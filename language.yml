@@ -1,0 +1,178 @@
+Buttons:
+  SellPrice:
+    Title: '&6Sell Price'
+    Description: '&7click to change the sell price'
+  CancelAuction: '&cCancel this auction'
+  SearchButton:
+    Title: '&bSearch for an auction'
+    Description: ''
+  PageView:
+    SinglePage: 'Page: %arg0'
+    LastPage: Last Page
+    CurrentPage: 'Page: %arg0'
+    FirstPage: First Page
+  DeleteShop: '&cDelete Shop'
+  EditAdminShop:
+    Toggle:
+      'OFF':
+        Description: '&9click to &aenable'
+        Title: '&7AdminShop is &cdisabled'
+      'ON':
+        Title: '&7AdminShop is &aenabled'
+        Description: '&9click to &cdisable'
+    ExitSave:
+      Title: Save and exit
+      Description: '&7click here to exit'
+  PolarQuestion:
+    'YES': 'Yes'
+    NoWithoutSave: '&cNo, leave WITHOUT saving!'
+    SubmitBuy: '&cAre you sure to buy?'
+    CreateAuction: '&cSure to create a new auction?'
+    SuretoBuy: '&cAre you sure to buy?'
+    SubmitSell: '&cAre you sure to sell?'
+    'NO': 'No'
+    CancelAuction: '&cAre you sure you want to cancel?'
+  AuctionInfo:
+    SellPriceEach: '&7Sell price each:  &c%arg0'
+    Title:
+      ERROR: not available
+      AdminShop: AdminShop
+      LocalShop: Player offer
+    Seller: '&7Seller:  &9%arg0'
+    Status:
+      Ended: '&7Status: &cended'
+      Expired: '&7Status: &cexpired'
+      Active: '&7Status: &2active'
+      Canceled: '&7Status: &4canceled'
+    Amount: '&7Amount: &6%arg0'
+    PriceEach: '&7PriceEach:  &c%arg0'
+    PriceTotal: '&7PriceTotal:  &c%arg0'
+    DateStarted: '&7started: %arg0'
+    BuyPriceEach: '&7Buy price each:  &c%arg0'
+    DateEnded: '&7ended: %arg0'
+    Buyer: '&7Buyer:  &9%arg0'
+  AuctionHistory:
+    Title: Overview
+    Description: auction history
+  BuyPrice:
+    Description: '&7click to change the buy price'
+    Title: '&6Buy Price'
+  EmptyListIcon:
+    Title: '&4empty'
+    Description: ''
+  SellButtons:
+    Title: '&9Sell'
+  AuctionCreate:
+    Description: '&7click here to sell your items'
+    Title: '&2Create new auction'
+  SetBuyPriceTitle: '&6Change buy price'
+  AmountButtons:
+    Description: '&7Use shift to stack'
+    Title: '&6Amount'
+  CreateAuction:
+    Description: '&7click here to sell your item'
+    Title: '&2Create new auction'
+  Finish: '&aFINISH - Sell this item'
+  CloseButtons:
+    Description: close this inventory
+    Title: EXIT
+  CreateAdminShop:
+    Title: '&2Create / Edit Adminshop'
+    Description: '&7click to create / edit an AdminShop'
+  MoneyButtons:
+    Title: '&6Your money'
+  "SellAll\t": '&aSell as many stacks I own'
+  Next: '&aNext'
+  BuyButtons:
+    Title: '&9Buy'
+  SellAllButtons:
+    Title: '&9Sell all'
+  SellSingle: '&aSell this item stack'
+  FindSimillarAuctions:
+    Description: ''
+    Title: '&9find simillar auctions'
+  ChooseItem:
+    Description: '&aor use SHIFT-Click'
+    Title: '&aDrag an item here'
+  AllPlayerHistory:
+    Description: global history - admins only
+    Title: Auction overview
+  BackButtons:
+    Description: go back to previous inventory
+    Title: RETURN
+  Free: '&aFree'
+  SearchButtonFindPlayer:
+    Title: '&bSearch for player'
+GuiTitles:
+  Warning: '&cWarning'
+  AdminShop: '&6 AdminShop'
+  AllLocalChestShop: '&6 All LocalChestShops'
+  AllItemsInCategories: GlobalChestShop
+  AuctionSellItem: '&aSell this item'
+  CancelAuction: '&cCanceling auction'
+  History:
+    CanceledAuctions: '&6Canceled Auctions'
+    RunningAuctions: '&aRunning Auctions'
+    BoughtAuctions: '&9Bought auction'
+    Expired: '&cExpired auctions'
+    SoldAuctions: '&bSold auctions'
+  SetSellPrice: '&6Change sell price'
+  LocalChestShop: '&0LocalChestShop'
+  EndedAuctionTitle: '&7 This auction has ended!'
+  AuctionPage: '&8Auctions'
+  Search: '&0Search results of: "&2%arg0&0"'
+  CreateAdminShop: '&2Create new Adminshop'
+  CreateAuction: '&2Creating new auction'
+  AllAuctions: '&6 All Auctions'
+  EditAdminShop: '&6Edit AdminShop'
+  AuctionChangePrice: '&6Changing price'
+  BuyAuction: Buying an auction
+Messages:
+  MoneyDeposit: '[BANK] You have received %arg0.'
+  WorldNotFound: '&c You cannot access the shop system in this world'
+  ItemIsDamaged: '&cItem is damaged'
+  MoneyDepositTax: '[BANK] You have received %arg0(%arg1 are tax)'
+  InformAboutBuy: '[SHOP] %arg0 has purchased your auction: %arg1 %arg1'
+  AdminShopIsDisabled: '&cThis AdminShop is not available!'
+  Inventory:
+    NoSpace: '&cYou don''t have enough space in your inventory'
+    NoMoney: '&cYou don''t have enought money!'
+    NoItem: '&cYou don''t own this item!'
+  SearchInstructionsAnvilGui: '&asearch for:'
+  AuctionAllreadyEnded: '&cThis auction was already bought'
+  TooManyAuctions: '&cYou cant have more than %arg0 running auctions'
+  NoChestFound: '&cYou can only create shops 1 block away from a chest'
+  SearchInstructions: '&aType the name of the item you are looking for into the chat'
+  TooSlowAuctionEnded: '&cThis auction is no longer for sale!'
+  CreatedAuction: '&aYou have successfully created a new auction'
+  ItemSold: '&aYou just sold an item'
+  PriceCantBeLessThanZero: '&cPrice can''t be nagative'
+  BroadcastSell: '&a[GlobalChestShop]  &6%arg0 &ahas purchased &6%arg1 &afor %arg2
+    &aeach from %arg3&a.'
+  QuestionSaveChanges: '&cSave all changes?'
+  TooManyShops: '&cYou already have too many shops '
+  MoneyWithdrawn: '[Money] %arg0 were withdrawn from your account.'
+  ItemBought: '&aYou just bought an item &b%arg0'
+  ChooseItem: '&aDrag an item in the center slot to sell it'
+  BuyCommandWrongUsage: '&7/GlobalChestShop buy &c<itemname | hand>'
+  WarningBuyPriceGreaterSellPrice: '&cBuy price can''t be greater sell price!'
+  PermissionWarning: '&cYou don''t have the permission to do this!'
+  RemovedAuction: '&cCanceled auction'
+  BroadcastCreationOfNewAuction: '&a[GlobalChestShop]  &6%arg0 &ahas created a new
+    global auction: &6%arg1 %arg2 &afor &6%arg3 &aeach.'
+  ItemNotAllowed: '&cYou cannot sell this item here.'
+  CanNotDeleteShopTooManyAuctions: '&cThis shop still contains running auctions. To
+    delete a shop you have to cancel all your auctions first.'
+  NoChestOwner: '&cIt seems this chest is not yours. If it is yours, place the chest
+    again!'
+DefaultCategories:
+  Miscellaneous: Miscellaneous
+  DecorationBlocks: Decoration Blocks
+  Transportation: Transportation
+  BuildingBlocks: Building Blocks
+  Materials: Materials
+  Redstone: Redstone
+  Combat: Combat
+  Tools: Tools
+  Foodstuff: Foodstuff
+  Brewing: Brewing
