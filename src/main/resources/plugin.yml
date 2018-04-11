@@ -1,0 +1,10 @@
+name: GlobalMarketChest
+version: 0.0.1
+author: EpiCanard
+depend: [Vault]
+description: Shop plugin to create economy between user
+main: fr.epicanard.globalmarketchest.GlobalMarketChest
+commands:
+  GlobalMarketChest:
+    description: Open or handle GlobalMarketChest interfaces
+    aliases : [globalmarketchest, gmc, globalmarket, globalchest]

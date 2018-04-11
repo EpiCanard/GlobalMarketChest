@@ -1,0 +1,27 @@
+# WorldGroups and auctionLimits configuration
+#
+#
+# Example :
+# 
+# WorldGroups:
+#   MyWorld:
+#     Worlds:
+#       - world
+#       - end
+#       - nether
+#     AuctionLimitByPlayer: 50
+#   RessourceWorld:
+#     Worlds:
+#       - ressource_overworld
+#
+WorldGroups:
+  MyWorld:
+    Worlds:
+      - world
+      - end
+      - nether
+    AuctionLimitByPlayer: 50
+  RessourceWorld:
+    Worlds:
+      - ressource_overworld
+      

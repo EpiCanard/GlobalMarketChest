@@ -1,3 +1,10 @@
+bin/
+dist/
+target/
+.externalToolBuilders/
+.settings/
+Notes.java
+
 # Compiled class file
 *.class
 

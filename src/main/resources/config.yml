@@ -1,0 +1,46 @@
+General:
+  Lang: "lang-fr_FR.yml"
+# Connection:
+#   Host: 192.168.99.100
+#   Port: 3306
+#   Database: gmctest
+#   User: root
+#   Password: gmc
+#   TablePrefix: GCS_
+#   SimultaneousConnection: 4
+Connection:
+  Host: buoktobku-mysql.services.clever-cloud.com
+  Port: 3306
+  Database: buoktobku
+  User: ud515gr5ecd6qghr
+  Password: pPdP5RHRxTIWduti4ZZ
+  TablePrefix: GMC_
+  SimultaneousConnection: 4
+Interfaces:
+  Background: minecraft:stained_glass_pane/15
+  Buttons:
+    NewAuction: minecraft:nether_star
+    ExitButton: minecraft:barrier
+    Money: minecraft:double_plant
+    GlobalView: minecraft:enchanted_book
+    Search: minecraft:hopper
+    ViewByCategory: minecraft:compass
+    ViewByPlayer: minecraft:chest
+    ViewByLastCreated: minecraft:apple
+    AuctionSide: minecraft:stained_glass_pane/11
+    AuctionMiddle: minecraft:stained_glass_pane
+Sign:
+  Appearance:
+    GlobalShop:
+      DisplayName: "&a[GlobalShop]"
+      DisplayItem: minecraft:compass
+      FirstLineToCreate: "globalshop"
+    LocalShop:
+      DisplayName: '&a[LocalShop]'
+      UsePlayerHead: true
+      FirstLineToCreate: "localshop"
+    AdminShop:
+      DisplayName: '&a[AdminShop]'
+      DisplayItem: minecraft:end_crystal
+      FirstLineToCreate: "adminshop"
+    NotWorkingShopDisplayName : "&f[DisableShop]"

@@ -1,0 +1,45 @@
+GUITitle:
+  SelectShop: "Select a shop"
+  ChooseTypeShop : "&5Choose a shop type"
+  NewAuction: "&2Creating new auction"
+  CreationShop:
+    GlobalShop: "Creation of Global Shop"
+Divers:
+  State: "Status"
+  Quantity: "Amount"
+  UnitPrice: "PriceEach"
+  TotalPrice: "PriceTotal"
+  Seller: "Seller"
+  Buyer: "Buyer"
+  Start: "Started"
+Buttons:
+  Money:
+    Name: "Your money"
+  PreviousButton:
+    Name: "Return"
+    Description: "Go back to previous inventory"
+  ExitButton:
+    Name: "&4Exit"
+    Description: "Close this inventory"
+  NewAuction:
+    Name: "&2Create new auction"
+    Description: "&7Click here to sell your items"
+  GlobalView:
+    Name: "Overview"
+    Description: "Auction history"
+  Search:
+    Name: "&3Search for an auction"
+  DragItem:
+    Name: "&aDrag an item here"
+    Description: "&aor use SHIFT-Click"
+  CancelAuction:
+    Name: "&4Cancel this auction"
+  ViewByCategory:
+    Name: "View by category"
+    Description: "Can player see auctions by category ?"
+  ViewByPlayer:
+    Name: "View by player"
+    Description: "Can player see auctions by player ?"
+  ViewByLastCreated:
+    Name: "View by last created"
+    Description: "Can player see auctions by last created ?"

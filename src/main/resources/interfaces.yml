@@ -1,0 +1,40 @@
+GlobalShop:
+  Height: 6
+  Items:
+    8: ExitButton
+    9: Search
+    45: GlobalView
+    46: Money
+    53: NewAuction
+
+DefaultShopInterface:
+  Height: 6
+  Items:
+    8: ExitButton
+    18-44: None
+    45: GlobalView
+    46: Money
+    53: NewAuction
+
+PhysicalShopType:
+  Height: 3
+  Items:
+    8: ExitButton
+
+ConfigShop:
+  Height: 4
+  Items:
+    8: ExitButton
+    20: ViewByCategory
+    22: ViewByPlayer
+    24: ViewByLastCreated
+
+CreateAuction:
+  Height: 6
+  Items:
+    12-14: AuctionSide
+    21-23: AuctionSide
+    22: DragItem
+    30-32: AuctionSide
+    
+    

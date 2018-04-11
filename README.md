@@ -7,6 +7,10 @@ To work you will need the plugin **Vault** to handle the economy.
 ## Commands
     /globalmarketchest
 **Open gui to select global, local or admin of your choice**
+
+    /globalmarketchest locate [item]
+**Give 5 best places that sell this item**
+
     
     /globalmarketchest reload
 **Reload the plugin**

@@ -1,0 +1,46 @@
+GUITitle:
+  SelectShop: "Sélection d'un shop"
+  ChooseTypeShop : "&5Choisissez un type de shop"
+  NewAuction: "&2Création d'une nouvelle enchère"
+  CreationShop:
+    GlobalShop: "Création d'un Global Shop"
+Divers:
+  State: "Status"
+  Quantity: "Quantité"
+  UnitPrice: "Prix unitaire"
+  TotalPrice: "Prix total"
+  Seller: "Vendeur"
+  Buyer: "Acheteur"
+  Start: "Débuté"
+Buttons:
+  Money:
+    Name: "Votre argent"
+  PreviousButton:
+    Name: "Retour"
+    Description: "Revenir à l'inventaire précédent"
+  ExitButton:
+    Name: "&4Sortie"
+    Description: "Ferme cet inventaire"
+  NewAuction:
+    Name: "&2Créer une nouvelle enchère"
+    Description: "&7Cliquer ici pour vendre vos objets"
+  GlobalView:
+    Name: "Vue d'ensemble"
+    Description: "Historique des enchères"
+  Search:
+    Name: "&3Chercher une enchère"
+  DragItem:
+    Name: "&aDéposer un objet ici"
+    Description: "&aou utiliser SHIFT-Click"
+  CancelAuction:
+    Name: "&4Annuler cette enchère"
+  ViewByCategory:
+    Name: "Vue par catégorie"
+    Description: "Le joueur peut voir les enchères par catégorie ?"
+  ViewByPlayer:
+    Name: "Vue par joueur"
+    Description: "Le joueur peut voir les enchères par joueur ?"
+  ViewByLastCreated:
+    Name: "Vue par dernier créé"
+    Description: "Le joeur peut voir les enchères dernièrement créé ?"
+    
