@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Comands;
+package fr.epicanard.globalmarketchest.commands;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,14 +17,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
 
-import fr.epicanard.globalmarketchest.GUI.CategoryHandler;
-import fr.epicanard.globalmarketchest.Utils.Utils;
+import fr.epicanard.globalmarketchest.economy.VaultEconomy;
+import fr.epicanard.globalmarketchest.gui.CategoryHandler;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.commands.SelectShops;
+import fr.epicanard.globalmarketchest.gui.shops.GlobalShop;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.Economy.VaultEconomy;
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
-import fr.epicanard.globalmarketchest.GUI.Commands.SelectShops;
-import fr.epicanard.globalmarketchest.GUI.Shops.GlobalShop;
-import fr.epicanard.globalmarketchest.Permissions.Permissions;
 import net.minecraft.server.v1_12_R1.Item;
 import net.minecraft.server.v1_12_R1.MinecraftKey;
 

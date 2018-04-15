@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Configuration;
+package fr.epicanard.globalmarketchest.configuration;
 
 import java.io.File;
 import java.io.IOException;

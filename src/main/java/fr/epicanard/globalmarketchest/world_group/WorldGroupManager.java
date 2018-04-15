@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.WorldGroup;
+package fr.epicanard.globalmarketchest.world_group;
 
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;

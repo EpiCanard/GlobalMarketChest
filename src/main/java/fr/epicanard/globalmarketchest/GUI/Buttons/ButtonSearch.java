@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.GUI.Buttons;
+package fr.epicanard.globalmarketchest.gui.buttons;
 
 public class ButtonSearch extends Button {
 

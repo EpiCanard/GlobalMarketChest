@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.GUI;
+package fr.epicanard.globalmarketchest.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,8 +13,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.epicanard.globalmarketchest.DefaultItems;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.GUI.Buttons.Button;
-import fr.epicanard.globalmarketchest.Utils.Utils;
+import fr.epicanard.globalmarketchest.gui.buttons.Button;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 public abstract class InventoryGUI {
   private Inventory inv;

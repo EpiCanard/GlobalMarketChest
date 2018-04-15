@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Shops;
+package fr.epicanard.globalmarketchest.shops;
 
 public enum KindShop {
   GLOBALSHOP(1),

@@ -1,13 +1,13 @@
-package fr.epicanard.globalmarketchest.GUI.Shops;
+package fr.epicanard.globalmarketchest.gui.shops;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.Configuration.ConfigLoader;
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
-import fr.epicanard.globalmarketchest.GUI.Buttons.ButtonLeave;
-import fr.epicanard.globalmarketchest.GUI.Buttons.ButtonNewAuction;
-import fr.epicanard.globalmarketchest.GUI.Buttons.ButtonOverview;
-import fr.epicanard.globalmarketchest.GUI.Buttons.ButtonSearch;
-import fr.epicanard.globalmarketchest.Utils.Utils;
+import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.buttons.ButtonLeave;
+import fr.epicanard.globalmarketchest.gui.buttons.ButtonNewAuction;
+import fr.epicanard.globalmarketchest.gui.buttons.ButtonOverview;
+import fr.epicanard.globalmarketchest.gui.buttons.ButtonSearch;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class GlobalShop extends InventoryGUI {
 

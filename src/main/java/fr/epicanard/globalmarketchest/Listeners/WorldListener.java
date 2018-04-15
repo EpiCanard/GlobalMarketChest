@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Listeners;
+package fr.epicanard.globalmarketchest.listeners;
 
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
@@ -12,9 +12,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
-import fr.epicanard.globalmarketchest.GUI.Shops.Creation.GlobalChooseTypeShop;
-import fr.epicanard.globalmarketchest.Shops.ShopInfo;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.shops.creation.GlobalChooseTypeShop;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
 
 public class WorldListener implements Listener {
   

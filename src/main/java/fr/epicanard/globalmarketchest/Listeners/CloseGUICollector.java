@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Listeners;
+package fr.epicanard.globalmarketchest.listeners;
 
 import java.util.UUID;
 

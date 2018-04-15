@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Economy;
+package fr.epicanard.globalmarketchest.economy;
 
 import java.util.List;
 import java.util.UUID;
@@ -9,9 +9,9 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-import fr.epicanard.globalmarketchest.Exceptions.RequiredPluginException;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.Utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.permission.Permission;

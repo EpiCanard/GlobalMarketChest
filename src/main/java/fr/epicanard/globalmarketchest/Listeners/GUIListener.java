@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Listeners;
+package fr.epicanard.globalmarketchest.listeners;
 
 import java.lang.reflect.Field;
 
@@ -13,7 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import net.minecraft.server.v1_12_R1.CreativeModeTab;
 import net.minecraft.server.v1_12_R1.Item;
 

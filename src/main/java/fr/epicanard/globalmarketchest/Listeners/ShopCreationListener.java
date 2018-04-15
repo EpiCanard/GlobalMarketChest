@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Listeners;
+package fr.epicanard.globalmarketchest.listeners;
 
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import fr.epicanard.globalmarketchest.Permissions.Permissions;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
 
 public class ShopCreationListener implements Listener {
   

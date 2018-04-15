@@ -1,10 +1,10 @@
-package fr.epicanard.globalmarketchest.GUI.Shops.Creation;
+package fr.epicanard.globalmarketchest.gui.shops.creation;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.Configuration.ConfigLoader;
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
-import fr.epicanard.globalmarketchest.GUI.Buttons.ButtonLeave;
-import fr.epicanard.globalmarketchest.Utils.Utils;
+import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.buttons.ButtonLeave;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class GlobalChooseTypeShop extends InventoryGUI {
 

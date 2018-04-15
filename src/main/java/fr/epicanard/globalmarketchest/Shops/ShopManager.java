@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Shops;
+package fr.epicanard.globalmarketchest.shops;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +10,8 @@ import java.util.List;
 import org.bukkit.Location;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.DatabaseConnections.DatabaseConnection;
-import fr.epicanard.globalmarketchest.Utils.WorldUtils;
+import fr.epicanard.globalmarketchest.database_connections.DatabaseConnection;
+import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
 public class ShopManager {
   List<ShopInfo> shops = new ArrayList<ShopInfo>();

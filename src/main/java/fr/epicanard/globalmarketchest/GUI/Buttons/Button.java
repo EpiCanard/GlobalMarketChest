@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.GUI.Buttons;
+package fr.epicanard.globalmarketchest.gui.buttons;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.Configuration.ConfigLoader;
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
-import fr.epicanard.globalmarketchest.Utils.Utils;
+import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 public abstract class Button {
   private ItemStack item;

@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Exceptions;
+package fr.epicanard.globalmarketchest.exceptions;
 
 public class ConfigException extends Exception {
 

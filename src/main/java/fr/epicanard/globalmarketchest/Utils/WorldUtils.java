@@ -1,11 +1,11 @@
-package fr.epicanard.globalmarketchest.Utils;
+package fr.epicanard.globalmarketchest.utils;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.Exceptions.DatabaseException;
+import fr.epicanard.globalmarketchest.exceptions.DatabaseException;
 
 public class WorldUtils {
   public static Block getNearestMaterial(Location location, Material material)

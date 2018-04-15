@@ -1,6 +1,6 @@
-package fr.epicanard.globalmarketchest.GUI.CreateShop;
+package fr.epicanard.globalmarketchest.gui.create_shop;
 
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 
 public class CreateGlobalShopInterface extends InventoryGUI{
 

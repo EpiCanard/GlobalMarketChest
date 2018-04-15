@@ -1,11 +1,11 @@
-package fr.epicanard.globalmarketchest.DatabaseConnections;
+package fr.epicanard.globalmarketchest.database_connections;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.Exceptions.ConfigException;
+import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
 public abstract class DatabaseConnection {
   protected String host;

@@ -13,21 +13,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.Exceptions.ConfigException;
-import fr.epicanard.globalmarketchest.Exceptions.RequiredPluginException;
-
-import fr.epicanard.globalmarketchest.Comands.CommandGMC;
-import fr.epicanard.globalmarketchest.Configuration.ConfigLoader;
-import fr.epicanard.globalmarketchest.DatabaseConnections.DatabaseConnection;
-import fr.epicanard.globalmarketchest.DatabaseConnections.MySQLConnection;
-import fr.epicanard.globalmarketchest.Economy.VaultEconomy;
-import fr.epicanard.globalmarketchest.GUI.InterfacesLoader;
-import fr.epicanard.globalmarketchest.GUI.InventoriesHandler;
-import fr.epicanard.globalmarketchest.Listeners.CloseGUICollector;
-import fr.epicanard.globalmarketchest.Listeners.GUIListener;
-import fr.epicanard.globalmarketchest.Listeners.WorldListener;
-import fr.epicanard.globalmarketchest.Shops.ShopManager;
-import fr.epicanard.globalmarketchest.WorldGroup.WorldGroupManager;
+import fr.epicanard.globalmarketchest.commands.CommandGMC;
+import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import fr.epicanard.globalmarketchest.database_connections.DatabaseConnection;
+import fr.epicanard.globalmarketchest.database_connections.MySQLConnection;
+import fr.epicanard.globalmarketchest.economy.VaultEconomy;
+import fr.epicanard.globalmarketchest.exceptions.ConfigException;
+import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;
+import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
+import fr.epicanard.globalmarketchest.gui.InventoriesHandler;
+import fr.epicanard.globalmarketchest.listeners.CloseGUICollector;
+import fr.epicanard.globalmarketchest.listeners.GUIListener;
+import fr.epicanard.globalmarketchest.listeners.WorldListener;
+import fr.epicanard.globalmarketchest.shops.ShopManager;
+import fr.epicanard.globalmarketchest.world_group.WorldGroupManager;
 
 
 public class GlobalMarketChest extends JavaPlugin {

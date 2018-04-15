@@ -1,9 +1,9 @@
-package fr.epicanard.globalmarketchest.GUI.CreateShop.GlobalShop;
+package fr.epicanard.globalmarketchest.gui.create_shop.global_shop;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 
 public class GlobalShop_0 extends InventoryGUI {
 

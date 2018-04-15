@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.GUI;
+package fr.epicanard.globalmarketchest.gui;
 
 public class GUIBuilder {
 

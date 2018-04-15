@@ -1,12 +1,12 @@
-package fr.epicanard.globalmarketchest.GUI.Commands;
+package fr.epicanard.globalmarketchest.gui.commands;
 
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.Configuration.ConfigLoader;
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
-import fr.epicanard.globalmarketchest.GUI.Buttons.Button;
-import fr.epicanard.globalmarketchest.GUI.Buttons.ButtonLeave;
+import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.buttons.Button;
+import fr.epicanard.globalmarketchest.gui.buttons.ButtonLeave;
 
 public class SelectShops extends InventoryGUI {
 

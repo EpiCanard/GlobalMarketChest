@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Shops;
+package fr.epicanard.globalmarketchest.shops;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,9 +9,9 @@ import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.Exceptions.DatabaseException;
-import fr.epicanard.globalmarketchest.GUI.InventoryGUI;
-import fr.epicanard.globalmarketchest.Utils.WorldUtils;
+import fr.epicanard.globalmarketchest.exceptions.DatabaseException;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
 public class ShopInfo {
   private int id;

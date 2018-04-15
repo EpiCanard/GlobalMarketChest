@@ -3,7 +3,7 @@ package fr.epicanard.globalmarketchest;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.Utils.Utils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 public enum DefaultItems {
   DEFAULT(Material.STAINED_GLASS_PANE, 15, " ", null),

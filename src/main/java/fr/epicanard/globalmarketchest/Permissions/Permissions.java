@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.Permissions;
+package fr.epicanard.globalmarketchest.permissions;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.World;
