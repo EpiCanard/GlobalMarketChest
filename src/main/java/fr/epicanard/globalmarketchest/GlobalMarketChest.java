@@ -1,11 +1,7 @@
 package fr.epicanard.globalmarketchest;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -66,8 +62,7 @@ public class GlobalMarketChest extends JavaPlugin {
     this.loader.loadFiles();
 
     YamlConfiguration defConfig = this.loader.loadResource("interfaces.yml");
-    InterfacesLoader inter = new InterfacesLoader();
-    this.interfaces = inter.loadInterfaces(defConfig);
+    this.interfaces = InterfacesLoader.getInstance().loadInterfaces(defConfig);
 
     this.worldManager = new WorldGroupManager();
 

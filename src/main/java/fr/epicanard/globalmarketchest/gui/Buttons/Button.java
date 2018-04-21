@@ -20,9 +20,9 @@ public abstract class Button {
     this.pos = pos;
     ConfigLoader conf = GlobalMarketChest.plugin.getConfigLoader();
 
-    this.item = Utils.getItemStack(conf.getConfig().getString("Interfaces.Buttons." + configName));
+    this.item = Utils.getInstance().getItemStack(conf.getConfig().getString("Interfaces.Buttons." + configName));
     if (this.item == null)
-      this.item = Utils.getItemStack("minecraft:barrier");
+      this.item = Utils.getInstance().getItemStack("minecraft:barrier");
     
     this.name = conf.getLanguages().getString("Buttons." + configName + ".Name");
     this.name = this.name.replaceAll("&", "§");
@@ -31,10 +31,10 @@ public abstract class Button {
     if (desc != null) {
       desc = desc.replaceAll("&", "§");
       this.description = Arrays.asList(desc.split(";"));
-      Utils.setItemStackMeta(this.item, this.name, this.description);
+      Utils.getInstance().setItemStackMeta(this.item, this.name, this.description);
     }
     else {
-      Utils.setItemStackMeta(this.item, this.name);      
+      Utils.getInstance().setItemStackMeta(this.item, this.name);      
     }
   }
   
@@ -43,7 +43,7 @@ public abstract class Button {
     this.name = name;
     this.description = description;
     this.pos = pos;
-    Utils.setItemStackMeta(this.item, this.name, this.description);
+    Utils.getInstance().setItemStackMeta(this.item, this.name, this.description);
   }
 
   public void addToGUI(InventoryGUI gui) {

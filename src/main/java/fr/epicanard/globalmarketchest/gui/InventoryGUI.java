@@ -90,7 +90,7 @@ public abstract class InventoryGUI {
 
   public void setIcon(ItemStack mat) {
     if (mat != null) {
-      this.icon = Utils.setItemStackMeta(mat, this.name);
+      this.icon = Utils.getInstance().setItemStackMeta(mat, this.name);
       this.setItemTo(4, this.icon);
     }
   }
@@ -105,7 +105,7 @@ public abstract class InventoryGUI {
   }
 
   public void setBack(ItemStack item) {
-    Utils.setItemStackMeta(item, "Retour", "Retourner à l'inventaire précédent");
+    Utils.getInstance().setItemStackMeta(item, "Retour", "Retourner à l'inventaire précédent");
     this.setItemTo(0, item);
   }
 

@@ -16,15 +16,17 @@ public class GlobalShop extends InventoryGUI {
 
     super.buildInterface();
     
-    super.addButton(new ButtonLeave(Utils.toPos(8, 0)), true);
-    super.addButton(new ButtonOverview(Utils.toPos(0, 5)), true);
-    super.addButton(new ButtonNewAuction(Utils.toPos(8, 5)), true);
-    super.addButton(new ButtonSearch(Utils.toPos(0, 1)), true);
+    Utils utils = Utils.getInstance();
+    
+    super.addButton(new ButtonLeave(utils.toPos(8, 0)), true);
+    super.addButton(new ButtonOverview(utils.toPos(0, 5)), true);
+    super.addButton(new ButtonNewAuction(utils.toPos(8, 5)), true);
+    super.addButton(new ButtonSearch(utils.toPos(0, 1)), true);
 
     
     ConfigLoader conf = GlobalMarketChest.plugin.getConfigLoader();
     String ic = conf.getConfig().getString("Sign.Appearance.GlobalShop.DisplayItem");
     System.out.println(ic);
-    super.setIcon(Utils.getItemStack(ic));
+    super.setIcon(utils.getItemStack(ic));
   }
 }

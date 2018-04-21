@@ -15,24 +15,31 @@ import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
 import net.minecraft.server.v1_12_R1.Item;
 import net.minecraft.server.v1_12_R1.MinecraftKey;
 
-public final class Utils {
-  public static final ItemStack background;
-
-  static {
-    background = getItemStack(
+public class Utils {
+  private static Utils INSTANCE;
+  public final ItemStack background;
+  
+  private Utils() {
+    this.background = getItemStack(
         GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Interfaces.Background"));
     setItemStackMeta(background, null);
   }
+  
+  public static Utils getInstance() {
+    if (INSTANCE == null)
+      INSTANCE = new Utils();
+    return INSTANCE;
+  }
 
-  public static String toColor(String toChange) {
+  public String toColor(String toChange) {
     return toChange.replaceAll("&", "§");
   }
 
-  public static int toPos(int x, int y) {
+  public int toPos(int x, int y) {
     return y * 9 + x;
   }
 
-  public static ItemStack getItemStack(String name) {
+  public ItemStack getItemStack(String name) {
     if (name == null)
       return null;
 
@@ -46,7 +53,7 @@ public final class Utils {
     return item;
   }
 
-  private static ItemStack setItemMeta(ItemStack item, String displayName, List<String> lore) {
+  private ItemStack setItemMeta(ItemStack item, String displayName, List<String> lore) {
     if (item == null)
       return null;
 
@@ -60,27 +67,27 @@ public final class Utils {
     return item;
   }
 
-  public static ItemStack setItemStackMeta(ItemStack item, String displayName) {
+  public ItemStack setItemStackMeta(ItemStack item, String displayName) {
     return setItemMeta(item, displayName, null);
   }
 
-  public static ItemStack setItemStackMeta(ItemStack item, String displayName, List<String> lore) {
+  public ItemStack setItemStackMeta(ItemStack item, String displayName, List<String> lore) {
     return setItemMeta(item, displayName, lore);
   }
 
-  public static ItemStack setItemStackMeta(ItemStack item, String displayName, String lore) {
+  public ItemStack setItemStackMeta(ItemStack item, String displayName, String lore) {
     if (lore == null)
       return setItemMeta(item, displayName, null);
     return setItemMeta(item, displayName, Arrays.asList(lore.split(";")));
   }
 
-  public static ItemStack setItemStackMeta(ItemStack item, String displayName, String[] lore) {
+  public ItemStack setItemStackMeta(ItemStack item, String displayName, String[] lore) {
     if (lore == null)
       return setItemMeta(item, displayName, null);
     return setItemMeta(item, displayName, Arrays.asList(lore));
   }
 
-  public static ItemStack getButton(String buttonName) {
+  public ItemStack getButton(String buttonName) {
     ConfigLoader loader = GlobalMarketChest.plugin.getConfigLoader();
     String item;
     ItemStack itemStack = background;

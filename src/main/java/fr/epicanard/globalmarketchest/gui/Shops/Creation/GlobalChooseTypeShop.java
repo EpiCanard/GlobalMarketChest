@@ -15,7 +15,7 @@ public class GlobalChooseTypeShop extends InventoryGUI {
       super.setName(conf.getLanguages().getString("GUITitle.ChooseTypeShop"));
     super.buildInterface();
 
-    super.addButton(new ButtonLeave(Utils.toPos(8, 0)), true);
+    super.addButton(new ButtonLeave(Utils.getInstance().toPos(8, 0)), true);
 
   }
 

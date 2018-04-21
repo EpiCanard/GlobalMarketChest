@@ -44,7 +44,7 @@ public class GUIListener implements Listener {
     }
   }
 
-  // TO DELETE : Not Working for every item
+  // TO DELETE : Not Working for every item (See if it's work better in 1.13)
   public void getCategoryByMystery(Material item) {
     Item it = CraftMagicNumbers.getItem(item);
     try {

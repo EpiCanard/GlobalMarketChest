@@ -19,6 +19,7 @@ import org.bukkit.permissions.Permission;
 
 import fr.epicanard.globalmarketchest.economy.VaultEconomy;
 import fr.epicanard.globalmarketchest.gui.CategoryHandler;
+import fr.epicanard.globalmarketchest.gui.GUIBuilder;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.commands.SelectShops;
 import fr.epicanard.globalmarketchest.gui.shops.GlobalShop;
@@ -38,10 +39,10 @@ public class CommandGMC implements CommandExecutor {
     if (sender != null && sender instanceof Player) {
       Player player = (Player) sender;
       
-      for (String ar: args) {
-      	System.out.println(ar);
-      }
-      this.openShops(player, args);
+      GUIBuilder gui = new GUIBuilder();
+      gui.loadInterface(args[0]);
+      player.openInventory(gui.getInv());
+      //this.openShops(player, args);
       /*
       if (args.length == 0)
         this.openShops(player, args);
@@ -150,7 +151,7 @@ public class CommandGMC implements CommandExecutor {
     CategoryHandler h = new CategoryHandler((YamlConfiguration)GlobalMarketChest.plugin.getConfigLoader().getCategories());
     String[] cat = h.getCategories();
     for (int i = 0; i < cat.length; i++) {
-      shop.setItemTo(Utils.toPos(i % 5 + 2, (i / 5) * 2 + 2), Utils.setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i])));
+      shop.setItemTo(Utils.getInstance().toPos(i % 5 + 2, (i / 5) * 2 + 2), Utils.getInstance().setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i])));
     }
     shop.open(player);
   }

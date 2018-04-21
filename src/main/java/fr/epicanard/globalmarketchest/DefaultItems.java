@@ -25,7 +25,7 @@ public enum DefaultItems {
 
   public ItemStack getItemStack() {
     ItemStack item = new ItemStack(this.mat, 1, this.meta);
-    Utils.setItemStackMeta(item, this.name, this.lore);
+    Utils.getInstance().setItemStackMeta(item, this.name, this.lore);
     return item;
   }
 }
