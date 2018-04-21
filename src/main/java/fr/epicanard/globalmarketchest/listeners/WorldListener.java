@@ -51,9 +51,7 @@ public class WorldListener implements Listener {
       if (bs instanceof Sign) {
         Sign sign = (Sign) bs;
         if (sign.getLine(0).equals("[GMC]")) {
-          InventoryGUI shopGUI = new GlobalChooseTypeShop();
-          GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), shopGUI);
-          shopGUI.open(player);
+          // GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), shopGUI);
         }
       }
     }
