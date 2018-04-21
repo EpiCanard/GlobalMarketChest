@@ -156,35 +156,4 @@ public class CommandGMC implements CommandExecutor {
     shop.open(player);
   }
 
-  private void openShops(Player player, String[] args) {
-    InventoryGUI gui = new SelectShops(args[0]);
-
-    ItemStack item = new ItemStack(Material.COMPASS);
-    ItemMeta met = item.getItemMeta();
-
-    /*
-    met.setDisplayName("GlobalShop");
-    met.setLore(Arrays.asList("Open the GlobalShop of the current world"));
-    item.setItemMeta(met);
-    gui.setItemTo(10, item);
-
-    ItemStack ita = new ItemStack(Material.CHEST);
-    ItemMeta meta = ita.getItemMeta();
-
-    meta.setDisplayName("LocalsShops");
-    meta.setLore(Arrays.asList("Open the LocalsShops of players"));
-    ita.setItemMeta(meta);
-    gui.setItemTo(13, ita);
-
-    ItemStack itb = new ItemStack(Material.ENDER_CHEST);
-    ItemMeta metb = itb.getItemMeta();
-
-    metb.setDisplayName("AdminShop");
-    metb.setLore(Arrays.asList("Open the AdminShop"));
-    itb.setItemMeta(metb);
-
-    gui.setItemTo(16, itb);
-    */
-    gui.open(player);
-  }
 }
