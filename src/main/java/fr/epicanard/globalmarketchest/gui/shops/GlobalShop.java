@@ -1,32 +1,22 @@
 package fr.epicanard.globalmarketchest.gui.shops;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
-import fr.epicanard.globalmarketchest.gui.InventoryGUI;
-import fr.epicanard.globalmarketchest.gui.buttons.ButtonLeave;
-import fr.epicanard.globalmarketchest.gui.buttons.ButtonNewAuction;
-import fr.epicanard.globalmarketchest.gui.buttons.ButtonOverview;
-import fr.epicanard.globalmarketchest.gui.buttons.ButtonSearch;
-import fr.epicanard.globalmarketchest.utils.Utils;
+import org.bukkit.event.Event;
+import org.bukkit.inventory.Inventory;
 
-public class GlobalShop extends InventoryGUI {
 
-  public GlobalShop() {
-    super(null, 6);
+public class GlobalShop extends ShopInterface {
+  @Override
+  public void load(Inventory gui) {
+    super.load(gui);
+  }
 
-    super.buildInterface();
-    
-    Utils utils = Utils.getInstance();
-    
-    super.addButton(new ButtonLeave(utils.toPos(8, 0)), true);
-    super.addButton(new ButtonOverview(utils.toPos(0, 5)), true);
-    super.addButton(new ButtonNewAuction(utils.toPos(8, 5)), true);
-    super.addButton(new ButtonSearch(utils.toPos(0, 1)), true);
+  @Override
+  public void unload() {
+    // TODO Auto-generated method stub
+  }
 
-    
-    ConfigLoader conf = GlobalMarketChest.plugin.getConfigLoader();
-    String ic = conf.getConfig().getString("Sign.Appearance.GlobalShop.DisplayItem");
-    System.out.println(ic);
-    super.setIcon(utils.getItemStack(ic));
+  @Override
+  public void onClick(Event event) {
+    // TODO Auto-generated method stub
   }
 }

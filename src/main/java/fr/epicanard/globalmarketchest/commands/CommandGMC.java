@@ -21,7 +21,6 @@ import fr.epicanard.globalmarketchest.economy.VaultEconomy;
 import fr.epicanard.globalmarketchest.gui.CategoryHandler;
 import fr.epicanard.globalmarketchest.gui.GUIBuilder;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
-import fr.epicanard.globalmarketchest.gui.commands.SelectShops;
 import fr.epicanard.globalmarketchest.gui.shops.GlobalShop;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.utils.Utils;
@@ -38,11 +37,12 @@ public class CommandGMC implements CommandExecutor {
   public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
     if (sender != null && sender instanceof Player) {
       Player player = (Player) sender;
-      
+      this.locateBestShop(player, args);
+      /*
       GUIBuilder gui = new GUIBuilder();
       gui.loadInterface(args[0]);
       player.openInventory(gui.getInv());
-      //this.openShops(player, args);
+      */
       /*
       if (args.length == 0)
         this.openShops(player, args);
@@ -102,58 +102,12 @@ public class CommandGMC implements CommandExecutor {
   }
   
   private void locateBestShop(Player player, String[] args) {
-    YamlConfiguration categories = (YamlConfiguration)GlobalMarketChest.plugin.getConfigLoader().getCategories();
-
-/*
-    if (args.length >= 2) {
-     String st = categories.getString(args[1] + ".DisplayName");
-     if (st != null) {
-       Inventory inv = Bukkit.createInventory(null, 54, st);
-       List<String> items = categories.getStringList(args[1]+ ".Items");
-       Object[] arr = items.toArray();
-       System.out.println("yey : " + Item.REGISTRY.get(new MinecraftKey("salut")));
-       for (int i = 0; i < arr.length && i < 54; i++) {
-         MinecraftKey mk = new MinecraftKey((String)arr[i]);
-         ItemStack item = CraftItemStack.asNewCraftStack(Item.REGISTRY.get(mk));         
-         inv.setItem(i, item);
-       }
-       player.openInventory(inv);
-     }
-    }
-*/
-/*
-    Set<String> keys = categories.getKeys(false);
-    Object[] ar = keys.toArray();
-    for (int i = 0; i < ar.length; i++) {
-      List<String> items = categories.getStringList(ar[i]+ ".Items");
-      Object[] arr = items.toArray();
-      for (int v = 0; v < arr.length; v++) {
-        MinecraftKey mk = new MinecraftKey((String)arr[v]);
-        if (Item.REGISTRY.get(mk) == null)
-          System.out.println("Unkown " + (String)arr[v]);
-      }      
-    }
-    
-    MinecraftKey m = new MinecraftKey("minecraft:log");
-    ItemStack item = CraftItemStack.asNewCraftStack(Item.REGISTRY.get(m));
-*/    
-//    ItemStack it = CraftItemStack.asNewCraftStack(Item.REGISTRY.getId(17));
-//    item.setDurability((short) 2);
-//    player.getInventory().addItem(item);
-//    player.getInventory().addItem(it);
-    Object[] ar = Item.REGISTRY.keySet().toArray();
-    for(int to = 0; to < ar.length; to++) {
-      System.out.println("=> " + ar[to]);
-    }
-    
-    GlobalShop shop = new GlobalShop();
-    
+        
     CategoryHandler h = new CategoryHandler((YamlConfiguration)GlobalMarketChest.plugin.getConfigLoader().getCategories());
     String[] cat = h.getCategories();
     for (int i = 0; i < cat.length; i++) {
-      shop.setItemTo(Utils.getInstance().toPos(i % 5 + 2, (i / 5) * 2 + 2), Utils.getInstance().setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i])));
+      //shop.setItemTo(Utils.getInstance().toPos(i % 5 + 2, (i / 5) * 2 + 2), Utils.getInstance().setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i])));
     }
-    shop.open(player);
   }
 
 }
