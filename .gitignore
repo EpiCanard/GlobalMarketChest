@@ -3,6 +3,7 @@ dist/
 target/
 .externalToolBuilders/
 .settings/
+.vscode/
 Notes.java
 
 # Compiled class file
