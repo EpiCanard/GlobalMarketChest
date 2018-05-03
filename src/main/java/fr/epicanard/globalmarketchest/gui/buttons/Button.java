@@ -47,7 +47,7 @@ public abstract class Button {
   }
 
   public void addToGUI(InventoryGUI gui) {
-    gui.setItemTo(this.pos, this.item);
+    // TODO Delete
   }
   
   public String getName() {

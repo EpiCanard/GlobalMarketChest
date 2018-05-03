@@ -10,7 +10,7 @@ import java.util.List;
 import org.bukkit.Location;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.database_connections.DatabaseConnection;
+import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 

@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.commands.CommandGMC;
 import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
-import fr.epicanard.globalmarketchest.database_connections.DatabaseConnection;
-import fr.epicanard.globalmarketchest.database_connections.MySQLConnection;
+import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
+import fr.epicanard.globalmarketchest.database.connections.MySQLConnection;
 import fr.epicanard.globalmarketchest.economy.VaultEconomy;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;

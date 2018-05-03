@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.database_connections;
+package fr.epicanard.globalmarketchest.database.connections;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

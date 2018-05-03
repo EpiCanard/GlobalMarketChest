@@ -15,7 +15,7 @@ public class GUIBuilder {
   private Deque<ShopInterface> shopStack = new ArrayDeque<ShopInterface>();
 
   public GUIBuilder() {
-    this.inv = Bukkit.createInventory(null, 54, "ง8GlobalMarketChest");
+    this.inv = Bukkit.createInventory(null, 54, "ยง8GlobalMarketChest");
   }
 
   /**

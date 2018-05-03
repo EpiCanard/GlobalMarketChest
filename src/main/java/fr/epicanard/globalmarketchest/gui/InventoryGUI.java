@@ -1,18 +1,15 @@
 package fr.epicanard.globalmarketchest.gui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.epicanard.globalmarketchest.DefaultItems;
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.buttons.Button;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
@@ -30,7 +27,7 @@ public abstract class InventoryGUI {
   }
   
   public void buildInterface() {
-    this.inv = Bukkit.createInventory(null, this.numberLines * 9, "§8" + this.name);
+    this.inv = Bukkit.createInventory(null, this.numberLines * 9, "ï¿½8" + this.name);
 
     // Init iterface
     /*
@@ -81,7 +78,7 @@ public abstract class InventoryGUI {
   }
   
   public void setName(String name) {
-    this.name = name.replaceAll("&", "§");
+    this.name = name.replaceAll("&", "Â§");
   }
 
   public String getName() {
