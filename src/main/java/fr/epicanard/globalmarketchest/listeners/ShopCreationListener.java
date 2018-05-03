@@ -9,6 +9,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 
+/**
+ * Listener for creation process
+ */
 public class ShopCreationListener implements Listener {
   
   @EventHandler

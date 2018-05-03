@@ -12,9 +12,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 
+/**
+ * Listener for every world interact like opennin a chest
+ */
 public class WorldListener implements Listener {
   
   // TO DELETE

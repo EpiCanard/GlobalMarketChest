@@ -17,6 +17,9 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import net.minecraft.server.v1_12_R1.CreativeModeTab;
 import net.minecraft.server.v1_12_R1.Item;
 
+/**
+ * Listener for each interaction done inside a chest
+ */
 public class GUIListener implements Listener {
   @EventHandler
   public void onClick(InventoryClickEvent event) {

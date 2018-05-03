@@ -9,6 +9,11 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.utils.Utils;
 
+/**
+ * SINGLETON
+ * Loader that load and store interfaces (pool of ItemStack) from the config
+ * We can get the interface layout without having to check the configuration file each time
+ */
 public class InterfacesLoader {
   private static InterfacesLoader INSTANCE;
   private Map<String, ItemStack[]> interfaces;
@@ -23,7 +28,7 @@ public class InterfacesLoader {
   }
 
   /**
-   * Get interfaces already loaded
+   * Get all interfaces loaded
    * 
    * @return
    */
@@ -32,7 +37,7 @@ public class InterfacesLoader {
   }
 
   /**
-   * Get list ItemStack for one interface
+   * Get list of ItemStack for one interface
    * 
    * @param interfaceName
    * @return
@@ -43,18 +48,19 @@ public class InterfacesLoader {
 
   /**
    * Load interfaces Create a map, where the key is the name of the interface
-   * and the value a list of ItemStack Fill empty space with background item
+   * and the value a list of ItemStack
+   * When there no item specified for a position it's filled with background item
    * 
-   * @param interfaceConfig
-   * @param reload
+   * @param interfaceConfig YamlConfiguration
+   * @param reload if it's set to true force reload from configuraiton
    * @return
    */
   public Map<String, ItemStack[]> loadInterfaces(YamlConfiguration interfaceConfig, Boolean reload) {
     if (reload == false && this.interfaces != null)
       return this.interfaces;
 
-    this.interfaces = new HashMap<String, ItemStack[]>();
     Set<String> interfacesName = interfaceConfig.getKeys(false);
+    this.interfaces = new HashMap<String, ItemStack[]>();
 
     for (String name : interfacesName) {
       ItemStack[] itemsStack = new ItemStack[54];

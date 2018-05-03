@@ -9,6 +9,9 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 
+/**
+ * Listener for every close event link to an inventory
+ */
 public class CloseGUICollector implements Listener {
 
   @EventHandler

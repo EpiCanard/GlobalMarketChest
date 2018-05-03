@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Store each opened shop interface by player (uuid)
+ */
 public class InventoriesHandler {
   private Map<UUID, InventoryGUI> inventories;
   
