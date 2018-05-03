@@ -9,11 +9,11 @@ General:
 #   TablePrefix: GCS_
 #   SimultaneousConnection: 4
 Connection:
-  Host: buoktobku-mysql.services.clever-cloud.com
+  Host: bol3vp5cj-mysql.services.clever-cloud.com
   Port: 3306
-  Database: buoktobku
-  User: ud515gr5ecd6qghr
-  Password: pPdP5RHRxTIWduti4ZZ
+  Database: bol3vp5cj
+  User: ulymnspjd93n0dqa
+  Password: bGz7GYeLxFPvQXG84Ug
   TablePrefix: GMC_
   SimultaneousConnection: 4
 Interfaces:
