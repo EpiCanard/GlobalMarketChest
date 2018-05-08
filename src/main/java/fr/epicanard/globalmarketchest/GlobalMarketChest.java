@@ -23,11 +23,14 @@ import fr.epicanard.globalmarketchest.listeners.GUIListener;
 import fr.epicanard.globalmarketchest.listeners.WorldListener;
 import fr.epicanard.globalmarketchest.shops.ShopManager;
 import fr.epicanard.globalmarketchest.world_group.WorldGroupManager;
+import lombok.Getter;
 
 
 public class GlobalMarketChest extends JavaPlugin {
 
-  private final ConfigLoader loader;
+  @Getter
+  private final ConfigLoader configLoader;
+  @Getter
   private DatabaseConnection sqlConnection;
   public static GlobalMarketChest plugin;
   public final InventoriesHandler inventories;
@@ -38,77 +41,75 @@ public class GlobalMarketChest extends JavaPlugin {
 
   public GlobalMarketChest() {
     // Initialization of loader
-    this.loader = new ConfigLoader();
+    this.configLoader = new ConfigLoader();
     this.inventories = new InventoriesHandler();
     this.economy = new VaultEconomy();
     this.shopManager = new ShopManager();
     this.interfaces = new HashMap<String, ItemStack[]>();
-  }
-  
-  public ConfigLoader getConfigLoader() {
-    return this.loader;
-  }
-  
-  public DatabaseConnection getSqlConnection() {
-    return this.sqlConnection;
   }
 
   @Override
   public void onEnable() {
     plugin = this;
 
+    this.configLoader.loadFiles();
 
-    // Load Configurations files
-    this.loader.loadFiles();
-
-    YamlConfiguration defConfig = this.loader.loadResource("interfaces.yml");
+    YamlConfiguration defConfig = this.configLoader.loadResource("interfaces.yml");
     this.interfaces = InterfacesLoader.getInstance().loadInterfaces(defConfig);
 
     this.worldManager = new WorldGroupManager();
 
-    // Set Economy
+    try {
+      this.initEconomy();
+      this.initDatabase();
+    } catch (Exception e) {
+      return;
+    }
+    
+    this.shopManager.updateShops();
+
+    getCommand("GlobalMarketChest").setExecutor(new CommandGMC());
+
+    getServer().getPluginManager().registerEvents(new GUIListener(), this);
+    getServer().getPluginManager().registerEvents(new CloseGUICollector(), this);
+    getServer().getPluginManager().registerEvents(new WorldListener(), this);
+  }
+
+  @Override
+  public void onDisable() {
+    this.sqlConnection.cleanPool();
+  }
+
+  /**
+   * Init the economy plugin
+   * @throws Exception
+   */
+  private void initEconomy() throws Exception {
     try {
       this.economy.initEconomy();
     } catch (RequiredPluginException e) {
       this.getLogger().log(Level.WARNING, e.getMessage());
       this.getLogger().log(Level.WARNING, "Plugin GlobalMarketChest disabled");
       this.setEnabled(false);
-      return;
+      throw new Exception();
     }
+  }
 
-    // Establish SQL Connection
+  /**
+   * Init Database create databaseconnection and configure it
+   * @throws Exception
+   */
+  private void initDatabase() throws Exception {
     try {
       this.sqlConnection = (DatabaseConnection)new MySQLConnection();
       this.sqlConnection.configFromConfigFile();
       this.sqlConnection.fillPool();
       DatabaseConnection.configureTables();
-    } catch (ConfigException e1) {
-      this.getLogger().log(Level.WARNING, "[SQLConnection] " + e1.getMessage());
+    } catch (ConfigException e) {
+      this.getLogger().log(Level.WARNING, "[SQLConnection] " + e.getMessage());
       this.setEnabled(false);
-      return;
+      throw new Exception();
     }
-    
-    this.shopManager.updateShops();
-    
-/*
-    try {
-      this.sql = new SQLConnection("jdbc:mysql://", this.loader.getConfig());
-      this.sql.listTables(this.sql.connect());
-    } catch (ConfigException | SQLException e) {
-      this.getLogger().log(Level.WARNING, e.getMessage());
-      this.getLogger().log(Level.WARNING, "Without a correct database config the plugin can't work");
-      getServer().getPluginManager().disablePlugin(this);
-      return;
-    }
-*/
-
-    // Set Command Executor
-    getCommand("GlobalMarketChest").setExecutor(new CommandGMC());
-
-    // Set Listeners
-    getServer().getPluginManager().registerEvents(new GUIListener(), this);
-    getServer().getPluginManager().registerEvents(new CloseGUICollector(), this);
-    getServer().getPluginManager().registerEvents(new WorldListener(), this);
   }
  
   public Boolean hasPermission(Player player, String perm) {
@@ -117,12 +118,5 @@ public class GlobalMarketChest extends JavaPlugin {
     
     return true;
   }
-  
-  public void purgeDatabase(Player p, String[] args) {
-    
-  }
-  
-  public void reloadPlugin(Player p) {
-    
-  }
+
 }
