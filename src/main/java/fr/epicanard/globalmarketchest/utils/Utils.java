@@ -32,7 +32,7 @@ public class Utils {
   }
 
   public String toColor(String toChange) {
-    return toChange.replaceAll("&", "ง");
+    return toChange.replaceAll("&", "ยง");
   }
 
   public int toPos(int x, int y) {

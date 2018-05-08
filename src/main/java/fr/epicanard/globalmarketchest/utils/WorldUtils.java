@@ -9,24 +9,27 @@ import fr.epicanard.globalmarketchest.exceptions.DatabaseException;
 
 public class WorldUtils {
   public static Block getNearestMaterial(Location location, Material material)
-  {    
+  {
     int radius = 1;
     Block finalBlock = null;
     double distance = 6.0D;
+    int diameter = 1 + 2 * radius;
+    int x, y, z;
 
-    for (int x = -radius; x <= radius; x++) {
-      for (int y = -radius; y <= radius; y++) {
-        for (int z = -radius; z <= radius; z++) {
-          if ((x != 0) || (y != 0) || (z != 0)) {
-            Block tempBlock = location.getBlock().getRelative(x, y, z);
-            if (tempBlock != null && tempBlock.getState().getType().compareTo(material) == 0) {
-              double blockDistance = tempBlock.getLocation().distance(location);
-              if (blockDistance < distance) {
-                finalBlock = tempBlock;
-                distance = blockDistance;
-              }
-            }
-          }
+    for (int i = 0; i < Math.pow(diameter, 3); i++) {
+      x = i % diameter - radius;
+      y = i / (int)Math.pow(diameter, 2) - radius;
+      z = (i % (int)Math.pow(diameter, 2)) / 3 - radius;
+      
+      if (x == 0 && y == 0 && z == 0)
+        continue;
+      
+      Block tempBlock = location.getBlock().getRelative(x, y, z);
+      if (tempBlock != null && tempBlock.getState().getType().compareTo(material) == 0) {
+        double blockDistance = tempBlock.getLocation().distance(location);
+        if (blockDistance < distance) {
+          finalBlock = tempBlock;
+          distance = blockDistance;
         }
       }
     }
@@ -38,7 +41,7 @@ public class WorldUtils {
     
     
     if (args.length != 4)
-      throw new DatabaseException((databaseVar == null) ? "signLocation" : databaseVar);
+      return null;
     
     if (location == null)
       location = new Location(GlobalMarketChest.plugin.getServer().getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]));
@@ -52,10 +55,14 @@ public class WorldUtils {
   }
   
   public static String getStringFromLocation(Location loc) {
+    if (loc == null)
+      return "";
     return loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
   }
 
   public static Boolean compareLocations(Location first, Location second) {
+    if (first == null || second == null)
+      return false;
     if (first.getBlockX() == second.getBlockX() &&
       first.getBlockY() == second.getBlockY() &&
       first.getBlockZ() == second.getBlockZ() &&
