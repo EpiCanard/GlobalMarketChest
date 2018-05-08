@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.listeners;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.EnderChest;
@@ -9,29 +10,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 /**
  * Listener for every world interact like opennin a chest
  */
 public class WorldListener implements Listener {
-  
-  // TO DELETE
-  public void TrashFunction(Location loc) {
-    ShopInfo shop = GlobalMarketChest.plugin.shopManager.getShop(loc);
-    
-    if (shop != null) {
-      System.out.println("================");
-      System.out.println("ID :" + shop.getIDShop());
-      Location sign = shop.getSignLocation();
-      System.out.println("SignLocation :" + sign.getWorld().getName() + " - [" + sign.getX() + "," + sign.getY() + "," + sign.getZ() + "]");
-      Location chest = shop.getChestLocation();
-      System.out.println("ChestLocation :" + chest.getWorld().getName() + " - [" + chest.getX() + "," + chest.getY() + "," + chest.getZ() + "]");
-      System.out.println("================");
-   }
+
+  @EventHandler
+  public void onPlayerBreakBlock(BlockBreakEvent event) {
+    Material type = event.getBlock().getType();
+    if (type.equals(Material.SIGN_POST) || type.equals(Material.WALL_SIGN)) {
+      if (GlobalMarketChest.plugin.shopManager.deleteShop(event.getBlock().getLocation()))
+        PlayerUtils.sendMessagePlayer(event.getPlayer(), "Shop successfully deleted");
+    }
+
   }
   
   @EventHandler
@@ -45,15 +43,6 @@ public class WorldListener implements Listener {
       
       if (shop != null && (bs instanceof Sign || bs instanceof EnderChest || bs instanceof Chest)) {
         // Create shop interface for player
-      }
-
-      // TO DELETE
-      this.TrashFunction(event.getClickedBlock().getLocation());
-      if (bs instanceof Sign) {
-        Sign sign = (Sign) bs;
-        if (sign.getLine(0).equals("[GMC]")) {
-          // GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), shopGUI);
-        }
       }
     }
   }

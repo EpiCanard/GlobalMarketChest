@@ -20,6 +20,7 @@ import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoriesHandler;
 import fr.epicanard.globalmarketchest.listeners.CloseGUICollector;
 import fr.epicanard.globalmarketchest.listeners.GUIListener;
+import fr.epicanard.globalmarketchest.listeners.ShopCreationListener;
 import fr.epicanard.globalmarketchest.listeners.WorldListener;
 import fr.epicanard.globalmarketchest.shops.ShopManager;
 import fr.epicanard.globalmarketchest.world_group.WorldGroupManager;
@@ -73,6 +74,7 @@ public class GlobalMarketChest extends JavaPlugin {
     getServer().getPluginManager().registerEvents(new GUIListener(), this);
     getServer().getPluginManager().registerEvents(new CloseGUICollector(), this);
     getServer().getPluginManager().registerEvents(new WorldListener(), this);
+    getServer().getPluginManager().registerEvents(new ShopCreationListener(), this);
   }
 
   @Override
@@ -105,6 +107,7 @@ public class GlobalMarketChest extends JavaPlugin {
       this.sqlConnection.configFromConfigFile();
       this.sqlConnection.fillPool();
       DatabaseConnection.configureTables();
+      this.sqlConnection.recreateTables();
     } catch (ConfigException e) {
       this.getLogger().log(Level.WARNING, "[SQLConnection] " + e.getMessage());
       this.setEnabled(false);

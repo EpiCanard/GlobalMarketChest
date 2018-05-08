@@ -26,15 +26,44 @@ public class MySQLConnection extends DatabaseConnection {
       this.simultaneousConnections = 1;
   }
 
+  /**
+   * Recreate tables if doesn't exist
+   */
+  @Override
   public void recreateTables() {
+    Connection co = this.getConnection();
 
-  }
-
-  public void listTables(Connection con) throws SQLException {
-    Statement st = con.createStatement();
-    ResultSet rs = st.executeQuery("SHOW TABLES IN " + this.database);
-    while (rs.next()) {
-      System.out.println(rs.getString(1));
+    try {
+      Statement state = co.createStatement();
+      state.execute(
+        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnection.tableAuctions + "` (" +
+        "  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
+        "  `itemStack` VARCHAR(50) NOT NULL," +
+        "  `itemMeta` TEXT NOT NULL," +
+        "  `amount` INT UNSIGNED NOT NULL," +
+        "  `price` DOUBLE NOT NULL," +
+        "  `state` TINYINT(1) NOT NULL," +
+        "  `playerStarter` TEXT NOT NULL," +
+        "  `playerEnder` TEXT DEFAULT NULL," +
+        "  `start` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
+        "  `end` TIMESTAMP NOT NULL," +
+        "  `worldGroup` VARCHAR(50) NOT NULL" +
+        ");"
+      );
+      state.execute(
+        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnection.tableShops + "` (" +
+        "  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
+        "  `owner` TEXT NOT NULL," +
+        "  `signLocation` TEXT NOT NULL," +
+        "  `otherLocation` TEXT NOT NULL," +
+        "  `type` TINYINT(1) NOT NULL," +
+        "  `worldGroup` VARCHAR(50) NOT NULL" +
+        ");"
+      );
+      state.close();
+    } catch(SQLException e) {}
+    finally {
+      this.getBackConnection(co);
     }
   }
 
@@ -55,23 +84,11 @@ public class MySQLConnection extends DatabaseConnection {
         || this.password == null)
       throw new ConfigException("Some database informations are missing");
   }
-  
+
   /**
-   * Configure the connection manually sending all informations in parameters
+   * Create connection to database
+   * @return Connection
    */
-  @Override
-  public void configManually(String host, String port, String database, String user, String password) throws ConfigException {
-    if (this.host == null || this.port == null || this.database == null || this.user == null
-        || this.password == null)
-      throw new ConfigException("Some database informations are missing");
-
-    this.host = host;
-    this.port = port;
-    this.database = database;
-    this.user = user;
-    this.password = password;
-  }
-
   @Override
   protected Connection connect() {
     try {
@@ -79,24 +96,29 @@ public class MySQLConnection extends DatabaseConnection {
       Connection con = DriverManager.getConnection("jdbc:mysql://" + this.buildUrl(),
           this.user, this.password);
       return con;
-    } catch (SQLException e) {
-      e.printStackTrace();
-  	} catch (ClassNotFoundException e) {
+    } catch (SQLException | ClassNotFoundException e) {
       e.printStackTrace();
     }
     return null;
   }
   
+  /**
+   * Disconnection connection
+   */
   @Override
   protected void disconnect(Connection connection) {
-    if (connection != null) {
-      try {
-        if (!connection.isClosed())
-          connection.close();
-      } catch (SQLException e) {}      
-    }
+    if (connection == null)
+      return;
+    try {
+      if (!connection.isClosed())
+        connection.close();
+    } catch (SQLException e) {}      
   }
 
+  /**
+   * Get a connection from the pool or create it is no connected
+   * @return Connection
+   */
   @Override
   public Connection getConnection() {
     try {
@@ -104,25 +126,29 @@ public class MySQLConnection extends DatabaseConnection {
       if (co == null || co.isClosed())
         return this.connect();
       return co;
-    } catch (SQLException e) {
-      return this.connect();
-    } catch (InterruptedException e) {
+    } catch (SQLException | InterruptedException e) {
       return this.connect();
     }
   }
 
+  /**
+   * Get Back the connection to the poll
+   */
   @Override
   public void getBackConnection(Connection connection) {
-    if (connection != null) {
-      try {
-        if (this.pool.size() > this.simultaneousConnections)
-          this.disconnect(connection);
-        else
-          this.pool.put(connection);
-      } catch (InterruptedException e) {}      
-    }
+    if (connection == null)
+      return;
+    try {
+      if (this.pool.size() >= this.simultaneousConnections)
+        this.disconnect(connection);
+      else
+        this.pool.put(connection);
+    } catch (InterruptedException e) {}      
   }
 
+  /**
+   * Fill pool with connection from the size specified in config file
+   */
   @Override
   public void fillPool() {
     for (int i = 0; i < this.simultaneousConnections; i++) {
@@ -131,17 +157,26 @@ public class MySQLConnection extends DatabaseConnection {
     }
   }
 
+  /**
+   * Clean pool and close every connections
+   */
+  @Override
+  public void cleanPool() {
+    Connection co;
+    while ((co = this.pool.poll()) != null)
+      this.disconnect(co);
+  }
+
+  /**
+   * Close ressources specified in parameter
+   */
   @Override
   public void closeRessources(ResultSet res, PreparedStatement prepared) {
-    if (res != null) {
-      try {
+    try {
+      if (res != null)
         res.close();
-      } catch (SQLException e) {}
-    }
-    if (prepared != null) {
-      try {
+      if (prepared != null)
         prepared.close();
-      } catch (SQLException e) {}
-    }
+    } catch (SQLException e) {}
   }
 }

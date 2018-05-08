@@ -51,12 +51,6 @@ public class CommandGMC implements CommandExecutor {
           case "locate":
             this.locateBestShop(player, args);
             break;
-          case "reload":
-            GlobalMarketChest.plugin.reloadPlugin(player);
-            break;
-          case "purge":
-            GlobalMarketChest.plugin.purgeDatabase(player, args);
-            break;
           case "vau":
             this.testVault(player);
             break;
