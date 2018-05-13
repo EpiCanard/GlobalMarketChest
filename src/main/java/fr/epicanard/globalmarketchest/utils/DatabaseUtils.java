@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 
@@ -28,4 +30,14 @@ public class DatabaseUtils {
 
   }
 
+  public static Timestamp getTimestamp() {
+    return new Timestamp(System.currentTimeMillis());
+  }
+
+  public static Timestamp addDays(Timestamp ts, int days) {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(ts);
+    cal.add(Calendar.DAY_OF_WEEK, days);
+    return new Timestamp(cal.getTime().getTime());
+  }
 }
