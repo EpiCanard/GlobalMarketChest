@@ -12,6 +12,10 @@ public class PlayerUtils {
     return GlobalMarketChest.plugin.getServer().getOfflinePlayer(playerUUID);
   }
 
+  public static String getUUIDToString(Player player) {
+    return player.getUniqueId().toString();
+  }
+
   public static void sendMessagePlayer(Player pl, String message) {
     pl.sendMessage("[GlobalMarketChest] " + message);
   }

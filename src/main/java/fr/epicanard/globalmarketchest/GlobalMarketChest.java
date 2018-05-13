@@ -22,7 +22,7 @@ import fr.epicanard.globalmarketchest.listeners.CloseGUICollector;
 import fr.epicanard.globalmarketchest.listeners.GUIListener;
 import fr.epicanard.globalmarketchest.listeners.ShopCreationListener;
 import fr.epicanard.globalmarketchest.listeners.WorldListener;
-import fr.epicanard.globalmarketchest.shops.ShopManager;
+import fr.epicanard.globalmarketchest.managers.ShopManager;
 import fr.epicanard.globalmarketchest.world_group.WorldGroupManager;
 import lombok.Getter;
 
