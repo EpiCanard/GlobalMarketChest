@@ -6,10 +6,11 @@ import java.util.logging.Level;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.commands.CommandGMC;
+import fr.epicanard.globalmarketchest.commands.CommandHandler;
 import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
 import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
 import fr.epicanard.globalmarketchest.database.connections.MySQLConnection;
@@ -69,12 +70,12 @@ public class GlobalMarketChest extends JavaPlugin {
     
     this.shopManager.updateShops();
 
-    getCommand("GlobalMarketChest").setExecutor(new CommandGMC());
+    getCommand("GlobalMarketChest").setExecutor(new CommandHandler());
 
-    getServer().getPluginManager().registerEvents(new GUIListener(), this);
-    getServer().getPluginManager().registerEvents(new CloseGUICollector(), this);
-    getServer().getPluginManager().registerEvents(new WorldListener(), this);
-    getServer().getPluginManager().registerEvents(new ShopCreationListener(), this);
+    this.register(new GUIListener());
+    this.register(new CloseGUICollector());
+    this.register(new WorldListener());
+    this.register(new ShopCreationListener());
   }
 
   @Override
@@ -113,6 +114,10 @@ public class GlobalMarketChest extends JavaPlugin {
       this.setEnabled(false);
       throw new Exception();
     }
+  }
+
+  private void register(Listener listener) {
+    getServer().getPluginManager().registerEvents(listener, this);
   }
  
   public Boolean hasPermission(Player player, String perm) {
