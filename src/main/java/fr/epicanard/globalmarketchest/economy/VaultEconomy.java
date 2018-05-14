@@ -1,8 +1,6 @@
 package fr.epicanard.globalmarketchest.economy;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
