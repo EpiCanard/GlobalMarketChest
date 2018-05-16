@@ -6,7 +6,7 @@ General:
 #   Database: gmctest
 #   User: root
 #   Password: gmc
-#   TablePrefix: GCS_
+#   TablePrefix: GMC_
 #   SimultaneousConnection: 4
 Connection:
   Host: bol3vp5cj-mysql.services.clever-cloud.com
@@ -16,6 +16,15 @@ Connection:
   Password: bGz7GYeLxFPvQXG84Ug
   TablePrefix: GMC_
   SimultaneousConnection: 4
+Auctions:
+  # An auction expire if she is older than NumberDaysExpiration
+  NumberDaysExpiration: 7
+  # -1 to ignore purge else specific a number of days to purge database every n days
+  PurgeInterval: 30
+WorldAllowed:
+  - overworld
+  - the_end
+  - the_nether
 Interfaces:
   Background: minecraft:stained_glass_pane/15
   Buttons:
