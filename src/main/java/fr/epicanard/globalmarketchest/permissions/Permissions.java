@@ -44,14 +44,12 @@ public enum Permissions {
   }
 
   public Boolean isSetOn(Player player) {
-    System.out.println(this.perm);
     if (player != null && GlobalMarketChest.plugin.economy.hasPermissions(player, this.perm))
       return true;
     return false;
   }
 
   public Boolean isSetOnn(Player player) {
-    System.out.println(this.perm);    
     if (player != null && player.hasPermission(this.perm))
       return true;
     return false;
@@ -62,7 +60,6 @@ public enum Permissions {
     String[] perms = this.perm.split(".");
     ArrayUtils.remove(perms, perms.length - 1);
     String basicPerm = String.join(".", perms);
-    System.out.println(basicPerm);
 
     return basicPerm;
   }
