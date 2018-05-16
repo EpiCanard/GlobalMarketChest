@@ -5,6 +5,15 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+/**
+ * Add glow effect to item 
+ * Add Curse Binding effect and hide enchants
+ * 
+ * /!\ Don't use on selling items
+ * 
+ * @param ItemStack
+ * @return ItemStack
+ */
 public class ItemUtils {
   public static ItemStack addGlow(ItemStack item) {
     ItemMeta met = item.getItemMeta();
@@ -14,6 +23,15 @@ public class ItemUtils {
     return item;
   }
 
+  /**
+   * Remove glow effect to item 
+   * Remove Curse Binding effect and show enchants
+   * 
+   * /!\ Don't use on selling items
+   * 
+   * @param ItemStack
+   * @return ItemStack
+   */
   public static ItemStack removeGlow(ItemStack item) {
     ItemMeta met = item.getItemMeta();
     met.removeEnchant(Enchantment.BINDING_CURSE);
