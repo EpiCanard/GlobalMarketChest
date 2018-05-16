@@ -38,7 +38,7 @@ public enum Permissions {
   }
   
   public Boolean isSetOn(Player player, World world) {
-    if (player != null && (this.isSetOn(player) || player.hasPermission(this.perm + "." + GlobalMarketChest.plugin.worldManager.getWorldGroup(world))))
+    if (player != null && (this.isSetOn(player) || player.hasPermission(this.perm)))
       return true;
     return false;
   }

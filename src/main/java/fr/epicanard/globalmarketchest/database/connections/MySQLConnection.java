@@ -47,7 +47,7 @@ public class MySQLConnection extends DatabaseConnection {
         "  `playerEnder` TEXT DEFAULT NULL," +
         "  `start` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
         "  `end` TIMESTAMP NOT NULL," +
-        "  `worldGroup` VARCHAR(50) NOT NULL" +
+        "  `group` VARCHAR(50) NOT NULL" +
         ");"
       );
       state.execute(
@@ -57,7 +57,7 @@ public class MySQLConnection extends DatabaseConnection {
         "  `signLocation` TEXT NOT NULL," +
         "  `otherLocation` TEXT NOT NULL," +
         "  `type` TINYINT(1) NOT NULL," +
-        "  `worldGroup` VARCHAR(50) NOT NULL" +
+        "  `group` VARCHAR(50) NOT NULL" +
         ");"
       );
       state.close();
