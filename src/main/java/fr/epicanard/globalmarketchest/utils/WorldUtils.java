@@ -1,11 +1,13 @@
 package fr.epicanard.globalmarketchest.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.DatabaseException;
+import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
 
 public class WorldUtils {
   public static Block getNearestMaterial(Location location, Material material)
@@ -70,5 +72,11 @@ public class WorldUtils {
       return true;
     else
       return false;
+  }
+
+  public static Boolean isAllowedWorld(String worldName) throws WorldDoesntExist {
+    if (Bukkit.getWorld(worldName) == null)
+      throw new WorldDoesntExist(worldName);
+    return GlobalMarketChest.plugin.getConfigLoader().getConfig().getList("WorldAllowed").contains(worldName);
   }
 }

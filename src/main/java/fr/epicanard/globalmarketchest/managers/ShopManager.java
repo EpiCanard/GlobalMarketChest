@@ -65,7 +65,7 @@ public class ShopManager {
   /**
    * Create a shop inside database and add it in list shops
    */
-  public void createShop(Player owner, Location sign, Location other, int mask, String worldGroup) throws ShopAlreadyExistException {
+  public Integer createShop(Player owner, Location sign, Location other, int mask, String group) throws ShopAlreadyExistException {
     if (!this.shops.stream().allMatch(shop -> !WorldUtils.compareLocations(shop.getSignLocation(), sign)))
       throw new ShopAlreadyExistException(sign);
 
@@ -75,10 +75,11 @@ public class ShopManager {
     builder.addValue("signLocation", WorldUtils.getStringFromLocation(sign));
     builder.addValue("otherLocation", WorldUtils.getStringFromLocation(other));
     builder.addValue("type", mask);
-    builder.addValue("worldGroup", worldGroup);
+    builder.addValue("group", group);
 
-    builder.execute(builder.insert());
+    Integer res = (Integer)builder.execute(builder.insert());
     this.updateShops();
+    return res;
   }
 
 
