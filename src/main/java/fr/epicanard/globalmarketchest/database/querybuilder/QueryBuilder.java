@@ -2,7 +2,9 @@ package fr.epicanard.globalmarketchest.database.querybuilder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -85,19 +87,24 @@ public class QueryBuilder {
   /**
    * Prepare and execute the query
    */
-  private Object execute(String query, boolean select, boolean values) {
+  public Object execute(String query) {
     Connection co = GlobalMarketChest.plugin.getSqlConnection().getConnection();
     Object res = null;
+    QueryType type = QueryType.getQueryType(query);
 
     try {
-      PreparedStatement prepared = co.prepareStatement(query);
-      if (values == true)
+      PreparedStatement prepared = co.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+      if (type == QueryType.INSERT || type == QueryType.UPDATE)
         this.setPrepared(prepared, this.values, 0);
       this.setPrepared(prepared, this.conditions, this.values.size());
-      if (select)
-        res = prepared.executeQuery();
-      else
-        res = prepared.executeUpdate();
+
+      res = (type == QueryType.SELECT) ? prepared.executeQuery() : prepared.executeUpdate();
+      
+      if (type == QueryType.INSERT) {
+        ResultSet rs = prepared.getGeneratedKeys();
+        if (rs.next())
+          res = rs.getInt(1);
+      }
 
       GlobalMarketChest.plugin.getSqlConnection().closeRessources(null, prepared);
     } catch (SQLException e) {
@@ -107,13 +114,6 @@ public class QueryBuilder {
     }
     GlobalMarketChest.plugin.getSqlConnection().getBackConnection(co);
     return res;
-  }
-
-  public Object execute(String query) {
-    final String start = query.substring(0, 6);
-    final Boolean select = start.compareTo("SELECT") == 0;
-    final Boolean value = start.compareTo("INSERT") == 0 || start.compareTo("UPDATE") == 0;
-    return this.execute(query, select, value);
   }
 
   /* ======================================
