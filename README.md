@@ -15,10 +15,10 @@ To work you will need the plugin **Vault** to handle the economy.
     /globalmarketchest reload
 **Reload the plugin**
 
-    /globalmarketchest purge  [local | admin | global | all] [worldGroup]
-**Delete local, admin, global or all shops in worldGroup**
+    /globalmarketchest purge  [local | admin | global | all] [group_name]
+**Delete local, admin, global or all shops in groupe_name**
 - if kind of shop is not specified it apply to all kind of shops by default
-- if worldGroup is not specified it apply to all world Group by default
+- if group_name is not specified it apply to all shop by default
 
 ## Permissions
     globalmarketchest.localshop.create

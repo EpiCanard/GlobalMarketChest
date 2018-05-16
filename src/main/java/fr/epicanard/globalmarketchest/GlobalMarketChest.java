@@ -24,7 +24,6 @@ import fr.epicanard.globalmarketchest.listeners.GUIListener;
 import fr.epicanard.globalmarketchest.listeners.ShopCreationListener;
 import fr.epicanard.globalmarketchest.listeners.WorldListener;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
-import fr.epicanard.globalmarketchest.world_group.WorldGroupManager;
 import lombok.Getter;
 
 
@@ -38,7 +37,6 @@ public class GlobalMarketChest extends JavaPlugin {
   public final InventoriesHandler inventories;
   public final VaultEconomy economy;
   public final ShopManager shopManager;
-  public WorldGroupManager worldManager;
   public Map<String, ItemStack[]> interfaces;
 
   public GlobalMarketChest() {
@@ -58,8 +56,6 @@ public class GlobalMarketChest extends JavaPlugin {
 
     YamlConfiguration defConfig = this.configLoader.loadResource("interfaces.yml");
     this.interfaces = InterfacesLoader.getInstance().loadInterfaces(defConfig);
-
-    this.worldManager = new WorldGroupManager();
 
     try {
       this.initEconomy();

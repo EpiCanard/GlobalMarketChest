@@ -9,35 +9,21 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import lombok.Getter;
 
 public class ConfigLoader {
 
+  @Getter
   private YamlConfiguration config;
+  @Getter
   private YamlConfiguration languages;
+  @Getter
   private YamlConfiguration categories;
-  private YamlConfiguration worldGroups;
 
   public ConfigLoader() {
     this.config = null;
     this.languages = null;
     this.categories =  null;
-    this.worldGroups = null;
-  }
-
-  public YamlConfiguration getConfig() {
-    return this.config;
-  }
-
-  public YamlConfiguration getLanguages() {
-    return this.languages;
-  }
-
-  public YamlConfiguration getCategories() {
-    return this.categories;
-  }
-
-  public YamlConfiguration getWorldGroups() {
-    return this.worldGroups;
   }
   
   private YamlConfiguration loadOneFile(String fileName) {
@@ -75,7 +61,6 @@ public class ConfigLoader {
   public void loadFiles() {
     this.config = this.loadOneFile("config.yml");
     this.categories = this.loadOneFile("categories.yml");
-    this.worldGroups = this.loadOneFile("worldGroups.yml");
     if (this.config != null) {
       String tmp = this.config.getString("General.Lang");
       if (tmp == null)
