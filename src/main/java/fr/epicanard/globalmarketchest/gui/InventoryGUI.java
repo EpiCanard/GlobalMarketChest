@@ -10,12 +10,16 @@ import org.bukkit.inventory.Inventory;
 
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 
-public class GUIBuilder {
+public class InventoryGUI {
   private Inventory inv;
   private Deque<ShopInterface> shopStack = new ArrayDeque<ShopInterface>();
 
-  public GUIBuilder() {
+  public InventoryGUI() {
     this.inv = Bukkit.createInventory(null, 54, "§8GlobalMarketChest");
+  }
+
+  public Boolean inventoryEquals(Inventory i) {
+    return this.inv.equals(i);
   }
 
   /**
@@ -70,7 +74,6 @@ public class GUIBuilder {
       
       this.shopStack.push(shop);
     } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
