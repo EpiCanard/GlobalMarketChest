@@ -30,12 +30,6 @@ public class ShopManager {
     } catch(SQLException e) {}
   }
 
-  public void listShops() {
-    for (ShopInfo s: this.shops) {
-      System.out.println(s.getId() + " - " + WorldUtils.getStringFromLocation(s.getSignLocation()));
-    }
-  }
-
   /**
    * Get a shop with his ID
    * @param ID

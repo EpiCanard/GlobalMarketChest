@@ -40,8 +40,7 @@ public class WorldUtils {
   
   public static Location getLocationFromString(String locatString, Location location, String databaseVar) throws DatabaseException {
     String[] args = locatString.split(",");
-    
-    
+
     if (args.length != 4)
       return null;
     
