@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +33,7 @@ public class Utils {
   }
 
   public String toColor(String toChange) {
-    return toChange.replaceAll("&", "§");
+    return ChatColor.translateAlternateColorCodes('&', toChange);
   }
 
   public int toPos(int x, int y) {
