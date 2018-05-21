@@ -19,4 +19,12 @@ public enum StateAuction {
     this.state = id;
     this.keyLang = keyLang;
   }
+
+  public static final StateAuction getStateAuction(int value) {
+    for (StateAuction state : StateAuction.values()) {
+      if (state.getState() == value)
+        return state;
+    }
+    return StateAuction.FINISHED;
+  }
 }
