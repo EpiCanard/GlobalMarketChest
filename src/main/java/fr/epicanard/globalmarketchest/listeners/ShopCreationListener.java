@@ -9,6 +9,7 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.shops.ShopType;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.utils.ShopUtils;
 
 /**
  * Listener for creation process
@@ -21,7 +22,7 @@ public class ShopCreationListener implements Listener {
     
     try {
       if (event.getLine(0).compareTo("[GMC]") == 0)
-        GlobalMarketChest.plugin.shopManager.createShop(player, event.getBlock().getLocation(), null, ShopType.GLOBALSHOP.setOn(0), "MyWorld");
+        GlobalMarketChest.plugin.shopManager.createShop(player, event.getBlock().getLocation(), null, ShopType.GLOBALSHOP.setOn(0), ShopUtils.generateName());
     } catch (ShopAlreadyExistException e) {
       PlayerUtils.sendMessagePlayer(player, e.getMessage());
       event.getBlock().breakNaturally();

@@ -38,7 +38,9 @@ public class WorldUtils {
     return finalBlock;
   }
   
-  public static Location getLocationFromString(String locatString, Location location, String databaseVar) throws DatabaseException {
+  public static Location getLocationFromString(String locatString, Location location) throws DatabaseException {
+    if (locatString == null)
+      return null;
     String[] args = locatString.split(",");
 
     if (args.length != 4)
