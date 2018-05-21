@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -87,9 +90,10 @@ public class QueryBuilder {
   /**
    * Prepare and execute the query
    */
-  public Object execute(String query) {
+  public Boolean execute(String query, Consumer<ResultSet> consumer) {
     Connection co = GlobalMarketChest.plugin.getSqlConnection().getConnection();
-    Object res = null;
+    Boolean ret = false;
+    ResultSet res = null;
     QueryType type = QueryType.getQueryType(query);
 
     try {
@@ -98,22 +102,28 @@ public class QueryBuilder {
         this.setPrepared(prepared, this.values, 0);
       this.setPrepared(prepared, this.conditions, this.values.size());
 
-      res = (type == QueryType.SELECT) ? prepared.executeQuery() : prepared.executeUpdate();
-      
-      if (type == QueryType.INSERT) {
-        ResultSet rs = prepared.getGeneratedKeys();
-        if (rs.next())
-          res = rs.getInt(1);
-      }
+      if (type == QueryType.SELECT)
+        res = prepared.executeQuery();
+      else
+        ret = prepared.executeUpdate() >= 1;
 
-      GlobalMarketChest.plugin.getSqlConnection().closeRessources(null, prepared);
+      if (type == QueryType.INSERT) 
+        res = prepared.getGeneratedKeys();
+
+      Optional.ofNullable(res).ifPresent(consumer);
+
+      GlobalMarketChest.plugin.getSqlConnection().closeRessources(res, prepared);
     } catch (SQLException e) {
       e.printStackTrace();
     } catch (TypeNotSupported e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
     }
     GlobalMarketChest.plugin.getSqlConnection().getBackConnection(co);
-    return res;
+    return ret;
+  }
+
+  public Boolean execute(String query) {
+    return this.execute(query, null);
   }
 
   /* ======================================
@@ -161,8 +171,9 @@ public class QueryBuilder {
   public String insert() {
     StringBuilder query = new StringBuilder("INSERT INTO " + this.tableName + " (");
 
-    query.append(String.join(",", this.values.keys()));
-    query.append(") VALUES (" + StringUtils.repeat("?,", this.values.keys().size()));
+    query.append(String.join(", ", this.values.keys().stream().map(e -> "`" + e + "`").collect(Collectors.toList())));
+    query.append(") VALUES (" + StringUtils.repeat("?, ", this.values.keys().size()));
+    query.deleteCharAt(query.length() - 1);
     query.deleteCharAt(query.length() - 1);
     query.append(")");
 
@@ -176,7 +187,7 @@ public class QueryBuilder {
    */
   public String update() {
     StringBuilder builder = new StringBuilder("UPDATE " + this.tableName);
-    this.buildClause(builder, "SET", ",", this.values);
+    this.buildClause(builder, "SET", ", ", this.values);
     return this.buildWhereClause(builder).toString();
   }
 
