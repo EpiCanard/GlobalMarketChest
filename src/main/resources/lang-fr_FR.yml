@@ -21,6 +21,14 @@ Buttons:
   ExitButton:
     Name: "&4Sortie"
     Description: "Ferme cet inventaire"
+  Validate:
+    Name: "&4Valider"
+    Description: "Aller à l'étape suivante"
+  Return:
+    Name: "&4Revenir"
+    Description: "Revenir à l'étape précédente"
+  CreateShop:
+    Name: "&2Créer le Shop"
   NewAuction:
     Name: "&2Créer une nouvelle enchère"
     Description: "&7Cliquer ici pour vendre vos objets"
@@ -43,4 +51,12 @@ Buttons:
   ViewByLastCreated:
     Name: "Vue par dernier créé"
     Description: "Le joeur peut voir les enchères dernièrement créé ?"
-    
+  GlobalShop:
+    Name: "GlobalShop"
+  AuctionShop:
+    Name: "AuctionShop"
+  LocalShop:
+    Name: "LocalShop"
+  EditGroupName:
+    Name: "Modifier le nom du groupe"
+    Description: "Si vous voulez renommer le nom du groupe de votre Shop"
