@@ -43,6 +43,7 @@ public class MySQLConnection extends DatabaseConnection {
         "  `amount` INT UNSIGNED NOT NULL," +
         "  `price` DOUBLE NOT NULL," +
         "  `state` TINYINT(1) NOT NULL," +
+        "  `type` TINYINT(1) NOT NULL," +
         "  `playerStarter` TEXT NOT NULL," +
         "  `playerEnder` TEXT DEFAULT NULL," +
         "  `start` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
