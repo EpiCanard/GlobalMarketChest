@@ -21,6 +21,14 @@ Buttons:
   ExitButton:
     Name: "&4Exit"
     Description: "Close this inventory"
+  Validate:
+    Name: "&2Validate"
+    Description: "Go to next step"
+  Return:
+    Name: "&4Return"
+    Description: "Return to previous step"
+  CreateShop:
+    Name: "&2Create Shop"
   NewAuction:
     Name: "&2Create new auction"
     Description: "&7Click here to sell your items"
@@ -43,3 +51,12 @@ Buttons:
   ViewByLastCreated:
     Name: "View by last created"
     Description: "Can player see auctions by last created ?"
+  GlobalShop:
+    Name: "GlobalShop"
+  AuctionShop:
+    Name: "AuctionShop"
+  LocalShop:
+    Name: "LocalShop"
+  EditGroupName:
+    Name: "Edit Group Name"
+    Description: "If you want to rename the group of your shop"

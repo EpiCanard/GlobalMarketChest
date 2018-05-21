@@ -30,6 +30,9 @@ Interfaces:
   Buttons:
     NewAuction: minecraft:nether_star
     ExitButton: minecraft:barrier
+    Validate: minecraft:spectral_arrow
+    Return: minecraft:tipped_arrow
+    CreateShop: minecraft:nether_star
     Money: minecraft:double_plant
     GlobalView: minecraft:enchanted_book
     Search: minecraft:hopper
@@ -38,6 +41,11 @@ Interfaces:
     ViewByLastCreated: minecraft:apple
     AuctionSide: minecraft:stained_glass_pane/11
     AuctionMiddle: minecraft:stained_glass_pane
+    GlobalShop: minecraft:ender_chest
+    AuctionShop: minecraft:purple_shulker_box
+    LocalShop: minecraft:chest
+    EditGroupName: minecraft:stained_glass_pane/11
+
 Sign:
   Appearance:
     GlobalShop:

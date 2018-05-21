@@ -36,5 +36,23 @@ CreateAuction:
     21-23: AuctionSide
     22: DragItem
     30-32: AuctionSide
-    
+
+SelectShopType:
+  Height: 6
+  Items:
+    8: ExitButton
+    11: GlobalShop
+    13: AuctionShop
+    15: LocalShop
+    27-35: None
+    53: Validate
+
+LinkShop:
+  Height: 6
+  Items:
+    0: Return
+    8: ExitButton
+    18-26: None
+    49: EditGroupName
+    53: CreateShop
     
