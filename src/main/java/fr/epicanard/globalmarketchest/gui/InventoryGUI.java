@@ -3,9 +3,11 @@ package fr.epicanard.globalmarketchest.gui;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.Inventory;
 
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
@@ -45,10 +47,12 @@ public class InventoryGUI {
    */
   public void unloadTempInterface() {
     try {
+      ShopInterface peek;
       do {
         this.shopStack.pop().unload();
-      } while(this.shopStack.peek().isTemp());
-      this.shopStack.peek().load(this.inv);
+        peek = this.shopStack.peek();
+      } while(peek != null && peek.isTemp());
+      Optional.ofNullable(peek).ifPresent(e -> e.load(this.inv));
     } catch (NoSuchElementException e) {}
   }
   
@@ -58,7 +62,19 @@ public class InventoryGUI {
   public void unloadLastInterface() {
     try {
       this.shopStack.pop().unload();
-      this.shopStack.peek().load(this.inv);      
+      Optional.ofNullable(this.shopStack.peek()).ifPresent(e -> e.load(this.inv));
+    } catch (NoSuchElementException e) {}
+  }
+
+  /**
+   * Unload all interface
+   * 
+   * @param name
+   */
+  public void unloadAllInterface() {
+    try {
+      this.shopStack.pop().unload();
+      this.shopStack.clear();
     } catch (NoSuchElementException e) {}
   }
 
@@ -70,8 +86,9 @@ public class InventoryGUI {
   public void loadInterface(String name) {
     try {
       ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops." + name).newInstance();
+      Optional.ofNullable(this.shopStack.peek()).ifPresent(ShopInterface::unload);
+
       shop.load(this.inv);
-      
       this.shopStack.push(shop);
     } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
       e.printStackTrace();
