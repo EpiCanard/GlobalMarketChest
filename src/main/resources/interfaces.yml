@@ -9,6 +9,10 @@ GlobalShop:
 
 DefaultShopInterface:
   Height: 6
+  Paginator:
+    Height: 3
+    Width: 9
+    StartPos: 18
   Items:
     8: ExitButton
     18-44: None
@@ -39,6 +43,10 @@ CreateAuction:
 
 SelectShopType:
   Height: 6
+  Paginator:
+    Height: 1
+    Width: 9
+    StartPos: 27
   Items:
     8: ExitButton
     11: GlobalShop
@@ -49,6 +57,10 @@ SelectShopType:
 
 LinkShop:
   Height: 6
+  Paginator:
+    Height: 1
+    Width: 9
+    StartPos: 18
   Items:
     0: Return
     8: ExitButton

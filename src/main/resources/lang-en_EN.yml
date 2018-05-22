@@ -60,3 +60,9 @@ Buttons:
   EditGroupName:
     Name: "Edit Group Name"
     Description: "If you want to rename the group of your shop"
+  PreviousPage:
+    Name: "Previous page"
+  NextPage:
+    Name: "Next page"
+  NumPage:
+    Name: "Page number"

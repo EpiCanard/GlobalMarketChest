@@ -3,10 +3,16 @@ package fr.epicanard.globalmarketchest.gui;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
+import fr.epicanard.globalmarketchest.gui.Paginator.Paginator;
+import fr.epicanard.globalmarketchest.gui.Paginator.PaginatorConfig;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
 /**
@@ -17,6 +23,7 @@ import fr.epicanard.globalmarketchest.utils.Utils;
 public class InterfacesLoader {
   private static InterfacesLoader INSTANCE;
   private Map<String, ItemStack[]> interfaces;
+  private Map<String, PaginatorConfig> paginators;
 
   private InterfacesLoader() {
   }
@@ -47,6 +54,35 @@ public class InterfacesLoader {
   }
 
   /**
+   * Get PaginatorConfig and create duplicate
+   * @param interfaceName
+   * @return PaginatorConfig
+   */
+  public PaginatorConfig getPaginatorConfig(String interfaceName) {
+    return this.paginators.get(interfaceName).duplicate();
+  }
+
+  /**
+   * Load Paginator from config if exist and add it inside paginators map
+   * @param config
+   * @param name
+   */
+  private void loadPaginator(YamlConfiguration config, String name) {
+    ConfigurationSection sec = config.getConfigurationSection(name + ".Paginator");
+
+    if (sec == null)
+      return;
+    try {
+      this.paginators.put(name, new PaginatorConfig(
+        sec.getInt("Height"),
+        sec.getInt("Width"),
+        sec.getInt("StartPos")));
+    } catch (InvalidPaginatorParameter e) {
+      GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
+    }
+  }
+
+  /**
    * Load interfaces Create a map, where the key is the name of the interface
    * and the value a list of ItemStack
    * When there no item specified for a position it's filled with background item
@@ -61,6 +97,7 @@ public class InterfacesLoader {
 
     Set<String> interfacesName = interfaceConfig.getKeys(false);
     this.interfaces = new HashMap<String, ItemStack[]>();
+    this.paginators = new HashMap<String, PaginatorConfig>();
 
     for (String name : interfacesName) {
       ItemStack[] itemsStack = new ItemStack[54];
@@ -69,6 +106,7 @@ public class InterfacesLoader {
       for (int i = 0; i < 54; i++)
         itemsStack[i] = Utils.getInstance().getButton(items.get(i));
       this.interfaces.put(name, itemsStack);
+      this.loadPaginator(interfaceConfig, name);
     }
     return this.interfaces;
   }
