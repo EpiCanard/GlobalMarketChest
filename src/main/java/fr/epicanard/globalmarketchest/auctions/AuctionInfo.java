@@ -53,8 +53,4 @@ public class AuctionInfo {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
     }
   }
-
-  public AuctionInfo(int id) {
-    this.id = id;
-  }
 }
