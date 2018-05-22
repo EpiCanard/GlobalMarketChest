@@ -45,6 +45,9 @@ Interfaces:
     AuctionShop: minecraft:purple_shulker_box
     LocalShop: minecraft:chest
     EditGroupName: minecraft:stained_glass_pane/11
+    PreviousPage: minecraft:arrow
+    NextPage: minecraft:arrow
+    NumPage: minecraft:book
 
 Sign:
   Appearance:
