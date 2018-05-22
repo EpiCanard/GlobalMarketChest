@@ -89,7 +89,7 @@ class AuctionManager {
     QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableAuctions);
     if  (useConfig) {
       Integer purge = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Auctions.PurgeInterval");
-      builder.addCondition("start", DatabaseUtils.addDays(DatabaseUtils.getTimestamp(), purge * -1), ConditionType.inferior_equal);
+      builder.addCondition("start", DatabaseUtils.addDays(DatabaseUtils.getTimestamp(), purge * -1), ConditionType.INFERIOR_EQUAL);
     }
     builder.execute(builder.delete());
   }
