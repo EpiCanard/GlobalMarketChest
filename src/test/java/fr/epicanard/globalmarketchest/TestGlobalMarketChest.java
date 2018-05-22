@@ -23,9 +23,4 @@ public class TestGlobalMarketChest {
   public void testCreateConfig() {
     Assert.assertTrue(true);
   }
-
-  @Test
-  public void testUnicorn() {
-    Assert.assertFalse(false);
-  }
 }
