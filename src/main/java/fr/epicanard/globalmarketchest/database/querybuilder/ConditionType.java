@@ -6,11 +6,11 @@ import lombok.Getter;
  * Enum that define the comparators for condition composition
  */
 public enum ConditionType {
-  equal("="),
-  superior(">"),
-  superior_equal(">="),
-  inferior("<"),
-  inferior_equal("<=")
+  EQUAL("="),
+  SUPERIOR(">"),
+  SUPERIOR_EQUAL(">="),
+  INFERIOR("<"),
+  INFERIOR_EQUAL("<=")
   ;
 
   @Getter

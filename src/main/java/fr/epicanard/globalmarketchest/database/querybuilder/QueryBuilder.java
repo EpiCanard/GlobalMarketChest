@@ -51,14 +51,14 @@ public class QueryBuilder {
    * Add a condtion to conditions variable with default ConditionType to equal
    */
   public void addCondition(String key, Object value) {
-    this.conditions.put(key, value, ConditionType.equal);
+    this.conditions.put(key, value, ConditionType.EQUAL);
   }
 
   /**
    * Add a value to values variable with default ConditionType to equal
    */
   public void addValue(String key, Object value) {
-    this.values.put(key, value, ConditionType.equal);
+    this.values.put(key, value, ConditionType.EQUAL);
   }
 
   /* ======================================
