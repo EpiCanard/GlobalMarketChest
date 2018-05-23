@@ -8,9 +8,11 @@ import org.bukkit.block.Block;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.DatabaseException;
 import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class WorldUtils {
-  public static Block getNearestMaterial(Location location, Material material)
+  public Block getNearestMaterial(Location location, Material material)
   {
     int radius = 1;
     Block finalBlock = null;
@@ -38,7 +40,7 @@ public class WorldUtils {
     return finalBlock;
   }
   
-  public static Location getLocationFromString(String locatString, Location location) throws DatabaseException {
+  public Location getLocationFromString(String locatString, Location location) throws DatabaseException {
     if (locatString == null)
       return null;
     String[] args = locatString.split(",");
@@ -57,13 +59,13 @@ public class WorldUtils {
     return location;
   }
   
-  public static String getStringFromLocation(Location loc) {
+  public String getStringFromLocation(Location loc) {
     if (loc == null)
       return "";
     return loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
   }
 
-  public static Boolean compareLocations(Location first, Location second) {
+  public Boolean compareLocations(Location first, Location second) {
     if (first == null || second == null)
       return false;
     if (first.getBlockX() == second.getBlockX() &&
@@ -75,7 +77,7 @@ public class WorldUtils {
       return false;
   }
 
-  public static Boolean isAllowedWorld(String worldName) throws WorldDoesntExist {
+  public Boolean isAllowedWorld(String worldName) throws WorldDoesntExist {
     if (Bukkit.getWorld(worldName) == null)
       throw new WorldDoesntExist(worldName);
     return GlobalMarketChest.plugin.getConfigLoader().getConfig().getList("WorldAllowed").contains(worldName);

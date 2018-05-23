@@ -6,17 +6,19 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public class PlayerUtils {
-  public static OfflinePlayer getOfflinePlayer(UUID playerUUID) {
+  public OfflinePlayer getOfflinePlayer(UUID playerUUID) {
     return GlobalMarketChest.plugin.getServer().getOfflinePlayer(playerUUID);
   }
 
-  public static String getUUIDToString(Player player) {
+  public String getUUIDToString(Player player) {
     return player.getUniqueId().toString();
   }
 
-  public static void sendMessagePlayer(Player pl, String message) {
+  public void sendMessagePlayer(Player pl, String message) {
     pl.sendMessage("[GlobalMarketChest] " + message);
   }
 }
