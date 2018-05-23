@@ -1,5 +1,7 @@
 package fr.epicanard.globalmarketchest.gui.Paginator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
@@ -16,13 +18,15 @@ public class Paginator {
   private final Inventory inv;
   private ItemStack previous;
   private ItemStack next;
+  private int previousPos = -1;
+  private int nextPos = -1;
   private int counter;
   @Getter
   private PaginatorConfig config;
   @Setter
-  private Consumer<Paginator> nextConsumer;
+  private Consumer<Paginator> loadConsumer;
   @Setter
-  private Consumer<Paginator> previousConsumer;
+  private List<ItemStack> itemstacks = new ArrayList<ItemStack>();
 
 
   Paginator(Inventory inv, PaginatorConfig config) {
@@ -45,6 +49,9 @@ public class Paginator {
    * Add next button to a specific position
    */
   public void addNext(int pos) {
+    if (pos < 0 || pos >= this.inv.getSize())
+      return;
+    this.previousPos = pos;
     this.inv.setItem(pos, this.next);
   }
 
@@ -52,6 +59,9 @@ public class Paginator {
    * Add previous button to a specific position
    */
   public void addPrevious(int pos) {
+    if (pos < 0 || pos >= this.inv.getSize())
+      return;
+    this.nextPos = pos;
     this.inv.setItem(pos, this.previous);
   }
 
@@ -76,10 +86,13 @@ public class Paginator {
    * Change to next page
    */
   public void nextPage() {
-    this.config.nextPage();
-    if (this.nextConsumer != null)
-      this.nextConsumer.accept(this);
+    int prev = this.config.getPage();
+    if (this.config.nextPage() == prev)
+      return;
+    if (this.loadConsumer != null)
+      this.loadConsumer.accept(this);
     this.updateCounter();
+    this.loadItems();
   }
 
   /**
@@ -87,11 +100,48 @@ public class Paginator {
    */
   public void previousPage() {
     int prev = this.config.getPage();
-    if (this.config.nextPage() == prev)
+    if (this.config.previousPage() == prev)
       return;
-    if (this.nextConsumer != null)
-      this.nextConsumer.accept(this);
+    if (this.loadConsumer != null)
+      this.loadConsumer.accept(this);
     this.updateCounter();
+    this.loadItems();
+  }
+
+  /**
+   * Load Items paginator in inventpry
+   */
+  private void loadItems() {
+    for (int i = 0; i < this.config.getLimit(); i++) {
+      try {
+        ItemStack item = this.itemstacks.get(i);
+        int pos = this.config.getStartPos() + 
+                  Utils.getLine(i, this.config.getWidth()) * 9 +
+                  Utils.getCol(i, this.config.getWidth());
+        this.inv.setItem(pos, item);
+      } catch (IndexOutOfBoundsException e) {
+        break;
+      }
+    }
+  }
+
+  /**
+   * Call the consumer and load items in inventory (for first use for exemple)
+   */
+  public void reload() {
+    if (this.loadConsumer != null)
+      this.loadConsumer.accept(this);
+    this.loadItems();
+  }
+
+  /**
+   * When reload interface call this method to reload all the paginator with the same result before leaving
+   */
+  public void reloadInterface() {
+    this.updateCounter();
+    this.loadItems();
+    this.addNext(this.nextPos);
+    this.addPrevious(this.previousPos);
   }
 
 
