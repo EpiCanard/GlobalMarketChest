@@ -31,6 +31,14 @@ public class Utils {
     return y * 9 + x;
   }
 
+  public int getLine(int pos, int lineWidth) {
+    return (pos - pos % lineWidth) / lineWidth;
+  }
+
+  public int getCol(int pos, int lineWidth) {
+    return pos % lineWidth;
+  }
+
   public ItemStack getButton(String buttonName) {
     ConfigLoader loader = GlobalMarketChest.plugin.getConfigLoader();
     String item;

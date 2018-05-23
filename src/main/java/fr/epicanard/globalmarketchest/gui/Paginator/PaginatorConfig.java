@@ -6,8 +6,11 @@ import lombok.Getter;
 public class PaginatorConfig {
   @Getter
   private int limit = 0;
+  @Getter
   private int height;
+  @Getter
   private int width;
+  @Getter
   private int startPos;
   @Getter
   private int page = 0;
