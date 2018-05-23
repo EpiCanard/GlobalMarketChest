@@ -54,7 +54,7 @@ public class CommandHandler implements CommandExecutor {
     CategoryHandler h = new CategoryHandler((YamlConfiguration)GlobalMarketChest.plugin.getConfigLoader().getCategories());
     String[] cat = h.getCategories();
     for (int i = 0; i < cat.length; i++) {
-      //shop.setItemTo(Utils.getInstance().toPos(i % 5 + 2, (i / 5) * 2 + 2), Utils.getInstance().setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i])));
+      //shop.setItemTo(Utils.toPos(i % 5 + 2, (i / 5) * 2 + 2), ItemStackUtils.setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i])));
     }
   }
 

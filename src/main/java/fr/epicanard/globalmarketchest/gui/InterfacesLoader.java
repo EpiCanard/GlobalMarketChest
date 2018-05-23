@@ -103,7 +103,7 @@ public class InterfacesLoader {
       Map<Integer, String> items = this.parseItems(interfaceConfig.getConfigurationSection(name + ".Items").getValues(false));
 
       for (int i = 0; i < 54; i++)
-        itemsStack[i] = Utils.getInstance().getButton(items.get(i));
+        itemsStack[i] = Utils.getButton(items.get(i));
       this.interfaces.put(name, itemsStack);
       this.loadPaginator(interfaceConfig, name);
     }

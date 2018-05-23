@@ -5,17 +5,21 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-/**
- * Add glow effect to item 
- * Add Curse Binding effect and hide enchants
- * 
- * /!\ Don't use on selling items
- * 
- * @param ItemStack
- * @return ItemStack
- */
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
 public class ItemUtils {
-  public static ItemStack addGlow(ItemStack item) {
+
+  /**
+   * Add glow effect to item 
+   * Add Curse Binding effect and hide enchants
+   * 
+   * /!\ Don't use on selling items
+   * 
+   * @param ItemStack
+   * @return ItemStack
+   */
+  public ItemStack addGlow(ItemStack item) {
     ItemMeta met = item.getItemMeta();
     met.addEnchant(Enchantment.BINDING_CURSE, 1, false);
     met.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -32,7 +36,7 @@ public class ItemUtils {
    * @param ItemStack
    * @return ItemStack
    */
-  public static ItemStack removeGlow(ItemStack item) {
+  public ItemStack removeGlow(ItemStack item) {
     ItemMeta met = item.getItemMeta();
     met.removeEnchant(Enchantment.BINDING_CURSE);
     met.removeItemFlags(ItemFlag.HIDE_ENCHANTS);

@@ -27,8 +27,8 @@ public class Paginator {
 
   Paginator(Inventory inv, PaginatorConfig config) {
     this.inv = inv;
-    this.previous = Utils.getInstance().getButton("PreviousPage");
-    this.next = Utils.getInstance().getButton("NextPage");
+    this.previous = Utils.getButton("PreviousPage");
+    this.next = Utils.getButton("NextPage");
     this.config = config;
   }
 
@@ -59,7 +59,7 @@ public class Paginator {
    * Define NumPage position
    */
   public void addNumPage(int pos) {
-    this.inv.setItem(pos, Utils.getInstance().getButton("NumPage"));
+    this.inv.setItem(pos, Utils.getButton("NumPage"));
     this.counter = pos;
   }
 
