@@ -27,10 +27,12 @@ public class GUIListener implements Listener {
       Player p = (Player)event.getWhoClicked();
       InventoryGUI inv = GlobalMarketChest.plugin.inventories.getInventory(p.getUniqueId());
       if (inv != null && inv.inventoryEquals(event.getInventory())) {
-        if (inv.inventoryEquals(event.getClickedInventory()))
+        if (inv.inventoryEquals(event.getClickedInventory())) {
           event.setCancelled(true);
+          inv.getInterface().onClick(event, inv);
+        }
         ClickType click = event.getClick();
-        
+
         if (event.isShiftClick() || click == ClickType.DOUBLE_CLICK || click == ClickType.DROP)
           event.setCancelled(true);
       }

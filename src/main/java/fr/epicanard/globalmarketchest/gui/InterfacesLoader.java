@@ -75,10 +75,28 @@ public class InterfacesLoader {
       this.paginators.put(name, new PaginatorConfig(
         sec.getInt("Height"),
         sec.getInt("Width"),
-        sec.getInt("StartPos")));
+        sec.getInt("StartPos"),
+        sec.getInt("PreviousPos", -1),
+        sec.getInt("NextPos", -1),
+        sec.getInt("NumPagePos", -1)
+        ));
     } catch (InvalidPaginatorParameter e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
     }
+  }
+
+  /**
+   * Load Interface from config if add it inside interfaces map
+   * @param config
+   * @param name
+   */
+  private void loadInterface(YamlConfiguration config, String name) {
+    ItemStack[] itemsStack = new ItemStack[54];
+    Map<Integer, String> items = this.parseItems(config.getConfigurationSection(name + ".Items").getValues(false));
+
+    for (int i = 0; i < 54; i++)
+      itemsStack[i] = Utils.getButton(items.get(i));
+    this.interfaces.put(name, itemsStack);
   }
 
   /**
@@ -99,12 +117,7 @@ public class InterfacesLoader {
     this.paginators = new HashMap<String, PaginatorConfig>();
 
     for (String name : interfacesName) {
-      ItemStack[] itemsStack = new ItemStack[54];
-      Map<Integer, String> items = this.parseItems(interfaceConfig.getConfigurationSection(name + ".Items").getValues(false));
-
-      for (int i = 0; i < 54; i++)
-        itemsStack[i] = Utils.getButton(items.get(i));
-      this.interfaces.put(name, itemsStack);
+      this.loadInterface(interfaceConfig, name);
       this.loadPaginator(interfaceConfig, name);
     }
     return this.interfaces;

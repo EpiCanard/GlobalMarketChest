@@ -41,12 +41,14 @@ CreateAuction:
     22: DragItem
     30-32: AuctionSide
 
-SelectShopType:
+ShopCreationSelectType:
   Height: 6
   Paginator:
     Height: 1
-    Width: 9
-    StartPos: 27
+    Width: 7
+    StartPos: 28
+    PreviousPos: 27
+    NextPos: 35
   Items:
     8: ExitButton
     11: GlobalShop
@@ -55,12 +57,14 @@ SelectShopType:
     27-35: None
     53: Validate
 
-LinkShop:
+ShopCreationLink:
   Height: 6
   Paginator:
     Height: 1
-    Width: 9
-    StartPos: 18
+    Width: 7
+    StartPos: 19
+    PreviousPos: 18 
+    NextPos: 26
   Items:
     0: Return
     8: ExitButton

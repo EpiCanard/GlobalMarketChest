@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.gui;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.NoSuchElementException;
@@ -7,14 +8,16 @@ import java.util.Optional;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.inventory.Inventory;
 
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import lombok.Getter;
 
 public class InventoryGUI {
   private Inventory inv;
   private Deque<ShopInterface> shopStack = new ArrayDeque<ShopInterface>();
+  @Getter
+  private Player player;
 
   public InventoryGUI() {
     this.inv = Bukkit.createInventory(null, 54, "§8GlobalMarketChest");
@@ -30,6 +33,7 @@ public class InventoryGUI {
    * @param player
    */
   public void open(Player player) {
+    this.player = player;
     player.openInventory(this.inv);
   }
 
@@ -39,9 +43,11 @@ public class InventoryGUI {
    * @param player
    */
   public void close(Player player) {
-    player.closeInventory();
+    if (player != null)
+      player.closeInventory();
+    this.player.closeInventory();
   }
-  
+
   /**
    * Unload temporary interface and come back to principal
    */
@@ -52,7 +58,7 @@ public class InventoryGUI {
         this.shopStack.pop().unload();
         peek = this.shopStack.peek();
       } while(peek != null && peek.isTemp());
-      Optional.ofNullable(peek).ifPresent(e -> e.load(this.inv));
+      Optional.ofNullable(peek).ifPresent(e -> e.load());
     } catch (NoSuchElementException e) {}
   }
   
@@ -62,7 +68,7 @@ public class InventoryGUI {
   public void unloadLastInterface() {
     try {
       this.shopStack.pop().unload();
-      Optional.ofNullable(this.shopStack.peek()).ifPresent(e -> e.load(this.inv));
+      Optional.ofNullable(this.shopStack.peek()).ifPresent(e -> e.load());
     } catch (NoSuchElementException e) {}
   }
 
@@ -85,13 +91,17 @@ public class InventoryGUI {
    */
   public void loadInterface(String name) {
     try {
-      ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops." + name).newInstance();
+      ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops." + name).getDeclaredConstructor(Inventory.class).newInstance(this.inv);
       Optional.ofNullable(this.shopStack.peek()).ifPresent(ShopInterface::unload);
-
-      shop.load(this.inv);
+     
+      shop.load();
       this.shopStack.push(shop);
-    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
       e.printStackTrace();
     }
+  }
+
+  public ShopInterface getInterface() {
+    return this.shopStack.peek();
   }
 }
