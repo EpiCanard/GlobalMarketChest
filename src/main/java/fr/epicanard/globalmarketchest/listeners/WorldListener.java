@@ -37,7 +37,7 @@ public class WorldListener implements Listener {
         return;
       InventoryGUI inv = new InventoryGUI();
       GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
-      inv.loadInterface("LinkShop");
+      inv.loadInterface("ShopCreationLink");
       inv.open(player);
     }
   }

@@ -14,18 +14,31 @@ public class PaginatorConfig {
   private int startPos;
   @Getter
   private int page = 0;
+  @Getter
+  private int previousPos = -1;
+  @Getter
+  private int nextPos = -1;
+  @Getter
+  private int numPagePos = -1;
 
-  public PaginatorConfig(int height, int width, int startPos) throws InvalidPaginatorParameter {
+  public PaginatorConfig(int height, int width, int startPos, int prevPos, int nextPos, int numPagePos) throws InvalidPaginatorParameter {
     if (height < 1 || height > 6)
-      throw new InvalidPaginatorParameter("height");
+      throw new InvalidPaginatorParameter("Height");
     if (width < 1 || width > 9)
-      throw new InvalidPaginatorParameter("width");
+      throw new InvalidPaginatorParameter("Width");
     if (startPos % 9 + width > 9 || (startPos - startPos % 9) / 9 + height > 6)
-      throw new InvalidPaginatorParameter("startPos");
+      throw new InvalidPaginatorParameter("StartPos");
+    if (prevPos >= 53)
+      throw new InvalidPaginatorParameter("PreviousPos");
+    if (nextPos >= 53)
+      throw new InvalidPaginatorParameter("NextPos");
     this.height = height;
     this.width = width;
     this.startPos = startPos;
     this.limit = height * width;
+    this.previousPos = prevPos;
+    this.nextPos = nextPos;
+    this.numPagePos = numPagePos;
   }
 
   /**
@@ -34,7 +47,7 @@ public class PaginatorConfig {
    */
   public PaginatorConfig duplicate() {
     try {
-      return new PaginatorConfig(this.height, this.width, this.startPos);
+      return new PaginatorConfig(this.height, this.width, this.startPos, this.previousPos, this.nextPos, this.numPagePos);
     } catch(InvalidPaginatorParameter e) {
       return null;
     }

@@ -18,9 +18,7 @@ public class Paginator {
   private final Inventory inv;
   private ItemStack previous;
   private ItemStack next;
-  private int previousPos = -1;
-  private int nextPos = -1;
-  private int counter;
+  private ItemStack numPage;
   @Getter
   private PaginatorConfig config;
   @Setter
@@ -29,57 +27,41 @@ public class Paginator {
   private List<ItemStack> itemstacks = new ArrayList<ItemStack>();
 
 
-  Paginator(Inventory inv, PaginatorConfig config) {
+  public Paginator(Inventory inv, PaginatorConfig config) {
     this.inv = inv;
     this.previous = Utils.getButton("PreviousPage");
     this.next = Utils.getButton("NextPage");
+    this.numPage = Utils.getButton("NumPage");
     this.config = config;
   }
 
-  Paginator(Inventory inv) {
+  public Paginator(Inventory inv) {
     this(inv, null);
     try {
-      this.config = new PaginatorConfig(1, 9, 1);
+      this.config = new PaginatorConfig(1, 9, 1, -1, -1, -1);
     } catch(InvalidPaginatorParameter e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
     }
   }
 
   /**
-   * Add next button to a specific position
+   * Add item to inventory and check that param are valid
    */
-  public void addNext(int pos) {
-    if (pos < 0 || pos >= this.inv.getSize())
+  private void addItem(int pos, ItemStack item) {
+    if (pos < 0 || pos >= this.inv.getSize() || item == null)
       return;
-    this.previousPos = pos;
-    this.inv.setItem(pos, this.next);
-  }
-
-  /**
-   * Add previous button to a specific position
-   */
-  public void addPrevious(int pos) {
-    if (pos < 0 || pos >= this.inv.getSize())
-      return;
-    this.nextPos = pos;
-    this.inv.setItem(pos, this.previous);
-  }
-
-  /**
-   * Define NumPage position
-   */
-  public void addNumPage(int pos) {
-    this.inv.setItem(pos, Utils.getButton("NumPage"));
-    this.counter = pos;
+    this.inv.setItem(pos, item);
   }
 
   /**
    * Update page counter
    */
   private void updateCounter() {
-    ItemStack item = inv.getItem(this.counter);
+    if (this.config.getNumPagePos() < 0 || this.config.getNumPagePos() >= this.inv.getSize())
+      return;
+    ItemStack item = inv.getItem(this.config.getNumPagePos());
     item.setAmount(this.config.getPage() + 1);
-    this.inv.setItem(this.counter, item);
+    this.inv.setItem(this.config.getNumPagePos(), item);
   }
 
   /**
@@ -139,10 +121,32 @@ public class Paginator {
    */
   public void reloadInterface() {
     this.updateCounter();
-    this.loadItems();
-    this.addNext(this.nextPos);
-    this.addPrevious(this.previousPos);
+    this.addItem(this.config.getPreviousPos(), this.previous);
+    this.addItem(this.config.getNextPos(), this.next);
+    this.addItem(this.config.getNumPagePos(), this.numPage);
+    this.reload();
   }
 
+  public Boolean isButton(int pos) {
+    return (pos >= 0 && (pos == this.config.getPreviousPos() || pos == this.config.getNextPos()));
+  }
+
+  public Boolean isInZone(int pos) {
+    pos = pos - this.config.getStartPos();
+    if (pos < 0)
+      return false;
+    if (Utils.getCol(pos, this.config.getWidth()) >= this.config.getWidth())
+      return false;
+    if (Utils.getLine(pos, this.config.getWidth()) >= this.config.getHeight())
+      return false;
+    return true;
+  }
+
+  public void onClick(int pos) {
+    if (pos == this.config.getPreviousPos())
+      this.previousPage();
+    if (pos == this.config.getNextPos())
+      this.nextPage();
+  }
 
 }
