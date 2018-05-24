@@ -2,9 +2,9 @@ package fr.epicanard.globalmarketchest.gui.shops;
 
 import org.bukkit.inventory.Inventory;
 
-public class DefaultShopInterface extends ShopInterface {
+public class ShopCreationSelectType extends ShopInterface {
 
-  public DefaultShopInterface(Inventory inv) {
+  public ShopCreationSelectType(Inventory inv) {
     super(inv);
   }
 

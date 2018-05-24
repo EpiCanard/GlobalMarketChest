@@ -2,10 +2,13 @@ package fr.epicanard.globalmarketchest.gui.shops;
 
 import org.bukkit.inventory.Inventory;
 
-public class DefaultShopInterface extends ShopInterface {
+public class ShopCreationLink extends ShopInterface {
 
-  public DefaultShopInterface(Inventory inv) {
+  public ShopCreationLink(Inventory inv) {
     super(inv);
+    if (this.paginator != null) {
+      this.paginator.setLoadConsumer(pag -> {});
+    }
   }
 
   @Override
