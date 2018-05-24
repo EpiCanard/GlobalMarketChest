@@ -1,30 +1,53 @@
 package fr.epicanard.globalmarketchest.gui.shops;
 
-import org.bukkit.event.Event;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
+
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.Paginator.Paginator;
+import fr.epicanard.globalmarketchest.gui.Paginator.PaginatorConfig;
+import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
 public abstract class ShopInterface {
   @Accessors(fluent=true) @Getter
   protected Boolean isTemp = false;
+  protected Paginator paginator = null;
+  protected Inventory inv;
+  protected Map<Integer, Consumer<InventoryGUI>> actions = new HashMap<Integer, Consumer<InventoryGUI>>();
+
+  public ShopInterface(Inventory inv) {
+    this.inv = inv;
+    String className = this.getClass().getSimpleName();
+    PaginatorConfig conf = InterfacesLoader.getInstance().getPaginatorConfig(className);
+    if (conf != null)
+      this.paginator = new Paginator(this.inv, conf);
+    this.actions.put(8, new LeaveShop());
+  }
 
   /**
    * Load specific interface with is className
    * 
    * @param gui
    */
-  public void load(Inventory gui) {
+  public void load() {
     String className = this.getClass().getSimpleName();
     ItemStack[] items = InterfacesLoader.getInstance().getInterface(className);
     if (items == null)
       return;
     for (int i = 0; i < 54; i++)
-      gui.setItem(i, items[i]);
-    System.out.println(className);
+      this.inv.setItem(i, items[i]);
+    if (this.paginator != null)
+      this.paginator.reloadInterface();
   }
 
   /**
@@ -37,6 +60,13 @@ public abstract class ShopInterface {
    * 
    * @param event
    */
-  abstract public void onClick(Event event);
+  public void onClick(InventoryClickEvent event, InventoryGUI inv) {
+    if (event.getClick() != ClickType.LEFT)
+      return;
+    if (this.paginator != null && (this.paginator.isInZone(event.getSlot()) || this.paginator.isButton(event.getSlot())))
+      this.paginator.onClick(event.getSlot());
+    else
+      Optional.ofNullable(this.actions.get(event.getSlot())).ifPresent(c -> c.accept(inv));
+  }
   
 }
