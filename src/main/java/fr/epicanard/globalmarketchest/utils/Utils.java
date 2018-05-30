@@ -8,23 +8,22 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Utils {
+  @Getter
   private ItemStack background = null;
+
+  public void init() {
+    Utils.background = ItemStackUtils.getItemStack(
+      GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Interfaces.Background"));
+    Utils.background = ItemStackUtils.setItemStackMeta(background, null);
+  }
 
   public String toColor(String toChange) {
     return ChatColor.translateAlternateColorCodes('&', toChange);
-  }
-
-  public ItemStack getBackground() {
-    if (Utils.background == null) {
-      Utils.background = ItemStackUtils.getItemStack(
-        GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Interfaces.Background"));
-        ItemStackUtils.setItemStackMeta(background, null);
-    }
-    return Utils.background;
   }
 
   public int toPos(int x, int y) {
@@ -54,5 +53,11 @@ public class Utils {
       }
     }
     return itemStack;
+  }
+
+  public int getIndex(int index, int size) {
+    if (index < 0)
+      return 0;
+    return (index >= size) ? size : index;
   }
 }

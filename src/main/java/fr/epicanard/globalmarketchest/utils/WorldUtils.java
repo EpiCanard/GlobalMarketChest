@@ -1,5 +1,12 @@
 package fr.epicanard.globalmarketchest.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+
+import com.google.common.util.concurrent.AtomicDouble;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,11 +19,8 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class WorldUtils {
-  public Block getNearestMaterial(Location location, Material material)
-  {
-    int radius = 1;
-    Block finalBlock = null;
-    double distance = 6.0D;
+
+  private void getRadiusBlock(Location location, int radius, Consumer<Block> consumer) {
     int diameter = 1 + 2 * radius;
     int x, y, z;
 
@@ -24,20 +28,41 @@ public class WorldUtils {
       x = i % diameter - radius;
       y = i / (int)Math.pow(diameter, 2) - radius;
       z = (i % (int)Math.pow(diameter, 2)) / 3 - radius;
-      
+
       if (x == 0 && y == 0 && z == 0)
         continue;
-      
-      Block tempBlock = location.getBlock().getRelative(x, y, z);
-      if (tempBlock != null && tempBlock.getState().getType().compareTo(material) == 0) {
-        double blockDistance = tempBlock.getLocation().distance(location);
-        if (blockDistance < distance) {
-          finalBlock = tempBlock;
-          distance = blockDistance;
+
+      consumer.accept(location.getBlock().getRelative(x, y, z));
+    }
+    
+  }
+
+  public Block getNearestMaterial(Location location, Material material)
+  {
+    AtomicDouble distance = new AtomicDouble(6.0D);
+    AtomicReference<Block> finalBlock = new AtomicReference<Block>();
+
+    WorldUtils.getRadiusBlock(location, 1, block -> {
+      if (block != null && block.getState().getType().compareTo(material) == 0) {
+        double blockDistance = block.getLocation().distance(location);
+        if (blockDistance < distance.get()) {
+          finalBlock.set(block);
+          distance.set(blockDistance);
         }
       }
-    }
-    return finalBlock;
+    });
+    return finalBlock.get();
+  }
+
+  public List<Block> getNearAllowedBlocks(Location location) {
+    List<Block> listBlocks = new ArrayList<Block>();
+    List<Material> allowed = ShopUtils.getAllowedLinkBlock();
+
+    WorldUtils.getRadiusBlock(location, 1, block -> {
+      if (allowed.contains(block.getType()))
+        listBlocks.add(block);
+    });
+    return listBlocks;
   }
   
   public Location getLocationFromString(String locatString, Location location) throws DatabaseException {
