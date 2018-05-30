@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.utils;
 
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,6 +21,8 @@ public class ItemUtils {
    * @return ItemStack
    */
   public ItemStack addGlow(ItemStack item) {
+    if (item == null)
+      return null;
     ItemMeta met = item.getItemMeta();
     met.addEnchant(Enchantment.BINDING_CURSE, 1, false);
     met.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -37,10 +40,18 @@ public class ItemUtils {
    * @return ItemStack
    */
   public ItemStack removeGlow(ItemStack item) {
+    if (item == null)
+      return null;
     ItemMeta met = item.getItemMeta();
     met.removeEnchant(Enchantment.BINDING_CURSE);
     met.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
     item.setItemMeta(met);
     return item;
+  }
+
+  public void setGlow(Inventory inv, int pos, Boolean toGlow) {
+    ItemStack item = inv.getItem(pos);
+    item = (toGlow) ? ItemUtils.addGlow(item) : ItemUtils.removeGlow(item);
+    inv.setItem(pos, item);
   }
 }

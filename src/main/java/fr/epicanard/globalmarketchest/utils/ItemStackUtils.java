@@ -2,6 +2,7 @@ package fr.epicanard.globalmarketchest.utils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class ItemStackUtils {
     ItemMeta met = item.getItemMeta();
     met.setDisplayName((displayName == null) ? " " : Utils.toColor(displayName));
     if (lore != null) {
-      //lore = lore.stream().map(element -> toColor(element)).collect(Collectors.toList());
+      lore = lore.stream().map(element ->  Utils.toColor(element)).collect(Collectors.toList());
       met.setLore(lore);
     }
     item.setItemMeta(met);
