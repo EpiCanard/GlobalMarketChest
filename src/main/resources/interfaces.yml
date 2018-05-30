@@ -53,8 +53,9 @@ ShopCreationSelectType:
     8: ExitButton
     11: GlobalShop
     13: AuctionShop
-    15: LocalShop
+    15: AdminShop
     27-35: None
+    49: ShopIcon
     53: Validate
 
 ShopCreationLink:
@@ -69,6 +70,7 @@ ShopCreationLink:
     0: Return
     8: ExitButton
     18-26: None
-    49: EditGroupName
+    40: EditGroupName
+    49: ShopIcon
     53: CreateShop
     
