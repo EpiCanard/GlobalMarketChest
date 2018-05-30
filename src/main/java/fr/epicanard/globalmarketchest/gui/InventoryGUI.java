@@ -3,6 +3,8 @@ package fr.epicanard.globalmarketchest.gui;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -14,8 +16,11 @@ import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import lombok.Getter;
 
 public class InventoryGUI {
+  @Getter
   private Inventory inv;
   private Deque<ShopInterface> shopStack = new ArrayDeque<ShopInterface>();
+  @Getter
+  private Map<String, Object> transaction = new HashMap<String, Object>();
   @Getter
   private Player player;
 
@@ -91,7 +96,7 @@ public class InventoryGUI {
    */
   public void loadInterface(String name) {
     try {
-      ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops." + name).getDeclaredConstructor(Inventory.class).newInstance(this.inv);
+      ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops.interfaces." + name).getDeclaredConstructor(InventoryGUI.class).newInstance(this);
       Optional.ofNullable(this.shopStack.peek()).ifPresent(ShopInterface::unload);
      
       shop.load();
@@ -103,5 +108,10 @@ public class InventoryGUI {
 
   public ShopInterface getInterface() {
     return this.shopStack.peek();
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> T getTransValue(String name) {
+    return (T) this.transaction.get(name);
   }
 }

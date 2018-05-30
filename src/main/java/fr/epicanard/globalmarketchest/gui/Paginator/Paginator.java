@@ -1,7 +1,8 @@
-package fr.epicanard.globalmarketchest.gui.Paginator;
+package fr.epicanard.globalmarketchest.gui.paginator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
@@ -24,6 +25,8 @@ public class Paginator {
   @Setter
   private Consumer<Paginator> loadConsumer;
   @Setter
+  private Consumer<Integer> clickConsumer;
+  @Getter
   private List<ItemStack> itemstacks = new ArrayList<ItemStack>();
 
 
@@ -95,15 +98,10 @@ public class Paginator {
    */
   private void loadItems() {
     for (int i = 0; i < this.config.getLimit(); i++) {
-      try {
-        ItemStack item = this.itemstacks.get(i);
-        int pos = this.config.getStartPos() + 
-                  Utils.getLine(i, this.config.getWidth()) * 9 +
-                  Utils.getCol(i, this.config.getWidth());
-        this.inv.setItem(pos, item);
-      } catch (IndexOutOfBoundsException e) {
-        break;
-      }
+      if (i < this.itemstacks.size())
+        this.inv.setItem(this.getPos(i), this.itemstacks.get(i));        
+      else
+        this.inv.clear(this.getPos(i));
     }
   }
 
@@ -127,10 +125,29 @@ public class Paginator {
     this.reload();
   }
 
+  /**
+   * Clear all paginator zone
+   */
+  public void clear() {
+    for (int i = 0; i < this.config.getLimit(); i++) {
+      this.inv.clear(this.getPos(i));
+    }
+  }
+
+  /**
+   * Define if the position is a button previous or next
+   * 
+   * @return Boolean
+   */
   public Boolean isButton(int pos) {
     return (pos >= 0 && (pos == this.config.getPreviousPos() || pos == this.config.getNextPos()));
   }
 
+  /**
+   * Define if the position is inside the click zone
+   * 
+   * @return Boolean
+   */
   public Boolean isInZone(int pos) {
     pos = pos - this.config.getStartPos();
     if (pos < 0)
@@ -142,11 +159,59 @@ public class Paginator {
     return true;
   }
 
-  public void onClick(int pos) {
-    if (pos == this.config.getPreviousPos())
-      this.previousPage();
-    if (pos == this.config.getNextPos())
-      this.nextPage();
+  /**
+   * Execute action when player click on button (previous or next) or inside the click zone
+   */
+  public Boolean onClick(int pos) {
+    if (this.isButton(pos)) {
+      if (pos == this.config.getPreviousPos())
+        this.previousPage();
+      if (pos == this.config.getNextPos())
+        this.nextPage();
+      return true;
+    }
+    if (this.isInZone(pos)) {
+      Optional.ofNullable(this.clickConsumer).ifPresent(e -> e.accept(this.getIndex(pos)));
+      return true;
+    }
+    return false;
+
   }
 
+  /**
+   * Get the real position inside the inventory depending of the index (the case number x from the paginator (not the same than the inventory))
+   * 
+   * @param int index
+   * @return int
+   */
+  public int getPos(int index) {
+    return this.config.getStartPos() +
+      Utils.getLine(index, this.config.getWidth()) * 9 +
+      Utils.getCol(index, this.config.getWidth());
+  }
+
+  /**
+   * Get index inside paginator from the real inventory position
+   * 
+   * @param int pos
+   * @return int
+   */
+  public int getIndex(int pos) {
+    if (!this.isInZone(pos))
+      return -1;
+    pos -= this.config.getStartPos();
+    return Utils.getLine(pos, 9) * this.config.getWidth() + Utils.getCol(pos, 9);
+  }
+
+  /**
+   * Get Sublist from a given list depending of the page
+   * 
+   * @param List<T> list
+   * @return List<T>
+   */
+  public <T> List<T> getSubList(List<T> list) {
+    int start = Utils.getIndex(this.getConfig().getStartLimit(), list.size());
+    int end = Utils.getIndex(this.getConfig().getStartLimit() + this.getConfig().getLimit(), list.size());
+    return list.subList(start, end);
+  }
 }

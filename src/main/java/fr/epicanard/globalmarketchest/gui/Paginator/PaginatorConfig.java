@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.gui.Paginator;
+package fr.epicanard.globalmarketchest.gui.paginator;
 
 import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
 import lombok.Getter;
