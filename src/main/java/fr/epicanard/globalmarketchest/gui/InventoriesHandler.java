@@ -18,8 +18,8 @@ public class InventoriesHandler {
     this.inventories.put(playerID, inv);
   }
   
-  public void removeInventory(UUID playerID) {
-    this.inventories.remove(playerID);
+  public InventoryGUI removeInventory(UUID playerID) {
+    return this.inventories.remove(playerID);
   }
   
   public Boolean hasInventory(UUID playerID) {

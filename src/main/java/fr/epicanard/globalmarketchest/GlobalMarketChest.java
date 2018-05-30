@@ -24,6 +24,8 @@ import fr.epicanard.globalmarketchest.listeners.GUIListener;
 import fr.epicanard.globalmarketchest.listeners.ShopCreationListener;
 import fr.epicanard.globalmarketchest.listeners.WorldListener;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
+import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.Getter;
 
 
@@ -53,6 +55,9 @@ public class GlobalMarketChest extends JavaPlugin {
     plugin = this;
 
     this.configLoader.loadFiles();
+
+    ShopUtils.init();
+    Utils.init();
 
     YamlConfiguration defConfig = this.configLoader.loadResource("interfaces.yml");
     this.interfaces = InterfacesLoader.getInstance().loadInterfaces(defConfig);

@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.listeners;
 
 import java.lang.reflect.Field;
+import java.util.Optional;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.bukkit.Material;
@@ -29,7 +30,7 @@ public class GUIListener implements Listener {
       if (inv != null && inv.inventoryEquals(event.getInventory())) {
         if (inv.inventoryEquals(event.getClickedInventory())) {
           event.setCancelled(true);
-          inv.getInterface().onClick(event, inv);
+          Optional.ofNullable(inv.getInterface()).ifPresent(interf -> interf.onClick(event, inv));
         }
         ClickType click = event.getClick();
 
