@@ -4,25 +4,19 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
-import net.minecraft.server.v1_12_R1.Item;
-import net.minecraft.server.v1_12_R1.MinecraftKey;
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import lombok.Getter;
 
 public class CategoryHandler {
   YamlConfiguration config;
-  String[] categories;
+  @Getter
+  Set<String> categories;
   
   public CategoryHandler(YamlConfiguration conf) {
     this.config = conf;
-    
-    Set<String> keys = this.config.getKeys(false);
-    this.categories = keys.toArray(new String[0]);
-  }
-
-  public String[] getCategories() {
-    return this.categories;
+    this.categories = this.config.getKeys(false);
   }
   
   public String[] getItems(String category) {
@@ -36,22 +30,11 @@ public class CategoryHandler {
 
   public ItemStack getDisplayItem(String category) {
     String item = this.config.getString(category + ".DisplayItem");
-    if (item == null) {
+    if (item == null)
       item = "minecraft:barrier";
-    }
-    ItemStack it = this.getItemStack(item);
-    return (it == null) ? this.getItemStack("minecraft:barrier") : it;
-  }
-
-  public ItemStack getItemStack(String name) {
-    String[] spec = name.split("/");
-    MinecraftKey mk = new MinecraftKey(spec[0]);
-    if (Item.REGISTRY.get(mk) == null)
-      return null;
-    ItemStack item = CraftItemStack.asNewCraftStack(Item.REGISTRY.get(mk));
-    if (spec.length > 1)
-      item.setDurability(Short.parseShort(spec[1]));
-    return item;
+    
+    ItemStack it = ItemStackUtils.getItemStack(item);
+    return (it == null) ? ItemStackUtils.getItemStack("minecraft:barrier") : it;
   }
   
   public String getCategory(ItemStack item) {
@@ -61,10 +44,6 @@ public class CategoryHandler {
   public Boolean isCategory(String category) {
     if (this.categories == null)
       return false;
-    for(int i = 0; i < this.categories.length; i++) {
-      if (this.categories[i] == category)
-        return true;
-    }
-    return false;
+    return this.categories.contains(category);
   }
 }

@@ -1,5 +1,7 @@
 package fr.epicanard.globalmarketchest.commands;
 
+import java.util.Set;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -52,8 +54,8 @@ public class CommandHandler implements CommandExecutor {
   private void locateBestShop(Player player, String[] args) {
         
     CategoryHandler h = new CategoryHandler((YamlConfiguration)GlobalMarketChest.plugin.getConfigLoader().getCategories());
-    String[] cat = h.getCategories();
-    for (int i = 0; i < cat.length; i++) {
+    Set<String> cat = h.getCategories();
+    for (int i = 0; i < cat.size(); i++) {
       //shop.setItemTo(Utils.toPos(i % 5 + 2, (i / 5) * 2 + 2), ItemStackUtils.setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i])));
     }
   }

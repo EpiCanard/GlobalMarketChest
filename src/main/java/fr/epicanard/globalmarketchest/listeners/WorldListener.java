@@ -35,6 +35,11 @@ public class WorldListener implements Listener {
 
       if (shop == null)
         return;
+      event.setCancelled(true);
+      if (GlobalMarketChest.plugin.inventories.hasInventory(player.getUniqueId())) {
+        InventoryGUI old = GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
+        old.close(player);
+      }
       InventoryGUI inv = new InventoryGUI();
       GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
       inv.loadInterface("ShopCreationLink");

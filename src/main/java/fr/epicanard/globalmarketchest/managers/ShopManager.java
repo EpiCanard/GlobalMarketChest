@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -20,8 +19,10 @@ import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
+import lombok.Getter;
 
 public class ShopManager {
+  @Getter
   private List<ShopInfo> shops = new ArrayList<ShopInfo>();
 
   /**
@@ -67,13 +68,13 @@ public class ShopManager {
   /**
    * Create a shop inside database and add it in list shops
    */
-  public Integer createShop(Player owner, Location sign, Location other, int mask, String group) throws ShopAlreadyExistException {
+  public Integer createShop(String owner, Location sign, Location other, int mask, String group) throws ShopAlreadyExistException {
     if (!this.shops.stream().allMatch(shop -> !WorldUtils.compareLocations(shop.getSignLocation(), sign)))
       throw new ShopAlreadyExistException(sign);
 
     QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableShops);
 
-    builder.addValue("owner", owner.getUniqueId().toString());
+    builder.addValue("owner", owner);
     builder.addValue("signLocation", WorldUtils.getStringFromLocation(sign));
     builder.addValue("otherLocation", WorldUtils.getStringFromLocation(other));
     builder.addValue("type", mask);
@@ -86,6 +87,13 @@ public class ShopManager {
     if (builder.execute(builder.insert(), cs))
       this.updateShops();
     return id.get();
+  }
+
+    /**
+   * Create a shop inside database and add it in list shops
+   */
+  public Integer createShop(ShopInfo shop) throws ShopAlreadyExistException {
+    return this.createShop(shop.getOwner(), shop.getSignLocation(), shop.getOtherLocation(), shop.getType(), shop.getGroup());
   }
 
 
