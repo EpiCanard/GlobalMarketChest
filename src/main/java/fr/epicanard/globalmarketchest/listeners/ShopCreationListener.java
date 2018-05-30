@@ -6,9 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 
 /**
@@ -20,12 +20,14 @@ public class ShopCreationListener implements Listener {
   public void onChangeSign(SignChangeEvent event) {    
     Player player = event.getPlayer();
     
-    try {
-      if (event.getLine(0).compareTo("[GMC]") == 0)
-        GlobalMarketChest.plugin.shopManager.createShop(player, event.getBlock().getLocation(), null, ShopType.GLOBALSHOP.setOn(0), ShopUtils.generateName());
-    } catch (ShopAlreadyExistException e) {
-      PlayerUtils.sendMessagePlayer(player, e.getMessage());
-      event.getBlock().breakNaturally();
+    if (event.getLine(0).compareTo("[GMC]") == 0) {
+      ShopInfo shop = new ShopInfo(-1, player.getUniqueId().toString(), ShopType.GLOBALSHOP.setOn(0), event.getBlock().getLocation(), null, ShopUtils.generateName());
+      InventoryGUI inv = new InventoryGUI();
+
+      inv.getTransaction().put("ShopInfo", shop);
+      GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
+      inv.loadInterface("ShopCreationSelectType");
+      inv.open(player);
     }
   }
 }
