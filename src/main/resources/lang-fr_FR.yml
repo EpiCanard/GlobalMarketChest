@@ -12,6 +12,13 @@ Divers:
   Seller: "Vendeur"
   Buyer: "Acheteur"
   Start: "Débuté"
+  Location: "Localisation"
+  OtherLocation: "Localisation autre"
+  Group: "Groupe"
+  Type: "Type"
+Shops:
+  ClickChangeGroup: "Cliques pour changer le nom de groupe du shop"
+  CurrentShop: "Shop actuel"
 Buttons:
   Money:
     Name: "Votre argent"
@@ -20,7 +27,7 @@ Buttons:
     Description: "Revenir à l'inventaire précédent"
   ExitButton:
     Name: "&4Sortie"
-    Description: "Ferme cet inventaire"
+    Description: "Fermer cet inventaire"
   Validate:
     Name: "&4Valider"
     Description: "Aller à l'étape suivante"
@@ -57,6 +64,8 @@ Buttons:
     Name: "AuctionShop"
   LocalShop:
     Name: "LocalShop"
+  AdminShop:
+    Name: "AdminShop"
   EditGroupName:
     Name: "Modifier le nom du groupe"
     Description: "Si vous voulez renommer le nom du groupe de votre Shop"

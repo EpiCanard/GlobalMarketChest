@@ -12,6 +12,13 @@ Divers:
   Seller: "Seller"
   Buyer: "Buyer"
   Start: "Started"
+  Location: "Location"
+  OtherLocation: "Other location"
+  Group: "Group"
+  Type: "Type"
+Shops:
+  ClickChangeGroup: "Click to change shop group name"
+  CurrentShop: "Current shop"
 Buttons:
   Money:
     Name: "Your money"
@@ -57,6 +64,8 @@ Buttons:
     Name: "AuctionShop"
   LocalShop:
     Name: "LocalShop"
+  AdminShop:
+    Name: "AdminShop"
   EditGroupName:
     Name: "Edit Group Name"
     Description: "If you want to rename the group of your shop"
