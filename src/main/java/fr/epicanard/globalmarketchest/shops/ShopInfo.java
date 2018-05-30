@@ -13,6 +13,8 @@ import fr.epicanard.globalmarketchest.exceptions.DatabaseException;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 public class ShopInfo {
   @Getter
@@ -23,9 +25,9 @@ public class ShopInfo {
   private int type;
   @Getter
   private Location signLocation;
-  @Getter
+  @Getter @Setter  @NonNull
   private Location otherLocation;
-  @Getter
+  @Getter @Setter  @NonNull
   private String group;
   
   public ShopInfo(ResultSet res) throws NullPointerException {
@@ -81,5 +83,9 @@ public class ShopInfo {
   public void removeMetadata() {
     Optional.ofNullable(this.signLocation).ifPresent(this::removeMetadata);
     Optional.ofNullable(this.otherLocation).ifPresent(this::removeMetadata);
+  }
+
+  public void toggleType(ShopType type) {
+    this.type = type.toggle(this.type);
   }
 }

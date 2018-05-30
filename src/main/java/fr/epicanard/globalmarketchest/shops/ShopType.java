@@ -42,4 +42,14 @@ public enum ShopType {
   public int unsetOn(int types) {
     return types & ~this.shopMask;
   }
+
+  /**
+   * Toggle this ShopType from the mask
+   * 
+   * @param type the mask
+   * @return the mask
+   */
+  public int toggle(int types) {
+    return (this.isSetOn(types)) ? this.unsetOn(types) : this.setOn(types);
+  }
 }
