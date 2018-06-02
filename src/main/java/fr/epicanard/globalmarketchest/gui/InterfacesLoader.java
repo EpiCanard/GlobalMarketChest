@@ -21,8 +21,8 @@ import fr.epicanard.globalmarketchest.utils.Utils;
  */
 public class InterfacesLoader {
   private static InterfacesLoader INSTANCE;
-  private Map<String, ItemStack[]> interfaces;
-  private Map<String, PaginatorConfig> paginators;
+  private Map<String, ItemStack[]> interfaces = new HashMap<String, ItemStack[]>();
+  private Map<String, PaginatorConfig> paginators = new HashMap<String, PaginatorConfig>();
 
   private InterfacesLoader() {
   }
@@ -58,7 +58,8 @@ public class InterfacesLoader {
    * @return PaginatorConfig
    */
   public PaginatorConfig getPaginatorConfig(String interfaceName) {
-    return this.paginators.get(interfaceName).duplicate();
+    PaginatorConfig conf = this.paginators.get(interfaceName);
+    return (conf != null) ? conf.duplicate() : null;
   }
 
   /**
@@ -108,29 +109,16 @@ public class InterfacesLoader {
    * @param reload if it's set to true force reload from configuraiton
    * @return
    */
-  public Map<String, ItemStack[]> loadInterfaces(YamlConfiguration interfaceConfig, Boolean reload) {
-    if (reload == false && this.interfaces != null)
-      return this.interfaces;
-
+  public Map<String, ItemStack[]> loadInterfaces(YamlConfiguration interfaceConfig) {
     Set<String> interfacesName = interfaceConfig.getKeys(false);
-    this.interfaces = new HashMap<String, ItemStack[]>();
-    this.paginators = new HashMap<String, PaginatorConfig>();
+    this.interfaces.clear();
+    this.paginators.clear();
 
     for (String name : interfacesName) {
       this.loadInterface(interfaceConfig, name);
       this.loadPaginator(interfaceConfig, name);
     }
     return this.interfaces;
-  }
-
-  /**
-   * Overload "loadInterfaces" method to set param reload default to false
-   * 
-   * @param interfaceConfig
-   * @return
-   */
-  public Map<String, ItemStack[]> loadInterfaces(YamlConfiguration interfaceConfig) {
-    return this.loadInterfaces(interfaceConfig, false);
   }
 
   /**
