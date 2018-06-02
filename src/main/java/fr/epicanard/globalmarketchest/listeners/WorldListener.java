@@ -42,7 +42,7 @@ public class WorldListener implements Listener {
       }
       InventoryGUI inv = new InventoryGUI();
       GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
-      inv.loadInterface("ShopCreationLink");
+      inv.loadInterface("GlobalShop");
       inv.open(player);
     }
   }

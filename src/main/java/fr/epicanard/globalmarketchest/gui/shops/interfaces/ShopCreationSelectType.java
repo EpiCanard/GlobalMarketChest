@@ -27,8 +27,10 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     this.actions.put(13, i -> this.toggleShop(13, ShopType.AUCTIONSHOP));
     this.actions.put(15, i -> this.toggleShop(15, ShopType.ADMINSHOP));
     this.actions.put(53, new NextInterface("ShopCreationLink", this::checkCreation));
-    this.paginator.setLoadConsumer(this::loadNearBlock);
-    this.paginator.setClickConsumer(this::setOtherLocation);
+    if (this.paginator != null) {
+      this.paginator.setLoadConsumer(this::loadNearBlock);
+      this.paginator.setClickConsumer(this::setOtherLocation);
+    }
   }
 
   /**

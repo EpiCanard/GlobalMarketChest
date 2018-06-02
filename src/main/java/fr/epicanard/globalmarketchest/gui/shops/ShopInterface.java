@@ -62,7 +62,7 @@ public abstract class ShopInterface {
   public void onClick(InventoryClickEvent event, InventoryGUI inv) {
     if (event.getClick() != ClickType.LEFT)
       return;
-    if (!this.paginator.onClick(event.getSlot()))
+    if (this.paginator == null ||!this.paginator.onClick(event.getSlot()))
       Optional.ofNullable(this.actions.get(event.getSlot())).ifPresent(c -> c.accept(inv));
   }
   

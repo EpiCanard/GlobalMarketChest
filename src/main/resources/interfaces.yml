@@ -4,7 +4,6 @@ GlobalShop:
     8: ExitButton
     9: Search
     45: GlobalView
-    46: Money
     53: NewAuction
 
 DefaultShopInterface:
@@ -13,6 +12,9 @@ DefaultShopInterface:
     Height: 3
     Width: 9
     StartPos: 18
+    PreviousPos: 48
+    NextPos: 50
+    NumPagePos: 49
   Items:
     8: ExitButton
     18-44: None
