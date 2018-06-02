@@ -21,6 +21,9 @@ import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import lombok.Getter;
 
+/**
+ * Class that handle all shops and communication with database
+ */
 public class ShopManager {
   @Getter
   private List<ShopInfo> shops = new ArrayList<ShopInfo>();
@@ -54,8 +57,9 @@ public class ShopManager {
 
   /**
    * Get a shop with his ID
-   * @param ID
-   * @return
+   * 
+   * @param id id of the shop
+   * @return Return the shop with this id
    */
   public ShopInfo getShop(int id) {
     for (ShopInfo info : this.shops) {
@@ -67,6 +71,13 @@ public class ShopManager {
   
   /**
    * Create a shop inside database and add it in list shops
+   * 
+   * @param owner
+   * @param sign
+   * @param other
+   * @param mask
+   * @param group
+   * @return Return shop id created
    */
   public Integer createShop(String owner, Location sign, Location other, int mask, String group) throws ShopAlreadyExistException {
     if (!this.shops.stream().allMatch(shop -> !WorldUtils.compareLocations(shop.getSignLocation(), sign)))
@@ -89,8 +100,11 @@ public class ShopManager {
     return id.get();
   }
 
-    /**
+  /**
    * Create a shop inside database and add it in list shops
+   * 
+   * @param shop Info about a shop
+   * @return Return Shop id created
    */
   public Integer createShop(ShopInfo shop) throws ShopAlreadyExistException {
     return this.createShop(shop.getOwner(), shop.getSignLocation(), shop.getOtherLocation(), shop.getType(), shop.getGroup());
@@ -99,6 +113,9 @@ public class ShopManager {
 
   /**
    * Delete shop at the specific location
+   * 
+   * @param shop Shop to delete
+   * @return Return true if succeed else false
    */
   public Boolean deleteShop(ShopInfo shop) {
     if (shop == null)

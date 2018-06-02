@@ -15,6 +15,9 @@ public abstract class ShopCreationInterface extends ShopInterface {
     super(inv);
   }
 
+  /**
+   * Update the lore of the current shop
+   */
   protected void updateName() {
     ShopInfo shop = this.inv.getTransValue("ShopInfo");
     ItemStack item = this.inv.getInv().getItem(49);
@@ -25,6 +28,9 @@ public abstract class ShopCreationInterface extends ShopInterface {
     this.inv.getInv().setItem(49, item);
   }
 
+  /**
+   * Called when loading the interface
+   */
   @Override
   public void load() {
     super.load();

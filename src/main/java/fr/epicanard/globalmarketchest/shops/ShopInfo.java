@@ -15,6 +15,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+/**
+ * Class that store all the information about a shop
+ */
 public class ShopInfo {
   @Getter
   private int id;
@@ -56,6 +59,8 @@ public class ShopInfo {
 
   /**
    * Add shop metadata on specific location
+   * 
+   * @param loc Location where add metadata
    */
   private void addMetadata(Location loc) {
     loc.getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, this));
@@ -63,6 +68,8 @@ public class ShopInfo {
 
   /**
    * Remove shop metadata from specific location
+   * 
+   * @param loca Location where remove metadata
    */
   private void removeMetadata(Location loc) {
     loc.getBlock().removeMetadata(ShopUtils.META_KEY, GlobalMarketChest.plugin);
@@ -84,6 +91,11 @@ public class ShopInfo {
     Optional.ofNullable(this.otherLocation).ifPresent(this::removeMetadata);
   }
 
+  /**
+   * Toggle the type in parameter to the shop mask type
+   * 
+   * @param type Type to toggle
+   */
   public void toggleType(ShopType type) {
     this.type = type.toggle(this.type);
   }
