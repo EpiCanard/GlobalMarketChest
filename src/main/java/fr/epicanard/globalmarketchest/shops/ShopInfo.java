@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.exceptions.DatabaseException;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import lombok.Getter;
@@ -41,7 +40,7 @@ public class ShopInfo {
       this.type = res.getInt("type");
       this.group = res.getString("group");
 
-    } catch (DatabaseException | SQLException e) {
+    } catch (SQLException e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
     }
   }

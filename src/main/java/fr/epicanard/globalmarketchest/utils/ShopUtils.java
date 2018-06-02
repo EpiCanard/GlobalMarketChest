@@ -13,6 +13,9 @@ import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
 import lombok.experimental.UtilityClass;
 
+/**
+ * Utility Class about Shops
+ */
 @UtilityClass
 public class ShopUtils {
   public final String META_KEY = "GMC_SHOP";
@@ -29,14 +32,30 @@ public class ShopUtils {
     });
   }
 
+  /**
+   * Generate a custom random name
+   * 
+   * @return
+   */
   public String generateName() {
     return "Shop_" + RandomStringUtils.randomAlphabetic(5);
   }
 
+  /**
+   * Generate a name for localshop
+   * 
+   * @return
+   */
   public String generateLocalName(int id) {
     return "LocalShop" + id;
   }
 
+  /**
+   * Get the shop at the block position
+   * 
+   * @param bl Block linked to a shop
+   * @return Return the ShopInfo or null
+   */
   public ShopInfo getShop(Block bl) {
     try {
       return (ShopInfo)bl.getMetadata(ShopUtils.META_KEY).get(0).value();
@@ -45,10 +64,22 @@ public class ShopUtils {
     }
   }
 
+  /**
+   * Generate a String key/value
+   * 
+   * @param key
+   * @param value
+   */
   public String generateKeyValue(String key, String value) {
     return "&2" + key + " : &9" + value;
   }
 
+  /**
+   * Generate a string with the initial of shop Type
+   * 
+   * @param shop Shop used
+   * @return Return string generated
+   */
   private String generateShopType(ShopInfo shop) {
     String ret = "";
 
@@ -61,6 +92,11 @@ public class ShopUtils {
     return ret;
   }
 
+  /**
+   * Generate Lore for specific shop
+   * 
+   * @return Return lore as String array
+   */
   public String[] generateLore(ShopInfo shop) {
     String[] lore = {
       ShopUtils.generateKeyValue(LangUtils.get("Divers.Location"), WorldUtils.getStringFromLocation(shop.getSignLocation())),
@@ -71,6 +107,11 @@ public class ShopUtils {
     return lore;
   }
 
+  /**
+   * Generate Lore for specific shop with otherLocation
+   * 
+   * @return Return lore as String array
+   */
   public String[] generateLoreWithOther(ShopInfo shop) {
     String[] lore = {
       ShopUtils.generateKeyValue(LangUtils.get("Divers.Location"), WorldUtils.getStringFromLocation(shop.getSignLocation())),
@@ -81,6 +122,11 @@ public class ShopUtils {
     return lore;
   }
 
+  /**
+   * Get Allowed Block that can be linked with a shop
+   * 
+   * @return Return the list of allowed Material
+   */
   public List<Material> getAllowedLinkBlock() {
     return ShopUtils.allowedBlock;
   }

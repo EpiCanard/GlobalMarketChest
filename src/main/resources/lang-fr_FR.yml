@@ -16,6 +16,7 @@ Divers:
   OtherLocation: "Localisation autre"
   Group: "Groupe"
   Type: "Type"
+  Warning: "Attention"
 Shops:
   ClickChangeGroup: "Cliques pour changer le nom de groupe du shop"
   CurrentShop: "Shop actuel"
@@ -75,3 +76,5 @@ Buttons:
     Name: "Page suivante"
   NumPage:
     Name: "Numéro de la page"
+ErrorMessages:
+  ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"

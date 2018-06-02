@@ -11,6 +11,9 @@ import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
 import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
+/**
+ * Global Utility Class
+ */
 @UtilityClass
 public class Utils {
   @Getter
@@ -22,22 +25,52 @@ public class Utils {
     Utils.background = ItemStackUtils.setItemStackMeta(background, null);
   }
 
+  /**
+   * Change String too support color
+   */
   public String toColor(String toChange) {
     return ChatColor.translateAlternateColorCodes('&', toChange);
   }
 
+  /**
+   * From position x and y give a position inside the inventory
+   * 
+   * @param x
+   * @param y
+   * @return position
+   */
   public int toPos(int x, int y) {
     return y * 9 + x;
   }
 
+  /**
+   * Get the line number from position
+   * 
+   * @param pos position
+   * @param lineWidth line width if the used zone is smaller then the inventory width
+   * @return line number
+   */
   public int getLine(int pos, int lineWidth) {
     return (pos - pos % lineWidth) / lineWidth;
   }
 
+  /**
+   * Get the column number from position
+   * 
+   * @param pos position
+   * @param lineWidth line width if the used zone is smaller then the inventory width
+   * @return column number
+   */
   public int getCol(int pos, int lineWidth) {
     return pos % lineWidth;
   }
 
+  /**
+   * Get a button from the config file and create itemstack
+   * 
+   * @param buttonName button name to search inside config
+   * @return item created
+   */
   public ItemStack getButton(String buttonName) {
     ConfigLoader loader = GlobalMarketChest.plugin.getConfigLoader();
     String item;
@@ -55,6 +88,11 @@ public class Utils {
     return itemStack;
   }
 
+  /**
+   * If the index is bigger than size return the size to prevent IndexOutOfBOundException
+   * 
+   * @return index
+   */
   public int getIndex(int index, int size) {
     if (index < 0)
       return 0;

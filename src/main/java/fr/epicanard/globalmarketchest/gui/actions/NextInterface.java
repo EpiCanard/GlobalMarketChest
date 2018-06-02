@@ -1,18 +1,34 @@
 package fr.epicanard.globalmarketchest.gui.actions;
 
+import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 
+/**
+ * Consumer to load the specified interface
+ * 
+ * Can be build with a Callable<Boolean> to make blocking verification before loading the interface
+ */
 public class NextInterface implements Consumer<InventoryGUI> {
   private String name;
+  private Callable<Boolean> callable;
 
   public NextInterface(String name) {
     this.name = name;
+    this.callable = () -> true;
+  }
+
+  public NextInterface(String name, Callable<Boolean> callable) {
+    this.name = name;
+    this.callable = callable;
   }
 
   @Override
   public void accept(InventoryGUI t) {
-    t.loadInterface(name);
+    try {
+      if (this.callable == null || this.callable.call() == true)
+        t.loadInterface(name);
+    } catch(Exception e) {}
   }
 }

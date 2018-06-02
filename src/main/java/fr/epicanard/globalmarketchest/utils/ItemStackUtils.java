@@ -8,12 +8,22 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import lombok.experimental.UtilityClass;
 import net.minecraft.server.v1_12_R1.Item;
 import net.minecraft.server.v1_12_R1.MinecraftKey;
 
+/**
+ * Utility class for ItemStacks
+ */
 @UtilityClass
 public class ItemStackUtils {
+  /**
+   * Get the itemstack from the specify key
+   * 
+   * @param name Minecraft item name (ex: minecraft:chest)
+   * @return ItemStack created from minecraft key
+   */
   public ItemStack getItemStack(String name) {
     if (name == null)
       return null;
@@ -28,6 +38,24 @@ public class ItemStackUtils {
     return item;
   }
 
+  /**
+   * Get the item name from config file and then get the itemstack
+   * 
+   * @param path Path to item name in config
+   * @return ItemStack created from minecraft key
+   */
+  public ItemStack getItemStackFromConfig(String path) {
+    String itemName = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString(path);
+    return ItemStackUtils.getItemStack(itemName);
+  }
+
+  /**
+   * Set ItemMeta to the specific item
+   * 
+   * @param item        ItemStack used
+   * @param displayName Name displayed on the item
+   * @param lore        Lore of the item to add (List)
+   */
   private ItemStack setItemMeta(ItemStack item, String displayName, List<String> lore) {
     if (item == null)
       return null;
@@ -42,20 +70,47 @@ public class ItemStackUtils {
     return item;
   }
 
+  /**
+   * Set ItemMeta to the specific item
+   * 
+   * @param item        ItemStack used
+   * @param displayName Name displayed on the item
+   */
   public ItemStack setItemStackMeta(ItemStack item, String displayName) {
     return setItemMeta(item, displayName, null);
   }
 
+  /**
+   * Set ItemMeta to the specific item
+   * 
+   * @param item        ItemStack used
+   * @param displayName Name displayed on the item
+   * @param lore        Lore of the item to add (List)
+   */
   public ItemStack setItemStackMeta(ItemStack item, String displayName, List<String> lore) {
     return setItemMeta(item, displayName, lore);
   }
 
+  /**
+   * Set ItemMeta to the specific item
+   * 
+   * @param item        ItemStack used
+   * @param displayName Name displayed on the item
+   * @param lore        Lore of the item to add (String)
+   */
   public ItemStack setItemStackMeta(ItemStack item, String displayName, String lore) {
     if (lore == null)
       return setItemMeta(item, displayName, null);
     return setItemMeta(item, displayName, Arrays.asList(lore.split(";")));
   }
 
+  /**
+   * Set ItemMeta to the specific item
+   * 
+   * @param item        ItemStack used
+   * @param displayName Name displayed on the item
+   * @param lore        Lore of the item to add (String[])
+   */
   public ItemStack setItemStackMeta(ItemStack item, String displayName, String[] lore) {
     if (lore == null)
       return setItemMeta(item, displayName, null);

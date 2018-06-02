@@ -8,6 +8,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import lombok.experimental.UtilityClass;
 
+/**
+ * Utility Class about Item
+ */
 @UtilityClass
 public class ItemUtils {
 
@@ -49,6 +52,13 @@ public class ItemUtils {
     return item;
   }
 
+  /**
+   * Add or remove the glow to an item inside the inventory at a postion
+   * 
+   * @param inv Inventory to use
+   * @param pos Position to set the glow
+   * @param toGlow If true add the glow else remove the glow effect
+   */
   public void setGlow(Inventory inv, int pos, Boolean toGlow) {
     ItemStack item = inv.getItem(pos);
     item = (toGlow) ? ItemUtils.addGlow(item) : ItemUtils.removeGlow(item);

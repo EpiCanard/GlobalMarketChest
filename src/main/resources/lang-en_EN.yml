@@ -16,6 +16,7 @@ Divers:
   OtherLocation: "Other location"
   Group: "Group"
   Type: "Type"
+  Warning: "Warning"
 Shops:
   ClickChangeGroup: "Click to change shop group name"
   CurrentShop: "Current shop"
@@ -75,3 +76,5 @@ Buttons:
     Name: "Next page"
   NumPage:
     Name: "Page number"
+ErrorMessages:
+  ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
