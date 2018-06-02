@@ -13,8 +13,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.Warning;
 import lombok.Getter;
 
+/**
+ * Inventory Class that manage inventory view
+ */
 public class InventoryGUI {
   @Getter
   private Inventory inv;
@@ -23,13 +27,21 @@ public class InventoryGUI {
   private Map<String, Object> transaction = new HashMap<String, Object>();
   @Getter
   private Player player;
+  @Getter
+  private Warning warn;
 
   public InventoryGUI() {
     this.inv = Bukkit.createInventory(null, 54, "§8GlobalMarketChest");
+    this.warn = new Warning(this.inv);
   }
 
-  public Boolean inventoryEquals(Inventory i) {
-    return this.inv.equals(i);
+  /**
+   * Check if the inventory in param is the same as this inventory
+   * 
+   * @param inventory Inventory to verify
+   */
+  public Boolean inventoryEquals(Inventory inventory) {
+    return this.inv.equals(inventory);
   }
 
   /**
@@ -106,10 +118,19 @@ public class InventoryGUI {
     }
   }
 
+  /**
+   * Get the loaded interface
+   */
   public ShopInterface getInterface() {
     return this.shopStack.peek();
   }
 
+  /**
+   * Get Transiction Value
+   * 
+   * @param name Key to get transcation object
+   * @return <T> return the object with these key
+   */
   @SuppressWarnings("unchecked")
   public <T> T getTransValue(String name) {
     return (T) this.transaction.get(name);

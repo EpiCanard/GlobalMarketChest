@@ -30,6 +30,7 @@ AllowedLinkBlock:
   - minecraft:chest
 Interfaces:
   Background: minecraft:stained_glass_pane/15
+  Warn: minecraft:stained_glass_pane/14
   Buttons:
     NewAuction: minecraft:nether_star
     ExitButton: minecraft:barrier

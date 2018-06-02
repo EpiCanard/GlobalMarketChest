@@ -18,6 +18,10 @@ import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 
+/**
+ * Shop Interface for Creation Process
+ * Step 2 : Set the groupe name of the shop, can link the group name wither another shop
+ */
 public class ShopCreationLink extends ShopCreationInterface {
 
   public ShopCreationLink(InventoryGUI inv) {
@@ -30,20 +34,30 @@ public class ShopCreationLink extends ShopCreationInterface {
     this.actions.put(53, this::createShop);
   }
 
-  private void createShop(InventoryGUI i) {
+  /**
+   * Create the shop inside the database and leave the GUI
+   * Drop the sign if the shop already exist
+   * 
+   * @param gui InventoryGUI used shop creation
+   */
+  private void createShop(InventoryGUI gui) {
     ShopInfo shop = this.inv.getTransValue("ShopInfo");
     try {
       GlobalMarketChest.plugin.shopManager.createShop(shop);
-      Consumer<InventoryGUI> exit = new LeaveShop();
-      exit.accept(i);
     } catch (ShopAlreadyExistException e) {
-      PlayerUtils.sendMessagePlayer(i.getPlayer(), e.getMessage());
+      PlayerUtils.sendMessagePlayer(gui.getPlayer(), e.getMessage());
       shop.getSignLocation().getBlock().breakNaturally();
+    } finally {
       Consumer<InventoryGUI> exit = new LeaveShop();
-      exit.accept(i);
+      exit.accept(gui);
     }
-  }
+}
 
+  /**
+   * Load the shop link zone
+   * 
+   * @param pag Paginator used
+   */
   public void loadZone(Paginator pag) {
     List<ShopInfo> lst = pag.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
     List<ItemStack> items = pag.getItemstacks();
@@ -61,6 +75,11 @@ public class ShopCreationLink extends ShopCreationInterface {
     }
   }
 
+  /**
+   * Get the group name of the shop at position inside the inventory and set on current shop
+   * 
+   * @param pos Position inside the inventory
+   */
   public void changeName(Integer pos) {
     List<ShopInfo> subShops = this.paginator.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
     ShopInfo shop = this.inv.getTransValue("ShopInfo");
@@ -70,11 +89,17 @@ public class ShopCreationLink extends ShopCreationInterface {
     this.updateName();
   }
 
+  /**
+   * Called when loading the interface
+   */
   @Override
   public void load() {
     super.load();
   }
 
+  /**
+   * Called when unloading the interface
+   */
   @Override
   public void unload() {
   }

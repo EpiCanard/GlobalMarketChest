@@ -15,6 +15,10 @@ import fr.epicanard.globalmarketchest.shops.ShopType;
 import fr.epicanard.globalmarketchest.utils.ItemUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
+/**
+ * Shop Interface for Creation Process
+ * Step 1 : Selection shop type and Choose to link with another block (chest, etc)
+ */
 public class ShopCreationSelectType extends ShopCreationInterface {
 
   public ShopCreationSelectType(InventoryGUI inv) {
@@ -22,23 +26,42 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     this.actions.put(11, i -> this.toggleShop(11, ShopType.GLOBALSHOP));
     this.actions.put(13, i -> this.toggleShop(13, ShopType.AUCTIONSHOP));
     this.actions.put(15, i -> this.toggleShop(15, ShopType.ADMINSHOP));
-    this.actions.put(53, new NextInterface("ShopCreationLink"));
+    this.actions.put(53, new NextInterface("ShopCreationLink", this::checkCreation));
     this.paginator.setLoadConsumer(this::loadNearBlock);
     this.paginator.setClickConsumer(this::setOtherLocation);
   }
 
+  /**
+   * Set or unset glow on item below specific position (if type is set on mask or not)
+   * 
+   * @param pos   Position of the item
+   * @param mask  shop mask
+   * @param type  Type of shop
+   */
   private void setGlow(int pos, int mask, ShopType type) {
     ItemUtils.setGlow(this.inv.getInv(), pos + 9, type.isSetOn(mask));
   }
 
+  /**
+   * Toggle the ShopType in the specific shop
+   * 
+   * @param pos   Position in the inventory of the type
+   * @param type  Type to toggle
+   */
   private void toggleShop(int pos, ShopType type) {
     ShopInfo shop = this.inv.getTransValue("ShopInfo");
     shop.toggleType(type);
 
     this.setGlow(pos, shop.getType(), type);
     this.updateName();
+    this.inv.getWarn().stopWarn();
   }
 
+  /**
+   * Get near allowed block around the sign and add it in paginator
+   * 
+   * @param pag Paginator used
+   */
   private void loadNearBlock(Paginator pag) {
     ShopInfo shop = this.inv.getTransValue("ShopInfo");
 
@@ -48,6 +71,11 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     pag.getItemstacks().addAll(items);
   }
 
+  /**
+   * Get the block at the position and set as the otherLocation inside the shop
+   * 
+   * @param pos Position inside the inventory
+   */
   private void setOtherLocation(int pos) {
     ShopInfo shop = this.inv.getTransValue("ShopInfo");
     List<Block> blocks = this.paginator.getSubList(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()));
@@ -60,6 +88,25 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     } catch(IndexOutOfBoundsException e) {}
   }
 
+  /**
+   * Verify if the shop type is set if not display warning
+   * 
+   * @return if there is an error return false else true
+   */
+  private Boolean checkCreation() {
+    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+
+    if (shop != null && shop.getType() > 0) {
+      this.inv.getWarn().stopWarn();
+      return true;
+    }
+    this.inv.getWarn().warn("ShopTypeNotSet", 40);
+    return false;
+  }
+
+  /**
+   * Called when loading the interface
+   */
   @Override
   public void load() {
     super.load();
@@ -68,10 +115,13 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     this.setGlow(11, shop.getType(), ShopType.GLOBALSHOP);
     this.setGlow(13, shop.getType(), ShopType.AUCTIONSHOP);
     this.setGlow(15, shop.getType(), ShopType.ADMINSHOP);
-
   }
 
+  /**
+   * Called when unloading the interface
+   */
   @Override
   public void unload() {
+    this.inv.getWarn().stopWarn();
   }
 }
