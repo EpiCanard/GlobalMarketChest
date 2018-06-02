@@ -7,6 +7,9 @@ import org.bukkit.entity.Player;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 
+/**
+ * Consumer to leave the inventoryGUI
+ */
 public class LeaveShop implements Consumer<InventoryGUI> {
 
   @Override

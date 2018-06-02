@@ -14,9 +14,20 @@ import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import net.minecraft.server.v1_12_R1.ItemStack;
 
+/**
+ * Class that handle all auctions and communication with database
+ */
 class AuctionManager {
   /**
    * Create an auction inside database
+   * 
+   * @param itemStack
+   * @param itemMeta
+   * @param amount
+   * @param price
+   * @param type
+   * @param playerStarter
+   * @param group
    */
   public void createAuction(ItemStack itemStack, String itemMeta, Integer amount, Double price, AuctionType type, Player playerStarter, String group) {
     QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableAuctions);
@@ -37,11 +48,15 @@ class AuctionManager {
 
   /**
    * Update database when player obtain an auction
+   * 
+   * @param id Id of the auction to update
+   * @param buyer Player that vuy the auction
    */
   public void buyAuction(int id, Player buyer) {
     QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableAuctions);
 
     builder.addValue("playerEnder", PlayerUtils.getUUIDToString(buyer));
+    builder.addValue("end", DatabaseUtils.getTimestamp().toString());
     builder.addValue("state", StateAuction.FINISHED.getState());
     builder.addCondition("id", id);
 
@@ -50,6 +65,9 @@ class AuctionManager {
 
   /**
    * Create a querybuilder, update timestamp to now and change state to INPROGRESS
+   * 
+   * @param builder
+   * @return Return same builder
    */
   private QueryBuilder updateToNow(QueryBuilder builder) {
     Timestamp ts = DatabaseUtils.getTimestamp();
@@ -65,6 +83,9 @@ class AuctionManager {
 
   /**
    * Renew all player auctions expired
+   * 
+   * @param player
+   * @param group
    */
   public void renewEveryAuctionOfPlayer(Player player, String group) {
     QueryBuilder builder = this.updateToNow(null);
@@ -77,6 +98,8 @@ class AuctionManager {
 
   /**
    * Renew a specific auction
+   * 
+   * @param id Id of the auction to renew
    */
   public void renewAuction(int id) {
     QueryBuilder builder = this.updateToNow(null);
@@ -85,6 +108,11 @@ class AuctionManager {
     builder.execute(builder.update());
   }
 
+  /**
+   * Remove every auction before a specific date
+   * 
+   * @param useConfig Define if remove all or with the date in config file
+   */
   public void purgeAuctions(Boolean useConfig) {
     QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableAuctions);
     if  (useConfig) {

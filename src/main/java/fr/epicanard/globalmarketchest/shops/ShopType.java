@@ -1,5 +1,8 @@
 package fr.epicanard.globalmarketchest.shops;
 
+/**
+ * Enum for define the shop type
+ */
 public enum ShopType {
   GLOBALSHOP(1),
   AUCTIONSHOP(2),
