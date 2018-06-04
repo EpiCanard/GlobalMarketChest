@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.shops.ShopCreationInterface;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
@@ -41,7 +42,7 @@ public class ShopCreationLink extends ShopCreationInterface {
    * @param gui InventoryGUI used shop creation
    */
   private void createShop(InventoryGUI gui) {
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
     try {
       GlobalMarketChest.plugin.shopManager.createShop(shop);
     } catch (ShopAlreadyExistException e) {
@@ -82,7 +83,7 @@ public class ShopCreationLink extends ShopCreationInterface {
    */
   public void changeName(Integer pos) {
     List<ShopInfo> subShops = this.paginator.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     if (shop != null)
       shop.setGroup(subShops.get(pos).getGroup());
