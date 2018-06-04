@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.CategoryHandler;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.actions.NewAuction;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
@@ -13,6 +14,7 @@ public class GlobalShop extends ShopInterface {
 
   public GlobalShop(InventoryGUI inv) {
     super(inv);
+    this.actions.put(53, new NewAuction());
   }
 
   @Override

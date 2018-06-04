@@ -38,10 +38,20 @@ ConfigShop:
 CreateAuction:
   Height: 6
   Items:
+    0: Return
+    8: ExitButton
     12-14: AuctionSide
     21-23: AuctionSide
-    22: DragItem
+    22: AuctionMiddle
     30-32: AuctionSide
+    53: Validate
+
+CreateAuctionPrice:
+  Height: 6
+  Items:
+    0: Return
+    8: ExitButton
+    53: CreateShop
 
 ShopCreationSelectType:
   Height: 6

@@ -76,5 +76,10 @@ Buttons:
     Name: "Page suivante"
   NumPage:
     Name: "Numéro de la page"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2Déposez un item ici"
+    Description: "&2ou utilises SHIFT-Click"
 ErrorMessages:
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"

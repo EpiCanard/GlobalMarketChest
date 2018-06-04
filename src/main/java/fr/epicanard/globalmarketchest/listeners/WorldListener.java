@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
@@ -42,6 +43,7 @@ public class WorldListener implements Listener {
       }
       InventoryGUI inv = new InventoryGUI();
       GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
+      inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
       inv.loadInterface("GlobalShop");
       inv.open(player);
     }

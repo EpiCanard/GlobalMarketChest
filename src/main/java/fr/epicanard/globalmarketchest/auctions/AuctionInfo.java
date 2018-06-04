@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+import org.bukkit.entity.Player;
+
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import lombok.Getter;
 
@@ -52,5 +54,12 @@ public class AuctionInfo {
     } catch (SQLException e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
     }
+  }
+
+  public AuctionInfo(AuctionType type, Player owner, String group) {
+    this.state = StateAuction.getStateAuction(StateAuction.INPROGRESS.getState());
+    this.type = AuctionType.getAuctionType(type.getType());
+    this.playerStarter = owner.getUniqueId().toString();
+    this.group = group;
   }
 }

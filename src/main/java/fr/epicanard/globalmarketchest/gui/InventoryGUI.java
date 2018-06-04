@@ -14,6 +14,7 @@ import org.bukkit.inventory.Inventory;
 
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.gui.shops.Warning;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.Getter;
 
 /**
@@ -24,14 +25,14 @@ public class InventoryGUI {
   private Inventory inv;
   private Deque<ShopInterface> shopStack = new ArrayDeque<ShopInterface>();
   @Getter
-  private Map<String, Object> transaction = new HashMap<String, Object>();
+  private Map<TransactionKey, Object> transaction = new HashMap<TransactionKey, Object>();
   @Getter
   private Player player;
   @Getter
   private Warning warn;
 
   public InventoryGUI() {
-    this.inv = Bukkit.createInventory(null, 54, "§8GlobalMarketChest");
+    this.inv = Bukkit.createInventory(null, 54, Utils.toColor("&2GlobalMarketChest"));
     this.warn = new Warning(this.inv);
   }
 
@@ -92,7 +93,7 @@ public class InventoryGUI {
   /**
    * Unload all interface
    * 
-   * @param name
+   * @param key
    */
   public void unloadAllInterface() {
     try {
@@ -126,13 +127,13 @@ public class InventoryGUI {
   }
 
   /**
-   * Get Transiction Value
+   * Get Transaction Value
    * 
-   * @param name Key to get transcation object
+   * @param key Key to get transcation object
    * @return <T> return the object with these key
    */
   @SuppressWarnings("unchecked")
-  public <T> T getTransValue(String name) {
-    return (T) this.transaction.get(name);
+  public <T> T getTransactionValue(TransactionKey key) {
+    return (T) this.transaction.get(key);
   }
 }

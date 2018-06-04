@@ -65,5 +65,12 @@ public abstract class ShopInterface {
     if (this.paginator == null ||!this.paginator.onClick(event.getSlot()))
       Optional.ofNullable(this.actions.get(event.getSlot())).ifPresent(c -> c.accept(inv));
   }
+
+  /**
+   * Called when a mouse drop event is done inside inventory
+   * 
+   * @param event
+   */
+  public void onDrop(InventoryClickEvent event, InventoryGUI inv) {}
   
 }

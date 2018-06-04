@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.shops.ShopCreationInterface;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
@@ -51,7 +52,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param type  Type to toggle
    */
   private void toggleShop(int pos, ShopType type) {
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
     shop.toggleType(type);
 
     this.setGlow(pos, shop.getType(), type);
@@ -65,7 +66,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param pag Paginator used
    */
   private void loadNearBlock(Paginator pag) {
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     List<Block> blocks = pag.getSubList(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()));
     List<ItemStack> items = blocks.stream().map(block -> new ItemStack(block.getType())).collect(Collectors.toList());
@@ -79,7 +80,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param pos Position inside the inventory
    */
   private void setOtherLocation(int pos) {
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
     List<Block> blocks = this.paginator.getSubList(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()));
 
     try {
@@ -96,7 +97,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @return if there is an error return false else true
    */
   private Boolean checkCreation() {
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     if (shop != null && shop.getType() > 0) {
       this.inv.getWarn().stopWarn();
@@ -113,7 +114,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
   public void load() {
     super.load();
 
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
     this.setGlow(11, shop.getType(), ShopType.GLOBALSHOP);
     this.setGlow(13, shop.getType(), ShopType.AUCTIONSHOP);
     this.setGlow(15, shop.getType(), ShopType.ADMINSHOP);
