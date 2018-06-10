@@ -20,7 +20,7 @@ public class MySQLConnection extends DatabaseConnection {
   public MySQLConnection() throws ConfigException {
     super();
 
-    this.pool = new LinkedBlockingQueue<Connection>();
+    this.pool = new LinkedBlockingQueue<>();
     this.simultaneousConnections = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Connection.SimultaneousConnection");
     if (this.simultaneousConnections == null)
       this.simultaneousConnections = 1;
@@ -94,9 +94,8 @@ public class MySQLConnection extends DatabaseConnection {
   protected Connection connect() {
     try {
       Class.forName("com.mysql.jdbc.Driver");
-      Connection con = DriverManager.getConnection("jdbc:mysql://" + this.buildUrl(),
+      return DriverManager.getConnection("jdbc:mysql://" + this.buildUrl(),
           this.user, this.password);
-      return con;
     } catch (SQLException | ClassNotFoundException e) {
       e.printStackTrace();
     }

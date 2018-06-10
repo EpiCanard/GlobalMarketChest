@@ -1,7 +1,9 @@
 package fr.epicanard.globalmarketchest.gui;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -12,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
 import fr.epicanard.globalmarketchest.gui.paginator.PaginatorConfig;
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
 /**
@@ -21,8 +24,10 @@ import fr.epicanard.globalmarketchest.utils.Utils;
  */
 public class InterfacesLoader {
   private static InterfacesLoader INSTANCE;
-  private Map<String, ItemStack[]> interfaces = new HashMap<String, ItemStack[]>();
-  private Map<String, PaginatorConfig> paginators = new HashMap<String, PaginatorConfig>();
+  private Map<String, ItemStack[]> interfaces = new HashMap<>();
+  private Map<String, PaginatorConfig> paginators = new HashMap<>();
+  private Map<String, ItemStack[]> baseInterfaces = new HashMap<>();
+  private Map<String, PaginatorConfig> basePaginators = new HashMap<>();
 
   private InterfacesLoader() {
   }
@@ -31,15 +36,6 @@ public class InterfacesLoader {
     if (INSTANCE == null)
       INSTANCE = new InterfacesLoader();
     return INSTANCE;
-  }
-
-  /**
-   * Get all interfaces loaded
-   * 
-   * @return
-   */
-  public Map<String, ItemStack[]> getInterfaces() {
-    return this.interfaces;
   }
 
   /**
@@ -67,13 +63,13 @@ public class InterfacesLoader {
    * @param config
    * @param name
    */
-  private void loadPaginator(YamlConfiguration config, String name) {
+  private void loadPaginator(ConfigurationSection config, String name, Map<String, PaginatorConfig> map) {
     ConfigurationSection sec = config.getConfigurationSection(name + ".Paginator");
 
     if (sec == null)
       return;
     try {
-      this.paginators.put(name, new PaginatorConfig(
+      map.put(name, new PaginatorConfig(
         sec.getInt("Height"),
         sec.getInt("Width"),
         sec.getInt("StartPos"),
@@ -91,33 +87,66 @@ public class InterfacesLoader {
    * @param config
    * @param name
    */
-  private void loadInterface(YamlConfiguration config, String name) {
-    ItemStack[] itemsStack = new ItemStack[54];
-    Map<Integer, String> items = this.parseItems(config.getConfigurationSection(name + ".Items").getValues(false));
+  private void loadInterface(ConfigurationSection config, String name, Map<String, ItemStack[]> map) {
+    ConfigurationSection itemsConfig = config.getConfigurationSection(name + ".Items");
+    if (itemsConfig == null)
+      return;
+    Map<Integer, String> items = this.parseItems(itemsConfig.getValues(false));
 
-    for (int i = 0; i < 54; i++)
-      itemsStack[i] = Utils.getButton(items.get(i));
-    this.interfaces.put(name, itemsStack);
+    if (map.get(name) == null) {
+      ItemStack[] itemsStack = new ItemStack[54];
+      for (int i = 0; i < 54; i++)
+        itemsStack[i] = Utils.getButton(items.get(i));
+        map.put(name, itemsStack);
+      } else {
+      for (Integer key : items.keySet())
+        map.get(name)[key] = Utils.getButton(items.get(key));
+    }
   }
 
   /**
-   * Load interfaces Create a map, where the key is the name of the interface
+   * Load interfaces inside a map, where the key is the name of the interface
    * and the value a list of ItemStack
    * When there no item specified for a position it's filled with background item
    * 
    * @param interfaceConfig YamlConfiguration
-   * @param reload if it's set to true force reload from configuraiton
+   * @param loadBase if set to true get base interfaces and it in final interface
+   * @return
+   */
+  private void loadInterfaces(ConfigurationSection interfaceConfig, Boolean loadBase) {
+    Set<String> interfacesName = interfaceConfig.getKeys(false);
+
+    for (String name : interfacesName) {
+      if (loadBase) {
+        for (String base : interfaceConfig.getStringList(name + ".Base")) {
+          Optional.ofNullable(this.baseInterfaces.get(base)).ifPresent(i -> {
+            if (this.interfaces.get(name) == null)
+              this.interfaces.put(name, Arrays.copyOf(i, i.length));
+            else
+              ItemStackUtils.mergeArray(this.interfaces.get(name), i);
+          });
+          Optional.ofNullable(this.basePaginators.get(base)).ifPresent(p -> this.paginators.put(base, p.duplicate()));
+        }
+      }
+      this.loadInterface(interfaceConfig, name, (loadBase) ? this.interfaces : this.baseInterfaces);
+      this.loadPaginator(interfaceConfig, name, (loadBase) ? this.paginators : this.basePaginators);
+    }
+  }
+
+  /**
+   * Load all interfaces in a map of string and itemstacks
+   * 
+   * @param interfaceConfig YamlConfiguration
    * @return
    */
   public Map<String, ItemStack[]> loadInterfaces(YamlConfiguration interfaceConfig) {
-    Set<String> interfacesName = interfaceConfig.getKeys(false);
     this.interfaces.clear();
     this.paginators.clear();
-
-    for (String name : interfacesName) {
-      this.loadInterface(interfaceConfig, name);
-      this.loadPaginator(interfaceConfig, name);
-    }
+    this.baseInterfaces.clear();
+    this.basePaginators.clear();
+    
+    this.loadInterfaces(interfaceConfig.getConfigurationSection("BaseInterfaces"), false);
+    this.loadInterfaces(interfaceConfig.getConfigurationSection("Interfaces"), true);
     return this.interfaces;
   }
 

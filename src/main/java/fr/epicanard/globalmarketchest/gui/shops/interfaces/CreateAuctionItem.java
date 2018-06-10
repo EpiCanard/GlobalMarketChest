@@ -1,0 +1,149 @@
+package fr.epicanard.globalmarketchest.gui.shops.interfaces;
+
+import java.util.Arrays;
+import java.util.Map;
+
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+
+import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
+import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
+import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
+import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.Toggler;
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
+
+public class CreateAuctionItem extends ShopInterface {
+  private Toggler toggler;
+
+  public CreateAuctionItem(InventoryGUI inv) {
+    super(inv);
+    this.isTemp = true;
+    this.toggler = new Toggler(inv.getInv(), 53);
+    this.actions.put(22, i -> this.unsetItem());
+    this.actions.put(0, new PreviousInterface(() -> {
+      this.unsetItem();
+      this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
+    }));
+    this.actions.put(48, i -> this.defineMaxInOne());
+    this.actions.put(50, i -> this.defineMaxRepeat());
+    this.actions.put(53, new NextInterface("CreateAuctionPrice", this::checkItem));
+  }
+
+  @Override
+  public void load() {
+    super.load();
+    this.toggler.load();
+
+    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    if (item != null)
+      this.inv.getInv().setItem(22, item);
+    else
+      this.toggler.unset();
+  }
+
+  @Override
+  public void unload() {
+  }
+
+  /**
+   * Set the item in dropzone when drop
+   * 
+   * @param item ItemStack to set in drop zone
+   */
+  private void setItem(ItemStack item) {
+    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+
+    auction.setAmount(item.getAmount());
+    auction.setItemStack(item);
+    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, 1);
+    this.inv.getTransaction().put(TransactionKey.TEMPITEM, item.clone());
+    this.updateItem();
+    this.toggler.set();
+    Map<String, Object> ser = item.serialize();
+    for (String key : ser.keySet()) {
+      System.out.println("KEY : " + key + " - VALUE : " + ser.get(key));
+    }
+
+  }
+
+  /**
+   * Remove the item from drop zone
+   */
+  private void unsetItem() {
+    System.out.println("UNSET");
+    this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
+    ItemStack[] items = InterfacesLoader.getInstance().getInterface("CreateAuctionItem");
+    this.inv.getInv().setItem(22, items[22]);
+    this.toggler.unset();
+  }
+
+  /**
+   * Check if TEMPITEM is set (item dropped in interface)
+   * 
+   * @return false if TEMPITEM is not set else true
+   */
+  private Boolean checkItem() {
+    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    return (item != null);
+  }
+
+  /**
+   * Get lore with quantity and price for current auction item
+   * 
+   * @return the lore completed
+   */
+  private void updateItem() {
+    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+
+    String[] lore = {
+      "&7" + LangUtils.get("Divers.Quantity") + " : &6" + auction.getAmount(),
+      "&7" + LangUtils.get("Divers.AuctionNumber") + " : &6" + this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER)
+    };
+    this.inv.getInv().setItem(22, ItemStackUtils.setItemStackLore(item.clone(), lore));
+  }
+
+  private void defineMaxInOne() {
+    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+
+    ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
+    Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0, (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
+    item.setAmount((max > 64) ? 64 : max);
+    auction.setAmount(max);
+    this.updateItem();
+  }
+
+  private void defineMaxRepeat() {
+    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+
+    ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
+    Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0, (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
+    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, (Integer)(max / auction.getAmount()));
+    this.updateItem();
+  }
+
+  /**
+   * Called when a mouse drop event is done inside inventory
+   * 
+   * @param event
+   */
+  public void onDrop(InventoryClickEvent event, InventoryGUI inv) {
+    ItemStack item;
+    if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY)
+      item = event.getCurrentItem();
+    else {
+      item = event.getCursor();
+      event.getWhoClicked().setItemOnCursor(null);
+      event.getWhoClicked().getInventory().addItem(item);
+    }
+    this.setItem(item);
+  }  
+}

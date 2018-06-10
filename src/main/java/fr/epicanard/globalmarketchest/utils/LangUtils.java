@@ -15,10 +15,18 @@ public class LangUtils {
    * @return
    */
   public String get(String path) {
-    String ret = GlobalMarketChest.plugin.getConfigLoader().getLanguages().getString(path);
-    if (ret == null) {
-      return "MISSING_VAR";
-    }
-    return ret;
+    return LangUtils.getOrElse(path, "MISSING_VAR");
+  }
+
+  /**
+   * Get language translate or else value if null
+   * 
+   * @param path Path to variable inside language file
+   * @param els Else value
+   * @return if string not in config set else value
+   */
+  public String getOrElse(String path, String els) {
+    String value = GlobalMarketChest.plugin.getConfigLoader().getLanguages().getString(path);
+    return Utils.toColor((value != null) ? value : els);
   }
 }

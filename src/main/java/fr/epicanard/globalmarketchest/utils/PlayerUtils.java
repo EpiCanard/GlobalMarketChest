@@ -37,6 +37,6 @@ public class PlayerUtils {
    * @param message message to sent to player
    */
   public void sendMessagePlayer(Player pl, String message) {
-    pl.sendMessage("[GlobalMarketChest] " + message);
+    pl.sendMessage("[GlobalMarketChest] " + Utils.toColor(message));
   }
 }

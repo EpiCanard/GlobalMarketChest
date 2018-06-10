@@ -61,12 +61,26 @@ public class ItemStackUtils {
       return null;
 
     ItemMeta met = item.getItemMeta();
-    met.setDisplayName((displayName == null) ? " " : Utils.toColor(displayName));
-    if (lore != null) {
+    if (met != null)
+      met.setDisplayName((displayName == null) ? " " : Utils.toColor(displayName));
+    item.setItemMeta(ItemStackUtils.setMetaLore(met, lore));
+    return item;
+  }
+
+  private ItemMeta setMetaLore(ItemMeta meta, List<String> lore) {
+    if (meta != null && lore != null) {
       lore = lore.stream().map(element ->  Utils.toColor(element)).collect(Collectors.toList());
-      met.setLore(lore);
+      meta.setLore(lore);
     }
-    item.setItemMeta(met);
+    return meta;
+  }
+
+  public ItemStack setItemStackLore(ItemStack item, String[] lore) {
+    if (item == null)
+      return null;
+
+    ItemMeta met = item.getItemMeta();
+    item.setItemMeta(ItemStackUtils.setMetaLore(met, Arrays.asList(lore)));
     return item;
   }
 
@@ -115,5 +129,12 @@ public class ItemStackUtils {
     if (lore == null)
       return setItemMeta(item, displayName, null);
     return setItemMeta(item, displayName, Arrays.asList(lore));
+  }
+
+  public ItemStack[] mergeArray(ItemStack[] a, ItemStack[] b) {
+    for (int i = 0; i < a.length && i < b.length; i++)
+      if (!b[i].equals(Utils.getBackground()))
+        a[i] = b[i];
+    return a;
   }
 }

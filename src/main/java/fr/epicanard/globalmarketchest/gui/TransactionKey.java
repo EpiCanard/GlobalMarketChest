@@ -4,5 +4,6 @@ public enum TransactionKey {
   TEMPITEM,
   SHOPINFO,
   AUCTIONINFO,
+  AUCTIONNUMBER,
   ;
 }

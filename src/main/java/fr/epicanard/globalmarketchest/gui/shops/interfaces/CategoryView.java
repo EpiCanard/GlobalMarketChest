@@ -10,9 +10,9 @@ import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
-public class GlobalShop extends ShopInterface {
+public class CategoryView extends ShopInterface {
 
-  public GlobalShop(InventoryGUI inv) {
+  public CategoryView(InventoryGUI inv) {
     super(inv);
     this.actions.put(53, new NewAuction());
   }

@@ -31,7 +31,8 @@ public class InventoryGUI {
   @Getter
   private Warning warn;
 
-  public InventoryGUI() {
+  public InventoryGUI(Player player) {
+    this.player = player;
     this.inv = Bukkit.createInventory(null, 54, Utils.toColor("&2GlobalMarketChest"));
     this.warn = new Warning(this.inv);
   }
@@ -50,8 +51,7 @@ public class InventoryGUI {
    * 
    * @param player
    */
-  public void open(Player player) {
-    this.player = player;
+  public void open() {
     player.openInventory(this.inv);
   }
 
@@ -60,9 +60,7 @@ public class InventoryGUI {
    * 
    * @param player
    */
-  public void close(Player player) {
-    if (player != null)
-      player.closeInventory();
+  public void close() {
     this.player.closeInventory();
   }
 
@@ -111,7 +109,7 @@ public class InventoryGUI {
     try {
       ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops.interfaces." + name).getDeclaredConstructor(InventoryGUI.class).newInstance(this);
       Optional.ofNullable(this.shopStack.peek()).ifPresent(ShopInterface::unload);
-     
+
       shop.load();
       this.shopStack.push(shop);
     } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {

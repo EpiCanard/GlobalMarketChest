@@ -15,6 +15,7 @@ import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
 import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
 import fr.epicanard.globalmarketchest.database.connections.MySQLConnection;
 import fr.epicanard.globalmarketchest.economy.VaultEconomy;
+import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
@@ -23,6 +24,7 @@ import fr.epicanard.globalmarketchest.listeners.CloseGUICollector;
 import fr.epicanard.globalmarketchest.listeners.GUIListener;
 import fr.epicanard.globalmarketchest.listeners.ShopCreationListener;
 import fr.epicanard.globalmarketchest.listeners.WorldListener;
+import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
@@ -39,7 +41,8 @@ public class GlobalMarketChest extends JavaPlugin {
   public final InventoriesHandler inventories;
   public final VaultEconomy economy;
   public final ShopManager shopManager;
-  public Map<String, ItemStack[]> interfaces;
+  public final AuctionManager auctionManager;
+  public final Map<String, ItemStack[]> interfaces;
 
   public GlobalMarketChest() {
     // Initialization of loader
@@ -47,25 +50,34 @@ public class GlobalMarketChest extends JavaPlugin {
     this.inventories = new InventoriesHandler();
     this.economy = new VaultEconomy();
     this.shopManager = new ShopManager();
-    this.interfaces = new HashMap<String, ItemStack[]>();
+    this.auctionManager = new AuctionManager();
+    this.interfaces = new HashMap<>();
   }
 
   @Override
   public void onEnable() {
-    plugin = this;
+    GlobalMarketChest.plugin = this;
 
-    this.configLoader.loadFiles();
+    try {
+      this.configLoader.loadFiles();
+    } catch (CantLoadConfigException e) {
+      this.getLogger().log(Level.SEVERE, e.getMessage());
+      this.disable();
+      return;
+    }
 
     ShopUtils.init();
     Utils.init();
 
     YamlConfiguration defConfig = this.configLoader.loadResource("interfaces.yml");
-    this.interfaces = InterfacesLoader.getInstance().loadInterfaces(defConfig);
+    this.interfaces.clear();
+    this.interfaces.putAll(InterfacesLoader.getInstance().loadInterfaces(defConfig));
 
     try {
       this.initEconomy();
       this.initDatabase();
     } catch (Exception e) {
+      this.disable();
       return;
     }
     
@@ -84,6 +96,11 @@ public class GlobalMarketChest extends JavaPlugin {
     this.sqlConnection.cleanPool();
   }
 
+  public void disable() {
+    this.getLogger().log(Level.WARNING, "Plugin GlobalMarketChest disabled");
+    this.setEnabled(false);
+  }
+
   /**
    * Init the economy plugin
    * @throws Exception
@@ -93,8 +110,6 @@ public class GlobalMarketChest extends JavaPlugin {
       this.economy.initEconomy();
     } catch (RequiredPluginException e) {
       this.getLogger().log(Level.WARNING, e.getMessage());
-      this.getLogger().log(Level.WARNING, "Plugin GlobalMarketChest disabled");
-      this.setEnabled(false);
       throw new Exception();
     }
   }
@@ -105,14 +120,13 @@ public class GlobalMarketChest extends JavaPlugin {
    */
   private void initDatabase() throws Exception {
     try {
-      this.sqlConnection = (DatabaseConnection)new MySQLConnection();
+      this.sqlConnection = new MySQLConnection();
       this.sqlConnection.configFromConfigFile();
       this.sqlConnection.fillPool();
       DatabaseConnection.configureTables();
       this.sqlConnection.recreateTables();
     } catch (ConfigException e) {
       this.getLogger().log(Level.WARNING, "[SQLConnection] " + e.getMessage());
-      this.setEnabled(false);
       throw new Exception();
     }
   }
@@ -124,7 +138,6 @@ public class GlobalMarketChest extends JavaPlugin {
   public Boolean hasPermission(Player player, String perm) {
     if (player == null || perm == null)
       return false;
-    
     return true;
   }
 

@@ -18,6 +18,6 @@ public class NewAuction implements Consumer<InventoryGUI> {
     ShopInfo shop = inv.getTransactionValue(TransactionKey.SHOPINFO);
     AuctionInfo info = new AuctionInfo(AuctionType.SELL, inv.getPlayer(), shop.getGroup());
     inv.getTransaction().put(TransactionKey.AUCTIONINFO, info);
-    inv.loadInterface("CreateAuction");
+    inv.loadInterface("CreateAuctionItem");
   }
 }

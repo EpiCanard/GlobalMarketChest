@@ -52,7 +52,7 @@ public class ShopCreationLink extends ShopCreationInterface {
       Consumer<InventoryGUI> exit = new LeaveShop();
       exit.accept(gui);
     }
-}
+  }
 
   /**
    * Load the shop link zone

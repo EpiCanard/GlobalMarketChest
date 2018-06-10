@@ -4,10 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import lombok.Getter;
+import lombok.Setter;
 
 public class AuctionInfo {
   @Getter
@@ -16,9 +19,9 @@ public class AuctionInfo {
   private String itemStack;
   @Getter
   private String itemMeta;
-  @Getter
+  @Getter @Setter
   private Integer amount;
-  @Getter
+  @Getter @Setter
   private Double price;
   @Getter
   private StateAuction state;
@@ -35,7 +38,7 @@ public class AuctionInfo {
   @Getter
   private String group;
   
-  public AuctionInfo(ResultSet res) throws NullPointerException {
+  public AuctionInfo(ResultSet res) {
     if (res == null)
       throw new NullPointerException("Fail to get auction from database");
     try {
@@ -59,7 +62,12 @@ public class AuctionInfo {
   public AuctionInfo(AuctionType type, Player owner, String group) {
     this.state = StateAuction.getStateAuction(StateAuction.INPROGRESS.getState());
     this.type = AuctionType.getAuctionType(type.getType());
+    this.price = 0.0;
     this.playerStarter = owner.getUniqueId().toString();
     this.group = group;
+  }
+
+  public void setItemStack(ItemStack item) {
+    this.itemStack = CraftItemStack.asNMSCopy(item).getItem().getName();
   }
 }

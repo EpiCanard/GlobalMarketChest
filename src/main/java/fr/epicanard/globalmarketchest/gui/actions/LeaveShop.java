@@ -16,7 +16,7 @@ public class LeaveShop implements Consumer<InventoryGUI> {
   public void accept(InventoryGUI t) {
     t.unloadAllInterface();
     Player pl = t.getPlayer();
-    t.close(pl);
+    t.close();
     GlobalMarketChest.plugin.inventories.removeInventory(pl.getUniqueId());
   }
 }

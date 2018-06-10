@@ -19,9 +19,9 @@ import fr.epicanard.globalmarketchest.database.querybuilder.MultiConditionMap;
 import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
 
 public class QueryBuilder {
-  MultiConditionMap conditions = new MultiConditionMap();
-  MultiConditionMap values = new MultiConditionMap();
-  String tableName;
+  private MultiConditionMap conditions = new MultiConditionMap();
+  private MultiConditionMap values = new MultiConditionMap();
+  private String tableName;
 
   public QueryBuilder(String tableName) {
     this.tableName = tableName;
@@ -67,10 +67,10 @@ public class QueryBuilder {
    */
 
   public void setPrepared(PreparedStatement prepared, MultiConditionMap map, int inc) throws SQLException, TypeNotSupported {
-    List<Object> values = map.values();
+    List<Object> vals = map.values();
 
-    for (int i = 0; i < values.size(); i++) {
-      final Object value = values.get(i);
+    for (int i = 0; i < vals.size(); i++) {
+      final Object value = vals.get(i);
       switch (value.getClass().getSimpleName()) {
         case "String":
           prepared.setString(i + inc + 1, (String)value);
@@ -110,7 +110,8 @@ public class QueryBuilder {
       if (type == QueryType.INSERT) 
         res = prepared.getGeneratedKeys();
 
-      Optional.ofNullable(res).ifPresent(consumer);
+      if (consumer != null)
+        Optional.ofNullable(res).ifPresent(consumer);
 
       GlobalMarketChest.plugin.getSqlConnection().closeRessources(res, prepared);
     } catch (SQLException e) {
