@@ -21,7 +21,7 @@ public abstract class DatabaseConnection {
     String prefix = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Connection.TablePrefix");
     if (prefix == null)
       return;
-    if (prefix.matches("[a-zA-Z_]*") == false)
+    if (!prefix.matches("[a-zA-Z_]*"))
       throw new ConfigException("tablePrefix not containing only letters or/and _");
   
     DatabaseConnection.tableAuctions = prefix + "auctions";

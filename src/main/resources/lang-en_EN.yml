@@ -1,14 +1,19 @@
-GUITitle:
-  SelectShop: "Select a shop"
-  ChooseTypeShop : "&5Choose a shop type"
-  NewAuction: "&2Creating new auction"
-  CreationShop:
-    GlobalShop: "Creation of Global Shop"
+InterfacesTitle:
+  CategoryView: "&2Category view"
+  AuctionViewGroup: "&2AuctionViewGroup"
+  ConfigShop : "&2Shop configuration"
+  # Auction Creation
+  CreateAuctionItem: "&2Select auction item"
+  CreateAuctionPrice: "&2Select auction price"
+  # Shop Creation
+  ShopCreationSelectType: "&2Select shop Type and link block"
+  ShopCreationLink: "&2Set group name / link shop"
 Divers:
   State: "Status"
   Quantity: "Amount"
   UnitPrice: "PriceEach"
   TotalPrice: "PriceTotal"
+  AuctionNumber: "Auction Number"
   Seller: "Seller"
   Buyer: "Buyer"
   Start: "Started"
@@ -81,5 +86,9 @@ Buttons:
   AuctionMiddle:
     Name: "&2Drop an item here"
     Description: "&2or use SHIFT-Click"
+  MaxInOne:
+    Name: "Maximum items in one auction"
+  MaxRepeat:
+    Name: "Repeat auction as many as possible"
 ErrorMessages:
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"

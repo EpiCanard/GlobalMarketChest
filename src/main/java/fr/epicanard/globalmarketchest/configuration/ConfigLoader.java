@@ -9,6 +9,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
 import lombok.Getter;
 
 public class ConfigLoader {
@@ -26,7 +27,7 @@ public class ConfigLoader {
     this.categories =  null;
   }
   
-  private YamlConfiguration loadOneFile(String fileName) {
+  private YamlConfiguration loadOneFile(String fileName) throws CantLoadConfigException {
     if (!fileName.substring(fileName.length() - 4).equals(".yml"))
       fileName += ".yml";
 
@@ -41,12 +42,9 @@ public class ConfigLoader {
     try {
       conf.load(confFile);
       return conf;
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (InvalidConfigurationException e) {
-      e.printStackTrace();
+    } catch (IOException | IllegalArgumentException | InvalidConfigurationException e) {
+      throw new CantLoadConfigException(fileName);
     }
-    return null;
   }
 
   public YamlConfiguration loadResource(String filename) {
@@ -58,7 +56,7 @@ public class ConfigLoader {
 		}
   }
   
-  public void loadFiles() {
+  public void loadFiles()  throws CantLoadConfigException {
     this.config = this.loadOneFile("config.yml");
     this.categories = this.loadOneFile("categories.yml");
     if (this.config != null) {

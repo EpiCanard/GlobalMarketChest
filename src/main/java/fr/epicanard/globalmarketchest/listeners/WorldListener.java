@@ -39,13 +39,13 @@ public class WorldListener implements Listener {
       event.setCancelled(true);
       if (GlobalMarketChest.plugin.inventories.hasInventory(player.getUniqueId())) {
         InventoryGUI old = GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
-        old.close(player);
+        old.close();
       }
-      InventoryGUI inv = new InventoryGUI();
+      InventoryGUI inv = new InventoryGUI(player);
       GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
       inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
-      inv.loadInterface("GlobalShop");
-      inv.open(player);
+      inv.open();
+      inv.loadInterface("CategoryView");
     }
   }
 }

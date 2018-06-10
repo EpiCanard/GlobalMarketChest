@@ -23,12 +23,12 @@ public class ShopCreationListener implements Listener {
     
     if (event.getLine(0).compareTo("[GMC]") == 0) {
       ShopInfo shop = new ShopInfo(-1, player.getUniqueId().toString(), ShopType.GLOBALSHOP.setOn(0), event.getBlock().getLocation(), null, ShopUtils.generateName());
-      InventoryGUI inv = new InventoryGUI();
+      InventoryGUI inv = new InventoryGUI(player);
 
       inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
       GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
+      inv.open();
       inv.loadInterface("ShopCreationSelectType");
-      inv.open(player);
     }
   }
 }

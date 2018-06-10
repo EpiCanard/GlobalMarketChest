@@ -28,6 +28,24 @@ WorldAllowed:
 AllowedLinkBlock:
   - minecraft:ender_chest
   - minecraft:chest
+Price:
+  Ranges:
+    - 1000
+    - 100
+    - 10
+    - 1
+    - 0.1
+    - 0.01    
+  Items:
+    - minecraft:emerald_block
+    - minecraft:emerald
+    - minecraft:diamond_block
+    - minecraft:diamond
+    - minecraft:gold_ingot
+    - minecraft:iron_ingot
+    - minecraft:coal
+    - minecraft:redstone
+    - minecraft:dye/4
 Interfaces:
   Background: minecraft:stained_glass_pane/15
   Warn: minecraft:stained_glass_pane/14
@@ -53,7 +71,8 @@ Interfaces:
     PreviousPage: minecraft:arrow
     NextPage: minecraft:arrow
     NumPage: minecraft:book
-
+    MaxInOne: minecraft:stained_glass_pane/1
+    MaxRepeat: minecraft:stained_glass_pane/1
 Sign:
   Appearance:
     GlobalShop:

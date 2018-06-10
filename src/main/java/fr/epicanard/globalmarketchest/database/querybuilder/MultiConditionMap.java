@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 public class MultiConditionMap {
   @Getter
-  private List<ConditionStructure> map = new ArrayList<ConditionStructure>();
+  private List<ConditionStructure> map = new ArrayList<>();
 
   public List<String> keys() {
     return this.map.stream().map(ConditionStructure::getKey).collect(Collectors.toList());

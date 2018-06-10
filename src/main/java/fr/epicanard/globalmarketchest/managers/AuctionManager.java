@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import org.bukkit.entity.Player;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionType;
 import fr.epicanard.globalmarketchest.auctions.StateAuction;
 import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
@@ -12,12 +13,11 @@ import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryBuilder;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import net.minecraft.server.v1_12_R1.ItemStack;
 
 /**
  * Class that handle all auctions and communication with database
  */
-class AuctionManager {
+public class AuctionManager {
   /**
    * Create an auction inside database
    * 
@@ -29,21 +29,25 @@ class AuctionManager {
    * @param playerStarter
    * @param group
    */
-  public void createAuction(ItemStack itemStack, String itemMeta, Integer amount, Double price, AuctionType type, Player playerStarter, String group) {
+  public Boolean createAuction(String itemStack, String itemMeta, Integer amount, Double price, AuctionType type, String playerStarter, String group) {
     QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableAuctions);
     Timestamp ts = DatabaseUtils.getTimestamp();
 
-    builder.addValue("itemStack", itemStack.getItem().getName());
+    builder.addValue("itemStack", itemStack);
     builder.addValue("itemMeta", itemMeta);
     builder.addValue("amount", amount);
     builder.addValue("price", price);
     builder.addValue("state", StateAuction.INPROGRESS.getState());
     builder.addValue("type", type.getType());
-    builder.addValue("playerStarter", PlayerUtils.getUUIDToString(playerStarter));
+    builder.addValue("playerStarter", playerStarter);
     builder.addValue("start", ts.toString());
     builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
     builder.addValue("group", group);
-    builder.execute(builder.insert());
+    return builder.execute(builder.insert());
+  }
+
+  public Boolean createAuction(AuctionInfo auction) {
+    return this.createAuction(auction.getItemStack(), "", auction.getAmount(), auction.getPrice(), auction.getType(), auction.getPlayerStarter(), auction.getGroup());
   }
 
   /**

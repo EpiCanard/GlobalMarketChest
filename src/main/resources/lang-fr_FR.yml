@@ -1,14 +1,20 @@
-GUITitle:
-  SelectShop: "Sélection d'un shop"
-  ChooseTypeShop : "&5Choisissez un type de shop"
-  NewAuction: "&2Création d'une nouvelle enchère"
-  CreationShop:
-    GlobalShop: "Création d'un Global Shop"
+InterfacesTitle:
+  CategoryView: "&2Vue par catégorie"
+  AuctionViewGroup: "&2Vue par groupe d'item"
+  ConfigShop : "&2Configuration du shop"
+  # Auction Creation
+  CreateAuctionItem: "&2Sélection de l'item pour l'enchère"
+  CreateAuctionPrice: "&2Sélection du prix de l'enchère"
+  # Shop Creation
+  ShopCreationSelectType: "&2Sélection du type de shop et du block lié"
+  ShopCreationLink: "&2Définition du nom de groupe"
+
 Divers:
   State: "Status"
   Quantity: "Quantité"
   UnitPrice: "Prix unitaire"
   TotalPrice: "Prix total"
+  AuctionNumber: "Nombre d'enchère"
   Seller: "Vendeur"
   Buyer: "Acheteur"
   Start: "Débuté"
@@ -81,5 +87,9 @@ Buttons:
   AuctionMiddle:
     Name: "&2Déposez un item ici"
     Description: "&2ou utilises SHIFT-Click"
+  MaxInOne:
+    Name: "Maximum d'items en une enchère"
+  MaxRepeat:
+    Name: "Répéter cette enchère autant de fois que possible"
 ErrorMessages:
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
