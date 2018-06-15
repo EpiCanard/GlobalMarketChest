@@ -10,7 +10,8 @@ public enum ConditionType {
   SUPERIOR(">"),
   SUPERIOR_EQUAL(">="),
   INFERIOR("<"),
-  INFERIOR_EQUAL("<=")
+  INFERIOR_EQUAL("<="),
+  IN("IN")
   ;
 
   @Getter
