@@ -125,7 +125,7 @@ public class InterfacesLoader {
             else
               ItemStackUtils.mergeArray(this.interfaces.get(name), i);
           });
-          Optional.ofNullable(this.basePaginators.get(base)).ifPresent(p -> this.paginators.put(base, p.duplicate()));
+          Optional.ofNullable(this.basePaginators.get(base)).ifPresent(p -> this.paginators.put(name, p.duplicate()));
         }
       }
       this.loadInterface(interfaceConfig, name, (loadBase) ? this.interfaces : this.baseInterfaces);

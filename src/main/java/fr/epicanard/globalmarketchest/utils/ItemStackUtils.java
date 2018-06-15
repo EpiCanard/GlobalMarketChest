@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -35,6 +36,7 @@ public class ItemStackUtils {
     ItemStack item = CraftItemStack.asNewCraftStack(Item.REGISTRY.get(mk));
     if (spec.length > 1)
       item.setDurability(Short.parseShort(spec[1]));
+    ItemStackUtils.hideMeta(item);
     return item;
   }
 
@@ -136,5 +138,19 @@ public class ItemStackUtils {
       if (!b[i].equals(Utils.getBackground()))
         a[i] = b[i];
     return a;
+  }
+
+  /**
+   * Hide the meta of the item
+   * 
+   * @param item
+   * @return return the param itemstack
+   */
+  public ItemStack hideMeta(ItemStack item) {
+    ItemMeta met = item.getItemMeta();
+    met.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
+    item.setItemMeta(met);
+    return item;
+
   }
 }
