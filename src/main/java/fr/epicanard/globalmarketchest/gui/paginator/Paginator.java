@@ -214,4 +214,9 @@ public class Paginator {
     int end = Utils.getIndex(this.getConfig().getStartLimit() + this.getConfig().getLimit(), list.size());
     return list.subList(start, end);
   }
+
+  public void setItemStacks(List<ItemStack> items) {
+    this.itemstacks.clear();
+    this.itemstacks.addAll(items);
+  }
 }

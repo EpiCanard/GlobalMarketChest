@@ -21,7 +21,7 @@ public class CategoryHandler {
   
   public String[] getItems(String category) {
     List<String> lst = this.config.getStringList(category + ".Items");
-    return (lst != null) ? (String[]) lst.toArray() : null;
+    return (lst != null) ? lst.toArray(new String[0]) : null;
   }
 
   public String getDisplayName(String category) {

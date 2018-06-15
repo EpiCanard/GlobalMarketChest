@@ -49,4 +49,14 @@ public class DatabaseUtils {
     } catch(SQLException e) { e.printStackTrace(); }
     return id;
   }
+
+  public String joinRepeat(String str, String sep, int repeat) {
+    String ret = "";
+    for (int i = 0; i < repeat; i++) {
+      ret += str;
+      if (i != repeat - 1)
+        ret += sep;
+    }
+    return ret;
+  }
 }

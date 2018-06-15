@@ -52,6 +52,11 @@ public class CreateAuctionPrice extends ShopInterface {
     }
   }
 
+  /**
+   * Add the price gave in parameter to the current price and update interface
+   * 
+   * @param addPrice price to add
+   */
   private void setPrice(double addPrice) {
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
 
@@ -82,19 +87,27 @@ public class CreateAuctionPrice extends ShopInterface {
    */
   private String[] getLore() {
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
 
+    double price = BigDecimal.valueOf(auction.getPrice()).multiply(BigDecimal.valueOf(auction.getAmount())).doubleValue();
     String[] lore = {
-      "&7" + LangUtils.get("Divers.Quantity") + " : &6" + auction.getAmount(),
-      "&7" + LangUtils.get("Divers.UnitPrice") + " : &6" + auction.getPrice(),
-      "&7" + LangUtils.get("Divers.TotalPrice") + " : &6" + BigDecimal.valueOf(auction.getPrice()).multiply(BigDecimal.valueOf(auction.getAmount())).doubleValue()
+      String.format("&7%s : &6%s &ax&9%s", LangUtils.get("Divers.Quantity"), auction.getAmount(), auctionNumber),
+      String.format("&7%s : &6%s", LangUtils.get("Divers.UnitPrice"), auction.getPrice()),
+      String.format("&7%s : &6%s", LangUtils.get("Divers.TotalPrice"), price)
     };
     return lore;
   }
 
+  /**
+   * Create auction inside database and leave interface
+   * 
+   * @param i InventoryGui used
+   */
   private void createAuction(InventoryGUI i) {
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
 
-    Boolean ret = GlobalMarketChest.plugin.auctionManager.createAuction(auction);
+    Boolean ret = GlobalMarketChest.plugin.auctionManager.createAuction(auction, auctionNumber);
     if (!ret)
       this.inv.getWarn().warn("Fail to create auction in database", 49);
     else

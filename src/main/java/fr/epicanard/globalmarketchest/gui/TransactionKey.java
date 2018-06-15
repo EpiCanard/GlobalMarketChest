@@ -5,5 +5,6 @@ public enum TransactionKey {
   SHOPINFO,
   AUCTIONINFO,
   AUCTIONNUMBER,
+  CATEGORY,
   ;
 }

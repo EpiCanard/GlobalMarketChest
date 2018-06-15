@@ -1,8 +1,14 @@
 package fr.epicanard.globalmarketchest.managers;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
@@ -10,8 +16,13 @@ import fr.epicanard.globalmarketchest.auctions.AuctionType;
 import fr.epicanard.globalmarketchest.auctions.StateAuction;
 import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
-import fr.epicanard.globalmarketchest.database.querybuilder.QueryBuilder;
+import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuilder;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuilder;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.UpdateBuilder;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 /**
@@ -29,25 +40,30 @@ public class AuctionManager {
    * @param playerStarter
    * @param group
    */
-  public Boolean createAuction(String itemStack, String itemMeta, Integer amount, Double price, AuctionType type, String playerStarter, String group) {
-    QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableAuctions);
+  public Boolean createAuction(String itemStack, String itemMeta, Integer amount, Double price, AuctionType type, String playerStarter, String group, Integer repeat) {
+    InsertBuilder builder = new InsertBuilder(DatabaseConnection.tableAuctions);
     Timestamp ts = DatabaseUtils.getTimestamp();
 
-    builder.addValue("itemStack", itemStack);
-    builder.addValue("itemMeta", itemMeta);
-    builder.addValue("amount", amount);
-    builder.addValue("price", price);
-    builder.addValue("state", StateAuction.INPROGRESS.getState());
-    builder.addValue("type", type.getType());
-    builder.addValue("playerStarter", playerStarter);
-    builder.addValue("start", ts.toString());
-    builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
-    builder.addValue("group", group);
-    return builder.execute(builder.insert());
+    for (int i = 0; i < repeat; i++) {
+      builder.addValue("itemStack", itemStack);
+      builder.addValue("itemMeta", itemMeta);
+      builder.addValue("amount", amount);
+      builder.addValue("price", price);
+      builder.addValue("state", StateAuction.INPROGRESS.getState());
+      builder.addValue("type", type.getType());
+      builder.addValue("playerStarter", playerStarter);
+      builder.addValue("start", ts.toString());
+      builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
+      builder.addValue("group", group);
+
+      if (i != 0)
+        builder.setExtension(builder.getExtension() + ",(" + DatabaseUtils.joinRepeat("?", ",", 10) + ")" );
+    }
+    return QueryExecutor.of().execute(builder);
   }
 
-  public Boolean createAuction(AuctionInfo auction) {
-    return this.createAuction(auction.getItemStack(), "", auction.getAmount(), auction.getPrice(), auction.getType(), auction.getPlayerStarter(), auction.getGroup());
+  public Boolean createAuction(AuctionInfo auction, Integer repeat) {
+    return this.createAuction(auction.getItemStack(), "", auction.getAmount(), auction.getPrice(), auction.getType(), auction.getPlayerStarter(), auction.getGroup(), repeat);
   }
 
   /**
@@ -57,14 +73,14 @@ public class AuctionManager {
    * @param buyer Player that vuy the auction
    */
   public void buyAuction(int id, Player buyer) {
-    QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableAuctions);
+    UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
 
     builder.addValue("playerEnder", PlayerUtils.getUUIDToString(buyer));
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
     builder.addValue("state", StateAuction.FINISHED.getState());
     builder.addCondition("id", id);
 
-    builder.execute(builder.update());
+    QueryExecutor.of().execute(builder);
   }
 
   /**
@@ -73,10 +89,10 @@ public class AuctionManager {
    * @param builder
    * @return Return same builder
    */
-  private QueryBuilder updateToNow(QueryBuilder builder) {
+  private UpdateBuilder updateToNow(UpdateBuilder builder) {
     Timestamp ts = DatabaseUtils.getTimestamp();
     if (builder == null)
-      builder = new QueryBuilder(DatabaseConnection.tableAuctions);
+      builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
 
     builder.addValue("start", ts.toString());
     builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
@@ -92,12 +108,12 @@ public class AuctionManager {
    * @param group
    */
   public void renewEveryAuctionOfPlayer(Player player, String group) {
-    QueryBuilder builder = this.updateToNow(null);
+    UpdateBuilder builder = this.updateToNow(null);
 
     builder.addCondition("state", StateAuction.EXPIRED.getState());
     builder.addCondition("owner", PlayerUtils.getUUIDToString(player));
     builder.addCondition("group", group);
-    builder.execute(builder.update());
+    QueryExecutor.of().execute(builder);
   }
 
   /**
@@ -106,10 +122,10 @@ public class AuctionManager {
    * @param id Id of the auction to renew
    */
   public void renewAuction(int id) {
-    QueryBuilder builder = this.updateToNow(null);
+    UpdateBuilder builder = this.updateToNow(null);
 
     builder.addCondition("id", id);
-    builder.execute(builder.update());
+    QueryExecutor.of().execute(builder);
   }
 
   /**
@@ -118,11 +134,40 @@ public class AuctionManager {
    * @param useConfig Define if remove all or with the date in config file
    */
   public void purgeAuctions(Boolean useConfig) {
-    QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableAuctions);
+    DeleteBuilder builder = new DeleteBuilder(DatabaseConnection.tableAuctions);
     if  (useConfig) {
       Integer purge = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Auctions.PurgeInterval");
       builder.addCondition("start", DatabaseUtils.addDays(DatabaseUtils.getTimestamp(), purge * -1), ConditionType.INFERIOR_EQUAL);
     }
-    builder.execute(builder.delete());
+    QueryExecutor.of().execute(builder);
+  }
+
+  /**
+   * Get all item for one category in one group
+   * 
+   * @param group
+   * @param category
+   * @param consumer
+   */
+  public void getItemByCategory(String group, String category, Consumer<List<ItemStack>> consumer) {
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+
+    String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
+
+    builder.addCondition("group", group);
+    builder.addCondition("itemStack", Arrays.asList(items), ConditionType.IN);
+    builder.addField("*");
+    builder.addField("COUNT(itemStack)");
+    builder.setExtension(" GROUP BY itemStack");
+    QueryExecutor.of().execute(builder, res -> {
+      List<ItemStack> lst = new ArrayList<>();
+      try {
+        while (res.next()) {
+          lst.add(ItemStackUtils.getItemStack(res.getString("itemStack")));
+          System.out.println(res.getInt("count"));
+        }
+      } catch (SQLException e) {}
+      consumer.accept(lst);
+    });
   }
 }

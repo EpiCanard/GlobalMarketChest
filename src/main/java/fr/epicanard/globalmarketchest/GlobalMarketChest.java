@@ -18,6 +18,7 @@ import fr.epicanard.globalmarketchest.economy.VaultEconomy;
 import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;
+import fr.epicanard.globalmarketchest.gui.CategoryHandler;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoriesHandler;
 import fr.epicanard.globalmarketchest.listeners.CloseGUICollector;
@@ -43,6 +44,8 @@ public class GlobalMarketChest extends JavaPlugin {
   public final ShopManager shopManager;
   public final AuctionManager auctionManager;
   public final Map<String, ItemStack[]> interfaces;
+  @Getter
+  private CategoryHandler catHandler;
 
   public GlobalMarketChest() {
     // Initialization of loader
@@ -66,6 +69,7 @@ public class GlobalMarketChest extends JavaPlugin {
       return;
     }
 
+    this.catHandler = new CategoryHandler(GlobalMarketChest.plugin.getConfigLoader().getCategories());
     ShopUtils.init();
     Utils.init();
 

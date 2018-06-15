@@ -26,7 +26,6 @@ public class LangUtils {
    * @return if string not in config set else value
    */
   public String getOrElse(String path, String els) {
-    String value = GlobalMarketChest.plugin.getConfigLoader().getLanguages().getString(path);
-    return Utils.toColor((value != null) ? value : els);
+    return Utils.toColor(GlobalMarketChest.plugin.getConfigLoader().getLanguages().getString(path, els));
   }
 }
