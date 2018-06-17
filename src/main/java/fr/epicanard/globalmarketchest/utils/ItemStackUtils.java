@@ -49,6 +49,12 @@ public class ItemStackUtils {
     return ItemStackUtils.getItemStack(itemName);
   }
 
+  public String getMinecraftKey(ItemStack item) {
+    net.minecraft.server.v1_12_R1.ItemStack it = CraftItemStack.asNMSCopy(item);
+    MinecraftKey mk = Item.REGISTRY.b(it.getItem());
+    return mk.b() + ":" + mk.getKey();
+  }
+
   /**
    * Set ItemMeta to the specific item
    * 
