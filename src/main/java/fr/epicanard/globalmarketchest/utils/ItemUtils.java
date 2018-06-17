@@ -64,4 +64,17 @@ public class ItemUtils {
     item = (toGlow) ? ItemUtils.addGlow(item) : ItemUtils.removeGlow(item);
     inv.setItem(pos, item);
   }
+
+  /**
+   * Hide the meta of the item
+   * 
+   * @param item
+   * @return return the param itemstack
+   */
+  public ItemStack hideMeta(ItemStack item) {
+    ItemMeta met = item.getItemMeta();
+    met.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
+    item.setItemMeta(met);
+    return item;
+  }
 }

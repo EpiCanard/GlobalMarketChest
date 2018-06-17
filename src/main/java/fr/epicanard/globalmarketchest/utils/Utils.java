@@ -1,5 +1,7 @@
 package fr.epicanard.globalmarketchest.utils;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.ChatColor;
@@ -22,7 +24,7 @@ public class Utils {
   public void init() {
     Utils.background = ItemStackUtils.getItemStack(
       GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Interfaces.Background"));
-    Utils.background = ItemStackUtils.setItemStackMeta(background, null);
+    Utils.background = ItemStackUtils.setItemStackMeta(background, null, null);
   }
 
   /**
@@ -82,10 +84,18 @@ public class Utils {
       ConfigurationSection sec = loader.getLanguages().getConfigurationSection("Buttons." + buttonName);
       if (sec != null) {
         Map<String, Object> tmp = sec.getValues(false);
-        ItemStackUtils.setItemStackMeta(itemStack, (String) tmp.get("Name"), (String) tmp.get("Description"));
+        ItemStackUtils.setItemStackMeta(itemStack, (String) tmp.get("Name"), Utils.toList((String)tmp.get("Description")));
       }
     }
     return itemStack;
+  }
+
+  public List<String> toList(String[] lore) {
+    return (lore == null) ? null : Arrays.asList(lore);
+  }
+
+  public List<String> toList(String lore) {
+    return (lore == null) ? null : Arrays.asList(lore.split(";"));
   }
 
   /**
