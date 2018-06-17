@@ -4,7 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
+import org.bukkit.inventory.ItemStack;
+
+import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -58,5 +64,14 @@ public class DatabaseUtils {
         ret += sep;
     }
     return ret;
+  }
+
+  public List<ItemStack> toItemStacks(List<AuctionInfo> auctions, BiConsumer<ItemStack, AuctionInfo> adding) {
+    return auctions.stream().map(auction -> {
+      ItemStack item = ItemStackUtils.getItemStack(auction.getItemStack());
+      if (adding != null)
+        adding.accept(item, auction);
+      return item;
+    }).collect(Collectors.toList());
   }
 }
