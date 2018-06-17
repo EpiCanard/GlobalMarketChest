@@ -33,7 +33,7 @@ public class CategoryView extends ShopInterface {
         this.inv.getTransaction().put(TransactionKey.CATEGORY, cat[j]);
         callable.accept(in);
       });
-      this.inv.getInv().setItem(pos, ItemStackUtils.setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i])));
+      this.inv.getInv().setItem(pos, ItemStackUtils.setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i]), null));
     }
   }
 

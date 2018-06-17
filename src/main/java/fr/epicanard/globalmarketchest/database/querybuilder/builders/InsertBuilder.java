@@ -35,11 +35,13 @@ public class InsertBuilder extends BaseBuilder {
   @Override
   public String build() {
     StringBuilder builder = new StringBuilder("INSERT INTO " + this.tableName + " (");
+    List<String> keys = this.values.keys().stream().distinct().map(e -> "`" + e + "`").collect(Collectors.toList());
 
-    builder.append(String.join(", ", this.values.keys().stream().map(e -> "`" + e + "`").collect(Collectors.toList())));
-    builder.append(") VALUES (" + DatabaseUtils.joinRepeat("?", ",", this.values.keys().size()) + ")");
+    builder.append(String.join(", ", keys));
+    String repeat = "(" + DatabaseUtils.joinRepeat("?", ",", keys.size()) + ")";
+    builder.append(") VALUES " + DatabaseUtils.joinRepeat(repeat, ",", this.values.values().size() / keys.size()));
 
-    return this.buildExtension(builder).toString();
+    return builder.toString();
   }
 
   /**

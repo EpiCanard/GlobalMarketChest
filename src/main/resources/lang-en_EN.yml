@@ -22,6 +22,8 @@ Divers:
   Group: "Group"
   Type: "Type"
   Warning: "Warning"
+Database:
+  FailCreationAuction: "Fail to create auction in database"
 Shops:
   ClickChangeGroup: "Click to change shop group name"
   CurrentShop: "Current shop"

@@ -24,6 +24,7 @@ import fr.epicanard.globalmarketchest.database.querybuilder.builders.UpdateBuild
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 /**
  * Class that handle all auctions and communication with database
@@ -55,10 +56,8 @@ public class AuctionManager {
       builder.addValue("start", ts.toString());
       builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
       builder.addValue("group", group);
-
-      if (i != 0)
-        builder.setExtension(builder.getExtension() + ",(" + DatabaseUtils.joinRepeat("?", ",", 10) + ")" );
     }
+    System.out.println(builder.build());
     return QueryExecutor.of().execute(builder);
   }
 
@@ -163,7 +162,9 @@ public class AuctionManager {
       List<ItemStack> lst = new ArrayList<>();
       try {
         while (res.next()) {
-          lst.add(ItemStackUtils.getItemStack(res.getString("itemStack")));
+          ItemStack item = ItemStackUtils.getItemStack(res.getString("itemStack"));
+          ItemStackUtils.setItemStackLore(item, Utils.toList("coucou"));
+          lst.add(item);
           System.out.println(res.getInt("count"));
         }
       } catch (SQLException e) {}

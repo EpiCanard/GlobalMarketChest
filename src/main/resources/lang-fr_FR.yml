@@ -8,7 +8,8 @@ InterfacesTitle:
   # Shop Creation
   ShopCreationSelectType: "&2Sélection du type de shop et du block lié"
   ShopCreationLink: "&2Définition du nom de groupe"
-
+Database:
+  FailCreationAuction: "Impossible de créer l'enchère en base de données"
 Divers:
   State: "Status"
   Quantity: "Quantité"

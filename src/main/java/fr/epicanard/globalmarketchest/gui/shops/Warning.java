@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitTask;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 /**
  * Warning class used to make blinking item inside Inventory
@@ -34,7 +35,7 @@ public class Warning {
   private ItemStack setWarn(String message, ItemStack item) {
     return ItemStackUtils.setItemStackMeta(item, 
       "/!\\ " + LangUtils.get("Divers.Warning"),
-      "&7" + message);
+      Utils.toList("&7" + message));
   }
 
   /**

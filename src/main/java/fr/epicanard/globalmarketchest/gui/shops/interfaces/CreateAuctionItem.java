@@ -1,6 +1,8 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.event.inventory.InventoryAction;
@@ -101,11 +103,10 @@ public class CreateAuctionItem extends ShopInterface {
   private void updateItem() {
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    List<String> lore = new ArrayList<>();
 
-    String[] lore = {
-      "&7" + LangUtils.get("Divers.Quantity") + " : &6" + auction.getAmount(),
-      "&7" + LangUtils.get("Divers.AuctionNumber") + " : &6" + this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER)
-    };
+    lore.add("&7" + LangUtils.get("Divers.Quantity") + " : &6" + auction.getAmount());
+    lore.add("&7" + LangUtils.get("Divers.AuctionNumber") + " : &6" + this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER));
     this.inv.getInv().setItem(22, ItemStackUtils.setItemStackLore(item.clone(), lore));
   }
 

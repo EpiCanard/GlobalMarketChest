@@ -1,11 +1,9 @@
 package fr.epicanard.globalmarketchest.utils;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -36,7 +34,7 @@ public class ItemStackUtils {
     ItemStack item = CraftItemStack.asNewCraftStack(Item.REGISTRY.get(mk));
     if (spec.length > 1)
       item.setDurability(Short.parseShort(spec[1]));
-    ItemStackUtils.hideMeta(item);
+    ItemUtils.hideMeta(item);
     return item;
   }
 
@@ -57,8 +55,10 @@ public class ItemStackUtils {
    * @param item        ItemStack used
    * @param displayName Name displayed on the item
    * @param lore        Lore of the item to add (List)
+   * 
+   * @return return the itemstack in param
    */
-  private ItemStack setItemMeta(ItemStack item, String displayName, List<String> lore) {
+  public ItemStack setItemStackMeta(ItemStack item, String displayName, List<String> lore) {
     if (item == null)
       return null;
 
@@ -69,6 +69,14 @@ public class ItemStackUtils {
     return item;
   }
 
+  /**
+   * Set lore on item meta
+   * 
+   * @param meta
+   * @param lore
+   * 
+   * @return return the meta in param
+   */
   private ItemMeta setMetaLore(ItemMeta meta, List<String> lore) {
     if (meta != null && lore != null) {
       lore = lore.stream().map(element ->  Utils.toColor(element)).collect(Collectors.toList());
@@ -77,80 +85,32 @@ public class ItemStackUtils {
     return meta;
   }
 
-  public ItemStack setItemStackLore(ItemStack item, String[] lore) {
-    if (item == null)
-      return null;
-
-    ItemMeta met = item.getItemMeta();
-    item.setItemMeta(ItemStackUtils.setMetaLore(met, Arrays.asList(lore)));
+  /**
+   * Set lore on itemstack
+   * 
+   * @param item
+   * @param lore
+   * 
+   * @return return item in param
+   */
+  public ItemStack setItemStackLore(ItemStack item, List<String> lore) {
+    if (item != null)
+      item.setItemMeta(ItemStackUtils.setMetaLore(item.getItemMeta(), lore));
     return item;
   }
 
   /**
-   * Set ItemMeta to the specific item
+   * Merge two itemstack array in one
    * 
-   * @param item        ItemStack used
-   * @param displayName Name displayed on the item
-   */
-  public ItemStack setItemStackMeta(ItemStack item, String displayName) {
-    return setItemMeta(item, displayName, null);
-  }
-
-  /**
-   * Set ItemMeta to the specific item
+   * @param a first array
+   * @param b second array
    * 
-   * @param item        ItemStack used
-   * @param displayName Name displayed on the item
-   * @param lore        Lore of the item to add (List)
+   * @return return first array instance but merged
    */
-  public ItemStack setItemStackMeta(ItemStack item, String displayName, List<String> lore) {
-    return setItemMeta(item, displayName, lore);
-  }
-
-  /**
-   * Set ItemMeta to the specific item
-   * 
-   * @param item        ItemStack used
-   * @param displayName Name displayed on the item
-   * @param lore        Lore of the item to add (String)
-   */
-  public ItemStack setItemStackMeta(ItemStack item, String displayName, String lore) {
-    if (lore == null)
-      return setItemMeta(item, displayName, null);
-    return setItemMeta(item, displayName, Arrays.asList(lore.split(";")));
-  }
-
-  /**
-   * Set ItemMeta to the specific item
-   * 
-   * @param item        ItemStack used
-   * @param displayName Name displayed on the item
-   * @param lore        Lore of the item to add (String[])
-   */
-  public ItemStack setItemStackMeta(ItemStack item, String displayName, String[] lore) {
-    if (lore == null)
-      return setItemMeta(item, displayName, null);
-    return setItemMeta(item, displayName, Arrays.asList(lore));
-  }
-
   public ItemStack[] mergeArray(ItemStack[] a, ItemStack[] b) {
     for (int i = 0; i < a.length && i < b.length; i++)
       if (!b[i].equals(Utils.getBackground()))
         a[i] = b[i];
     return a;
-  }
-
-  /**
-   * Hide the meta of the item
-   * 
-   * @param item
-   * @return return the param itemstack
-   */
-  public ItemStack hideMeta(ItemStack item) {
-    ItemMeta met = item.getItemMeta();
-    met.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
-    item.setItemMeta(met);
-    return item;
-
   }
 }
