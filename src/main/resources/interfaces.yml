@@ -39,6 +39,10 @@ Interfaces:
     Base:
       - DefaultShopInterface
 
+  AuctionViewList:
+    Base:
+      - DefaultShopInterface
+
   ConfigShop:
     Base:
       - Exit

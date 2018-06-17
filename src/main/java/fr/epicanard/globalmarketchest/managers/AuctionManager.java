@@ -23,6 +23,7 @@ import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuild
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.UpdateBuilder;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
@@ -155,20 +156,50 @@ public class AuctionManager {
 
     builder.addCondition("group", group);
     builder.addCondition("itemStack", Arrays.asList(items), ConditionType.IN);
+    builder.addCondition("state", StateAuction.INPROGRESS.getState());
     builder.addField("*");
-    builder.addField("COUNT(itemStack)");
+    builder.addField("COUNT(itemStack) AS count");
     builder.setExtension(" GROUP BY itemStack");
     QueryExecutor.of().execute(builder, res -> {
       List<ItemStack> lst = new ArrayList<>();
       try {
         while (res.next()) {
           ItemStack item = ItemStackUtils.getItemStack(res.getString("itemStack"));
-          ItemStackUtils.setItemStackLore(item, Utils.toList("coucou"));
+          ItemStackUtils.setItemStackLore(item, Utils.toList(String.format("%s : %d", LangUtils.get("Divers.AuctionNumber"), res.getInt("count"))));
           lst.add(item);
-          System.out.println(res.getInt("count"));
         }
-      } catch (SQLException e) {}
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
       consumer.accept(lst);
     });
   }
+
+  /**
+   * Get all item for one category in one group
+   * 
+   * @param group
+   * @param category
+   * @param consumer
+   */
+  public void getAuctionsByItem(String group, String item, Consumer<List<AuctionInfo>> consumer) {
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+
+    builder.addCondition("group", group);
+    builder.addCondition("itemStack", item);
+    builder.addCondition("state", StateAuction.INPROGRESS.getState());
+    builder.setExtension(" ORDER BY price, start ASC");
+    QueryExecutor.of().execute(builder, res -> {
+      List<AuctionInfo> lst = new ArrayList<>();
+      try {
+        while (res.next()) {
+          lst.add(new AuctionInfo(res));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+      consumer.accept(lst);
+    });
+  }
+
 }
