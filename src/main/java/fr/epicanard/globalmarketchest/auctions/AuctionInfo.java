@@ -4,11 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -68,6 +68,6 @@ public class AuctionInfo {
   }
 
   public void setItemStack(ItemStack item) {
-    this.itemStack = CraftItemStack.asNMSCopy(item).getItem().getName();
+    this.itemStack = ItemStackUtils.getMinecraftKey(item);
   }
 }
