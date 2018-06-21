@@ -58,12 +58,11 @@ public class AuctionManager {
       builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
       builder.addValue("group", group);
     }
-    System.out.println(builder.build());
     return QueryExecutor.of().execute(builder);
   }
 
   public Boolean createAuction(AuctionInfo auction, Integer repeat) {
-    return this.createAuction(auction.getItemStack(), "", auction.getAmount(), auction.getPrice(), auction.getType(), auction.getPlayerStarter(), auction.getGroup(), repeat);
+    return this.createAuction(auction.getItemStack(), auction.getItemMeta(), auction.getAmount(), auction.getPrice(), auction.getType(), auction.getPlayerStarter(), auction.getGroup(), repeat);
   }
 
   /**
