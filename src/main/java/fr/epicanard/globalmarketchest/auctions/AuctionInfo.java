@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -69,5 +70,6 @@ public class AuctionInfo {
 
   public void setItemStack(ItemStack item) {
     this.itemStack = ItemStackUtils.getMinecraftKey(item);
+    this.itemMeta = DatabaseUtils.serialize(item);
   }
 }

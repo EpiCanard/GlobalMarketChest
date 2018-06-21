@@ -3,7 +3,6 @@ package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -67,11 +66,6 @@ public class CreateAuctionItem extends ShopInterface {
     this.inv.getTransaction().put(TransactionKey.TEMPITEM, item.clone());
     this.updateItem();
     this.toggler.set();
-    Map<String, Object> ser = item.serialize();
-    for (String key : ser.keySet()) {
-      System.out.println("KEY : " + key + " - VALUE : " + ser.get(key));
-    }
-
   }
 
   /**

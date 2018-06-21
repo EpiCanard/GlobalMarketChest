@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
@@ -56,6 +58,14 @@ public class DatabaseUtils {
     return id;
   }
 
+  /**
+   * Repeat a string a certain amount of time with a separator
+   * 
+   * @param str String to repeat
+   * @param sep Separator
+   * @param repeat Repeat number
+   * @return Final composed string
+   */
   public String joinRepeat(String str, String sep, int repeat) {
     String ret = "";
     for (int i = 0; i < repeat; i++) {
@@ -66,12 +76,49 @@ public class DatabaseUtils {
     return ret;
   }
 
+  /**
+   * Convert a list of auction into a list of itemstacks
+   * 
+   * @param auctions
+   * @param adding Biconsumer to apply modifications to the itemstack
+   * @return A list of itemstack
+   */
   public List<ItemStack> toItemStacks(List<AuctionInfo> auctions, BiConsumer<ItemStack, AuctionInfo> adding) {
     return auctions.stream().map(auction -> {
-      ItemStack item = ItemStackUtils.getItemStack(auction.getItemStack());
-      if (adding != null)
+      ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
+      if (item == null) {
+        LoggerUtils.warn(String.format("Wrong itemMeta for auction `%d`", auction.getId()));
+      } else if (adding != null)
         adding.accept(item, auction);
       return item;
-    }).collect(Collectors.toList());
+    }).filter(i -> i != null).collect(Collectors.toList());
+  }
+
+  /**
+   * Serialize an itemstack into string
+   * 
+   * @param item
+   * @return return item serialized
+   */
+  public String serialize(ItemStack item) {
+    YamlConfiguration yaml = new YamlConfiguration();
+    yaml.set("item", item);
+    return yaml.saveToString();
+  }
+
+  /**
+   * Deserialize an itemstack from string
+   * 
+   * @param content
+   * @return return item deserialized
+   */
+  public ItemStack deserialize(String content) {
+    YamlConfiguration yaml = new YamlConfiguration();
+    try {
+      yaml.loadFromString(content);
+      return yaml.getItemStack("item");
+    } catch (InvalidConfigurationException e) {
+      return null;
+    }
   }
 }
