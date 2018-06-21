@@ -29,7 +29,7 @@ public class AuctionViewList extends ShopInterface {
       ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
       ItemStack item = this.inv.getTransactionValue(TransactionKey.AUCTIONITEM);
       
-      GlobalMarketChest.plugin.auctionManager.getAuctionsByItem(shop.getGroup(), ItemStackUtils.getMinecraftKey(item), auctions -> {
+      GlobalMarketChest.plugin.auctionManager.getAuctionsByItem(shop.getGroup(), item, auctions -> {
         pag.setItemStacks(pag.getSubList(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
           ItemStackUtils.setItemStackLore(itemstack, this.getLore(auction));
         })));
