@@ -42,12 +42,13 @@ public class AuctionManager {
    * @param playerStarter
    * @param group
    */
-  public Boolean createAuction(String itemStack, String itemMeta, Integer amount, Double price, AuctionType type, String playerStarter, String group, Integer repeat) {
+  public Boolean createAuction(String itemStack, Short damage, String itemMeta, Integer amount, Double price, AuctionType type, String playerStarter, String group, Integer repeat) {
     InsertBuilder builder = new InsertBuilder(DatabaseConnection.tableAuctions);
     Timestamp ts = DatabaseUtils.getTimestamp();
 
     for (int i = 0; i < repeat; i++) {
       builder.addValue("itemStack", itemStack);
+      builder.addValue("damage", damage);
       builder.addValue("itemMeta", itemMeta);
       builder.addValue("amount", amount);
       builder.addValue("price", price);
@@ -62,7 +63,7 @@ public class AuctionManager {
   }
 
   public Boolean createAuction(AuctionInfo auction, Integer repeat) {
-    return this.createAuction(auction.getItemStack(), auction.getItemMeta(), auction.getAmount(), auction.getPrice(), auction.getType(), auction.getPlayerStarter(), auction.getGroup(), repeat);
+    return this.createAuction(auction.getItemStack(), auction.getDamage(), auction.getItemMeta(), auction.getAmount(), auction.getPrice(), auction.getType(), auction.getPlayerStarter(), auction.getGroup(), repeat);
   }
 
   /**
@@ -158,12 +159,13 @@ public class AuctionManager {
     builder.addCondition("state", StateAuction.INPROGRESS.getState());
     builder.addField("*");
     builder.addField("COUNT(itemStack) AS count");
-    builder.setExtension(" GROUP BY itemStack");
+    builder.setExtension(" GROUP BY itemStack, damage");
     QueryExecutor.of().execute(builder, res -> {
       List<ItemStack> lst = new ArrayList<>();
       try {
         while (res.next()) {
           ItemStack item = ItemStackUtils.getItemStack(res.getString("itemStack"));
+          item.setDurability(res.getShort("damage"));
           ItemStackUtils.setItemStackLore(item, Utils.toList(String.format("%s : %d", LangUtils.get("Divers.AuctionNumber"), res.getInt("count"))));
           lst.add(item);
         }

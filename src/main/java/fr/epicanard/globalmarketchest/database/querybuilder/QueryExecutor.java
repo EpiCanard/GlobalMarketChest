@@ -34,6 +34,9 @@ public class QueryExecutor {
         case "Integer":
           prepared.setInt(inc.get(), (Integer)value);
           break;
+        case "Short":
+          prepared.setShort(inc.get(), (Short)value);
+          break;
         case "Double":
           prepared.setDouble(inc.get(), (Double)value);
           break;
