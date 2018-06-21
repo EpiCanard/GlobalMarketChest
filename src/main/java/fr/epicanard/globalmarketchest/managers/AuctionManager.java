@@ -183,11 +183,12 @@ public class AuctionManager {
    * @param category
    * @param consumer
    */
-  public void getAuctionsByItem(String group, String item, Consumer<List<AuctionInfo>> consumer) {
+  public void getAuctionsByItem(String group, ItemStack item, Consumer<List<AuctionInfo>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
     builder.addCondition("group", group);
-    builder.addCondition("itemStack", item);
+    builder.addCondition("itemStack", ItemStackUtils.getMinecraftKey(item));
+    builder.addCondition("damage", item.getDurability());
     builder.addCondition("state", StateAuction.INPROGRESS.getState());
     builder.setExtension(" ORDER BY price, start ASC");
     QueryExecutor.of().execute(builder, res -> {
