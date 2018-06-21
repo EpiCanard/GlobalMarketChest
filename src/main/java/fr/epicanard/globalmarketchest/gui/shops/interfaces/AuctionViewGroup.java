@@ -24,6 +24,8 @@ public class AuctionViewGroup extends ShopInterface {
       });
     });
     this.paginator.setClickConsumer(pos -> {
+      if (pos >= this.paginator.getItemstacks().size())
+        return;
       ItemStack item = this.paginator.getItemstacks().get(pos);
       this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, item);
       this.inv.loadInterface("AuctionViewList");
