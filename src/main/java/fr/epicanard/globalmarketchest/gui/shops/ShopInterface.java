@@ -72,7 +72,9 @@ public abstract class ShopInterface {
   /**
    * Unload interface
    */
-  abstract public void unload();
+  public void unload() {
+    this.inv.getWarn().stopWarn();
+  }
 
   /**
    * Called when a mouse event is done inside inventory
