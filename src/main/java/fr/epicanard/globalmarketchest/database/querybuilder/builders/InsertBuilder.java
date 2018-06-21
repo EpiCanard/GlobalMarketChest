@@ -64,7 +64,7 @@ public class InsertBuilder extends BaseBuilder {
    */
   @Override
   public Boolean execute(PreparedStatement statement, AtomicReference<ResultSet> resultSet) throws SQLException {
-    Boolean ret = statement.executeUpdate() >= 1;
+    Boolean ret = statement.executeUpdate() > 0;
     resultSet.set(statement.getGeneratedKeys());
     return ret;
   }

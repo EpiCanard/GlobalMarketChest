@@ -59,6 +59,6 @@ public class UpdateBuilder extends ConditionBase {
    */
   @Override
   public Boolean execute(PreparedStatement statement, AtomicReference<ResultSet> resultSet) throws SQLException {
-    return statement.executeUpdate() >= 1;
+    return statement.executeUpdate() > 0;
   }
 }

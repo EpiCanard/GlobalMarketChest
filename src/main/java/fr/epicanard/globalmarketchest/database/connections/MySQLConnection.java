@@ -39,6 +39,7 @@ public class MySQLConnection extends DatabaseConnection {
         "CREATE TABLE IF NOT EXISTS `" + DatabaseConnection.tableAuctions + "` (" +
         "  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
         "  `itemStack` VARCHAR(50) NOT NULL," +
+        "  `damage` SMALLINT NOT NULL," +
         "  `itemMeta` TEXT," +
         "  `amount` INT UNSIGNED NOT NULL," +
         "  `price` DOUBLE NOT NULL," +
