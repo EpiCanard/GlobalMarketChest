@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
-import fr.epicanard.globalmarketchest.auctions.AuctionType;
 import fr.epicanard.globalmarketchest.auctions.StateAuction;
 import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
@@ -34,36 +33,33 @@ public class AuctionManager {
   /**
    * Create an auction inside database
    * 
-   * @param itemStack
-   * @param itemMeta
-   * @param amount
-   * @param price
-   * @param type
-   * @param playerStarter
-   * @param group
+   * @param auction
+   * @param repeat
+   * 
+   * @return Return if execution succeed
    */
-  public Boolean createAuction(String itemStack, Short damage, String itemMeta, Integer amount, Double price, AuctionType type, String playerStarter, String group, Integer repeat) {
+  public Boolean createAuction(AuctionInfo auction, Integer repeat) {
     InsertBuilder builder = new InsertBuilder(DatabaseConnection.tableAuctions);
     Timestamp ts = DatabaseUtils.getTimestamp();
+    String[] stringTs = {
+      ts.toString(),
+      DatabaseUtils.addDays(ts, 7).toString()
+    };
 
     for (int i = 0; i < repeat; i++) {
-      builder.addValue("itemStack", itemStack);
-      builder.addValue("damage", damage);
-      builder.addValue("itemMeta", itemMeta);
-      builder.addValue("amount", amount);
-      builder.addValue("price", price);
+      builder.addValue("itemStack", auction.getItemStack());
+      builder.addValue("damage", auction.getDamage());
+      builder.addValue("itemMeta", auction.getItemMeta());
+      builder.addValue("amount", auction.getAmount());
+      builder.addValue("price", auction.getPrice());
       builder.addValue("state", StateAuction.INPROGRESS.getState());
-      builder.addValue("type", type.getType());
-      builder.addValue("playerStarter", playerStarter);
-      builder.addValue("start", ts.toString());
-      builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
-      builder.addValue("group", group);
+      builder.addValue("type", auction.getType().getType());
+      builder.addValue("playerStarter", auction.getPlayerStarter());
+      builder.addValue("start", stringTs[0]);
+      builder.addValue("end", stringTs[1]);
+      builder.addValue("group", auction.getGroup());
     }
     return QueryExecutor.of().execute(builder);
-  }
-
-  public Boolean createAuction(AuctionInfo auction, Integer repeat) {
-    return this.createAuction(auction.getItemStack(), auction.getDamage(), auction.getItemMeta(), auction.getAmount(), auction.getPrice(), auction.getType(), auction.getPlayerStarter(), auction.getGroup(), repeat);
   }
 
   /**
@@ -129,16 +125,35 @@ public class AuctionManager {
   }
 
   /**
+   * Undo auction
+   * 
+   * @param id Id of the auction to undo
+   */
+  public void undoAuction(int id) {
+    UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+
+    builder.addCondition("id", id);
+    builder.addValue("state", StateAuction.ABANDONED.getState());
+    builder.addValue("end", DatabaseUtils.getTimestamp().toString());
+    QueryExecutor.of().execute(builder);
+  }
+  /**
    * Remove every auction before a specific date
    * 
    * @param useConfig Define if remove all or with the date in config file
    */
-  public void purgeAuctions(Boolean useConfig) {
+  public void purgeAuctions() {
     DeleteBuilder builder = new DeleteBuilder(DatabaseConnection.tableAuctions);
-    if  (useConfig) {
-      Integer purge = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Auctions.PurgeInterval");
-      builder.addCondition("start", DatabaseUtils.addDays(DatabaseUtils.getTimestamp(), purge * -1), ConditionType.INFERIOR_EQUAL);
-    }
+    Integer purge = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Auctions.PurgeInterval");
+    if (purge < 0)
+      return;
+    builder.addCondition("end", DatabaseUtils.addDays(DatabaseUtils.getTimestamp(), purge * -1), ConditionType.INFERIOR_EQUAL);
+
+    List<Integer> lst = new ArrayList<>();
+    lst.add(StateAuction.ABANDONED.getState());
+    lst.add(StateAuction.FINISHED.getState());
+    builder.addCondition("state", lst, ConditionType.IN);
+
     QueryExecutor.of().execute(builder);
   }
 
@@ -201,6 +216,17 @@ public class AuctionManager {
         e.printStackTrace();
       }
       consumer.accept(lst);
+    });
+  }
+
+  public void getLastPrice(ItemStack item, String group, Player owner) {
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+
+    builder.addCondition("group", group);
+    builder.addCondition("itemMeta", ItemStackUtils.getMinecraftKey(item));
+    builder.addCondition("owner", PlayerUtils.getUUIDToString(owner));
+    builder.setExtension(" ORDER BY price, start ASC");
+    QueryExecutor.of().execute(builder, res -> {
     });
   }
 
