@@ -1,3 +1,4 @@
+# Base interface used for real interface
 BaseInterfaces:
   Exit:
     Items:
@@ -26,7 +27,15 @@ BaseInterfaces:
       45: GlobalView
       46: Money
       53: NewAuction
+
+# Real interface implemented
 Interfaces:
+
+  # ================
+  # AUCTION VIEWS
+  # ================
+
+  # View for category
   CategoryView:
     Base:
       - Exit
@@ -35,26 +44,39 @@ Interfaces:
       9: Search
       45: GlobalView
 
+  # View to list every group item of one category
   AuctionViewGroup:
     Base:
       - DefaultShopInterface
 
+  # View to see every auctions of one item
   AuctionViewList:
     Base:
       - DefaultShopInterface
 
-  ConfigShop:
+  BuyAuction:
     Base:
+      - Return
       - Exit
     Items:
-      20: ViewByCategory
-      22: ViewByPlayer
-      24: ViewByLastCreated
+      12-14: AuctionSide
+      21-23: AuctionSide
+      30-32: AuctionSide
+      22: BuyAuction
+
+  EditAuction:
+    Base:
+      - Return
+      - Exit
+    Items:
+      1: RenewAuction
+      2: UndoAuction
 
   # ================
   # AUCTION CREATION
   # ================
 
+  # Auction View to select/drop item
   CreateAuctionItem:
     Base:
       - Return
@@ -68,17 +90,19 @@ Interfaces:
       48: MaxInOne
       50: MaxRepeat
 
+  # Auction view to select item price
   CreateAuctionPrice:
     Base:
       - Return
       - Exit
     Items:
-      53: CreateShop
+      53: CreateAuction
 
   # =============
   # SHOP CREATION
   # =============
 
+  # View to select type and linked block with shop
   ShopCreationSelectType:
     Base:
       - Exit
@@ -96,6 +120,7 @@ Interfaces:
       27-35: None
       49: ShopIcon
 
+  # View to edit shop group or select another shop to set his group name on current
   ShopCreationLink:
     Base:
       - Return
@@ -111,3 +136,16 @@ Interfaces:
       40: EditGroupName
       49: ShopIcon
       53: CreateShop
+
+  # =============
+  # CONFIGURATION
+  # =============
+
+  # View to configure this shop
+  ConfigShop:
+    Base:
+      - Exit
+    Items:
+      20: ViewByCategory
+      22: ViewByPlayer
+      24: ViewByLastCreated

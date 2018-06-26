@@ -219,4 +219,10 @@ public class Paginator {
     this.itemstacks.clear();
     this.itemstacks.addAll(items);
   }
+
+  public ItemStack getItemStack(int pos) {
+    if (pos < 0 || pos >= this.itemstacks.size())
+      return null;
+    return this.itemstacks.get(pos);
+  }
 }

@@ -22,8 +22,6 @@ Divers:
   Group: "Group"
   Type: "Type"
   Warning: "Warning"
-Database:
-  FailCreationAuction: "Fail to create auction in database"
 Shops:
   ClickChangeGroup: "Click to change shop group name"
   CurrentShop: "Current shop"
@@ -47,6 +45,14 @@ Buttons:
   NewAuction:
     Name: "&2Create new auction"
     Description: "&7Click here to sell your items"
+  CreateAuction:
+    Name: "&2Create auction"
+  BuyAuction:
+    Name: "&2Buy auction"
+  RenewAuction:
+    Name: "&2Renew auction"
+  UndoAuction:
+    Name: "&2Undo auction"
   GlobalView:
     Name: "Overview"
     Description: "Auction history"
@@ -94,3 +100,5 @@ Buttons:
     Name: "Repeat auction as many as possible"
 ErrorMessages:
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
+  MissingItems: "Wrong number of items, some items are missing"
+  FailCreateAuction: "Fail to create auction in database"
