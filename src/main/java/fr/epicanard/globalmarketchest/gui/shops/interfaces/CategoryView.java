@@ -36,8 +36,4 @@ public class CategoryView extends ShopInterface {
       this.inv.getInv().setItem(pos, ItemStackUtils.setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i]), null));
     }
   }
-
-  @Override
-  public void unload() {
-  }
 }

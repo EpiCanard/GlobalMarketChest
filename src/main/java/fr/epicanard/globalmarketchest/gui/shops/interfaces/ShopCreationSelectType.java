@@ -119,12 +119,4 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     this.setGlow(13, shop.getType(), ShopType.AUCTIONSHOP);
     this.setGlow(15, shop.getType(), ShopType.ADMINSHOP);
   }
-
-  /**
-   * Called when unloading the interface
-   */
-  @Override
-  public void unload() {
-    this.inv.getWarn().stopWarn();
-  }
 }

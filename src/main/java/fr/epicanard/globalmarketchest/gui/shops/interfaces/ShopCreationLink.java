@@ -89,19 +89,4 @@ public class ShopCreationLink extends ShopCreationInterface {
       shop.setGroup(subShops.get(pos).getGroup());
     this.updateName();
   }
-
-  /**
-   * Called when loading the interface
-   */
-  @Override
-  public void load() {
-    super.load();
-  }
-
-  /**
-   * Called when unloading the interface
-   */
-  @Override
-  public void unload() {
-  }
 }
