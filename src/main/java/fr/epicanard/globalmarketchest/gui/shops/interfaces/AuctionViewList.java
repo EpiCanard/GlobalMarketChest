@@ -36,6 +36,8 @@ public class AuctionViewList extends ShopInterface {
       });
     });
 
+    this.paginator.setClickConsumer(this::selectAuction);
+
     this.actions.put(0, new PreviousInterface());
     this.actions.put(53, new NewAuction());
   }
@@ -51,12 +53,10 @@ public class AuctionViewList extends ShopInterface {
     return lore;
   }
 
-  @Override
-  public void load() {
-    super.load();
-  }
-
-  @Override
-  public void unload() {
+  private void selectAuction(Integer pos) {
+    ItemStack item = this.paginator.getItemStack(pos);
+    if (item == null)
+      return;
+    this.inv.loadInterface("BuyAuction");
   }
 }

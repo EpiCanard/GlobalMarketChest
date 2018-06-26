@@ -51,6 +51,10 @@ Interfaces:
   Warn: minecraft:stained_glass_pane/14
   Buttons:
     NewAuction: minecraft:nether_star
+    CreateAuction: minecraft:nether_star
+    BuyAuction: minecraft:nether_star
+    RenewAuction: minecraft:stained_glass_pane/1
+    UndoAuction: minecraft:stained_glass_pane/14
     ExitButton: minecraft:barrier
     Validate: minecraft:spectral_arrow
     Return: minecraft:tipped_arrow

@@ -8,8 +8,6 @@ InterfacesTitle:
   # Shop Creation
   ShopCreationSelectType: "&2Sélection du type de shop et du block lié"
   ShopCreationLink: "&2Définition du nom de groupe"
-Database:
-  FailCreationAuction: "Impossible de créer l'enchère en base de données"
 Divers:
   State: "Status"
   Quantity: "Quantité"
@@ -47,6 +45,14 @@ Buttons:
   NewAuction:
     Name: "&2Créer une nouvelle enchère"
     Description: "&7Cliquer ici pour vendre vos objets"
+  CreateAuction:
+    Name: "&2Créer l'enchère"
+  BuyAuction:
+    Name: "&2Acheter l'enchère"
+  RenewAuction:
+    Name: "&2Renouveler l'enchère"
+  UndoAuction:
+    Name: "&2Annuler l'enchère"
   GlobalView:
     Name: "Vue d'ensemble"
     Description: "Historique des enchères"
@@ -94,3 +100,5 @@ Buttons:
     Name: "Répéter cette enchère autant de fois que possible"
 ErrorMessages:
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
+  MissingItems: "Mauvais nombre d'items, certains items sont manquants"
+  FailCreationAuction: "Impossible de créer l'enchère en base de données"
