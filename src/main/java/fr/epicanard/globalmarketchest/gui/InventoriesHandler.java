@@ -21,6 +21,11 @@ public class InventoriesHandler {
   public InventoryGUI removeInventory(UUID playerID) {
     return this.inventories.remove(playerID);
   }
+
+  public void removeAllInventories() {
+    this.inventories.values().forEach(i -> i.close());
+    this.inventories.clear();
+  }
   
   public Boolean hasInventory(UUID playerID) {
     return this.inventories.containsKey(playerID);
