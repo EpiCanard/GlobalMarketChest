@@ -48,10 +48,6 @@ public class CreateAuctionItem extends ShopInterface {
       this.toggler.unset();
   }
 
-  @Override
-  public void unload() {
-  }
-
   /**
    * Set the item in dropzone when drop
    * 
