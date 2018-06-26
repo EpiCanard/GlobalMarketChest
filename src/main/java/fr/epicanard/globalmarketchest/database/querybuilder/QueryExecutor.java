@@ -24,7 +24,7 @@ public class QueryExecutor {
    */
 
   @SuppressWarnings("unchecked")
-  public void setPrepared(PreparedStatement prepared, List<Object> vals, AtomicInteger inc) throws SQLException, TypeNotSupported {
+  private void setPrepared(PreparedStatement prepared, List<Object> vals, AtomicInteger inc) throws SQLException, TypeNotSupported {
     for (int i = 0; i < vals.size(); i++) {
       final Object value = vals.get(i);
       switch (value.getClass().getSimpleName()) {
@@ -42,8 +42,11 @@ public class QueryExecutor {
           break;
         case "ArrayList":
           inc.decrementAndGet();
-          for(String val: (List<String>)value) {
-            prepared.setString(inc.incrementAndGet(), (String)val);
+          for(Object val: (List<Object>)value) {
+            if (val instanceof String)
+              prepared.setString(inc.incrementAndGet(), (String)val);
+            if (val instanceof Integer)
+              prepared.setInt(inc.incrementAndGet(), (Integer)val);
           }
           break;
         default:
