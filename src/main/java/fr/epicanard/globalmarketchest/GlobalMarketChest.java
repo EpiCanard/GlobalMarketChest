@@ -98,6 +98,7 @@ public class GlobalMarketChest extends JavaPlugin {
   @Override
   public void onDisable() {
     this.sqlConnection.cleanPool();
+    this.inventories.removeAllInventories();
   }
 
   public void disable() {
