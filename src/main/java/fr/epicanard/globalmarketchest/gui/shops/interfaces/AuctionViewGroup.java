@@ -24,9 +24,9 @@ public class AuctionViewGroup extends ShopInterface {
       });
     });
     this.paginator.setClickConsumer(pos -> {
-      if (pos >= this.paginator.getItemstacks().size())
+      ItemStack item = this.paginator.getItemStack(pos);
+      if (item == null)
         return;
-      ItemStack item = this.paginator.getItemstacks().get(pos);
       this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, item);
       this.inv.loadInterface("AuctionViewList");
     });
@@ -35,14 +35,5 @@ public class AuctionViewGroup extends ShopInterface {
       this.inv.getTransaction().remove(TransactionKey.CATEGORY);
     }));
     this.actions.put(53, new NewAuction());
-  }
-
-  @Override
-  public void load() {
-    super.load();
-  }
-
-  @Override
-  public void unload() {
   }
 }
