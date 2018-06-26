@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
@@ -106,19 +107,29 @@ public class CreateAuctionPrice extends ShopInterface {
   private void createAuction(InventoryGUI i) {
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
     Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
+    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    PlayerInventory playerInv = i.getPlayer().getInventory();
 
+    if (!playerInv.containsAtLeast(item, auction.getAmount() * auctionNumber)) {
+      this.inv.getWarn().warn("MissingItems", 49);
+      return;
+    }
     Boolean ret = GlobalMarketChest.plugin.auctionManager.createAuction(auction, auctionNumber);
-    if (!ret)
-      this.inv.getWarn().warn("Fail to create auction in database", 49);
-    else
-      ReturnBack.execute(() -> {
-        this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
-        this.inv.getTransaction().remove(TransactionKey.AUCTIONNUMBER);
-        this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
-      }, i);
-  }
-
-  @Override
-  public void unload() {
+    if (!ret) {
+      this.inv.getWarn().warn("FailCreateAuction", 49);
+      return;
+    }
+    Integer totalAmount = auction.getAmount() * auctionNumber;
+    ItemStack it = item.clone();
+    while (totalAmount > 0) {
+      it.setAmount(totalAmount >= 64 ? 64 : totalAmount);
+      playerInv.removeItem(it);
+      totalAmount -= 64;
+    }
+    ReturnBack.execute(() -> {
+      this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
+      this.inv.getTransaction().remove(TransactionKey.AUCTIONNUMBER);
+      this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
+    }, i);
   }
 }
