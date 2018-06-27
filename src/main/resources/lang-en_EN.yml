@@ -102,3 +102,5 @@ ErrorMessages:
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
   MissingItems: "Wrong number of items, some items are missing"
   FailCreateAuction: "Fail to create auction in database"
+  NotEnoughSpace: "Not enough space to add items bought"
+  CantBuyAuction: "Fail to buy auction in database"

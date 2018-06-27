@@ -102,3 +102,5 @@ ErrorMessages:
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
   MissingItems: "Mauvais nombre d'items, certains items sont manquants"
   FailCreationAuction: "Impossible de créer l'enchère en base de données"
+  NotEnoughSpace: "Pas assez de place pour ajouter les items acheté"
+  CantBuyAuction: "Imposibble d'acheter l'enchère en base de données"

@@ -68,7 +68,7 @@ public class AuctionManager {
    * @param id Id of the auction to update
    * @param buyer Player that vuy the auction
    */
-  public void buyAuction(int id, Player buyer) {
+  public Boolean buyAuction(int id, Player buyer) {
     UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
 
     builder.addValue("playerEnder", PlayerUtils.getUUIDToString(buyer));
@@ -76,7 +76,7 @@ public class AuctionManager {
     builder.addValue("state", StateAuction.FINISHED.getState());
     builder.addCondition("id", id);
 
-    QueryExecutor.of().execute(builder);
+    return QueryExecutor.of().execute(builder);
   }
 
   /**
