@@ -14,11 +14,12 @@ public class AuctionViewGroup extends ShopInterface {
 
   public AuctionViewGroup(InventoryGUI inv) {
     super(inv);
+    String category = this.inv.getTransactionValue(TransactionKey.CATEGORY);
+    this.setIcon(GlobalMarketChest.plugin.getCatHandler().getDisplayItem(category));
 
     this.paginator.setLoadConsumer(pag -> {
       ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-      String category = this.inv.getTransactionValue(TransactionKey.CATEGORY);
-      
+
       GlobalMarketChest.plugin.auctionManager.getItemByCategory(shop.getGroup(), category, its -> {
         pag.setItemStacks(pag.getSubList(its));
       });
