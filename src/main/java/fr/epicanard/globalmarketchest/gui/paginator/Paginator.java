@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -213,6 +215,13 @@ public class Paginator {
     int start = Utils.getIndex(this.getConfig().getStartLimit(), list.size());
     int end = Utils.getIndex(this.getConfig().getStartLimit() + this.getConfig().getLimit(), list.size());
     return list.subList(start, end);
+  }
+
+  /**
+   * Get the limit for the paginator
+   */
+  public Pair<Integer, Integer> getLimit() {
+    return new ImmutablePair<Integer,Integer>(this.config.getStartLimit(), this.config.getLimit());
   }
 
   public void setItemStacks(List<ItemStack> items) {
