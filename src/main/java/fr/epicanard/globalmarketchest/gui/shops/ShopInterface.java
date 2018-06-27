@@ -15,6 +15,7 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.paginator.PaginatorConfig;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -28,9 +29,11 @@ public abstract class ShopInterface {
   protected Paginator paginator = null;
   protected InventoryGUI inv;
   protected Map<Integer, Consumer<InventoryGUI>> actions = new HashMap<Integer, Consumer<InventoryGUI>>();
+  private ItemStack icon;
 
   public ShopInterface(InventoryGUI inv) {
     this.inv = inv;
+    this.icon = Utils.getBackground();
     String className = this.getClass().getSimpleName();
     PaginatorConfig conf = InterfacesLoader.getInstance().getPaginatorConfig(className);
     if (conf != null)
@@ -53,6 +56,7 @@ public abstract class ShopInterface {
     if (this.paginator != null)
       this.paginator.reloadInterface();
     this.updateInventoryName(className);
+    this.loadIcon();
   }
 
   /**
@@ -68,6 +72,24 @@ public abstract class ShopInterface {
     ep.playerConnection.sendPacket(packet);
     ep.updateInventory(ep.activeContainer);
   }
+
+  /**
+   * Add the icon item inside inventory
+   */
+  private void loadIcon() {
+    this.inv.getInv().setItem(4, this.icon);
+  }
+
+  /**
+   * Set and load icon
+   * 
+   * @param item Icon
+   */
+  protected void setIcon(ItemStack item) {
+    this.icon = item;
+    this.loadIcon();
+  }
+
 
   /**
    * Unload interface
