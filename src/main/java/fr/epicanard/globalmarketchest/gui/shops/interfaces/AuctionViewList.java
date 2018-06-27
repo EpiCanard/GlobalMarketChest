@@ -21,6 +21,7 @@ import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 public class AuctionViewList extends ShopInterface {
+  private List<AuctionInfo> auctions = new ArrayList<>();
 
   public AuctionViewList(InventoryGUI inv) {
     super(inv);
@@ -28,8 +29,10 @@ public class AuctionViewList extends ShopInterface {
     this.paginator.setLoadConsumer(pag -> {
       ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
       ItemStack item = this.inv.getTransactionValue(TransactionKey.AUCTIONITEM);
-      
+      this.setIcon(item);
+
       GlobalMarketChest.plugin.auctionManager.getAuctionsByItem(shop.getGroup(), item, auctions -> {
+        this.auctions = auctions;
         pag.setItemStacks(pag.getSubList(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
           ItemStackUtils.setItemStackLore(itemstack, this.getLore(auction));
         })));
@@ -54,9 +57,13 @@ public class AuctionViewList extends ShopInterface {
   }
 
   private void selectAuction(Integer pos) {
-    ItemStack item = this.paginator.getItemStack(pos);
-    if (item == null)
+    if (pos >= this.auctions.size())
       return;
-    this.inv.loadInterface("BuyAuction");
+    AuctionInfo auction = this.auctions.get(pos);
+    this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, auction);
+    if (!auction.getPlayerStarter().equals(PlayerUtils.getUUIDToString(this.inv.getPlayer())))
+      this.inv.loadInterface("EditAuction");
+    else
+      this.inv.loadInterface("BuyAuction");
   }
 }
