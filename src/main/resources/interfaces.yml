@@ -58,19 +58,24 @@ Interfaces:
     Base:
       - Return
       - Exit
+    CircleToggler:
+      - Pos: 31
+        Set: false
     Items:
-      12-14: AuctionSide
-      21-23: AuctionSide
-      30-32: AuctionSide
-      22: BuyAuction
+      31: BuyAuction
 
   EditAuction:
     Base:
       - Return
       - Exit
+    CircleToggler:
+      - Pos: 29
+        Set: false
+      - Pos: 33
+        Set: true
     Items:
-      1: RenewAuction
-      2: UndoAuction
+      33: RenewAuction
+      29: UndoAuction
 
   # ================
   # AUCTION CREATION
@@ -82,11 +87,10 @@ Interfaces:
       - Return
       - Exit
       - Validate
+    CircleToggler:
+      - Pos: 22
     Items:
-      12-14: AuctionSide
-      21-23: AuctionSide
       22: AuctionMiddle
-      30-32: AuctionSide
       48: MaxInOne
       50: MaxRepeat
 

@@ -15,17 +15,16 @@ import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
-import fr.epicanard.globalmarketchest.gui.shops.Toggler;
+import fr.epicanard.globalmarketchest.gui.shops.toggler.SingleToggler;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class CreateAuctionItem extends ShopInterface {
-  private Toggler toggler;
-
   public CreateAuctionItem(InventoryGUI inv) {
     super(inv);
     this.isTemp = true;
-    this.toggler = new Toggler(inv.getInv(), 53);
+    this.togglers.put(53, new SingleToggler(inv.getInv(), 53, inv.getInv().getItem(53), Utils.getBackground()));
     this.actions.put(22, i -> this.unsetItem());
     this.actions.put(0, new PreviousInterface(() -> {
       this.unsetItem();
@@ -39,13 +38,12 @@ public class CreateAuctionItem extends ShopInterface {
   @Override
   public void load() {
     super.load();
-    this.toggler.load();
 
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     if (item != null)
       this.inv.getInv().setItem(22, item);
     else
-      this.toggler.unset();
+      this.unsetItem();
   }
 
   /**
@@ -61,7 +59,7 @@ public class CreateAuctionItem extends ShopInterface {
     this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, 1);
     this.inv.getTransaction().put(TransactionKey.TEMPITEM, item.clone());
     this.updateItem();
-    this.toggler.set();
+    this.togglers.forEach((k, v) -> v.set());
   }
 
   /**
@@ -72,7 +70,7 @@ public class CreateAuctionItem extends ShopInterface {
     this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
     ItemStack[] items = InterfacesLoader.getInstance().getInterface("CreateAuctionItem");
     this.inv.getInv().setItem(22, items[22]);
-    this.toggler.unset();
+    this.togglers.forEach((k, v) -> v.unset());
   }
 
   /**

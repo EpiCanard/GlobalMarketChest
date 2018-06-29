@@ -1,12 +1,16 @@
 package fr.epicanard.globalmarketchest.gui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -28,6 +32,8 @@ public class InterfacesLoader {
   private Map<String, PaginatorConfig> paginators = new HashMap<>();
   private Map<String, ItemStack[]> baseInterfaces = new HashMap<>();
   private Map<String, PaginatorConfig> basePaginators = new HashMap<>();
+  private Map<String, List<Pair<Integer, Boolean>>> circleTogglers = new HashMap<>();
+  private Map<String, List<Pair<Integer, Boolean>>> baseCircleTogglers = new HashMap<>();
 
   private InterfacesLoader() {
   }
@@ -56,6 +62,33 @@ public class InterfacesLoader {
   public PaginatorConfig getPaginatorConfig(String interfaceName) {
     PaginatorConfig conf = this.paginators.get(interfaceName);
     return (conf != null) ? conf.duplicate() : null;
+  }
+
+  public List<Pair<Integer, Boolean>> getCircleTogglers(String interfaceName) {
+    return this.circleTogglers.get(interfaceName);
+  }
+  /**
+   * Load Circle Togle from config if exist and add it inside circleToggler map
+   * @param config
+   * @param name
+   */
+  private void loadCircleToggler(ConfigurationSection config, String name, Map<String, List<Pair<Integer, Boolean>>> map) {
+    List<Map<?, ?>> circles = config.getMapList(name + ".CircleToggler");
+
+    if (circles.isEmpty())
+      return;
+    List<Pair<Integer, Boolean>> circleList = new ArrayList<>();
+    for (Map<?, ?> circle : circles) {
+      Integer pos = (Integer)circle.get("Pos");
+      if (pos == null)
+        continue;
+      Boolean set = (Boolean)circle.get("Set");
+      if (set == null)
+        set = false;
+      circleList.add(new ImmutablePair<Integer,Boolean>(pos, set));
+    }
+    if (!circleList.isEmpty())
+      map.put(name, circleList);
   }
 
   /**
@@ -126,10 +159,12 @@ public class InterfacesLoader {
               ItemStackUtils.mergeArray(this.interfaces.get(name), i);
           });
           Optional.ofNullable(this.basePaginators.get(base)).ifPresent(p -> this.paginators.put(name, p.duplicate()));
+          Optional.ofNullable(this.baseCircleTogglers.get(base)).ifPresent(c -> this.circleTogglers.put(name, c));
         }
       }
       this.loadInterface(interfaceConfig, name, (loadBase) ? this.interfaces : this.baseInterfaces);
       this.loadPaginator(interfaceConfig, name, (loadBase) ? this.paginators : this.basePaginators);
+      this.loadCircleToggler(interfaceConfig, name, (loadBase) ? this.circleTogglers : this.baseCircleTogglers);
     }
   }
 

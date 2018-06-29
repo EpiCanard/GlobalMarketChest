@@ -1,10 +1,12 @@
 package fr.epicanard.globalmarketchest.gui.shops;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -14,6 +16,8 @@ import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.paginator.PaginatorConfig;
+import fr.epicanard.globalmarketchest.gui.shops.toggler.CircleToggler;
+import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
@@ -27,6 +31,7 @@ public abstract class ShopInterface {
   @Accessors(fluent=true) @Getter
   protected Boolean isTemp = false;
   protected Paginator paginator = null;
+  protected Map<Integer, Toggler> togglers = new HashMap<>();
   protected InventoryGUI inv;
   protected Map<Integer, Consumer<InventoryGUI>> actions = new HashMap<Integer, Consumer<InventoryGUI>>();
   private ItemStack icon;
@@ -38,6 +43,14 @@ public abstract class ShopInterface {
     PaginatorConfig conf = InterfacesLoader.getInstance().getPaginatorConfig(className);
     if (conf != null)
       this.paginator = new Paginator(this.inv.getInv(), conf);
+    List<Pair<Integer, Boolean>> circles = InterfacesLoader.getInstance().getCircleTogglers(className);
+    if (circles != null) {
+      circles.forEach(circle -> {
+        Toggler toggler = new CircleToggler(inv.getInv(), circle.getLeft());
+        this.togglers.put(circle.getLeft(), toggler);
+        toggler.setSet(circle.getRight());
+      });
+    }
     this.actions.put(8, new LeaveShop());
   }
 
@@ -56,6 +69,7 @@ public abstract class ShopInterface {
     if (this.paginator != null)
       this.paginator.reloadInterface();
     this.updateInventoryName(className);
+    this.togglers.forEach((k, v) -> v.load());
     this.loadIcon();
   }
 
