@@ -22,6 +22,7 @@ Divers:
   Group: "Groupe"
   Type: "Type"
   Warning: "Attention"
+  Expiration: "Date d'expiration"
 Shops:
   ClickChangeGroup: "Cliques pour changer le nom de groupe du shop"
   CurrentShop: "Shop actuel"
@@ -102,6 +103,11 @@ ErrorMessages:
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
   MissingItems: "Mauvais nombre d'items, certains items sont manquants"
   FailCreationAuction: "Impossible de créer l'enchère en base de données"
-  NotEnoughSpace: "Pas assez de place pour ajouter les items acheté"
+  NotEnoughSpace: "Pas assez de place pour ajouter;les items dans l'inventaire du joueur"
   NotEnoughMoney: "Pas assez d'argent pour acheter cette enchère"
   CantBuyAuction: "Imposibble d'acheter l'enchère en base de données"
+  CantRenewAuction: "Imposibble de renouveler l'enchère en base de données"
+  CantUndoAuction: "Imposibble d'annuler l'enchère en base de données"
+InfoMessages:
+  UndoAuction: "&2Enchère supprimé avec succès"
+  RenewAuction: "&2Enchère renouvelé avec succès"

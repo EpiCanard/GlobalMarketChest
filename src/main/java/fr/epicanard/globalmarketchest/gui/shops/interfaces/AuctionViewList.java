@@ -53,6 +53,7 @@ public class AuctionViewList extends ShopInterface {
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.UnitPrice"), auction.getPrice()));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.TotalPrice"), price));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Seller"), PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getName()));
+    lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Expiration"), auction.getEnd()));
     return lore;
   }
 
@@ -61,7 +62,7 @@ public class AuctionViewList extends ShopInterface {
       return;
     AuctionInfo auction = this.auctions.get(pos);
     this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, auction);
-    if (!auction.getPlayerStarter().equals(PlayerUtils.getUUIDToString(this.inv.getPlayer())))
+    if (auction.getPlayerStarter().equals(PlayerUtils.getUUIDToString(this.inv.getPlayer())))
       this.inv.loadInterface("EditAuction");
     else
       this.inv.loadInterface("BuyAuction");

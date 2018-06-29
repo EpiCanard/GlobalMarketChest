@@ -117,11 +117,11 @@ public class AuctionManager {
    * 
    * @param id Id of the auction to renew
    */
-  public void renewAuction(int id) {
+  public Boolean renewAuction(int id) {
     UpdateBuilder builder = this.updateToNow(null);
 
     builder.addCondition("id", id);
-    QueryExecutor.of().execute(builder);
+    return QueryExecutor.of().execute(builder);
   }
 
   /**
@@ -129,13 +129,13 @@ public class AuctionManager {
    * 
    * @param id Id of the auction to undo
    */
-  public void undoAuction(int id) {
+  public Boolean undoAuction(int id) {
     UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
 
     builder.addCondition("id", id);
     builder.addValue("state", StateAuction.ABANDONED.getState());
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
-    QueryExecutor.of().execute(builder);
+    return QueryExecutor.of().execute(builder);
   }
   /**
    * Remove every auction before a specific date

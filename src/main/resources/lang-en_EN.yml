@@ -22,6 +22,7 @@ Divers:
   Group: "Group"
   Type: "Type"
   Warning: "Warning"
+  Expiration: "Expiration Date"
 Shops:
   ClickChangeGroup: "Click to change shop group name"
   CurrentShop: "Current shop"
@@ -102,6 +103,11 @@ ErrorMessages:
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
   MissingItems: "Wrong number of items, some items are missing"
   FailCreateAuction: "Fail to create auction in database"
-  NotEnoughSpace: "Not enough space to add items bought"
+  NotEnoughSpace: "Not enough space to add items;in player inventory"
   NotEnoughMoney: "Not enough money to buy this auction"
   CantBuyAuction: "Fail to buy auction in database"
+  CantRenewAuction: "Fail to renew auction in database"
+  CantUndoAuction: "Fail to undo auction in database"
+InfoMessages:
+  UndoAuction: "Auction successfully deleted"
+  RenewAuction: "Auction successfully renewed"
