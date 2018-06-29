@@ -1,20 +1,34 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
+import org.bukkit.inventory.ItemStack;
+
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
+import fr.epicanard.globalmarketchest.exceptions.WarnException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
+import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 public class EditAuction extends ShopInterface {
 
   public EditAuction(InventoryGUI inv) {
     super(inv);
- 
-    this.actions.put(0, new PreviousInterface());
-    this.actions.put(1, this::renewAuction);
-    this.actions.put(2, this::undoAuction);
+
+    this.isTemp = true;
+    this.actions.put(0, new PreviousInterface(this::clean));
+    this.actions.put(33, this::renewAuction);
+    this.actions.put(29, this::undoAuction);
+  }
+
+  /**
+   * Remove transaction items
+   */
+  private void clean() {
+    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
   }
 
   /**
@@ -23,9 +37,13 @@ public class EditAuction extends ShopInterface {
    * @param i
    */
   private void renewAuction(InventoryGUI i) {
-    AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONITEM);
+    AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
 
-    GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId());
+    if (GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId()) == true) {
+      PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoAuction");
+      ReturnBack.execute(this::clean, this.inv);
+    } else
+      i.getWarn().warn("CantRenewAuction", 49);
   }
 
   /**
@@ -34,8 +52,22 @@ public class EditAuction extends ShopInterface {
    * @param i
    */
   private void undoAuction(InventoryGUI i) {
-    AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONITEM);
+    AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
+
     
-    GlobalMarketChest.plugin.auctionManager.undoAuction(auction.getId());    
+    ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
+    item.setAmount(auction.getAmount());
+    try {
+      PlayerUtils.hasEnoughPlaceWarn(i.getPlayer().getInventory(), item);
+      if (GlobalMarketChest.plugin.auctionManager.undoAuction(auction.getId()) == true) {
+        i.getPlayer().getInventory().addItem(item);
+        PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoAuction");
+        ReturnBack.execute(this::clean, i);
+      } else
+        throw new WarnException("CantUndoAuction");
+    } catch (WarnException e) {
+      i.getWarn().warn(e.getMessage(), 49);
+    }
+
   }
 }
