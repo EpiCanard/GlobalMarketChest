@@ -103,4 +103,5 @@ ErrorMessages:
   MissingItems: "Wrong number of items, some items are missing"
   FailCreateAuction: "Fail to create auction in database"
   NotEnoughSpace: "Not enough space to add items bought"
+  NotEnoughMoney: "Not enough money to buy this auction"
   CantBuyAuction: "Fail to buy auction in database"

@@ -103,4 +103,5 @@ ErrorMessages:
   MissingItems: "Mauvais nombre d'items, certains items sont manquants"
   FailCreationAuction: "Impossible de créer l'enchère en base de données"
   NotEnoughSpace: "Pas assez de place pour ajouter les items acheté"
+  NotEnoughMoney: "Pas assez d'argent pour acheter cette enchère"
   CantBuyAuction: "Imposibble d'acheter l'enchère en base de données"

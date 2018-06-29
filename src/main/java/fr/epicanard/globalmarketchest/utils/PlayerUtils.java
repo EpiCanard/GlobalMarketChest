@@ -14,7 +14,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class PlayerUtils {
   /**
-   * Get a player forrom is UUID
+   * Get a player from is UUID
    */
   public OfflinePlayer getOfflinePlayer(UUID playerUUID) {
     return GlobalMarketChest.plugin.getServer().getOfflinePlayer(playerUUID);

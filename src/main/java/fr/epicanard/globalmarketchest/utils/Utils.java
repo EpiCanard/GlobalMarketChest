@@ -22,8 +22,7 @@ public class Utils {
   private ItemStack background = null;
 
   public void init() {
-    Utils.background = ItemStackUtils.getItemStack(
-      GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Interfaces.Background"));
+    Utils.background = ItemStackUtils.getItemStackFromConfig("Interfaces.Background");
     Utils.background = ItemStackUtils.setItemStackMeta(background, null, null);
   }
 

@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -48,11 +49,15 @@ public class BuyAuction extends ShopInterface {
     item.setAmount(auction.getAmount());
 
     try {
+      if (GlobalMarketChest.plugin.economy.getMoneyOfPlayer(i.getPlayer().getUniqueId()) < auction.getTotalPrice())
+        throw new WarnException("NotEnoughMoney");
       if (!this.hasEnoughPlace(i.getPlayer().getInventory(), item))
         throw new WarnException("NotEnoughSpace");
       if (!GlobalMarketChest.plugin.auctionManager.buyAuction(auction.getId(), i.getPlayer()))
         throw new WarnException("CantBuyAuction");
       i.getPlayer().getInventory().addItem(item);
+
+      GlobalMarketChest.plugin.economy.exchangeMoney(i.getPlayer().getUniqueId(), UUID.fromString(auction.getPlayerStarter()), auction.getTotalPrice());
       ReturnBack.execute(null, i);
     } catch (WarnException e) {
       i.getWarn().warn(e.getMessage(), 49);
