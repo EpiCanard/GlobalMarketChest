@@ -77,6 +77,9 @@ Interfaces:
     NumPage: minecraft:book
     MaxInOne: minecraft:stained_glass_pane/1
     MaxRepeat: minecraft:stained_glass_pane/1
+  Circle:
+    SetItem: "minecraft:stained_glass_pane/5"
+    UnsetItem: "minecraft:stained_glass_pane/11"
 Sign:
   Appearance:
     GlobalShop:
