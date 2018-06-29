@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.auctions;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -69,6 +70,10 @@ public class AuctionInfo {
     this.price = 0.0;
     this.playerStarter = owner.getUniqueId().toString();
     this.group = group;
+  }
+
+  public Double getTotalPrice() {
+    return BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
   }
 
   public void setItemStack(ItemStack item) {
