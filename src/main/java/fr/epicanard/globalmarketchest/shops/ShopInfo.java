@@ -3,12 +3,12 @@ package fr.epicanard.globalmarketchest.shops;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-import java.util.logging.Level;
 
 import org.bukkit.Location;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import lombok.Getter;
@@ -42,9 +42,8 @@ public class ShopInfo {
       this.otherLocation = WorldUtils.getLocationFromString(res.getString("otherLocation"), null);
       this.type = res.getInt("type");
       this.group = res.getString("group");
-
     } catch (SQLException e) {
-      GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
+      LoggerUtils.warn(e.getMessage());
     }
   }
 

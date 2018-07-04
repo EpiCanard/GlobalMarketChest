@@ -100,6 +100,7 @@ Buttons:
   MaxRepeat:
     Name: "Repeat auction as many as possible"
 ErrorMessages:
+  UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
   MissingItems: "Wrong number of items, some items are missing"
   FailCreateAuction: "Fail to create auction in database"

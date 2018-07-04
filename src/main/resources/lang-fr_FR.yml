@@ -100,6 +100,7 @@ Buttons:
   MaxRepeat:
     Name: "Répéter cette enchère autant de fois que possible"
 ErrorMessages:
+  UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
   MissingItems: "Mauvais nombre d'items, certains items sont manquants"
   FailCreationAuction: "Impossible de créer l'enchère en base de données"

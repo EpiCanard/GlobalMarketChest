@@ -10,6 +10,7 @@ import com.google.common.util.concurrent.AtomicDouble;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -103,7 +104,12 @@ public class WorldUtils {
     if (location == null)
       location = new Location(GlobalMarketChest.plugin.getServer().getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]));
     else {
-      location.setWorld(GlobalMarketChest.plugin.getServer().getWorld(args[0]));
+      World world = GlobalMarketChest.plugin.getServer().getWorld(args[0]);
+      if (world == null) {
+        LoggerUtils.warn(LangUtils.get("ErrorMessages.UnkownWorld") + " " + locatString);
+        return null;
+      }
+      location.setWorld(world);
       location.setX(Double.parseDouble(args[1]));
       location.setY(Double.parseDouble(args[2]));
       location.setZ(Double.parseDouble(args[3]));
