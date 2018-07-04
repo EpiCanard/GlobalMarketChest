@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
@@ -49,4 +51,6 @@ public abstract class DatabaseConnection {
   public abstract void closeRessources(ResultSet res, PreparedStatement prepared);
 
   public abstract void configFromConfigFile() throws ConfigException;
+
+  public abstract String buildLimit(Pair<Integer, Integer> limit);
 }

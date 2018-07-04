@@ -25,18 +25,19 @@ public class AuctionViewList extends ShopInterface {
 
   public AuctionViewList(InventoryGUI inv) {
     super(inv);
- 
+
     this.paginator.setLoadConsumer(pag -> {
       ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
       ItemStack item = this.inv.getTransactionValue(TransactionKey.AUCTIONITEM);
       this.setIcon(item);
 
-      GlobalMarketChest.plugin.auctionManager.getAuctionsByItem(shop.getGroup(), item, auctions -> {
-        this.auctions = auctions;
-        pag.setItemStacks(pag.getSubList(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-          ItemStackUtils.setItemStackLore(itemstack, this.getLore(auction));
-        })));
-      });
+      GlobalMarketChest.plugin.auctionManager.getAuctionsByItem(shop.getGroup(), item, this.paginator.getLimit(),
+          auctions -> {
+            this.auctions = auctions;
+            pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
+              ItemStackUtils.setItemStackLore(itemstack, this.getLore(auction));
+            }));
+          });
     });
 
     this.paginator.setClickConsumer(this::selectAuction);
@@ -47,12 +48,13 @@ public class AuctionViewList extends ShopInterface {
 
   private List<String> getLore(AuctionInfo auction) {
     List<String> lore = new ArrayList<>();
-    
+
     double price = BigDecimal.valueOf(auction.getPrice()).multiply(BigDecimal.valueOf(auction.getAmount())).doubleValue();
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Quantity"), auction.getAmount()));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.UnitPrice"), auction.getPrice()));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.TotalPrice"), price));
-    lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Seller"), PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getName()));
+    lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Seller"),
+        PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getName()));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Expiration"), auction.getEnd()));
     return lore;
   }
@@ -66,5 +68,11 @@ public class AuctionViewList extends ShopInterface {
       this.inv.loadInterface("EditAuction");
     else
       this.inv.loadInterface("BuyAuction");
+  }
+
+  @Override
+  public void destroy() {
+    super.destroy();
+    this.inv.getTransaction().remove(TransactionKey.AUCTIONITEM);
   }
 }

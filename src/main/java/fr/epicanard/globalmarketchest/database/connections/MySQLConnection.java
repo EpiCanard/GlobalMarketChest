@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -179,5 +180,10 @@ public class MySQLConnection extends DatabaseConnection {
       if (prepared != null)
         prepared.close();
     } catch (SQLException e) {}
+  }
+
+  @Override
+  public String buildLimit(Pair<Integer, Integer> limit) {
+    return String.format("LIMIT %d, %d", limit.getLeft(), limit.getRight());
   }
 }
