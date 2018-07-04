@@ -126,10 +126,11 @@ public class CreateAuctionPrice extends ShopInterface {
       playerInv.removeItem(it);
       totalAmount -= 64;
     }
-    ReturnBack.execute(() -> {
-      this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
-      this.inv.getTransaction().remove(TransactionKey.AUCTIONNUMBER);
-      this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
-    }, i);
+    ReturnBack.execute(null, i);
+  }
+
+  @Override
+  public void destroy() {
+    super.destroy();
   }
 }
