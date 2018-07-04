@@ -26,10 +26,7 @@ public class CreateAuctionItem extends ShopInterface {
     this.isTemp = true;
     this.togglers.put(53, new SingleToggler(inv.getInv(), 53, inv.getInv().getItem(53), Utils.getBackground()));
     this.actions.put(22, i -> this.unsetItem());
-    this.actions.put(0, new PreviousInterface(() -> {
-      this.unsetItem();
-      this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
-    }));
+    this.actions.put(0, new PreviousInterface());
     this.actions.put(48, i -> this.defineMaxInOne());
     this.actions.put(50, i -> this.defineMaxRepeat());
     this.actions.put(53, new NextInterface("CreateAuctionPrice", this::checkItem));
@@ -102,9 +99,12 @@ public class CreateAuctionItem extends ShopInterface {
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
 
+    if (item == null || auction == null)
+      return;
     this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, 1);
     ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
-    Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0, (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
+    Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0,
+        (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
     item.setAmount((max > 64) ? 64 : max);
     auction.setItemStack(item);
     auction.setAmount(max);
@@ -115,9 +115,12 @@ public class CreateAuctionItem extends ShopInterface {
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
 
+    if (item == null || auction == null)
+      return;
     ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
-    Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0, (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
-    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, (Integer)(max / auction.getAmount()));
+    Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0,
+        (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
+    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, max / auction.getAmount());
     this.updateItem();
   }
 
@@ -126,6 +129,7 @@ public class CreateAuctionItem extends ShopInterface {
    * 
    * @param event
    */
+  @Override
   public void onDrop(InventoryClickEvent event, InventoryGUI inv) {
     ItemStack item;
     if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY)
@@ -136,5 +140,14 @@ public class CreateAuctionItem extends ShopInterface {
       event.getWhoClicked().getInventory().addItem(item);
     }
     this.setItem(item);
-  }  
+  }
+
+  @Override
+  public void destroy() {
+    super.destroy();
+    this.unsetItem();
+    this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
+    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
+    this.inv.getTransaction().remove(TransactionKey.AUCTIONNUMBER);
+  }
 }

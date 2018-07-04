@@ -14,13 +14,13 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.paginator.PaginatorConfig;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.CircleToggler;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 import net.minecraft.server.v1_12_R1.ChatMessage;
@@ -78,11 +78,11 @@ public abstract class ShopInterface {
    * 
    * @param interfaceName
    */
-  private void updateInventoryName(String interfaceName)
-  {
+  private void updateInventoryName(String interfaceName) {
     String title = LangUtils.getOrElse("InterfacesTitle." + interfaceName, "&2GlobalMarkChest");
-    EntityPlayer ep = ((CraftPlayer)this.inv.getPlayer()).getHandle();
-    PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(ep.activeContainer.windowId, "minecraft:chest", new ChatMessage(title), this.inv.getPlayer().getOpenInventory().getTopInventory().getSize());
+    EntityPlayer ep = ((CraftPlayer) this.inv.getPlayer()).getHandle();
+    PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(ep.activeContainer.windowId, "minecraft:chest",
+        new ChatMessage(title), this.inv.getPlayer().getOpenInventory().getTopInventory().getSize());
     ep.playerConnection.sendPacket(packet);
     ep.updateInventory(ep.activeContainer);
   }
@@ -104,13 +104,17 @@ public abstract class ShopInterface {
     this.loadIcon();
   }
 
-
   /**
    * Unload interface
    */
   public void unload() {
     this.inv.getWarn().stopWarn();
   }
+
+  /**
+   * Called when interface is destroyed
+   */
+  public void destroy() {}
 
   /**
    * Called when a mouse event is done inside inventory
@@ -120,7 +124,7 @@ public abstract class ShopInterface {
   public void onClick(InventoryClickEvent event, InventoryGUI inv) {
     if (event.getClick() != ClickType.LEFT)
       return;
-    if (this.paginator == null ||!this.paginator.onClick(event.getSlot()))
+    if (this.paginator == null || !this.paginator.onClick(event.getSlot()))
       Optional.ofNullable(this.actions.get(event.getSlot())).ifPresent(c -> c.accept(inv));
   }
 
@@ -130,5 +134,5 @@ public abstract class ShopInterface {
    * @param event
    */
   public void onDrop(InventoryClickEvent event, InventoryGUI inv) {}
-  
+
 }

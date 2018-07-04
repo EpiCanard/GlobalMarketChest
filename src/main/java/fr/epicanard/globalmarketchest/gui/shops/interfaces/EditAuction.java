@@ -19,16 +19,9 @@ public class EditAuction extends ShopInterface {
     super(inv);
 
     this.isTemp = true;
-    this.actions.put(0, new PreviousInterface(this::clean));
+    this.actions.put(0, new PreviousInterface());
     this.actions.put(33, this::renewAuction);
     this.actions.put(29, this::undoAuction);
-  }
-
-  /**
-   * Remove transaction items
-   */
-  private void clean() {
-    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
   }
 
   /**
@@ -41,7 +34,7 @@ public class EditAuction extends ShopInterface {
 
     if (GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId()) == true) {
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoAuction");
-      ReturnBack.execute(this::clean, this.inv);
+      ReturnBack.execute(null, this.inv);
     } else
       i.getWarn().warn("CantRenewAuction", 49);
   }
@@ -54,7 +47,6 @@ public class EditAuction extends ShopInterface {
   private void undoAuction(InventoryGUI i) {
     AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
 
-    
     ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
     item.setAmount(auction.getAmount());
     try {
@@ -62,12 +54,17 @@ public class EditAuction extends ShopInterface {
       if (GlobalMarketChest.plugin.auctionManager.undoAuction(auction.getId()) == true) {
         i.getPlayer().getInventory().addItem(item);
         PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoAuction");
-        ReturnBack.execute(this::clean, i);
+        ReturnBack.execute(null, i);
       } else
         throw new WarnException("CantUndoAuction");
     } catch (WarnException e) {
       i.getWarn().warn(e.getMessage(), 49);
     }
+  }
 
+  @Override
+  public void destroy() {
+    super.destroy();
+    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
   }
 }

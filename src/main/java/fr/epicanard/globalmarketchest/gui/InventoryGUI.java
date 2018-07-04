@@ -5,7 +5,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.bukkit.Bukkit;
@@ -40,7 +39,8 @@ public class InventoryGUI {
   /**
    * Check if the inventory in param is the same as this inventory
    * 
-   * @param inventory Inventory to verify
+   * @param inventory
+   *          Inventory to verify
    */
   public Boolean inventoryEquals(Inventory inventory) {
     return this.inv.equals(inventory);
@@ -68,24 +68,26 @@ public class InventoryGUI {
    * Unload temporary interface and come back to principal
    */
   public void unloadTempInterface() {
-    try {
-      ShopInterface peek;
-      do {
-        this.shopStack.pop().unload();
-        peek = this.shopStack.peek();
-      } while(peek != null && peek.isTemp());
-      Optional.ofNullable(peek).ifPresent(e -> e.load());
-    } catch (NoSuchElementException e) {}
+    if (this.shopStack.isEmpty())
+      return;
+    ShopInterface peek;
+    do {
+      this.shopStack.peek().unload();
+      this.shopStack.pop().destroy();
+      peek = this.shopStack.peek();
+    } while (peek != null && peek.isTemp());
+    Optional.ofNullable(peek).ifPresent(e -> e.load());
   }
-  
+
   /**
    * Unload last loaded Interface and load the previous one
    */
   public void unloadLastInterface() {
-    try {
-      this.shopStack.pop().unload();
-      Optional.ofNullable(this.shopStack.peek()).ifPresent(e -> e.load());
-    } catch (NoSuchElementException e) {}
+    if (this.shopStack.isEmpty())
+      return;
+    this.shopStack.peek().unload();
+    this.shopStack.pop().destroy();
+    Optional.ofNullable(this.shopStack.peek()).ifPresent(e -> e.load());
   }
 
   /**
@@ -94,10 +96,11 @@ public class InventoryGUI {
    * @param key
    */
   public void unloadAllInterface() {
-    try {
-      this.shopStack.pop().unload();
-      this.shopStack.clear();
-    } catch (NoSuchElementException e) {}
+    if (this.shopStack.isEmpty())
+      return;
+    this.shopStack.peek().unload();
+    while (!this.shopStack.isEmpty())
+      this.shopStack.pop().destroy();
   }
 
   /**
@@ -107,12 +110,14 @@ public class InventoryGUI {
    */
   public void loadInterface(String name) {
     try {
-      ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops.interfaces." + name).getDeclaredConstructor(InventoryGUI.class).newInstance(this);
+      ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops.interfaces." + name)
+          .getDeclaredConstructor(InventoryGUI.class).newInstance(this);
       Optional.ofNullable(this.shopStack.peek()).ifPresent(ShopInterface::unload);
 
       shop.load();
       this.shopStack.push(shop);
-    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
+    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
+        | InvocationTargetException e) {
       e.printStackTrace();
     }
   }
@@ -127,7 +132,8 @@ public class InventoryGUI {
   /**
    * Get Transaction Value
    * 
-   * @param key Key to get transcation object
+   * @param key
+   *          Key to get transcation object
    * @return <T> return the object with these key
    */
   @SuppressWarnings("unchecked")

@@ -25,7 +25,7 @@ public class BuyAuction extends ShopInterface {
     ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
     this.setIcon(item);
     this.actions.put(0, new PreviousInterface());
-    this.actions.put(22, this::buyAuction);
+    this.actions.put(31, this::buyAuction);
   }
 
   /**
@@ -52,5 +52,11 @@ public class BuyAuction extends ShopInterface {
     } catch (WarnException e) {
       i.getWarn().warn(e.getMessage(), 49);
     }
+  }
+  
+  @Override
+  public void destroy() {
+    super.destroy();
+    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
   }
 }

@@ -32,9 +32,13 @@ public class AuctionViewGroup extends ShopInterface {
       this.inv.loadInterface("AuctionViewList");
     });
 
-    this.actions.put(0, new PreviousInterface(() -> {
-      this.inv.getTransaction().remove(TransactionKey.CATEGORY);
-    }));
+    this.actions.put(0, new PreviousInterface());
     this.actions.put(53, new NewAuction());
+  }
+
+  @Override
+  public void destroy() {
+    super.destroy();
+    this.inv.getTransaction().remove(TransactionKey.CATEGORY);
   }
 }
