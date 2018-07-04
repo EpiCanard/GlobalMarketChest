@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -198,7 +199,7 @@ public class AuctionManager {
    * @param category
    * @param consumer
    */
-  public void getAuctionsByItem(String group, ItemStack item, Consumer<List<AuctionInfo>> consumer) {
+  public void getAuctionsByItem(String group, ItemStack item, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
     builder.addCondition("group", group);
@@ -206,6 +207,8 @@ public class AuctionManager {
     builder.addCondition("damage", item.getDurability());
     builder.addCondition("state", StateAuction.INPROGRESS.getState());
     builder.setExtension(" ORDER BY price, start ASC");
+    if (limit != null)
+      builder.setExtension(builder.getExtension() + " " + GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
       List<AuctionInfo> lst = new ArrayList<>();
       try {
