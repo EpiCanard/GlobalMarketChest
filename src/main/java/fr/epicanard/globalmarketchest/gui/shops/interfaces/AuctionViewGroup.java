@@ -19,10 +19,7 @@ public class AuctionViewGroup extends ShopInterface {
 
     this.paginator.setLoadConsumer(pag -> {
       ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-
-      GlobalMarketChest.plugin.auctionManager.getItemByCategory(shop.getGroup(), category, its -> {
-        pag.setItemStacks(pag.getSubList(its));
-      });
+      GlobalMarketChest.plugin.auctionManager.getItemByCategory(shop.getGroup(), category, pag.getLimit(), pag::setItemStacks);
     });
     this.paginator.setClickConsumer(pos -> {
       ItemStack item = this.paginator.getItemStack(pos);
