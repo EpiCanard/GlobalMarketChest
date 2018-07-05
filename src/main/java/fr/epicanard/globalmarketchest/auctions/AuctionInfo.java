@@ -87,6 +87,12 @@ public class AuctionInfo {
     this.itemMeta = DatabaseUtils.serialize(item);
   }
 
+  private String checkPrice(double price) {
+    if (price == 0.0)
+      return "&2" + LangUtils.get("Divers.Free");
+    return Double.toString(price);
+  }
+
   /**
    * Build and return lore for current auction
    * 
@@ -101,8 +107,8 @@ public class AuctionInfo {
     if (status == true)
       lore.add(String.format("&7%s : &2%s", LangUtils.get("Divers.State"), LangUtils.get("States." + this.state.getKeyLang())));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Quantity"), this.amount));
-    lore.add(String.format("&7%s : &c%s", LangUtils.get("Divers.UnitPrice"), this.price));
-    lore.add(String.format("&7%s : &c%s", LangUtils.get("Divers.TotalPrice"), totalPrice));
+    lore.add(String.format("&7%s : &c%s", LangUtils.get("Divers.UnitPrice"), this.checkPrice(this.price)));
+    lore.add(String.format("&7%s : &c%s", LangUtils.get("Divers.TotalPrice"), this.checkPrice(totalPrice)));
     lore.add(String.format("&7%s : &9%s", LangUtils.get("Divers.Seller"),
         PlayerUtils.getOfflinePlayer(UUID.fromString(this.playerStarter)).getName()));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Expiration"), this.end));

@@ -23,7 +23,8 @@ Divers:
   Type: "Type"
   Warning: "Attention"
   Expiration: "Date d'expiration"
-State:
+  Free: "Gratuit"
+States:
   InProgress: "En Cours"
   Expired: "Expiré"
   Abandoned: "Abandonné"

@@ -23,6 +23,7 @@ Divers:
   Type: "Type"
   Warning: "Warning"
   Expiration: "Expiration Date"
+  Free: "Free"
 States:
   InProgress: "In Progress"
   Expired: "Expired"
