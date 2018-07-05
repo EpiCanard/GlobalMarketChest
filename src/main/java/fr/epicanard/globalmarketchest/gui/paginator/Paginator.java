@@ -70,6 +70,19 @@ public class Paginator {
   }
 
   /**
+   * Reset page to 0
+   */
+  public void resetPage() {
+    if (this.config.getPage() <= 0)
+      return;
+    this.config.resetPage();
+    if (this.loadConsumer != null)
+      this.loadConsumer.accept(this);
+    this.updateCounter();
+    this.loadItems();
+  }
+
+  /**
    * Change to next page
    */
   public void nextPage() {
@@ -142,7 +155,7 @@ public class Paginator {
    * @return Boolean
    */
   public Boolean isButton(int pos) {
-    return (pos >= 0 && (pos == this.config.getPreviousPos() || pos == this.config.getNextPos()));
+    return (pos >= 0 && (pos == this.config.getPreviousPos() || pos == this.config.getNextPos() || pos == this.config.getNumPagePos()));
   }
 
   /**
@@ -170,6 +183,8 @@ public class Paginator {
         this.previousPage();
       if (pos == this.config.getNextPos())
         this.nextPage();
+      if (pos == this.config.getNumPagePos())
+        this.resetPage();
       return true;
     }
     if (this.isInZone(pos)) {
