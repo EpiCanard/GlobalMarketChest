@@ -13,6 +13,7 @@ import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 public class BuyAuction extends ShopInterface {
@@ -26,6 +27,13 @@ public class BuyAuction extends ShopInterface {
     this.setIcon(item);
     this.actions.put(0, new PreviousInterface());
     this.actions.put(31, this::buyAuction);
+  }
+
+  @Override
+  public void load() {
+    super.load();
+    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(true)));
   }
 
   /**
