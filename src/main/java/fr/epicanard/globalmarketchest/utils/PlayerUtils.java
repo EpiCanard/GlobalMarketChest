@@ -53,6 +53,8 @@ public class PlayerUtils {
     return Arrays.asList(items).stream().reduce(0, (res, val) -> {
       if (val == null)
         return res + item.getMaxStackSize();
+      if (val.isSimilar(item))
+        return res + (val.getMaxStackSize() - val.getAmount());
       return res;
     }, (s1, s2) -> s1 + s2) >= item.getAmount();
   }
