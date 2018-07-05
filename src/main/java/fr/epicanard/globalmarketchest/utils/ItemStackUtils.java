@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -105,6 +106,25 @@ public class ItemStackUtils {
     return item;
   }
 
+  /**
+   * Add lore to existing lore on itemstack
+   * 
+   * @param item
+   * @param lore
+   * 
+   * @return return item in param
+   */
+  public ItemStack addItemStackLore(ItemStack item, List<String> lore) {
+    if (item != null && lore != null) {
+      ItemMeta meta = item.getItemMeta();
+      List<String> loreDup = new ArrayList<>();
+      if (meta.getLore() != null)
+        loreDup.addAll(meta.getLore());
+      loreDup.addAll(lore);
+      item.setItemMeta(ItemStackUtils.setMetaLore(meta, loreDup));
+    }
+    return item;
+  }
   /**
    * Merge two itemstack array in one
    * 

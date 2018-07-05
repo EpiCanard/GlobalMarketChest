@@ -32,7 +32,7 @@ public class AuctionViewList extends ShopInterface {
           auctions -> {
             this.auctions = auctions;
             pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-              ItemStackUtils.setItemStackLore(itemstack, auction.getLore(false));
+              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(false));
             }));
           });
     });
