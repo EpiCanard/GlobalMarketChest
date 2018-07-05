@@ -23,6 +23,11 @@ Divers:
   Type: "Type"
   Warning: "Attention"
   Expiration: "Date d'expiration"
+State:
+  InProgress: "En Cours"
+  Expired: "Expiré"
+  Abandoned: "Abandonné"
+  Finished: "Fini"
 Shops:
   ClickChangeGroup: "Cliques pour changer le nom de groupe du shop"
   CurrentShop: "Shop actuel"
