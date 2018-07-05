@@ -165,7 +165,7 @@ public class AuctionManager {
    * @param category
    * @param consumer
    */
-  public void getItemByCategory(String group, String category, Consumer<List<ItemStack>> consumer) {
+  public void getItemByCategory(String group, String category, Pair<Integer, Integer> limit, Consumer<List<ItemStack>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
     String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
@@ -175,7 +175,9 @@ public class AuctionManager {
     builder.addCondition("state", StateAuction.INPROGRESS.getState());
     builder.addField("*");
     builder.addField("COUNT(itemStack) AS count");
-    builder.setExtension(" GROUP BY itemStack, damage");
+    builder.setExtension("GROUP BY itemStack, damage");
+    if (limit != null)
+      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
       List<ItemStack> lst = new ArrayList<>();
       try {
@@ -206,9 +208,9 @@ public class AuctionManager {
     builder.addCondition("itemStack", ItemStackUtils.getMinecraftKey(item));
     builder.addCondition("damage", item.getDurability());
     builder.addCondition("state", StateAuction.INPROGRESS.getState());
-    builder.setExtension(" ORDER BY price, start ASC");
+    builder.setExtension("ORDER BY price, start ASC");
     if (limit != null)
-      builder.setExtension(builder.getExtension() + " " + GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
+      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
       List<AuctionInfo> lst = new ArrayList<>();
       try {
@@ -228,7 +230,7 @@ public class AuctionManager {
     builder.addCondition("group", group);
     builder.addCondition("itemMeta", ItemStackUtils.getMinecraftKey(item));
     builder.addCondition("owner", PlayerUtils.getUUIDToString(owner));
-    builder.setExtension(" ORDER BY price, start ASC");
+    builder.setExtension("ORDER BY price, start ASC");
     QueryExecutor.of().execute(builder, res -> {
     });
   }

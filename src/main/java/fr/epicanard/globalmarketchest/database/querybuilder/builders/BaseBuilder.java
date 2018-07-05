@@ -31,6 +31,15 @@ public abstract class BaseBuilder {
   }
 
   /**
+   * Add extension to existing extension
+   * 
+   * @param add
+   */
+  public void addExtension(String add) {
+    this.extension = this.getExtension() + " " + add;
+  }
+
+  /**
    * Build a clause
    * 
    * @param builder
@@ -60,7 +69,7 @@ public abstract class BaseBuilder {
    */
   protected StringBuilder buildExtension(StringBuilder builder) {
     if (this.extension != null)
-      builder.append(this.extension);
+      builder.append(" " + this.extension);
     return builder;
   }
 
