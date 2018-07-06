@@ -31,7 +31,7 @@ public class AuctionViewList extends DefaultFooter {
           auctions -> {
             this.auctions = auctions;
             pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(false));
+              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(false, false));
             }));
           });
     });

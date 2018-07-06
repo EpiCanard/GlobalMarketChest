@@ -39,6 +39,7 @@ public class AuctionGlobalView extends DefaultFooter {
   private void setPair(StateAuction state, Boolean playerIsStarter, Integer pos) {
     this.view.setLeft(state);
     this.view.setRight(playerIsStarter);
+    this.paginator.resetPage();
     this.paginator.reload();
     ItemUtils.setGlow(this.inv.getInv(), this.old, false);
     this.old = pos;
@@ -54,7 +55,7 @@ public class AuctionGlobalView extends DefaultFooter {
       this.paginator.getLimit(),
       auctions -> {
         this.paginator.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-          ItemStackUtils.addItemStackLore(itemstack, auction.getLore(false));
+          ItemStackUtils.addItemStackLore(itemstack, auction.getLore(false, true));
         }));
       });
   }

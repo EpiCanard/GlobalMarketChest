@@ -99,18 +99,21 @@ public class AuctionInfo {
    * @param status
    * @return the lore
    */
-  public List<String> getLore(Boolean status) {
+  public List<String> getLore(Boolean status, Boolean buyer) {
     List<String> lore = new ArrayList<>();
 
     double totalPrice = BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
     lore.add("&6--------------");
-    if (status == true)
+    if (status)
       lore.add(String.format("&7%s : &2%s", LangUtils.get("Divers.State"), LangUtils.get("States." + this.state.getKeyLang())));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Quantity"), this.amount));
     lore.add(String.format("&7%s : &c%s", LangUtils.get("Divers.UnitPrice"), this.checkPrice(this.price)));
     lore.add(String.format("&7%s : &c%s", LangUtils.get("Divers.TotalPrice"), this.checkPrice(totalPrice)));
     lore.add(String.format("&7%s : &9%s", LangUtils.get("Divers.Seller"),
-        PlayerUtils.getOfflinePlayer(UUID.fromString(this.playerStarter)).getName()));
+      PlayerUtils.getOfflinePlayer(UUID.fromString(this.playerStarter)).getName()));
+    if (buyer && this.playerEnder != null)
+      lore.add(String.format("&7%s : &9%s", LangUtils.get("Divers.Buyer"),
+        PlayerUtils.getOfflinePlayer(UUID.fromString(this.playerEnder)).getName()));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Expiration"), this.end));
     lore.add("&6--------------");
     return lore;
