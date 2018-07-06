@@ -70,7 +70,7 @@ public class AuctionInfo {
   }
 
   public AuctionInfo(AuctionType type, Player owner, String group) {
-    this.state = StateAuction.getStateAuction(StateAuction.INPROGRESS.getState());
+    this.state = StateAuction.INPROGRESS;
     this.type = AuctionType.getAuctionType(type.getType());
     this.price = 0.0;
     this.playerStarter = owner.getUniqueId().toString();

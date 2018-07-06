@@ -5,12 +5,11 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
-import fr.epicanard.globalmarketchest.gui.actions.NewAuction;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
-import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.DefaultFooter;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 
-public class AuctionViewGroup extends ShopInterface {
+public class AuctionViewGroup extends DefaultFooter {
 
   public AuctionViewGroup(InventoryGUI inv) {
     super(inv);
@@ -30,7 +29,6 @@ public class AuctionViewGroup extends ShopInterface {
     });
 
     this.actions.put(0, new PreviousInterface());
-    this.actions.put(53, new NewAuction());
   }
 
   @Override

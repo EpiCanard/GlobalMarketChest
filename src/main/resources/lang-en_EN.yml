@@ -34,7 +34,7 @@ Shops:
   CurrentShop: "Current shop"
 Buttons:
   Money:
-    Name: "Your money"
+    Name: "&6Your money"
   PreviousButton:
     Name: "Return"
     Description: "Go back to previous inventory"
@@ -105,6 +105,16 @@ Buttons:
     Name: "Maximum items in one auction"
   MaxRepeat:
     Name: "Repeat auction as many as possible"
+  InProgressAuction:
+    Name: "&aIn progress auctions"
+  ExpiredAuction:
+    Name: "&cExpired auctions"
+  SoldAuction:
+    Name: "&bSold auctions"
+  BoughtAuction:
+    Name: "&9Bought auctions"
+  CanceledAuction:
+    Name: "&6Canceled auctions"
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
