@@ -53,7 +53,7 @@ public class AuctionManager {
       builder.addValue("itemMeta", auction.getItemMeta());
       builder.addValue("amount", auction.getAmount());
       builder.addValue("price", auction.getPrice());
-      builder.addValue("state", StateAuction.INPROGRESS.getState());
+      builder.addValue("state", auction.getState().getState());
       builder.addValue("type", auction.getType().getType());
       builder.addValue("playerStarter", auction.getPlayerStarter());
       builder.addValue("start", stringTs[0]);
@@ -229,10 +229,33 @@ public class AuctionManager {
 
     builder.addCondition("group", group);
     builder.addCondition("itemMeta", ItemStackUtils.getMinecraftKey(item));
-    builder.addCondition("owner", PlayerUtils.getUUIDToString(owner));
+    builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(owner));
     builder.setExtension("ORDER BY price, start ASC");
     QueryExecutor.of().execute(builder, res -> {
     });
+  }
+
+  public void getAuctions(String group, StateAuction state, Player starter, Player ender, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+
+    builder.addCondition("group", group);
+    builder.addCondition("state", state.getState());
+    if (starter != null)
+      builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(starter));
+    if (ender != null)
+      builder.addCondition("playerEnder", PlayerUtils.getUUIDToString(ender));
+    builder.setExtension("ORDER BY end DESC");
+    if (limit != null)
+      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
+    QueryExecutor.of().execute(builder, res -> {
+      List<AuctionInfo> auctions = new ArrayList<>();
+      try {
+        while (res.next())
+          auctions.add(new AuctionInfo(res));
+        consumer.accept(auctions);
+      } catch (SQLException e) {}
+    });
+    
   }
 
 }

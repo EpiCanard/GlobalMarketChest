@@ -6,17 +6,15 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.CategoryHandler;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
-import fr.epicanard.globalmarketchest.gui.actions.NewAuction;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
-import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.DefaultFooter;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
-public class CategoryView extends ShopInterface {
+public class CategoryView extends DefaultFooter {
 
   public CategoryView(InventoryGUI inv) {
     super(inv);
-    this.actions.put(53, new NewAuction());
   }
 
   @Override

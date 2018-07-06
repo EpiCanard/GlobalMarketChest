@@ -34,7 +34,7 @@ Shops:
   CurrentShop: "Shop actuel"
 Buttons:
   Money:
-    Name: "Votre argent"
+    Name: "&6Votre argent"
   PreviousButton:
     Name: "Retour"
     Description: "Revenir à l'inventaire précédent"
@@ -105,6 +105,16 @@ Buttons:
     Name: "Maximum d'items en une enchère"
   MaxRepeat:
     Name: "Répéter cette enchère autant de fois que possible"
+  InProgressAuction:
+    Name: "&aEnchères en cours"
+  ExpiredAuction:
+    Name: "&cEnchères expirées"
+  SoldAuction:
+    Name: "&bEnchères vendues"
+  BoughtAuction:
+    Name: "&9Enchères achetées"
+  CanceledAuction:
+    Name: "&6Enchères annulées"
 ErrorMessages:
   UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"

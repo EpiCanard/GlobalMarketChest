@@ -9,15 +9,14 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
-import fr.epicanard.globalmarketchest.gui.actions.NewAuction;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
-import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.DefaultFooter;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
-public class AuctionViewList extends ShopInterface {
+public class AuctionViewList extends DefaultFooter {
   private List<AuctionInfo> auctions = new ArrayList<>();
 
   public AuctionViewList(InventoryGUI inv) {
@@ -40,7 +39,6 @@ public class AuctionViewList extends ShopInterface {
     this.paginator.setClickConsumer(this::selectAuction);
 
     this.actions.put(0, new PreviousInterface());
-    this.actions.put(53, new NewAuction());
   }
 
   private void selectAuction(Integer pos) {

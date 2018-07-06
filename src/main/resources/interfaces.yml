@@ -12,6 +12,11 @@ BaseInterfaces:
   NewAuction:
     Items:
       53: NewAuction
+  DefaultFooter:
+    Items:
+      45: Money
+      46: GlobalView
+      53: NewAuction
   DefaultShopInterface:
     Paginator:
       Height: 3
@@ -24,9 +29,13 @@ BaseInterfaces:
       0: Return
       8: ExitButton
       18-44: None
-      45: GlobalView
-      46: Money
-      53: NewAuction
+  GlobalViewButtons:
+    Items:
+      13: InProgressAuction
+      14: ExpiredAuction
+      15: SoldAuction
+      16: BoughtAuction
+      17: CanceledAuction
 
 # Real interface implemented
 Interfaces:
@@ -39,20 +48,21 @@ Interfaces:
   CategoryView:
     Base:
       - Exit
-      - NewAuction 
+      - DefaultFooter
     Items:
       9: Search
-      45: GlobalView
 
   # View to list every group item of one category
   AuctionViewGroup:
     Base:
       - DefaultShopInterface
+      - DefaultFooter
 
   # View to see every auctions of one item
   AuctionViewList:
     Base:
       - DefaultShopInterface
+      - DefaultFooter
 
   BuyAuction:
     Base:
@@ -140,6 +150,16 @@ Interfaces:
       40: EditGroupName
       49: ShopIcon
       53: CreateShop
+
+  # ===================
+  # AUCTION GLOBAL VIEW
+  # ===================
+
+  AuctionGlobalView:
+    Base:
+      - DefaultShopInterface
+      - DefaultFooter
+      - GlobalViewButtons
 
   # =============
   # CONFIGURATION
