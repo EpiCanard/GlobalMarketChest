@@ -283,6 +283,7 @@ Misc:
     - minecraft:writable_book
     - minecraft:emerald
     - minecraft:map
+    - minecraft:filled_map
     - minecraft:nether_star
     - minecraft:firework_charge
     - minecraft:netherbrick
