@@ -29,7 +29,7 @@ public class EditAuction extends ShopInterface {
   public void load() {
     super.load();
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-    this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(true)));
+    this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(true, false)));
   }
 
   /**
