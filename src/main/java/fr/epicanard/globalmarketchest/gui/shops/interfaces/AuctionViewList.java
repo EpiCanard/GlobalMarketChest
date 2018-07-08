@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
+import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
@@ -31,7 +32,7 @@ public class AuctionViewList extends DefaultFooter {
           auctions -> {
             this.auctions = auctions;
             pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(false, false));
+              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(AuctionLoreConfig.TOSELL));
             }));
           });
     });

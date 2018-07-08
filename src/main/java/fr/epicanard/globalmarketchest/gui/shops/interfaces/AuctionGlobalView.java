@@ -1,8 +1,7 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import org.apache.commons.lang3.tuple.MutablePair;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.auctions.StateAuction;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
@@ -14,17 +13,27 @@ import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.ItemUtils;
 
 public class AuctionGlobalView extends DefaultFooter {
-  MutablePair<StateAuction, Boolean> view = new MutablePair<StateAuction,Boolean>(StateAuction.INPROGRESS, true);
-  Integer old = 13;
+  class ViewGlobal {
+    public StateAuction state = StateAuction.INPROGRESS;
+    public AuctionLoreConfig config = AuctionLoreConfig.OWN;
+    public Integer pos = 13;
+
+    public void set(StateAuction st, AuctionLoreConfig conf, Integer p) {
+      this.state = st;
+      this.config = conf;
+      this.pos = p;
+    }
+  }
+  ViewGlobal current = new ViewGlobal();
 
   public AuctionGlobalView(InventoryGUI inv) {
     super(inv);
     this.paginator.setLoadConsumer(pag -> this.loadAuctions());
-    this.actions.put(13, i -> this.setPair(StateAuction.INPROGRESS, true, 13));
-    this.actions.put(14, i -> this.setPair(StateAuction.EXPIRED, true, 14));
-    this.actions.put(15, i -> this.setPair(StateAuction.FINISHED, true, 15));
-    this.actions.put(16, i -> this.setPair(StateAuction.FINISHED, false, 16));
-    this.actions.put(17, i -> this.setPair(StateAuction.ABANDONED, true, 17));
+    this.actions.put(13, i -> this.setPair(StateAuction.INPROGRESS, AuctionLoreConfig.OWN, 13));
+    this.actions.put(14, i -> this.setPair(StateAuction.EXPIRED, AuctionLoreConfig.OWN, 14));
+    this.actions.put(15, i -> this.setPair(StateAuction.FINISHED, AuctionLoreConfig.SOLD, 15));
+    this.actions.put(16, i -> this.setPair(StateAuction.FINISHED, AuctionLoreConfig.BOUGHT, 16));
+    this.actions.put(17, i -> this.setPair(StateAuction.ABANDONED, AuctionLoreConfig.OWN, 17));
     this.actions.remove(46);
 
     this.actions.put(0, new PreviousInterface());
@@ -36,26 +45,24 @@ public class AuctionGlobalView extends DefaultFooter {
     ItemUtils.setGlow(this.inv.getInv(), 13, true);
   }
 
-  private void setPair(StateAuction state, Boolean playerIsStarter, Integer pos) {
-    this.view.setLeft(state);
-    this.view.setRight(playerIsStarter);
+  private void setPair(StateAuction state, AuctionLoreConfig config, Integer pos) {
+    ItemUtils.setGlow(this.inv.getInv(), this.current.pos, false);
+    this.current.set(state, config, pos);
+    ItemUtils.setGlow(this.inv.getInv(), this.current.pos, true);
     this.paginator.resetPage();
     this.paginator.reload();
-    ItemUtils.setGlow(this.inv.getInv(), this.old, false);
-    this.old = pos;
-    ItemUtils.setGlow(this.inv.getInv(), this.old, true);
   }
 
   private void loadAuctions() {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
-    GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), this.view.left, 
-      !this.view.right ? null : this.inv.getPlayer(),
-      this.view.right ? null : this.inv.getPlayer(),
+    GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), this.current.state, 
+      this.current.config == AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
+      this.current.config != AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
       this.paginator.getLimit(),
       auctions -> {
         this.paginator.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-          ItemStackUtils.addItemStackLore(itemstack, auction.getLore(false, true));
+          ItemStackUtils.addItemStackLore(itemstack, auction.getLore(this.current.config));
         }));
       });
   }

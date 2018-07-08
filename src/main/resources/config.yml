@@ -47,9 +47,9 @@ Price:
     - minecraft:redstone
     - minecraft:dye/4
 Interfaces:
-  Background: minecraft:stained_glass_pane/15
   Warn: minecraft:stained_glass_pane/14
   Buttons:
+    Background: minecraft:stained_glass_pane/15
     NewAuction: minecraft:nether_star
     CreateAuction: minecraft:nether_star
     BuyAuction: minecraft:nether_star
@@ -59,7 +59,7 @@ Interfaces:
     Validate: minecraft:spectral_arrow
     Return: minecraft:tipped_arrow
     CreateShop: minecraft:nether_star
-    Money: minecraft:double_plant
+    Money: minecraft:gold_ingot
     GlobalView: minecraft:enchanted_book
     Search: minecraft:hopper
     ViewByCategory: minecraft:compass

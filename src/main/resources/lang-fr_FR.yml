@@ -23,6 +23,8 @@ Divers:
   Type: "Type"
   Warning: "Attention"
   Expiration: "Date d'expiration"
+  StartDate: "Date de début"
+  EndDate: "Date de fin"
   Free: "Gratuit"
 States:
   InProgress: "En Cours"
@@ -33,6 +35,8 @@ Shops:
   ClickChangeGroup: "Cliques pour changer le nom de groupe du shop"
   CurrentShop: "Shop actuel"
 Buttons:
+  Background:
+    Name: " "
   Money:
     Name: "&6Votre argent"
   PreviousButton:
@@ -120,7 +124,7 @@ ErrorMessages:
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
   MissingItems: "Mauvais nombre d'items, certains items sont manquants"
   FailCreationAuction: "Impossible de créer l'enchère en base de données"
-  NotEnoughSpace: "Pas assez de place pour ajouter;les items dans l'inventaire du joueur"
+  NotEnoughSpace: "Pas assez de place pour ajouter;&fles items dans l'inventaire du joueur"
   NotEnoughMoney: "Pas assez d'argent pour acheter cette enchère"
   CantBuyAuction: "Imposibble d'acheter l'enchère en base de données"
   CantRenewAuction: "Imposibble de renouveler l'enchère en base de données"
@@ -128,3 +132,4 @@ ErrorMessages:
 InfoMessages:
   UndoAuction: "&2Enchère supprimé avec succès"
   RenewAuction: "&2Enchère renouvelé avec succès"
+  CreateAuction: "&2Enchère créé avec succès"

@@ -160,6 +160,8 @@ Interfaces:
       - DefaultShopInterface
       - DefaultFooter
       - GlobalViewButtons
+    Items:
+      46: Background
 
   # =============
   # CONFIGURATION

@@ -22,7 +22,7 @@ public class Utils {
   private ItemStack background = null;
 
   public void init() {
-    Utils.background = ItemStackUtils.getItemStackFromConfig("Interfaces.Background");
+    Utils.background = ItemStackUtils.getItemStackFromConfig("Interfaces.Buttons.Background");
     Utils.background = ItemStackUtils.setItemStackMeta(background, null, null);
   }
 

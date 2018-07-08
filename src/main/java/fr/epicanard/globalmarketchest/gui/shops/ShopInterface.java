@@ -79,7 +79,7 @@ public abstract class ShopInterface {
    * @param interfaceName
    */
   private void updateInventoryName(String interfaceName) {
-    String title = LangUtils.getOrElse("InterfacesTitle." + interfaceName, "&2GlobalMarkChest");
+    String title = LangUtils.getOrElse("InterfacesTitle." + interfaceName, "&2GlobalMarketChest");
     EntityPlayer ep = ((CraftPlayer) this.inv.getPlayer()).getHandle();
     PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(ep.activeContainer.windowId, "minecraft:chest",
         new ChatMessage(title), this.inv.getPlayer().getOpenInventory().getTopInventory().getSize());

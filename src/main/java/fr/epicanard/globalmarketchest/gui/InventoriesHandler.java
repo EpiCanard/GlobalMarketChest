@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+
 /**
  * Store each opened shop interface by player (uuid)
  */
