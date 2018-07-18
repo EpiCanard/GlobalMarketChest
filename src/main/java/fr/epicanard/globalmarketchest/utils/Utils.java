@@ -3,6 +3,8 @@ package fr.epicanard.globalmarketchest.utils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -89,12 +91,35 @@ public class Utils {
     return itemStack;
   }
 
+  /**
+   * Convert a String[] into List<String>
+   * 
+   * @param lore Array to convert
+   * @return List converted
+   */
   public List<String> toList(String[] lore) {
     return (lore == null) ? null : Arrays.asList(lore);
   }
 
+  /**
+   * Convert a String into List, splitting with ;
+   * 
+   * @param lore String to split
+   * @return List of element splitted
+   */
   public List<String> toList(String lore) {
     return (lore == null) ? null : Arrays.asList(lore.split(";"));
+  }
+
+  /**
+   * Map a function to a list
+   * 
+   * @param lst The list on which apply the function
+   * @param fct Function to map
+   * @return The new list mapped
+   */
+  public <T, R> List<T> mapList(List<R> lst, Function<R, T> fct) {
+    return lst.stream().map(fct).collect(Collectors.toList());
   }
 
   /**

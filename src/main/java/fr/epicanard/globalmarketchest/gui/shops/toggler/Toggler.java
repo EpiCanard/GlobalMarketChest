@@ -3,12 +3,13 @@ package fr.epicanard.globalmarketchest.gui.shops.toggler;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import lombok.Getter;
 import lombok.Setter;
 
 public abstract class Toggler {
-  @Setter
+  @Setter @Getter
   protected ItemStack setItem;
-  @Setter
+  @Setter @Getter
   protected ItemStack unsetItem;
   @Setter
   private Boolean set = false;
@@ -22,6 +23,9 @@ public abstract class Toggler {
     this.unsetItem = unsetItem;
   }
 
+  /**
+   * Load the toggler, Set or unset the element
+   */
   public void load() {
     if (set)
       this.setInView();
@@ -29,21 +33,27 @@ public abstract class Toggler {
       this.unsetInView();
   }
 
+  /**
+   * Change set boolean and load item in view
+   */
   public void set() {
     this.setInView();
     this.set = true;
   }
 
+  /**
+   * Change unset boolean and load/unload item in view
+   */
   public void unset() {
     this.unsetInView();
     this.set = false;
   }
 
+  /**
+   * Toggle, change the 
+   */
   public void toggle() {
-    if (this.set == true)
-      this.unset();
-    else
-      this.set();
+    (this.set == true) ? this.unset() : this.set();
   }
 
   protected abstract void setInView();
