@@ -26,6 +26,7 @@ Divers:
   StartDate: "Date de début"
   EndDate: "Date de fin"
   Free: "Gratuit"
+  WithStatus: "&fAvec le statut : &2%s"
 States:
   InProgress: "En Cours"
   Expired: "Expiré"
@@ -40,17 +41,17 @@ Buttons:
   Money:
     Name: "&6Votre argent"
   PreviousButton:
-    Name: "Retour"
-    Description: "Revenir à l'inventaire précédent"
+    Name: "&fRetour"
+    Description: "&fRevenir à l'inventaire précédent"
   ExitButton:
     Name: "&4Sortie"
-    Description: "Fermer cet inventaire"
+    Description: "&fFermer cet inventaire"
   Validate:
     Name: "&4Valider"
-    Description: "Aller à l'étape suivante"
+    Description: "&fAller à l'étape suivante"
   Return:
     Name: "&4Revenir"
-    Description: "Revenir à l'étape précédente"
+    Description: "&fRevenir à l'étape précédente"
   CreateShop:
     Name: "&2Créer le Shop"
   NewAuction:
@@ -61,12 +62,16 @@ Buttons:
   BuyAuction:
     Name: "&2Acheter l'enchère"
   RenewAuction:
-    Name: "&2Renouveler l'enchère"
+    Name: "&6Renouveler l'enchère"
   UndoAuction:
-    Name: "&2Annuler l'enchère"
+    Name: "&cAnnuler l'enchère"
+  RenewEveryAuction:
+    Name: "&6Renouveler toutes les enchères"
+  UndoEveryAuction:
+    Name: "&cAnnuler toutes les enchères"
   GlobalView:
-    Name: "Vue d'ensemble"
-    Description: "Historique des enchères"
+    Name: "&fVue d'ensemble"
+    Description: "&fHistorique des enchères"
   Search:
     Name: "&3Chercher une enchère"
   DragItem:
@@ -92,8 +97,8 @@ Buttons:
   AdminShop:
     Name: "AdminShop"
   EditGroupName:
-    Name: "Modifier le nom du groupe"
-    Description: "Si vous voulez renommer le nom du groupe de votre Shop"
+    Name: "&fModifier le nom du groupe"
+    Description: "&fSi vous voulez renommer le nom du groupe de votre Shop"
   PreviousPage:
     Name: "Page précédente"
   NextPage:
@@ -106,9 +111,9 @@ Buttons:
     Name: "&2Déposez un item ici"
     Description: "&2ou utilises SHIFT-Click"
   MaxInOne:
-    Name: "Maximum d'items en une enchère"
+    Name: "&fMaximum d'items en une enchère"
   MaxRepeat:
-    Name: "Répéter cette enchère autant de fois que possible"
+    Name: "&fRépéter cette enchère autant de fois que possible"
   InProgressAuction:
     Name: "&aEnchères en cours"
   ExpiredAuction:
@@ -129,7 +134,11 @@ ErrorMessages:
   CantBuyAuction: "Imposibble d'acheter l'enchère en base de données"
   CantRenewAuction: "Imposibble de renouveler l'enchère en base de données"
   CantUndoAuction: "Imposibble d'annuler l'enchère en base de données"
+  CantRenewEveryAuction: "Imposibble de renouveler toutes les enchères en base de données"
+  CantUndoEveryAuction: "Imposibble d'annuler toute les enchères en base de données"
 InfoMessages:
   UndoAuction: "&2Enchère supprimé avec succès"
   RenewAuction: "&2Enchère renouvelé avec succès"
   CreateAuction: "&2Enchère créé avec succès"
+  RenewEveryAuction: "&2Toutes les enchères sont renouvelées avec succès"
+  UndoEveryAuction: "&2Toutes les enchères sont supprimées avec succès"

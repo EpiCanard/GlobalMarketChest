@@ -55,6 +55,8 @@ Interfaces:
     BuyAuction: minecraft:nether_star
     RenewAuction: minecraft:wool/1
     UndoAuction: minecraft:wool/14
+    RenewEveryAuction: minecraft:wool/1
+    UndoEveryAuction: minecraft:wool/14
     ExitButton: minecraft:barrier
     Validate: minecraft:spectral_arrow
     Return: minecraft:tipped_arrow

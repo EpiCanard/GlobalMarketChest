@@ -161,6 +161,8 @@ Interfaces:
       - DefaultFooter
       - GlobalViewButtons
     Items:
+      10: UndoEveryAuction
+      11: RenewEveryAuction
       46: Background
 
   # =============

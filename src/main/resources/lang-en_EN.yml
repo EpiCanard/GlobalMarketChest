@@ -26,6 +26,7 @@ Divers:
   StartDate: "Start date"
   EndDate: "End date"
   Free: "Free"
+  WithStatus: "&fWith status : &2%s"
 States:
   InProgress: "In Progress"
   Expired: "Expired"
@@ -41,16 +42,16 @@ Buttons:
     Name: "&6Your money"
   PreviousButton:
     Name: "Return"
-    Description: "Go back to previous inventory"
+    Description: "&fGo back to previous inventory"
   ExitButton:
     Name: "&4Exit"
-    Description: "Close this inventory"
+    Description: "&fClose this inventory"
   Validate:
     Name: "&2Validate"
-    Description: "Go to next step"
+    Description: "&fGo to next step"
   Return:
     Name: "&4Return"
-    Description: "Return to previous step"
+    Description: "&fReturn to previous step"
   CreateShop:
     Name: "&2Create Shop"
   NewAuction:
@@ -59,14 +60,18 @@ Buttons:
   CreateAuction:
     Name: "&2Create auction"
   BuyAuction:
-    Name: "&2Buy auction"
+    Name: "&2Buy this auction"
   RenewAuction:
-    Name: "&2Renew auction"
+    Name: "&6Renew this auction"
   UndoAuction:
-    Name: "&2Undo auction"
+    Name: "&cUndo this auction"
+  RenewEveryAuction:
+    Name: "&6Renew every auctions"
+  UndoEveryAuction:
+    Name: "&cUndo every auctions"
   GlobalView:
-    Name: "Overview"
-    Description: "Auction history"
+    Name: "&fOverview"
+    Description: "&fAuction history"
   Search:
     Name: "&3Search for an auction"
   DragItem:
@@ -92,8 +97,8 @@ Buttons:
   AdminShop:
     Name: "AdminShop"
   EditGroupName:
-    Name: "Edit Group Name"
-    Description: "If you want to rename the group of your shop"
+    Name: "&fEdit Group Name"
+    Description: "&fIf you want to rename the group of your shop"
   PreviousPage:
     Name: "Previous page"
   NextPage:
@@ -106,9 +111,9 @@ Buttons:
     Name: "&2Drop an item here"
     Description: "&2or use SHIFT-Click"
   MaxInOne:
-    Name: "Maximum items in one auction"
+    Name: "&fMaximum items in one auction"
   MaxRepeat:
-    Name: "Repeat auction as many as possible"
+    Name: "&fRepeat auction as many as possible"
   InProgressAuction:
     Name: "&aIn progress auctions"
   ExpiredAuction:
@@ -124,12 +129,16 @@ ErrorMessages:
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
   MissingItems: "Wrong number of items, some items are missing"
   FailCreateAuction: "Fail to create auction in database"
-  NotEnoughSpace: "Not enough space to add items;&fin player inventory"
+  NotEnoughSpace: "Not enough space to add all items;&fin player inventory"
   NotEnoughMoney: "Not enough money to buy this auction"
   CantBuyAuction: "Fail to buy auction in database"
   CantRenewAuction: "Fail to renew auction in database"
   CantUndoAuction: "Fail to undo auction in database"
+  CantRenewEveryAuction: "Fail to renew every auction in database"
+  CantUndoEveryAuction: "Fail to undo every auction in database"
 InfoMessages:
   UndoAuction: "Auction successfully deleted"
   RenewAuction: "Auction successfully renewed"
   CreateAuction: "Auction successfully created"
+  UndoEveryAuction: "Every auction successfully deleted"
+  RenewEveryAuction: "Every auction successfully renewed"
