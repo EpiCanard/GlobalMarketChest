@@ -135,7 +135,7 @@ public class ItemStackUtils {
    */
   public ItemStack[] mergeArray(ItemStack[] a, ItemStack[] b) {
     for (int i = 0; i < a.length && i < b.length; i++)
-      if (!b[i].equals(Utils.getBackground()))
+      if (b[i] != null && !b[i].equals(Utils.getBackground()))
         a[i] = b[i];
     return a;
   }

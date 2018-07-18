@@ -8,6 +8,11 @@ public class SingleToggler extends Toggler{
     super(inv, pos, setItem, unsetItem);
   }
 
+  public SingleToggler(Inventory inv, int pos, ItemStack setItem, ItemStack unsetItem, Boolean set) {
+    super(inv, pos, setItem, unsetItem);
+    this.setSet(set);
+  }
+
   public void setInView() {
     this.inv.setItem(this.pos, this.setItem);
   }

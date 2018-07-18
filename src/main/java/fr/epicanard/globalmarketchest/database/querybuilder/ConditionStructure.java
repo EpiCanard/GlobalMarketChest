@@ -24,8 +24,9 @@ public class ConditionStructure {
 
   @SuppressWarnings("unchecked")
   public String build() {
+    String base = "`" + this.key + "` " + this.type.getCharacter();
     if (this.type == ConditionType.IN)
-      return this.key + " " + this.type.getCharacter() + " (" + DatabaseUtils.joinRepeat("?", ",", ((List<String>)this.value).size()) + ")";
-    return "`" + this.key + "` " + this.type.getCharacter() + " ?";
+      return base + " (" + DatabaseUtils.joinRepeat("?", ",", ((List<String>)this.value).size()) + ")";
+    return base + " ?";
   }
 }
