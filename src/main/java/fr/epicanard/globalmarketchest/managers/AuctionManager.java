@@ -104,13 +104,13 @@ public class AuctionManager {
    * @param player
    * @param group
    */
-  public void renewEveryAuctionOfPlayer(Player player, String group) {
+  public Boolean renewEveryAuctionOfPlayer(Player player, String group, StateAuction state) {
     UpdateBuilder builder = this.updateToNow(null);
 
-    builder.addCondition("state", StateAuction.EXPIRED.getState());
-    builder.addCondition("owner", PlayerUtils.getUUIDToString(player));
+    builder.addCondition("state", state.getState());
+    builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(player));
     builder.addCondition("group", group);
-    QueryExecutor.of().execute(builder);
+    return QueryExecutor.of().execute(builder);
   }
 
   /**
@@ -125,6 +125,22 @@ public class AuctionManager {
     return QueryExecutor.of().execute(builder);
   }
 
+  /**
+   * Undo a group of auctions
+   * 
+   * @param player
+   * @param group
+   */
+  public Boolean undoGroupOfPlayerAuctions(Player player, String group, List<Integer> auctions) {
+    UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+
+    builder.addCondition("id", auctions, ConditionType.IN);
+    builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(player));
+    builder.addCondition("group", group);
+    builder.addValue("state", StateAuction.ABANDONED.getState());
+    builder.addValue("end", DatabaseUtils.getTimestamp().toString());
+    return QueryExecutor.of().execute(builder);
+  }
   /**
    * Undo auction
    * 

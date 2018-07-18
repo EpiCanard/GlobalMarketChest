@@ -1,7 +1,10 @@
 package fr.epicanard.globalmarketchest.utils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -57,6 +60,45 @@ public class PlayerUtils {
         return res + (val.getMaxStackSize() - val.getAmount());
       return res;
     }, (s1, s2) -> s1 + s2) >= item.getAmount();
+  }
+
+  private Boolean addToList(List<ItemStack> items, ItemStack item, Integer size) {
+    Integer amount = item.getAmount();
+
+    for (ItemStack it : items) {
+      if (it.isSimilar(item)) {
+        int amountCanAdd = it.getMaxStackSize() - it.getAmount();
+        int amountWillAdd = (amount < amountCanAdd) ? amount : amountCanAdd;
+        amount -= amountWillAdd;
+        it.setAmount(it.getAmount() + amountWillAdd);
+      }
+      if (amount <= 0)
+        return true;
+    }
+
+    Double split = Math.ceil(amount.doubleValue() / Integer.valueOf(item.getMaxStackSize()).doubleValue());
+    if (items.size() == size || split.intValue() + items.size() > size)
+      return false;
+
+    while (amount > 0) {
+      ItemStack it = item.clone();
+      it.setAmount((amount > it.getMaxStackSize()) ? it.getMaxStackSize() : amount);
+      amount -= it.getAmount();
+      items.add(it);
+    }
+    return true;
+  }
+
+  public Boolean hasEnoughPlace(PlayerInventory i, List<ItemStack> itemsAdd, AtomicInteger auctionsToAdd) {
+    ItemStack[] storage = i.getStorageContents();
+    List<ItemStack> itemsStorage = Arrays.asList(storage).stream().filter(it -> it != null).map(it -> it.clone()).collect(Collectors.toList());
+
+    for (ItemStack item : itemsAdd) {
+      if (!PlayerUtils.addToList(itemsStorage, item, storage.length))
+        return false;
+      auctionsToAdd.incrementAndGet();
+    }
+    return true;
   }
 
   public void hasEnoughPlaceWarn(PlayerInventory i, ItemStack item) throws WarnException {
