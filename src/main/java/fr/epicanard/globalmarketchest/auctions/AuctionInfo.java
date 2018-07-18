@@ -93,6 +93,12 @@ public class AuctionInfo {
     return Double.toString(price);
   }
 
+  public ItemStack getRealItemStack() {
+    ItemStack item = DatabaseUtils.deserialize(this.itemMeta);
+    item.setAmount(this.amount);
+    return item;
+  }
+
   /**
    * Build and return lore for current auction
    * 
@@ -105,7 +111,7 @@ public class AuctionInfo {
     double totalPrice = BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
     lore.add("&6--------------");
     if (config.getState())
-      lore.add(String.format("&7%s : &2%s", LangUtils.get("Divers.State"), LangUtils.get("States." + this.state.getKeyLang())));
+      lore.add(String.format("&7%s : &2%s", LangUtils.get("Divers.State"), this.state.getLang()));
     if (config.getQuantity())
       lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Quantity"), this.amount));
     if (config.getUnitPrice())
