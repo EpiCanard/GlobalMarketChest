@@ -48,7 +48,7 @@ public abstract class ShopInterface {
       circles.forEach(circle -> {
         Toggler toggler = new CircleToggler(inv.getInv(), circle.getLeft());
         this.togglers.put(circle.getLeft(), toggler);
-        toggler.setSet(circle.getRight());
+        toggler.setIsSet(circle.getRight());
       });
     }
     this.actions.put(8, new LeaveShop());
