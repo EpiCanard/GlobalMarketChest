@@ -12,7 +12,7 @@ public abstract class Toggler {
   @Setter @Getter
   protected ItemStack unsetItem;
   @Setter
-  private Boolean set = false;
+  private Boolean isSet = false;
   protected Inventory inv;
   protected int pos;
 
@@ -27,7 +27,7 @@ public abstract class Toggler {
    * Load the toggler, Set or unset the element
    */
   public void load() {
-    if (set)
+    if (this.isSet)
       this.setInView();
     else
       this.unsetInView();
@@ -38,7 +38,7 @@ public abstract class Toggler {
    */
   public void set() {
     this.setInView();
-    this.set = true;
+    this.isSet = true;
   }
 
   /**
@@ -46,14 +46,17 @@ public abstract class Toggler {
    */
   public void unset() {
     this.unsetInView();
-    this.set = false;
+    this.isSet = false;
   }
 
   /**
    * Toggle, change the 
    */
   public void toggle() {
-    (this.set == true) ? this.unset() : this.set();
+    if (this.isSet)
+      this.unset();
+    else
+      this.set();
   }
 
   protected abstract void setInView();
