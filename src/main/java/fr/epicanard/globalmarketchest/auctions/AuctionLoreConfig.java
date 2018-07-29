@@ -4,8 +4,8 @@ import lombok.Getter;
 
 public enum AuctionLoreConfig {
   ALL(true, true, true, true, true, true, true, true, true),
-  TOSELL(false, true, true, true, true, false, false, false, true),
-  OWN(true, true, true, true, false, false, true, true, false),
+  TOSELL(false, true, true, true, true, false, true, false, true),
+  OWN(true, true, true, true, false, false, true, false, true),
   SOLD(true, true, true, true, false, true, true, true, false),
   BOUGHT(true, true, true, true, true, false, true, true, false),
   ;
@@ -23,11 +23,11 @@ public enum AuctionLoreConfig {
   @Getter
   private Boolean ender;
   @Getter
-  private Boolean startDate;
+  private Boolean started;
   @Getter
-  private Boolean endDate;
+  private Boolean ended;
   @Getter
-  private Boolean expiration;
+  private Boolean expire;
 
 
   AuctionLoreConfig(
@@ -37,9 +37,9 @@ public enum AuctionLoreConfig {
     Boolean totalPrice,
     Boolean starter,
     Boolean ender,
-    Boolean startTime,
-    Boolean endTime,
-    Boolean expiration
+    Boolean started,
+    Boolean ended,
+    Boolean expire
   ) {
     this.state = state;
     this.quantity = quantity;
@@ -47,8 +47,8 @@ public enum AuctionLoreConfig {
     this.totalPrice = totalPrice;
     this.starter = starter;
     this.ender = ender;
-    this.startDate = startTime;
-    this.endDate = endTime;
-    this.expiration = expiration;
+    this.started = started;
+    this.ended = ended;
+    this.expire = expire;
   }
 }

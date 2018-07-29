@@ -44,6 +44,48 @@ public class DatabaseUtils {
   }
 
   /**
+   * Get language from config and format it with value
+   * Ex : 2 days
+   * 
+   * @param value The long value
+   * @param timeLange The language vairable name
+   * @return The string formatted
+   */
+  private String getLanguageTime(long value, String timeLang) {
+    return String.format("%d %s ", value, LangUtils.get("Divers." + timeLang));
+  }
+  /**
+   * Compare two timestamp and get the diff inside string 
+   * Format A : 0 days 0 hours 0 minutes (ago)
+   * Format B : 0 days 0 hours (ago) |or| 0 hours 0 minutes (ago)
+   * 
+   * @param tsA First Timestamp
+   * @param tsB Second Timestamp
+   * @param full Define which format use. True => Format A | False => Format B
+   * @return The time string formatted
+   */
+  public String getExpirationString(Timestamp tsA, Timestamp tsB, Boolean full) {
+    Boolean ago = false;
+    StringBuilder sb = new StringBuilder();
+    long diff = tsA.getTime() - tsB.getTime();
+
+    if (diff < 0) {
+      diff *= -1;
+      ago = true;
+    }
+    diff = diff / 1000 / 60;
+    long day = diff / 60 / 24;
+    if (full || (!full && day > 0))
+      sb.append(DatabaseUtils.getLanguageTime(diff / 60 / 24, "Days"));
+    sb.append(DatabaseUtils.getLanguageTime(diff / 60 % 24, "Hours"));
+    if (full || (!full && day <= 0))
+      sb.append(DatabaseUtils.getLanguageTime(diff % 24, "Minutes"));
+    if (ago)
+      return String.format(LangUtils.getOrElse("Divers.PastDate", "%s"), sb.toString());
+    return sb.toString();
+  }
+
+  /**
    * Get an id from resultSet
    * 
    * @param res ResultSet

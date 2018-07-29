@@ -3,9 +3,9 @@ package fr.epicanard.globalmarketchest.auctions;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
@@ -41,9 +41,9 @@ public class AuctionInfo {
   @Getter
   private String playerEnder;
   @Getter
-  private String start;
+  private Timestamp start;
   @Getter
-  private String end;
+  private Timestamp end;
   @Getter
   private String group;
   
@@ -61,8 +61,8 @@ public class AuctionInfo {
       this.type = AuctionType.getAuctionType(res.getInt("type"));
       this.playerStarter = res.getString("playerStarter");
       this.playerEnder = res.getString("playerEnder");
-      this.start = res.getString("start");
-      this.end = res.getString("end");
+      this.start = res.getTimestamp("start");
+      this.end = res.getTimestamp("end");
       this.group = res.getString("group");
     } catch (SQLException e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
@@ -99,6 +99,10 @@ public class AuctionInfo {
     return item;
   }
 
+  private void addLore(List<String> lore, String key, String color, String value) {
+    lore.add(String.format("&7%s : %s%s", LangUtils.get("Divers." + key), color, value));
+  }
+
   /**
    * Build and return lore for current auction
    * 
@@ -111,25 +115,28 @@ public class AuctionInfo {
     double totalPrice = BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
     lore.add("&6--------------");
     if (config.getState())
-      lore.add(String.format("&7%s : &2%s", LangUtils.get("Divers.State"), this.state.getLang()));
+      this.addLore(lore, "State", "&2", this.state.getLang());
     if (config.getQuantity())
-      lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Quantity"), this.amount));
+      this.addLore(lore, "Quantity", "&6", this.amount.toString());
     if (config.getUnitPrice())
-      lore.add(String.format("&7%s : &c%s", LangUtils.get("Divers.UnitPrice"), this.checkPrice(this.price)));
+      this.addLore(lore, "UnitPrice", "&c", this.checkPrice(this.price));
     if (config.getTotalPrice())
-      lore.add(String.format("&7%s : &c%s", LangUtils.get("Divers.TotalPrice"), this.checkPrice(totalPrice)));
+      this.addLore(lore, "TotalPrice", "&c", this.checkPrice(totalPrice));
     if (config.getStarter())
-      lore.add(String.format("&7%s : &9%s", LangUtils.get("Divers.Seller"),
-        PlayerUtils.getOfflinePlayer(UUID.fromString(this.playerStarter)).getName()));
+      this.addLore(lore, "Seller", "&9", PlayerUtils.getPlayerName(this.playerStarter));
     if (config.getEnder())
-      lore.add(String.format("&7%s : &9%s", LangUtils.get("Divers.Buyer"),
-        PlayerUtils.getOfflinePlayer(UUID.fromString(this.playerEnder)).getName()));
-    if (config.getStartDate())
-      lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.StartDate"), this.start));
-    if (config.getEndDate())
-      lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.EndDate"), this.end));
-      if (config.getExpiration())
-      lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Expiration"), this.end));
+      this.addLore(lore, "Buyer", "&9", PlayerUtils.getPlayerName(this.playerEnder));
+    if (config.getStarted())
+      this.addLore(lore, "Started", "&6",
+        DatabaseUtils.getExpirationString(this.start, DatabaseUtils.getTimestamp(), false));
+    if (config.getEnded())
+      this.addLore(lore, "Ended", "&6",
+        DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
+    if (config.getExpire()) {
+      String path = (this.end.getTime() < DatabaseUtils.getTimestamp().getTime()) ? "Expired" : "ExpireIn";
+      this.addLore(lore, path, "&6",
+        DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
+    }
     lore.add("&6--------------");
     return lore;
   }
