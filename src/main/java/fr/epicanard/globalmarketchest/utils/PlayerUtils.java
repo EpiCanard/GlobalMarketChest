@@ -38,6 +38,16 @@ public class PlayerUtils {
   }
 
   /**
+   * Get the player name from is uuid in string format
+   * 
+   * @param uuid
+   * @return Player name
+   */
+  public String getPlayerName(String uuid) {
+    return PlayerUtils.getOfflinePlayer(UUID.fromString(uuid)).getName();
+  }
+
+  /**
    * Send Message to a player
    * 
    * @param player
