@@ -55,7 +55,7 @@ public class AuctionGlobalView extends DefaultFooter {
     this.actions.put(14, i -> this.setPair(StateAuction.EXPIRED, AuctionLoreConfig.OWN, 14));
     this.actions.put(15, i -> this.setPair(StateAuction.FINISHED, AuctionLoreConfig.SOLD, 15));
     this.actions.put(16, i -> this.setPair(StateAuction.FINISHED, AuctionLoreConfig.BOUGHT, 16));
-    this.actions.put(17, i -> this.setPair(StateAuction.ABANDONED, AuctionLoreConfig.OWN, 17));
+    this.actions.put(17, i -> this.setPair(StateAuction.ABANDONED, AuctionLoreConfig.OWNENDED, 17));
     this.actions.remove(46);
   }
 
