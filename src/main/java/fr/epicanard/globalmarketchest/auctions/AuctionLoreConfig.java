@@ -8,6 +8,7 @@ public enum AuctionLoreConfig {
   OWN(true, true, true, true, false, false, true, false, true),
   SOLD(true, true, true, true, false, true, true, true, false),
   BOUGHT(true, true, true, true, true, false, true, true, false),
+  OWNENDED(true, true, true, true, false, false, true, true, false),
   ;
 
   @Getter

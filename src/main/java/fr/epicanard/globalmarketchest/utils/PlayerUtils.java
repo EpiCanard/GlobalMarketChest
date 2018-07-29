@@ -44,6 +44,8 @@ public class PlayerUtils {
    * @return Player name
    */
   public String getPlayerName(String uuid) {
+    if (uuid == null)
+      return null;
     return PlayerUtils.getOfflinePlayer(UUID.fromString(uuid)).getName();
   }
 
