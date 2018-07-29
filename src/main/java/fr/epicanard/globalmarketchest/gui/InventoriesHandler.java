@@ -25,7 +25,8 @@ public class InventoriesHandler {
   }
 
   public void removeAllInventories() {
-    this.inventories.values().forEach(i -> i.close());
+    for (InventoryGUI i : this.inventories.values())
+      i.close();
     this.inventories.clear();
   }
   
