@@ -63,7 +63,6 @@ public class CreateAuctionItem extends ShopInterface {
    * Remove the item from drop zone
    */
   private void unsetItem() {
-    System.out.println("UNSET");
     this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
     ItemStack[] items = InterfacesLoader.getInstance().getInterface("CreateAuctionItem");
     this.inv.getInv().setItem(22, items[22]);

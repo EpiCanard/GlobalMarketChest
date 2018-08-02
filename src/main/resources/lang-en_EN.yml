@@ -32,6 +32,7 @@ Divers:
   Hours: "hours"
   Minutes: "minutes"
   PastDate: "%sago"
+  UnknownPlayer: "Unknown player"
 States:
   InProgress: "In Progress"
   Expired: "Expired"
@@ -141,6 +142,7 @@ ErrorMessages:
   CantUndoAuction: "Fail to undo auction in database"
   CantRenewEveryAuction: "Fail to renew every auction in database"
   CantUndoEveryAuction: "Fail to undo every auction in database"
+  PlayerDoesntExist: "This player doesn't exist"
 InfoMessages:
   UndoAuction: "Auction successfully deleted"
   RenewAuction: "Auction successfully renewed"

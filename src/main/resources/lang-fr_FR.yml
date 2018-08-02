@@ -32,6 +32,7 @@ Divers:
   Hours: "heures"
   Minutes: "minutes"
   PastDate: "il y a %s"
+  UnknownPlayer: "Inconnu au bataillon"
 States:
   InProgress: "En Cours"
   Expired: "Expiré"
@@ -141,6 +142,7 @@ ErrorMessages:
   CantUndoAuction: "Imposibble d'annuler l'enchère en base de données"
   CantRenewEveryAuction: "Imposibble de renouveler toutes les enchères en base de données"
   CantUndoEveryAuction: "Imposibble d'annuler toute les enchères en base de données"
+  PlayerDoesntExist: "Ce joueur n'existe pas"
 InfoMessages:
   UndoAuction: "&2Enchère supprimé avec succès"
   RenewAuction: "&2Enchère renouvelé avec succès"

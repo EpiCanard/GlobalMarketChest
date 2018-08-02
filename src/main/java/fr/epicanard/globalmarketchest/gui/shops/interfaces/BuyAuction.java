@@ -15,6 +15,7 @@ import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 public class BuyAuction extends ShopInterface {
@@ -48,15 +49,24 @@ public class BuyAuction extends ShopInterface {
 
     item.setAmount(auction.getAmount());
 
+      
+
     try {
+      UUID playerStarter = UUID.fromString(auction.getPlayerStarter());
+      if (PlayerUtils.getOfflinePlayer(playerStarter).getPlayer() == null) {
+        LoggerUtils.warn(String.format("The player with id : %s doesn't exist but there is still active auctions on his name", auction.getPlayerStarter()));
+        LoggerUtils.warn(String.format("Auction ID : %d", auction.getId()));
+        throw new WarnException("PlayerDoesntExist");
+      }
       if (GlobalMarketChest.plugin.economy.getMoneyOfPlayer(i.getPlayer().getUniqueId()) < auction.getTotalPrice())
         throw new WarnException("NotEnoughMoney");
       PlayerUtils.hasEnoughPlaceWarn(i.getPlayer().getInventory(), item);
       if (!GlobalMarketChest.plugin.auctionManager.buyAuction(auction.getId(), i.getPlayer()))
         throw new WarnException("CantBuyAuction");
-      i.getPlayer().getInventory().addItem(item);
 
-      GlobalMarketChest.plugin.economy.exchangeMoney(i.getPlayer().getUniqueId(), UUID.fromString(auction.getPlayerStarter()), auction.getTotalPrice());
+      GlobalMarketChest.plugin.economy.exchangeMoney(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice());
+
+      i.getPlayer().getInventory().addItem(item);
       ReturnBack.execute(null, i);
     } catch (WarnException e) {
       i.getWarn().warn(e.getMessage(), 49);
