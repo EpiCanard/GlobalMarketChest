@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,8 +29,16 @@ public class QueryExecutor {
     for (int i = 0; i < vals.size(); i++) {
       final Object value = vals.get(i);
       switch (value.getClass().getSimpleName()) {
+        case "ColumnType":
+          continue;
         case "String":
           prepared.setString(inc.get(), (String)value);
+          break;
+        case "Boolean":
+          prepared.setBoolean(inc.get(), (Boolean)value);
+          break;
+        case "Timestamp":
+          prepared.setTimestamp(inc.get(), (Timestamp)value);
           break;
         case "Integer":
           prepared.setInt(inc.get(), (Integer)value);

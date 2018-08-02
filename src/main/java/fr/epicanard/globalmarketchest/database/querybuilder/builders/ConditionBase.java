@@ -4,7 +4,7 @@ package fr.epicanard.globalmarketchest.database.querybuilder.builders;
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
 import fr.epicanard.globalmarketchest.database.querybuilder.MultiConditionMap;
 
-abstract class ConditionBase extends BaseBuilder {
+public abstract class ConditionBase extends BaseBuilder {
   protected MultiConditionMap conditions = new MultiConditionMap();
   
   public ConditionBase(String tableName) {
