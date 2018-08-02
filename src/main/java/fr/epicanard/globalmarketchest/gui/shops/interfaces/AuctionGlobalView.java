@@ -123,7 +123,7 @@ public class AuctionGlobalView extends DefaultFooter {
    * @param i
    */
   private void renewEveryAuction(InventoryGUI i) {
-    if (this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS)
+    if ((this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS) || this.current.auctions.size() == 0)
       return;
     this.inv.getWarn().stopWarn();
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
@@ -142,7 +142,7 @@ public class AuctionGlobalView extends DefaultFooter {
    * @param i
    */
   private void undoEveryAuction(InventoryGUI i) {
-    if (this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS)
+    if ((this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS) || this.current.auctions.size() == 0)
       return;
     this.inv.getWarn().stopWarn();
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
