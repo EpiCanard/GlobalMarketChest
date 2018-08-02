@@ -1,22 +1,19 @@
 package fr.epicanard.globalmarketchest.auctions;
 
+import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
-import lombok.Getter;
 
 public enum StateAuction {
-  INPROGRESS(1, "InProgress"),
-  EXPIRED(2, "Expired"),
-  ABANDONED(3, "Abandoned"),
-  FINISHED(4, "Finished")
+  INPROGRESS("InProgress"),
+  EXPIRED("Expired"),
+  ABANDONED("Abandoned"),
+  FINISHED("Finished")
   ;
   
-  @Getter
-  private int state;
   private String keyLang;
 
 
-  StateAuction(int id, String keyLang) {
-    this.state = id;
+  StateAuction(String keyLang) {
     this.keyLang = keyLang;
   }
 
@@ -37,11 +34,13 @@ public enum StateAuction {
    * @param value state value
    * @return StateAuction
    */
-  public static final StateAuction getStateAuction(int value) {
-    for (StateAuction state : StateAuction.values()) {
-      if (state.getState() == value)
-        return state;
-    }
+  public static final StateAuction getStateAuction(AuctionInfo auction) {
+    if (auction.getEnded() == false && auction.getEnd().getTime() < DatabaseUtils.getTimestamp().getTime())
+      return StateAuction.EXPIRED;
+    if (auction.getEnded() == false)
+      return StateAuction.INPROGRESS;
+    if (auction.getEnded() == true && auction.getPlayerStarter() == auction.getPlayerEnder())
+      return StateAuction.ABANDONED;
     return StateAuction.FINISHED;
   }
 }

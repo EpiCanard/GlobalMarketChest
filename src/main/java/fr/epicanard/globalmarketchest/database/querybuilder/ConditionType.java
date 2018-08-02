@@ -7,6 +7,7 @@ import lombok.Getter;
  */
 public enum ConditionType {
   EQUAL("="),
+  NOTEQUAL("!="),
   SUPERIOR(">"),
   SUPERIOR_EQUAL(">="),
   INFERIOR("<"),

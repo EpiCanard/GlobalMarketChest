@@ -35,6 +35,8 @@ public class AuctionInfo {
   @Getter
   private StateAuction state;
   @Getter
+  private Boolean ended;
+  @Getter
   private AuctionType type;
   @Getter
   private String playerStarter;
@@ -57,13 +59,14 @@ public class AuctionInfo {
       this.itemMeta = res.getString("itemMeta");
       this.amount = res.getInt("amount");
       this.price = res.getDouble("price");
-      this.state = StateAuction.getStateAuction(res.getInt("state"));
+      this.ended = res.getBoolean("ended");
       this.type = AuctionType.getAuctionType(res.getInt("type"));
       this.playerStarter = res.getString("playerStarter");
       this.playerEnder = res.getString("playerEnder");
       this.start = res.getTimestamp("start");
       this.end = res.getTimestamp("end");
       this.group = res.getString("group");
+      this.state = StateAuction.getStateAuction(this);
     } catch (SQLException e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
     }
@@ -74,6 +77,7 @@ public class AuctionInfo {
     this.type = AuctionType.getAuctionType(type.getType());
     this.price = 0.0;
     this.playerStarter = owner.getUniqueId().toString();
+    this.ended = false;
     this.group = group;
   }
 

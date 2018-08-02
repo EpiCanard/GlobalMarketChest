@@ -15,8 +15,10 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.StateAuction;
 import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
+import fr.epicanard.globalmarketchest.database.querybuilder.ColumnType;
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.ConditionBase;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
@@ -53,7 +55,7 @@ public class AuctionManager {
       builder.addValue("itemMeta", auction.getItemMeta());
       builder.addValue("amount", auction.getAmount());
       builder.addValue("price", auction.getPrice());
-      builder.addValue("state", auction.getState().getState());
+      builder.addValue("ended", auction.getEnded());
       builder.addValue("type", auction.getType().getType());
       builder.addValue("playerStarter", auction.getPlayerStarter());
       builder.addValue("start", stringTs[0]);
@@ -74,10 +76,34 @@ public class AuctionManager {
 
     builder.addValue("playerEnder", PlayerUtils.getUUIDToString(buyer));
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
-    builder.addValue("state", StateAuction.FINISHED.getState());
+    builder.addValue("ended", true);
     builder.addCondition("id", id);
 
     return QueryExecutor.of().execute(builder);
+  }
+
+  /**
+   * Define from a StateAuction the condition to apply
+   */
+  private void defineStateCondition(ConditionBase builder, StateAuction state) {
+    switch (state) {
+      case EXPIRED:
+        builder.addCondition("end", DatabaseUtils.getTimestamp(), ConditionType.INFERIOR);
+        builder.addCondition("ended", false);
+        break;
+      case INPROGRESS:
+        builder.addCondition("end", DatabaseUtils.getTimestamp(), ConditionType.SUPERIOR);
+        builder.addCondition("ended", false);
+        break;
+      case ABANDONED:
+        builder.addCondition("ended", true);
+        builder.addCondition("playerEnder", new ColumnType("playerStarter"));
+        break;
+      case FINISHED:
+        builder.addCondition("ended", true);
+        builder.addCondition("playerEnder", new ColumnType("playerStarter"), ConditionType.NOTEQUAL);
+        break;
+    }
   }
 
   /**
@@ -93,7 +119,7 @@ public class AuctionManager {
 
     builder.addValue("start", ts.toString());
     builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
-    builder.addValue("state", StateAuction.INPROGRESS.getState());
+    builder.addValue("ended", false);
         
     return builder;
   }
@@ -107,8 +133,11 @@ public class AuctionManager {
   public Boolean renewEveryAuctionOfPlayer(Player player, String group, StateAuction state) {
     UpdateBuilder builder = this.updateToNow(null);
 
-    builder.addCondition("state", state.getState());
-    builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(player));
+    if (state == StateAuction.FINISHED || state == StateAuction.ABANDONED)
+      return false;
+    String playeruuid = PlayerUtils.getUUIDToString(player);
+    this.defineStateCondition(builder, state);
+    builder.addCondition("playerStarter", playeruuid);
     builder.addCondition("group", group);
     return QueryExecutor.of().execute(builder);
   }
@@ -133,11 +162,13 @@ public class AuctionManager {
    */
   public Boolean undoGroupOfPlayerAuctions(Player player, String group, List<Integer> auctions) {
     UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+    String playeruuid = PlayerUtils.getUUIDToString(player);
 
     builder.addCondition("id", auctions, ConditionType.IN);
-    builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(player));
+    builder.addCondition("playerStarter", playeruuid);
     builder.addCondition("group", group);
-    builder.addValue("state", StateAuction.ABANDONED.getState());
+    builder.addValue("ended", true);
+    builder.addValue("playerEnder", playeruuid);
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
     return QueryExecutor.of().execute(builder);
   }
@@ -146,11 +177,12 @@ public class AuctionManager {
    * 
    * @param id Id of the auction to undo
    */
-  public Boolean undoAuction(int id) {
+  public Boolean undoAuction(int id, String playerUuid) {
     UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
 
     builder.addCondition("id", id);
-    builder.addValue("state", StateAuction.ABANDONED.getState());
+    builder.addValue("ended", true);
+    builder.addValue("playerEnder", playerUuid);
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
     return QueryExecutor.of().execute(builder);
   }
@@ -166,10 +198,11 @@ public class AuctionManager {
       return;
     builder.addCondition("end", DatabaseUtils.addDays(DatabaseUtils.getTimestamp(), purge * -1), ConditionType.INFERIOR_EQUAL);
 
-    List<Integer> lst = new ArrayList<>();
-    lst.add(StateAuction.ABANDONED.getState());
-    lst.add(StateAuction.FINISHED.getState());
-    builder.addCondition("state", lst, ConditionType.IN);
+    // TODO
+    // List<Integer> lst = new ArrayList<>();
+    // lst.add(StateAuction.ABANDONED.getState());
+    // lst.add(StateAuction.FINISHED.getState());
+    // builder.addCondition("state", lst, ConditionType.IN);
 
     QueryExecutor.of().execute(builder);
   }
@@ -188,7 +221,7 @@ public class AuctionManager {
 
     builder.addCondition("group", group);
     builder.addCondition("itemStack", Arrays.asList(items), ConditionType.IN);
-    builder.addCondition("state", StateAuction.INPROGRESS.getState());
+    this.defineStateCondition(builder, StateAuction.INPROGRESS);
     builder.addField("*");
     builder.addField("COUNT(itemStack) AS count");
     builder.setExtension("GROUP BY itemStack, damage");
@@ -223,7 +256,7 @@ public class AuctionManager {
     builder.addCondition("group", group);
     builder.addCondition("itemStack", ItemStackUtils.getMinecraftKey(item));
     builder.addCondition("damage", item.getDurability());
-    builder.addCondition("state", StateAuction.INPROGRESS.getState());
+    this.defineStateCondition(builder, StateAuction.INPROGRESS);
     builder.setExtension("ORDER BY price, start ASC");
     if (limit != null)
       builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
@@ -255,7 +288,7 @@ public class AuctionManager {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
     builder.addCondition("group", group);
-    builder.addCondition("state", state.getState());
+    this.defineStateCondition(builder, state);
     if (starter != null)
       builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(starter));
     if (ender != null)
