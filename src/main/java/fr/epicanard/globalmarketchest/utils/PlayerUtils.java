@@ -46,7 +46,10 @@ public class PlayerUtils {
   public String getPlayerName(String uuid) {
     if (uuid == null)
       return null;
-    return PlayerUtils.getOfflinePlayer(UUID.fromString(uuid)).getName();
+    OfflinePlayer pl = PlayerUtils.getOfflinePlayer(UUID.fromString(uuid));
+    if (pl.getName() == null)
+      return LangUtils.get("Divers.UnknownPlayer");
+    return pl.getName();
   }
 
   /**
