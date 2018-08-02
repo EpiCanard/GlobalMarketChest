@@ -140,7 +140,7 @@ ErrorMessages:
   CantBuyAuction: "Imposibble d'acheter l'enchère en base de données"
   CantRenewAuction: "Imposibble de renouveler l'enchère en base de données"
   CantUndoAuction: "Imposibble d'annuler l'enchère en base de données"
-  CantRenewEveryAuction: "Imposibble de renouveler toutes les enchères en base de données"
+  CantRenewEveryAuction: "Imposibble de renouveler toutes ;&7les enchères en base de données"
   CantUndoEveryAuction: "Imposibble d'annuler toute les enchères en base de données"
   PlayerDoesntExist: "Ce joueur n'existe pas"
 InfoMessages:
