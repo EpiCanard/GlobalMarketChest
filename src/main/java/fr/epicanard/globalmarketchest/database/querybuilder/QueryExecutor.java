@@ -93,8 +93,9 @@ public class QueryExecutor {
       e.printStackTrace();
     } catch (TypeNotSupported e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
+    } finally {
+      GlobalMarketChest.plugin.getSqlConnection().getBackConnection(co);
     }
-    GlobalMarketChest.plugin.getSqlConnection().getBackConnection(co);
     return ret;
   }
 
