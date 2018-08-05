@@ -44,7 +44,7 @@ public class MySQLConnection extends DatabaseConnection {
         "  `itemMeta` TEXT," +
         "  `amount` INT UNSIGNED NOT NULL," +
         "  `price` DOUBLE NOT NULL," +
-        "  `state` TINYINT(1) NOT NULL," +
+        "  `ended` BOOLEAN NOT NULL DEFAULT FALSE," +
         "  `type` TINYINT(1) NOT NULL," +
         "  `playerStarter` TEXT NOT NULL," +
         "  `playerEnder` TEXT DEFAULT NULL," +
@@ -145,7 +145,7 @@ public class MySQLConnection extends DatabaseConnection {
         this.disconnect(connection);
       else
         this.pool.put(connection);
-    } catch (InterruptedException e) {}      
+    } catch (InterruptedException e) {}
   }
 
   /**
