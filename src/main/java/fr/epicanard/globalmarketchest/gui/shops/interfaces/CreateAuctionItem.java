@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
@@ -16,6 +17,7 @@ import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.SingleToggler;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
@@ -111,16 +113,22 @@ public class CreateAuctionItem extends ShopInterface {
   }
 
   private void defineMaxRepeat() {
-    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
     if (item == null || auction == null)
       return;
-    ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
-    Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0,
+
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final Integer maxAuctions = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Auctions.MaxAuctionByPlayer");
+    final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
+    final Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0,
         (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
-    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, max / auction.getAmount());
-    this.updateItem();
+    final Integer auctionNumber = max / auction.getAmount();
+
+    GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), inv.getPlayer(), num -> {
+      this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, (num + auctionNumber > maxAuctions) ? maxAuctions - num : auctionNumber);
+      this.updateItem();
+    });
   }
 
   /**
