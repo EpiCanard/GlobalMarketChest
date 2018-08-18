@@ -75,25 +75,27 @@ public class QueryExecutor {
     Connection co = GlobalMarketChest.plugin.getSqlConnection().getConnection();
     Boolean ret = false;
     AtomicReference<ResultSet> res = new AtomicReference<>();
+    PreparedStatement prepared = null;
 
     try {
-      PreparedStatement prepared = co.prepareStatement(builder.build(), Statement.RETURN_GENERATED_KEYS);
+      prepared = co.prepareStatement(builder.build(), Statement.RETURN_GENERATED_KEYS);
+      final PreparedStatement preparedCopy = prepared;
       AtomicInteger atomint = new AtomicInteger(1);
 
       builder.prepare(lst -> {
-        this.setPrepared(prepared, lst, atomint);
+        this.setPrepared(preparedCopy, lst, atomint);
       });
       ret = builder.execute(prepared, res);
 
       if (consumer != null)
         Optional.ofNullable(res.get()).ifPresent(consumer);
 
-      GlobalMarketChest.plugin.getSqlConnection().closeRessources(res.get(), prepared);
     } catch (SQLException e) {
       e.printStackTrace();
     } catch (TypeNotSupported e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
     } finally {
+      GlobalMarketChest.plugin.getSqlConnection().closeRessources(res.get(), prepared);
       GlobalMarketChest.plugin.getSqlConnection().getBackConnection(co);
     }
     return ret;
