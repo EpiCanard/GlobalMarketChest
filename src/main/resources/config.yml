@@ -21,6 +21,7 @@ Auctions:
   NumberDaysExpiration: 7
   # -1 to ignore purge else specific a number of days to purge database every n days
   PurgeInterval: 30
+  MaxAuctionByPlayer : 50
 WorldAllowed:
   - overworld
   - the_end

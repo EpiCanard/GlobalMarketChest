@@ -143,6 +143,7 @@ ErrorMessages:
   CantRenewEveryAuction: "Fail to renew every auction"
   CantUndoEveryAuction: "Fail to undo every auction"
   PlayerDoesntExist: "This player doesn't exist"
+  MaxAuctionByPlayer: "Can't create more auction;&7You have reached the maximum auction number"
 InfoMessages:
   UndoAuction: "Auction successfully deleted"
   RenewAuction: "Auction successfully renewed"
