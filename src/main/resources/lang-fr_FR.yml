@@ -62,7 +62,7 @@ Buttons:
     Name: "&2Créer le Shop"
   NewAuction:
     Name: "&2Créer une nouvelle enchère"
-    Description: "&7Cliquer ici pour vendre vos objets"
+    Description: "&7Nombre d'enchères (%d/%d);&7Cliquer ici pour vendre vos objets"
   CreateAuction:
     Name: "&2Créer l'enchère"
   BuyAuction:
