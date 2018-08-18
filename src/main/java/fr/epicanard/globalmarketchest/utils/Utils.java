@@ -112,6 +112,16 @@ public class Utils {
   }
 
   /**
+   * Convert a List into String, concat with ;
+   * 
+   * @param lores List to concat
+   * @return String concat
+   */
+  public String fromList(List<String> lores) {
+    return (lores == null) ? null : String.join(";", lores);
+  }
+
+  /**
    * Map a function to a list
    * 
    * @param lst The list on which apply the function

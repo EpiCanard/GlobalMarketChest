@@ -62,7 +62,7 @@ Buttons:
     Name: "&2Create Shop"
   NewAuction:
     Name: "&2Create new auction"
-    Description: "&7Click here to sell your items"
+    Description: "&Auctions number (%d/%d);&7Click here to sell your items"
   CreateAuction:
     Name: "&2Create auction"
   BuyAuction:

@@ -263,7 +263,7 @@ public class AuctionManager {
 
   /**
    * Get a list of auctions matching with parameters
-   * 
+   *
    * @param group group of auction
    * @param state state of the auction
    * @param starter the player who created the auction
@@ -289,6 +289,29 @@ public class AuctionManager {
         while (res.next())
           auctions.add(new AuctionInfo(res));
         consumer.accept(auctions);
+      } catch (SQLException e) {}
+    });
+  }
+
+  /**
+   * Get number of auctions for a player
+   * 
+   * @param group group of auction
+   * @param starter the player who created the auction
+   * @param consumer callable, send database return to this callabke
+   */
+  public void getAuctionNumber(String group, Player starter, Consumer<Integer> consumer) {
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+
+    builder.addField("COUNT(id) AS count");
+    builder.addCondition("group", group);
+    builder.addCondition("ended", false);
+    builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(starter));
+
+    QueryExecutor.of().execute(builder, res -> {
+      try {
+        if (res.next())
+          consumer.accept(res.getInt("count"));
       } catch (SQLException e) {}
     });
   }
