@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,11 +20,9 @@ import fr.epicanard.globalmarketchest.gui.shops.toggler.CircleToggler;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import net.minecraft.server.v1_12_R1.ChatMessage;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
-import net.minecraft.server.v1_12_R1.PacketPlayOutOpenWindow;
 
 public abstract class ShopInterface {
   @Accessors(fluent=true) @Getter
@@ -80,11 +77,7 @@ public abstract class ShopInterface {
    */
   private void updateInventoryName(String interfaceName) {
     String title = LangUtils.getOrElse("InterfacesTitle." + interfaceName, "&2GlobalMarketChest");
-    EntityPlayer ep = ((CraftPlayer) this.inv.getPlayer()).getHandle();
-    PacketPlayOutOpenWindow packet = new PacketPlayOutOpenWindow(ep.activeContainer.windowId, "minecraft:chest",
-        new ChatMessage(title), this.inv.getPlayer().getOpenInventory().getTopInventory().getSize());
-    ep.playerConnection.sendPacket(packet);
-    ep.updateInventory(ep.activeContainer);
+    VersionSupportUtils.getInstance().updateInventoryName(title, this.inv.getPlayer());
   }
 
   /**
