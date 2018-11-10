@@ -35,14 +35,14 @@ public class EditAuction extends ShopInterface {
 
   /**
    * Renew the selected auction to current date
-   * 
+   *
    * @param i
    */
   private void renewAuction(InventoryGUI i) {
     AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
 
     if (GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId()) == true) {
-      PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoAuction");
+      PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewAuction");
       ReturnBack.execute(null, this.inv);
     } else
       i.getWarn().warn("CantRenewAuction", 49);
@@ -50,7 +50,7 @@ public class EditAuction extends ShopInterface {
 
   /**
    * Undo the selected auction
-   * 
+   *
    * @param i
    */
   private void undoAuction(InventoryGUI i) {
