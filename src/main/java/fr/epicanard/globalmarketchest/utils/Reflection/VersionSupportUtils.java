@@ -94,7 +94,7 @@ public class VersionSupportUtils {
 
   private Object newInstance(String path, Object ...args) {
     try {
-      return getClassFromPath(Path.MINECRAFT, path).getConstructor(fromObjecttoClass(args)).newInstance(args);
+      return getClassFromPath(Path.MINECRAFT, path).getConstructor(fromObjectToClass(args)).newInstance(args);
     } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
       e.printStackTrace();
     }
