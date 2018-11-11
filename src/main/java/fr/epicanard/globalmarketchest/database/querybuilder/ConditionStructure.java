@@ -25,7 +25,7 @@ public class ConditionStructure {
   @SuppressWarnings("unchecked")
   public String build() {
     String base = "`" + this.key + "` " + this.type.getCharacter();
-    if (this.type == ConditionType.IN)
+    if (this.type == ConditionType.IN || this.type == ConditionType.NOTIN)
       return base + " (" + DatabaseUtils.joinRepeat("?", ",", ((List<String>)this.value).size()) + ")";
     if (this.value instanceof ColumnType)
       return base + " `" + ((ColumnType)this.value).getValue() + "`";

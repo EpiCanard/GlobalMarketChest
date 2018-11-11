@@ -49,18 +49,18 @@ Price:
     - minecraft:iron_ingot
     - minecraft:coal
     - minecraft:redstone
-    - minecraft:lapis_lazuli
+    - minecraft:dye/4
 Interfaces:
-  Warn: minecraft:red_stained_glass_pane
+  Warn: minecraft:stained_glass_pane/14
   Buttons:
-    Background: minecraft:black_stained_glass_pane
+    Background: minecraft:stained_glass_pane/15
     NewAuction: minecraft:nether_star
     CreateAuction: minecraft:nether_star
     BuyAuction: minecraft:nether_star
-    RenewAuction: minecraft:orange_wool
-    UndoAuction: minecraft:red_wool
-    RenewEveryAuction: minecraft:orange_wool
-    UndoEveryAuction: minecraft:red_wool
+    RenewAuction: minecraft:wool/1
+    UndoAuction: minecraft:wool/14
+    RenewEveryAuction: minecraft:wool/1
+    UndoEveryAuction: minecraft:wool/14
     ExitButton: minecraft:barrier
     Validate: minecraft:spectral_arrow
     Return: minecraft:tipped_arrow
@@ -71,26 +71,26 @@ Interfaces:
     ViewByCategory: minecraft:compass
     ViewByPlayer: minecraft:chest
     ViewByLastCreated: minecraft:apple
-    AuctionSide: minecraft:blue_stained_glass_pane
+    AuctionSide: minecraft:stained_glass_pane/11
     AuctionMiddle: minecraft:stained_glass_pane
     GlobalShop: minecraft:ender_chest
     AuctionShop: minecraft:purple_shulker_box
     AdminShop: minecraft:chest
     ShopIcon: minecraft:ender_chest
-    EditGroupName: minecraft:blue_stained_glass_pane
+    EditGroupName: minecraft:stained_glass_pane/11
     PreviousPage: minecraft:arrow
     NextPage: minecraft:arrow
     NumPage: minecraft:book
-    MaxInOne: minecraft:orange_stained_glass_pane
-    MaxRepeat: minecraft:orange_stained_glass_pane
+    MaxInOne: minecraft:stained_glass_pane/1
+    MaxRepeat: minecraft:stained_glass_pane/1
     InProgressAuction: minecraft:book
     ExpiredAuction: minecraft:book
     SoldAuction: minecraft:book
     BoughtAuction: minecraft:book
     CanceledAuction: minecraft:book
   Circle:
-    SetItem: "minecraft:lime_stained_glass_pane"
-    UnsetItem: "minecraft:blue_stained_glass_pane"
+    SetItem: "minecraft:stained_glass_pane/5"
+    UnsetItem: "minecraft:stained_glass_pane/11"
 Sign:
   Appearance:
     GlobalShop:

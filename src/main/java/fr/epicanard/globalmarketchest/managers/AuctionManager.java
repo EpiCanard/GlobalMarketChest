@@ -37,10 +37,10 @@ public class AuctionManager {
 
   /**
    * Create an auction inside database
-   * 
+   *
    * @param auction
    * @param repeat
-   * 
+   *
    * @return Return if execution succeed
    */
   public Boolean createAuction(AuctionInfo auction, Integer repeat) {
@@ -69,7 +69,7 @@ public class AuctionManager {
 
   /**
    * Update database when player obtain an auction
-   * 
+   *
    * @param id Id of the auction to update
    * @param buyer Player that vuy the auction
    */
@@ -97,7 +97,7 @@ public class AuctionManager {
 
   /**
    * Renew all player auctions expired
-   * 
+   *
    * @param player
    * @param group
    */
@@ -115,7 +115,7 @@ public class AuctionManager {
 
   /**
    * Renew a specific auction
-   * 
+   *
    * @param id Id of the auction to renew
    */
   public Boolean renewAuction(int id) {
@@ -133,11 +133,11 @@ public class AuctionManager {
    * ==============
    *      UNDO
    * ==============
-   */ 
+   */
 
   /**
    * Undo a group of auctions
-   * 
+   *
    * @param player
    * @param group
    */
@@ -156,7 +156,7 @@ public class AuctionManager {
 
   /**
    * Undo auction
-   * 
+   *
    * @param id Id of the auction to undo
    */
   public Boolean undoAuction(int id, String playerUuid) {
@@ -176,7 +176,7 @@ public class AuctionManager {
   /**
    * TODO
    * Remove every auction before a specific date
-   * 
+   *
    * @param useConfig Define if remove all or with the date in config file
    */
   public void purgeAuctions() {
@@ -197,7 +197,7 @@ public class AuctionManager {
 
   /**
    * Get all item for one category in one group
-   * 
+   *
    * @param group
    * @param category
    * @param consumer
@@ -208,7 +208,7 @@ public class AuctionManager {
     String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
 
     builder.addCondition("group", group);
-    builder.addCondition("itemStack", Arrays.asList(items), ConditionType.IN);
+    builder.addCondition("itemStack", Arrays.asList(items), (category == "!") ? ConditionType.NOTIN : ConditionType.IN);
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
     builder.addField("*");
     builder.addField("COUNT(itemStack) AS count");
@@ -233,7 +233,7 @@ public class AuctionManager {
 
   /**
    * Get all item for one category in one group
-   * 
+   *
    * @param group
    * @param category
    * @param consumer
@@ -295,7 +295,7 @@ public class AuctionManager {
 
   /**
    * Get number of auctions for a player
-   * 
+   *
    * @param group group of auction
    * @param starter the player who created the auction
    * @param consumer callable, send database return to this callabke
@@ -335,10 +335,10 @@ public class AuctionManager {
    *             TOOLS
    * ================================
    */
-  
+
   /**
    * Create a querybuilder, update timestamp to now and change state to INPROGRESS
-   * 
+   *
    * @param builder
    * @return Return same builder
    */
@@ -350,13 +350,13 @@ public class AuctionManager {
     builder.addValue("start", ts.toString());
     builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
     builder.addValue("ended", false);
-        
+
     return builder;
   }
 
   /**
    * Define from a StateAuction the condition to apply
-   * 
+   *
    * @param builder builder on which set condition
    * @param state StateAuction to convert into condition
    */
@@ -383,7 +383,7 @@ public class AuctionManager {
 
   /**
    * Request the database to know if the auction specified is ended or not
-   * 
+   *
    * @param executor instance of QueryExecutor to us
    * @param id if the auction to verify
    * @return if auction is ended
@@ -395,7 +395,7 @@ public class AuctionManager {
     select.addField("id");
     select.addCondition("id", id);
     select.addCondition("ended", true, ConditionType.EQUAL);
- 
+
     executor.execute(select, res -> {
       try {
         if (res != null && res.next())
