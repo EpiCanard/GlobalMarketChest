@@ -114,7 +114,7 @@ public class Paginator {
   private void loadItems() {
     for (int i = 0; i < this.config.getLimit(); i++) {
       if (i < this.itemstacks.size())
-        this.inv.setItem(this.getPos(i), this.itemstacks.get(i));        
+        this.inv.setItem(this.getPos(i), this.itemstacks.get(i));
       else
         this.inv.clear(this.getPos(i));
     }
@@ -151,7 +151,7 @@ public class Paginator {
 
   /**
    * Define if the position is a button previous or next
-   * 
+   *
    * @return Boolean
    */
   public Boolean isButton(int pos) {
@@ -160,7 +160,7 @@ public class Paginator {
 
   /**
    * Define if the position is inside the click zone
-   * 
+   *
    * @return Boolean
    */
   public Boolean isInZone(int pos) {
@@ -197,7 +197,7 @@ public class Paginator {
 
   /**
    * Get the real position inside the inventory depending of the index (the case number x from the paginator (not the same than the inventory))
-   * 
+   *
    * @param int index
    * @return int
    */
@@ -209,7 +209,7 @@ public class Paginator {
 
   /**
    * Get index inside paginator from the real inventory position
-   * 
+   *
    * @param int pos
    * @return int
    */
@@ -222,7 +222,7 @@ public class Paginator {
 
   /**
    * Get Sublist from a given list depending of the page
-   * 
+   *
    * @param List<T> list
    * @return List<T>
    */

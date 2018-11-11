@@ -27,11 +27,17 @@ public class CategoryView extends DefaultFooter {
     for (int i = 0; i < cat.length; i++) {
       int pos = Utils.toPos(i % 5 + 2, (i / 5) * 2 + 2);
       final int j = i;
-      this.actions.put(pos, in -> {
-        this.inv.getTransaction().put(TransactionKey.CATEGORY, cat[j]);
-        callable.accept(in);
-      });
-      this.inv.getInv().setItem(pos, ItemStackUtils.setItemStackMeta(h.getDisplayItem(cat[i]), h.getDisplayName(cat[i]), null));
+      this.setActionCategory(pos, cat[j], callable);
+      this.inv.getInv().setItem(pos, h.getDisplayItem(cat[i]));
     }
+    if (GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.UncategorizedItems"))
+      this.setActionCategory(31, "!", callable);
+  }
+
+  private void setActionCategory(final int pos, final String category, final Consumer<InventoryGUI> callable) {
+    this.actions.put(pos, in -> {
+      this.inv.getTransaction().put(TransactionKey.CATEGORY, category);
+      callable.accept(in);
+    });
   }
 }
