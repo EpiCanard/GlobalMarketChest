@@ -16,19 +16,30 @@ import fr.epicanard.globalmarketchest.utils.ShopUtils;
  * Listener for creation process
  */
 public class ShopCreationListener implements Listener {
-  
-  @EventHandler
-  public void onChangeSign(SignChangeEvent event) {    
-    Player player = event.getPlayer();
-    
-    if (event.getLine(0).compareTo("[GMC]") == 0) {
-      ShopInfo shop = new ShopInfo(-1, player.getUniqueId().toString(), ShopType.GLOBALSHOP.setOn(0), event.getBlock().getLocation(), null, ShopUtils.generateName());
-      InventoryGUI inv = new InventoryGUI(player);
 
-      inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
-      GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
-      inv.open();
-      inv.loadInterface("ShopCreationSelectType");
+  @EventHandler
+  public void onChangeSign(SignChangeEvent event) {
+    final Player player = event.getPlayer();
     }
+
+    if (event.getLine(0).equals(ShopType.GLOBALSHOP.getFirstLineToCreate()))
+      this.openCreationShopInterface(player, event);
+  }
+
+  /**
+   * Open shop interface to create it
+   *
+   * @param player Player that create the shop
+   */
+  private void openCreationShopInterface(Player player, SignChangeEvent event) {
+    event.setLine(0, ShopType.GLOBALSHOP.getErrorDisplayName());
+    ShopInfo shop = new ShopInfo(-1, player.getUniqueId().toString(), ShopType.GLOBALSHOP.setOn(0), event.getBlock().getLocation(), null, ShopUtils.generateName());
+    InventoryGUI inv = new InventoryGUI(player);
+
+    inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
+    inv.getTransaction().put(TransactionKey.SIGNLOCATION, event.getBlock().getLocation());
+    GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
+    inv.open();
+    inv.loadInterface("ShopCreationSelectType");
   }
 }

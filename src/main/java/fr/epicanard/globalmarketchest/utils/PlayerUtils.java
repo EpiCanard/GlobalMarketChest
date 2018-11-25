@@ -29,9 +29,9 @@ public class PlayerUtils {
 
   /**
    * Get the uuid of a player into string
-   * 
+   *
    * @param player
-   * @return 
+   * @return
    */
   public String getUUIDToString(Player player) {
     return player.getUniqueId().toString();
@@ -39,7 +39,7 @@ public class PlayerUtils {
 
   /**
    * Get the player name from is uuid in string format
-   * 
+   *
    * @param uuid
    * @return Player name
    */
@@ -54,7 +54,7 @@ public class PlayerUtils {
 
   /**
    * Send Message to a player
-   * 
+   *
    * @param player
    * @param message message to sent to player
    */

@@ -26,9 +26,9 @@ Auctions:
   PurgeInterval: 30
   MaxAuctionByPlayer : 50
 WorldAllowed:
-  - overworld
-  - the_end
-  - the_nether
+  - world
+  - world_the_end
+  - world_nether
 AllowedLinkBlock:
   - minecraft:ender_chest
   - minecraft:chest
@@ -105,4 +105,4 @@ Sign:
       DisplayName: '&a[AdminShop]'
       DisplayItem: minecraft:end_crystal
       FirstLineToCreate: "adminshop"
-    NotWorkingShopDisplayName : "&f[DisableShop]"
+    NotWorkingShopDisplayName : "&c[DisableShop]"

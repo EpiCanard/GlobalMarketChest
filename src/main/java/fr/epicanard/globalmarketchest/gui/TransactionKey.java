@@ -7,5 +7,6 @@ public enum TransactionKey {
   AUCTIONNUMBER,
   CATEGORY,
   AUCTIONITEM,
+  SIGNLOCATION
   ;
 }
