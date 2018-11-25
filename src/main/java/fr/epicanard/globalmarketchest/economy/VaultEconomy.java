@@ -15,9 +15,9 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.permission.Permission;
 
 public class VaultEconomy {
-  Economy economy;
-  Permission permission;
-  
+  private Economy economy;
+  private Permission permission;
+
   /**
    * Init Economy plugin, check if vault is missing, set economy and permissions
    * @throws RequiredPluginException
@@ -48,7 +48,7 @@ public class VaultEconomy {
   public Boolean hasPermissions(Player player, String perm) {
     return this.permission.has(player, perm);
   }
-  
+
   /**
    * Getter for economy variable
    * @return
@@ -56,15 +56,15 @@ public class VaultEconomy {
   public Economy getEconomy() {
     return this.economy;
   }
-  
+
   /**
-   * Getter for permissions variable  
+   * Getter for permissions variable
    * @return
    */
   public Permission getPermission() {
     return this.permission;
   }
-  
+
   /**
    * Check if player has account and create if necessary
    * @param player
@@ -76,10 +76,10 @@ public class VaultEconomy {
 
     if (!ret && create)
       this.economy.createPlayerAccount(player);
-    
+
     return ret;
   }
-  
+
   /**
    * Give money to player and return if it is a success or not
    * @param playerUUID
@@ -94,7 +94,7 @@ public class VaultEconomy {
 
     return resp.transactionSuccess();
   }
-  
+
   /**
    * Take money to player and return if it is a success or not
    * @param playerUUID
@@ -106,7 +106,7 @@ public class VaultEconomy {
 
     this.hasAccount(player, true);
     EconomyResponse resp = this.economy.withdrawPlayer(player, amount);
-    
+
     return resp.transactionSuccess();
   }
 
@@ -117,9 +117,9 @@ public class VaultEconomy {
    */
   public double getMoneyOfPlayer(UUID playerUUID) {
     OfflinePlayer player = PlayerUtils.getOfflinePlayer(playerUUID);
-    
+
     this.hasAccount(player, true);
-    
+
     return this.economy.getBalance(player);
   }
 

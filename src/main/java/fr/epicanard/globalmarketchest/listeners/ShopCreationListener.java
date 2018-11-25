@@ -6,11 +6,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
 /**
  * Listener for creation process
@@ -20,6 +24,13 @@ public class ShopCreationListener implements Listener {
   @EventHandler
   public void onChangeSign(SignChangeEvent event) {
     final Player player = event.getPlayer();
+
+    try {
+      if (!Permissions.GS_CREATESHOP.isSetOn(player) || !WorldUtils.isAllowedWorld(event.getBlock().getWorld().getName()))
+        return;
+    } catch (WorldDoesntExist e) {
+      LoggerUtils.warn(e.getMessage());
+      return;
     }
 
     if (event.getLine(0).equals(ShopType.GLOBALSHOP.getFirstLineToCreate()))

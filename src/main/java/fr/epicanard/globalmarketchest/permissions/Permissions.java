@@ -1,61 +1,59 @@
 package fr.epicanard.globalmarketchest.permissions;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 /**
- * 
- * globalmarketchest.localshop.create
- * globalmarketchest.localshop.use_command
- * globalmarketchest.localshop.use
- * globalmarketchest.localshop.
- * globalmarketchest.globalshop.create
- * globalmarketchest.globalshop.use_command
- * globalmarketchest.globalshop.use
- * globalmarketchest.adminshop.create
- * globalmarketchest.globalshop.use_command
- * globalmarketchest.adminshop.use
- *
+ * Class that handle permissions of plugin
  */
 public enum Permissions {
-  GLOBALSHOP_CREATE("globalmarketchest.globalshop.create"),
-  GLOBALSHOP_USE_COMMAND("globalmarketchest.globalshop.use_command"),
-  GLOBALSHOP_USE("globalmarketchest.globalshop.use"),
-  LOCALSHOP_CREATE("globalmarketchest.localshop.create"),
-  LOCALSHOP_USE_COMMAND("globalmarketchest.locashop.use_command"),
-  LOCALSHOP_USE("globalmarketchest.localshop.use"),
-  ADMIN_RELOAD("globalmarketchest.admin.reload"),
-  ADMIN_PURGE("globalmarket.chest.admin.purge")
+  GS_CREATESHOP("globalmarketchest.globalshop.createshop"),
+  GS_OPENSHOP("globalmarketchest.globalshop.openshop"),
+  GS_CREATEAUCTION("globalmarketchest.globalshop.createauction"),
+  GS_BUYAUCTION("globalmarketchest.globalshop.buyauction")
   ;
-  
+
   private String perm;
-  
+
+  /**
+   * Enum constructor
+   * @param perm String permission
+   */
   Permissions(String perm) {
     this.perm = perm;
   }
-  
-  public Boolean isSetOn(Player player, World world) {
-    if (player != null && (this.isSetOn(player) || player.hasPermission(this.perm)))
-      return true;
-    return false;
-  }
 
+  /**
+   * Define if the permission is set
+   *
+   * @param player Player on which check the permissions
+   * @return Return a boolean to define if the permission is set
+   */
   public Boolean isSetOn(Player player) {
-    if (player != null && GlobalMarketChest.plugin.economy.hasPermissions(player, this.perm))
+    if (player != null && (player.hasPermission(this.perm) ||  GlobalMarketChest.plugin.economy.hasPermissions(player, this.perm)))
       return true;
     return false;
   }
 
-  public Boolean isSetOnn(Player player) {
-    if (player != null && player.hasPermission(this.perm))
-      return true;
-    return false;
+  /**
+   * Define if the permission is set and print an error message
+   *
+   * @param player Player on which check the permissions
+   * @return Return a boolean to define if the permission is set
+   */
+  public Boolean isSetOnWithMessage(Player player) {
+    final Boolean isSet = this.isSetOn(player);
+
+    if (!isSet) {
+      PlayerUtils.sendMessageConfig(player, "ErrorMessages.PermissionNotAllowed");
+    }
+
+    return isSet;
   }
 
-  
   private String getBasicPerm() {
     String[] perms = this.perm.split(".");
     ArrayUtils.remove(perms, perms.length - 1);

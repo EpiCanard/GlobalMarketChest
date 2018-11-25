@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
@@ -37,6 +38,9 @@ public class WorldListener implements Listener {
       if (shop == null)
         return;
       event.setCancelled(true);
+      if (!Permissions.GS_OPENSHOP.isSetOnWithMessage(player)) {
+        return;
+      }
       if (GlobalMarketChest.plugin.inventories.hasInventory(player.getUniqueId())) {
         InventoryGUI old = GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
         old.close();
