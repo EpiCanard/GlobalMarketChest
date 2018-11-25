@@ -8,24 +8,32 @@ To work you will need the plugin **Vault** to handle the economy.
     /globalmarketchest
 **Open gui to select global, local or admin of your choice**
 
-    /globalmarketchest locate [item]
+    /globalmarketchest open [group_name]
+**Open global shop with the groupe_name**
+
+    /globalmarketchest locate [item] #TODO
 **Give 5 best places that sell this item**
 
-    
-    /globalmarketchest reload
+    /globalmarketchest reload #TODO
 **Reload the plugin**
 
-    /globalmarketchest purge  [local | admin | global | all] [group_name]
-**Delete local, admin, global or all shops in groupe_name**
-- if kind of shop is not specified it apply to all kind of shops by default
-- if group_name is not specified it apply to all shop by default
+
 
 ## Permissions
-    globalmarketchest.localshop.create
-    globalmarketchest.localshop.use_command
-    globalmarketchest.localshop.use_chest
-    globalmarketchest.localshop.
-    globalmarketchest.globalshop.create
-    globalmarketchest.globalshop.use
-    globalmarketchest.adminshop.create
-    globalmarketchest.adminshop.use
+
+```YAML
+ # Allow to create a globalshop
+globalmarketchest.globalshop.createshop
+
+# Allow to destroy a globalshop
+globalmarketchest.globalshop.destroyshop
+
+# Allow to open a globalshop
+globalmarketchest.globalshop.openshop
+
+# Allow to create an auction inside globalshop
+globalmarketchest.globalshop.createauction
+
+# Allow to buy an auction inside globalshop
+globalmarketchest.globalshop.buyauction
+```
