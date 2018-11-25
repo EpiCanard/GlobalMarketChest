@@ -82,7 +82,7 @@ public class MySQLConnection extends DatabaseConnection {
     this.database = config.getString("Connection.Database");
     this.user = config.getString("Connection.User");
     this.password = config.getString("Connection.Password");
-    
+
     if (this.host == null || this.port == null || this.database == null || this.user == null
         || this.password == null)
       throw new ConfigException("Some database informations are missing");
@@ -103,7 +103,7 @@ public class MySQLConnection extends DatabaseConnection {
     }
     return null;
   }
-  
+
   /**
    * Disconnection connection
    */
@@ -114,7 +114,7 @@ public class MySQLConnection extends DatabaseConnection {
     try {
       if (!connection.isClosed())
         connection.close();
-    } catch (SQLException e) {}      
+    } catch (SQLException e) {}
   }
 
   /**
@@ -125,7 +125,7 @@ public class MySQLConnection extends DatabaseConnection {
   public Connection getConnection() {
     try {
       Connection co = this.pool.take();
-      if (co == null || co.isClosed())
+      if (co == null || !co.isValid(0) || co.isClosed())
         return this.connect();
       return co;
     } catch (SQLException | InterruptedException e) {
