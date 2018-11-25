@@ -12,6 +12,8 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 
@@ -22,11 +24,18 @@ public class WorldListener implements Listener {
 
   @EventHandler
   public void onPlayerBreakBlock(BlockBreakEvent event) {
-    if (event.getBlock().hasMetadata(ShopUtils.META_KEY))
-      if (GlobalMarketChest.plugin.shopManager.deleteShop(ShopUtils.getShop(event.getBlock())))
-        PlayerUtils.sendMessagePlayer(event.getPlayer(), "Shop successfully deleted");
+    if (event.getBlock().hasMetadata(ShopUtils.META_KEY)) {
+      ShopInfo shop = ShopUtils.getShop(event.getBlock());
+      if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
+        PlayerUtils.sendMessageConfig(event.getPlayer(), "InfoMessages.ShopDeleted");
+        String owner = shop.getOwner();
+        LoggerUtils.info(String.format("%s : [%s:%s<%s>]", LangUtils.get("InfoMessages.ShopDeleted"),
+          shop.getSignLocation().toString(), PlayerUtils.getPlayerName(owner), owner));
+      }
+
+    }
   }
-  
+
   @EventHandler
   public void onInteract(PlayerInteractEvent event) {
     Player player = event.getPlayer();
