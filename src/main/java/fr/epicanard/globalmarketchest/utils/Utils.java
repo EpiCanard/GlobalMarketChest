@@ -7,6 +7,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.block.Sign;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,7 +39,7 @@ public class Utils {
 
   /**
    * From position x and y give a position inside the inventory
-   * 
+   *
    * @param x
    * @param y
    * @return position
@@ -48,7 +50,7 @@ public class Utils {
 
   /**
    * Get the line number from position
-   * 
+   *
    * @param pos position
    * @param lineWidth line width if the used zone is smaller then the inventory width
    * @return line number
@@ -59,7 +61,7 @@ public class Utils {
 
   /**
    * Get the column number from position
-   * 
+   *
    * @param pos position
    * @param lineWidth line width if the used zone is smaller then the inventory width
    * @return column number
@@ -70,7 +72,7 @@ public class Utils {
 
   /**
    * Get a button from the config file and create itemstack
-   * 
+   *
    * @param buttonName button name to search inside config
    * @return item created
    */
@@ -93,7 +95,7 @@ public class Utils {
 
   /**
    * Convert a String[] into List<String>
-   * 
+   *
    * @param lore Array to convert
    * @return List converted
    */
@@ -103,7 +105,7 @@ public class Utils {
 
   /**
    * Convert a String into List, splitting with ;
-   * 
+   *
    * @param lore String to split
    * @return List of element splitted
    */
@@ -113,7 +115,7 @@ public class Utils {
 
   /**
    * Convert a List into String, concat with ;
-   * 
+   *
    * @param lores List to concat
    * @return String concat
    */
@@ -123,7 +125,7 @@ public class Utils {
 
   /**
    * Map a function to a list
-   * 
+   *
    * @param lst The list on which apply the function
    * @param fct Function to map
    * @return The new list mapped
@@ -134,12 +136,30 @@ public class Utils {
 
   /**
    * If the index is bigger than size return the size to prevent IndexOutOfBOundException
-   * 
+   *
    * @return index
    */
   public int getIndex(int index, int size) {
     if (index < 0)
       return 0;
     return (index >= size) ? size : index;
+  }
+
+  /**
+   * Edit the content of a sign at specific location
+   *
+   * @param loc Location of sign
+   * @param lines Lines to set on the sign
+   */
+  public void editSign(Location loc, String[] lines) {
+    if (loc.getBlock().getState() instanceof Sign) {
+      Sign signBlock = (Sign) loc.getBlock().getState();
+
+      for (int i = 0; i < lines.length && i < 4; i++) {
+        signBlock.setLine(i, lines[i]);
+      }
+
+      signBlock.update();
+    }
   }
 }

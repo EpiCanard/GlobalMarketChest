@@ -14,10 +14,12 @@ import fr.epicanard.globalmarketchest.gui.shops.ShopCreationInterface;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.shops.ShopType;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 /**
  * Shop Interface for Creation Process
@@ -38,13 +40,18 @@ public class ShopCreationLink extends ShopCreationInterface {
   /**
    * Create the shop inside the database and leave the GUI
    * Drop the sign if the shop already exist
-   * 
+   *
    * @param gui InventoryGUI used shop creation
    */
   private void createShop(InventoryGUI gui) {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
     try {
       GlobalMarketChest.plugin.shopManager.createShop(shop);
+
+      Utils.editSign(this.inv.getTransactionValue(TransactionKey.SIGNLOCATION), new String[] {
+        ShopType.GLOBALSHOP.getDisplayName()
+      });
+
     } catch (ShopAlreadyExistException e) {
       PlayerUtils.sendMessagePlayer(gui.getPlayer(), e.getMessage());
       shop.getSignLocation().getBlock().breakNaturally();
@@ -56,7 +63,7 @@ public class ShopCreationLink extends ShopCreationInterface {
 
   /**
    * Load the shop link zone
-   * 
+   *
    * @param pag Paginator used
    */
   public void loadZone(Paginator pag) {
@@ -78,7 +85,7 @@ public class ShopCreationLink extends ShopCreationInterface {
 
   /**
    * Get the group name of the shop at position inside the inventory and set on current shop
-   * 
+   *
    * @param pos Position inside the inventory
    */
   public void changeName(Integer pos) {
