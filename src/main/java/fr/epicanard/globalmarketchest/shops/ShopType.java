@@ -2,7 +2,6 @@ package fr.epicanard.globalmarketchest.shops;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import io.netty.util.concurrent.GlobalEventExecutor;
 
 /**
  * Enum for define the shop type

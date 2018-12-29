@@ -10,14 +10,14 @@ import fr.epicanard.globalmarketchest.database.querybuilder.ExceptionConsumer;
 import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
 
 public class DeleteBuilder extends ConditionBase {
-  
+
   public DeleteBuilder(String tableName) {
     super(tableName);
   }
 
   /**
    * Build the query
-   * 
+   *
    * @return query string built
    */
   @Override
@@ -29,20 +29,20 @@ public class DeleteBuilder extends ConditionBase {
 
   /**
    * Prepare the query params
-   * 
+   *
    * @param consumer
    */
   @Override
   public void prepare(ExceptionConsumer<List<Object>> consumer) throws TypeNotSupported, SQLException{
-    consumer.accept(this.conditions.values());    
+    consumer.accept(this.conditions.values());
   }
 
   /**
    * Execute the query
-   * 
+   *
    * @param statement
    * @param resultSet
-   * 
+   *
    * @return return if execution succeed
    */
   @Override

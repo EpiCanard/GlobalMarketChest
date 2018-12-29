@@ -74,7 +74,7 @@ Interfaces:
     AuctionSide: minecraft:blue_stained_glass_pane
     AuctionMiddle: minecraft:stained_glass_pane
     GlobalShop: minecraft:ender_chest
-    AuctionShop: minecraft:purple_shulker_box
+    AuctionShop: minecraft:shulker_box
     AdminShop: minecraft:chest
     ShopIcon: minecraft:ender_chest
     EditGroupName: minecraft:blue_stained_glass_pane
