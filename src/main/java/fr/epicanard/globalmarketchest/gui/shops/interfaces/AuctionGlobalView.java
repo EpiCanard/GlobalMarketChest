@@ -105,7 +105,7 @@ public class AuctionGlobalView extends DefaultFooter {
   private void loadAuctions() {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
-    GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), this.current.state, 
+    GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), this.current.state,
       this.current.config == AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
       this.current.config != AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
       this.paginator.getLimit(),
@@ -119,7 +119,7 @@ public class AuctionGlobalView extends DefaultFooter {
 
   /**
    * Renew every auction to current date
-   * 
+   *
    * @param i
    */
   private void renewEveryAuction(InventoryGUI i) {
@@ -138,7 +138,7 @@ public class AuctionGlobalView extends DefaultFooter {
 
   /**
    * Renew every auction to current date
-   * 
+   *
    * @param i
    */
   private void undoEveryAuction(InventoryGUI i) {
@@ -161,7 +161,7 @@ public class AuctionGlobalView extends DefaultFooter {
 
       if (!ret)
         throw new WarnException("NotEnoughSpace");
-      
+
     } catch (WarnException e) {
       i.getWarn().warn(e.getMessage(), 4);
     }

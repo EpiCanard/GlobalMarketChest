@@ -84,7 +84,7 @@ public class GlobalMarketChest extends JavaPlugin {
       this.disable();
       return;
     }
-    
+
     this.shopManager.updateShops();
 
     getCommand("GlobalMarketChest").setExecutor(new CommandHandler());
@@ -97,8 +97,10 @@ public class GlobalMarketChest extends JavaPlugin {
 
   @Override
   public void onDisable() {
-    this.sqlConnection.cleanPool();
-    this.inventories.removeAllInventories();
+    if (this.sqlConnection != null)
+      this.sqlConnection.cleanPool();
+    if (this.inventories != null)
+      this.inventories.removeAllInventories();
   }
 
   public void disable() {
@@ -139,7 +141,7 @@ public class GlobalMarketChest extends JavaPlugin {
   private void register(Listener listener) {
     getServer().getPluginManager().registerEvents(listener, this);
   }
- 
+
   public Boolean hasPermission(Player player, String perm) {
     if (player == null || perm == null)
       return false;

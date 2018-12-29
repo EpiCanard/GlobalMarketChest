@@ -12,14 +12,14 @@ import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
 
 public class SelectBuilder extends ConditionBase {
   private List<String> fields = new ArrayList<>();
-  
+
   public SelectBuilder(String tableName) {
     super(tableName);
   }
 
   /**
    * Add field to select
-   * 
+   *
    * @param field
    */
   public void addField(String field) {
@@ -28,7 +28,7 @@ public class SelectBuilder extends ConditionBase {
 
   /**
    * Build the query
-   * 
+   *
    * @return query string built
    */
   @Override
@@ -45,20 +45,20 @@ public class SelectBuilder extends ConditionBase {
 
   /**
    * Prepare the query params
-   * 
+   *
    * @param consumer
    */
   @Override
   public void prepare(ExceptionConsumer<List<Object>> consumer) throws TypeNotSupported, SQLException {
-    consumer.accept(this.conditions.values());    
+    consumer.accept(this.conditions.values());
   }
 
   /**
    * Execute the query
-   * 
+   *
    * @param statement
    * @param resultSet
-   * 
+   *
    * @return return if execution succeed
    */
   @Override

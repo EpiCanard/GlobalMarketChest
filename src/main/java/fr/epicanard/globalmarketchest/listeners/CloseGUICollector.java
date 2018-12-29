@@ -21,7 +21,6 @@ public class CloseGUICollector implements Listener {
       if (GlobalMarketChest.plugin.inventories.hasInventory(playerID)) {
         GlobalMarketChest.plugin.inventories.removeInventory(playerID);
       }
-        
     }
   }
 }

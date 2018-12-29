@@ -49,9 +49,6 @@ public abstract class Toggler {
     this.isSet = false;
   }
 
-  /**
-   * Toggle, change the 
-   */
   public void toggle() {
     if (this.isSet)
       this.unset();
