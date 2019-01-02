@@ -52,8 +52,7 @@ public class WorldUtils {
    * @param location  Looking around this location
    * @param material  Material to search
    */
-  public Block getNearestMaterial(Location location, Material material)
-  {
+  public Block getNearestMaterial(Location location, Material material) {
     AtomicDouble distance = new AtomicDouble(6.0D);
     AtomicReference<Block> finalBlock = new AtomicReference<Block>();
 
@@ -101,9 +100,9 @@ public class WorldUtils {
     if (args.length != 4)
       return null;
 
-    if (location == null)
-        location = new Location(GlobalMarketChest.plugin.getServer().getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]));
-    else {
+    if (location == null) {
+      location = new Location(GlobalMarketChest.plugin.getServer().getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]));
+    } else {
       World world = GlobalMarketChest.plugin.getServer().getWorld(args[0]);
       if (world == null) {
         LoggerUtils.warn(LangUtils.get("ErrorMessages.UnkownWorld") + " " + locatString);
@@ -126,13 +125,13 @@ public class WorldUtils {
    */
   public String getStringFromLocation(Location loc, String sep, Boolean world) {
     if (loc == null)
-    return "";
-  String finalString = "";
-  if (world) {
-    finalString += loc.getWorld().getName() + sep;
+      return "";
+    String finalString = "";
+    if (world) {
+      finalString += loc.getWorld().getName() + sep;
+    }
+    return finalString + loc.getBlockX() + sep + loc.getBlockY() + sep + loc.getBlockZ();
   }
-  return finalString + loc.getBlockX() + sep + loc.getBlockY() + sep + loc.getBlockZ();
-}
 
   /**
    * Transform a Location in a String
