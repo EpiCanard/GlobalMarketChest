@@ -5,6 +5,47 @@ depend: [Vault]
 description: Shop plugin to create economy between user
 main: fr.epicanard.globalmarketchest.GlobalMarketChest
 commands:
-  GlobalMarketChest:
+  globalmarketchest:
     description: Open or handle GlobalMarketChest interfaces
-    aliases : [globalmarketchest, gmc, globalmarket, globalchest]
+    aliases: [gmc, globalmarket, globalchest]
+    permission: globalmarketchest.commands
+permissions:
+  globalmarketchest.*:
+    description: Can use all commands and shops
+    children:
+      globalmarketchest.commands.*: true
+      globalmarketchest.globalshop.*: true
+  # GLOBAL SHOP
+  globalmarketchest.globalshop.*:
+    description: Can create or use a globalshop
+    children:
+      globalmarketchest.globalshop.createshop: true
+      globalmarketchest.globalshop.openshop: true
+      globalmarketchest.globalshop.createauction: true
+      globalmarketchest.globalshop.buyauction: true
+  globalmarketchest.globalshop.createshop:
+    description: Can create a globalshop
+  globalmarketchest.globalshop.openshop:
+    description: Can open shop
+  globalmarketchest.globalshop.createauction:
+    description: Can create an auction
+  globalmarketchest.globalshop.buyauction:
+    description: Can create buy an auction
+  # COMMANDS
+  globalmarketchest.commands.*:
+    description: Can use all commands and shops
+    children:
+      globalmarketchest.commands.open: true
+      globalmarketchest.commands.list: true
+  globalmarketchest.commands.open:
+    description: Can open a shop with command
+  globalmarketchest.commands.list.*:
+    description: Can list all shops with command
+    children:
+      globalmarketchest.commands.detail.: true
+  globalmarketchest.commands.detail.*:
+    description: Can see all shop position for a group of shop
+    children:
+      globalmarketchest.commands.detail.tp: true
+  globalmarketchest.commands.detail.tp:
+    description: Can be teleport to a specific shop
