@@ -5,35 +5,86 @@ GUI Plugin of shop for spigot
 To work you will need the plugin **Vault** to handle the economy.
 
 ## Commands
-    /globalmarketchest
-**Open gui to select global, local or admin of your choice**
 
-    /globalmarketchest open [group_name]
-**Open global shop with the groupe_name**
+**Help**
 
-    /globalmarketchest locate [item] #TODO
-**Give 5 best places that sell this item**
+Show help
 
-    /globalmarketchest reload #TODO
+`/globalmarketchest [help]`
+
+
+**List**
+
+List all globalshop
+
+`/globalmarketchest list`
+
+
+**Detail**
+
+List all physical globalshop à distance
+
+`/globalmarketchest list detail <group_name>`
+
+
+**Open**
+
+Allow to open a globalshop
+
+`/globalmarketchest open <group_name>`
+
+
+**TP**
+
+Allow to teleport the player a specific shop position
+
+`/globalmarketchest list tp <group_name> <coordinates>`
+
+
+#TODO
+
 **Reload the plugin**
 
-
+`/globalmarketchest reload`
 
 ## Permissions
 
 ```YAML
- # Allow to create a globalshop
-globalmarketchest.globalshop.createshop
+# Can use all commands and shops
+globalmarketchest.*:
 
-# Allow to destroy a globalshop
-globalmarketchest.globalshop.destroyshop
+# ==== Global Shop ====
 
-# Allow to open a globalshop
-globalmarketchest.globalshop.openshop
+# Can create or use a globalshop
+globalmarketchest.globalshop.*:
 
-# Allow to create an auction inside globalshop
-globalmarketchest.globalshop.createauction
+# Can create a globalshop
+globalmarketchest.globalshop.createshop:
 
-# Allow to buy an auction inside globalshop
-globalmarketchest.globalshop.buyauction
+# Can open shop
+globalmarketchest.globalshop.openshop:
+
+# Can create an auction
+globalmarketchest.globalshop.createauction:
+
+# Can create buy an auction
+globalmarketchest.globalshop.buyauction:
+
+# ==== COMMANDS ===
+
+# Can use all commands and shops
+globalmarketchest.commands.*:
+
+# Can open a shop with command
+globalmarketchest.commands.open:
+
+# Can list all shops with command
+globalmarketchest.commands.list.*:
+
+# Can see all shop position for a group of shop
+globalmarketchest.commands.detail.*:
+
+# Can be teleport to a specific shop
+globalmarketchest.commands.detail.tp:
+
 ```
