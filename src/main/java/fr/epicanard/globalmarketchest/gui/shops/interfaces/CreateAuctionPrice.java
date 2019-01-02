@@ -56,7 +56,7 @@ public class CreateAuctionPrice extends ShopInterface {
 
   /**
    * Add the price gave in parameter to the current price and update interface
-   * 
+   *
    * @param addPrice price to add
    */
   private void setPrice(double addPrice) {
@@ -84,7 +84,7 @@ public class CreateAuctionPrice extends ShopInterface {
 
   /**
    * Get lore with quantity and price for current auction item
-   * 
+   *
    * @return the lore completed
    */
   private List<String> getLore() {
@@ -101,7 +101,7 @@ public class CreateAuctionPrice extends ShopInterface {
 
   /**
    * Create auction inside database and leave interface
-   * 
+   *
    * @param i InventoryGui used
    */
   private void createAuction(InventoryGUI i) {
@@ -121,10 +121,11 @@ public class CreateAuctionPrice extends ShopInterface {
     }
     Integer totalAmount = auction.getAmount() * auctionNumber;
     ItemStack it = item.clone();
+    Integer stackSize = it.getMaxStackSize();
     while (totalAmount > 0) {
-      it.setAmount(totalAmount >= 64 ? 64 : totalAmount);
+      it.setAmount(ItemStackUtils.getMaxStack(it, totalAmount));
       playerInv.removeItem(it);
-      totalAmount -= 64;
+      totalAmount -= stackSize;
     }
     ReturnBack.execute(null, i);
   }

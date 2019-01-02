@@ -130,8 +130,11 @@ public class DatabaseUtils {
       ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
       if (item == null) {
         LoggerUtils.warn(String.format("Wrong itemMeta for auction `%d`", auction.getId()));
-      } else if (adding != null)
-        adding.accept(item, auction);
+      } else {
+        item.setAmount(ItemStackUtils.getMaxStack(item, auction.getAmount()));
+        if (adding != null)
+          adding.accept(item, auction);
+      }
       return item;
     }).filter(i -> i != null).collect(Collectors.toList());
   }

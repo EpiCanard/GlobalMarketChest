@@ -112,7 +112,7 @@ public class CreateAuctionItem extends ShopInterface {
     ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
     Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0,
         (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
-    item.setAmount((max > 64) ? 64 : max);
+    item.setAmount(ItemStackUtils.getMaxStack(item, max));
     auction.setItemStack(item);
     auction.setAmount(max);
     this.updateItem();
