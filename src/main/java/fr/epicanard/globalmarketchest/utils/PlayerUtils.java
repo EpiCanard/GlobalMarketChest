@@ -7,12 +7,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -20,6 +22,8 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class PlayerUtils {
+
+  private static final String prefix = Utils.toColor("&7[&2Global&6Market&3Chest&7] ");
   /**
    * Get a player from is UUID
    */
@@ -52,18 +56,27 @@ public class PlayerUtils {
     return pl.getName();
   }
 
-  /**
-   * Send Message to a player
-   *
-   * @param player
-   * @param message message to sent to player
-   */
-  public void sendMessagePlayer(Player pl, String message) {
-    pl.sendMessage("[GlobalMarketChest] " + Utils.toColor(message));
+  public String getPrefix() {
+    if (GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Logs.HidePrefix", false)) {
+      return Utils.toColor("&7");
+    }
+    return PlayerUtils.prefix;
+  }
+
+  public void sendMessage(Player pl, String message) {
+    pl.sendMessage(PlayerUtils.getPrefix() + Utils.toColor(message));
   }
 
   public void sendMessageConfig(Player pl, String path) {
-    pl.sendMessage("[GlobalMarketChest] " + LangUtils.get(path));
+    pl.sendMessage(PlayerUtils.getPrefix() + LangUtils.get(path));
+  }
+
+  public void sendMessage(CommandSender pl, String message) {
+    pl.sendMessage(PlayerUtils.getPrefix() + Utils.toColor(message));
+  }
+
+  public void sendMessageConfig(CommandSender pl, String path) {
+    pl.sendMessage(PlayerUtils.getPrefix() + LangUtils.get(path));
   }
 
   public Boolean hasEnoughPlace(PlayerInventory i, ItemStack item) {

@@ -53,7 +53,7 @@ public class ShopCreationLink extends ShopCreationInterface {
       });
 
     } catch (ShopAlreadyExistException e) {
-      PlayerUtils.sendMessagePlayer(gui.getPlayer(), e.getMessage());
+      PlayerUtils.sendMessage(gui.getPlayer(), e.getMessage());
       shop.getSignLocation().getBlock().breakNaturally();
     } finally {
       Consumer<InventoryGUI> exit = new LeaveShop();

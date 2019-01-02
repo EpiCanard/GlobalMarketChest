@@ -22,7 +22,7 @@ import lombok.experimental.UtilityClass;
 public class DatabaseUtils {
   /**
    * Get current timestamp
-   * 
+   *
    * @return Timestamp
    */
   public Timestamp getTimestamp() {
@@ -31,7 +31,7 @@ public class DatabaseUtils {
 
   /**
    * Add days to a spécific timestamp
-   * 
+   *
    * @param ts    Timestamp used
    * @param days  Nummber of days to add
    * @return Return the new timestamp
@@ -46,7 +46,7 @@ public class DatabaseUtils {
   /**
    * Get language from config and format it with value
    * Ex : 2 days
-   * 
+   *
    * @param value The long value
    * @param timeLange The language vairable name
    * @return The string formatted
@@ -55,10 +55,10 @@ public class DatabaseUtils {
     return String.format("%d %s ", value, LangUtils.get("Divers." + timeLang));
   }
   /**
-   * Compare two timestamp and get the diff inside string 
+   * Compare two timestamp and get the diff inside string
    * Format A : 0 days 0 hours 0 minutes (ago)
    * Format B : 0 days 0 hours (ago) |or| 0 hours 0 minutes (ago)
-   * 
+   *
    * @param tsA First Timestamp
    * @param tsB Second Timestamp
    * @param full Define which format use. True => Format A | False => Format B
@@ -87,7 +87,7 @@ public class DatabaseUtils {
 
   /**
    * Get an id from resultSet
-   * 
+   *
    * @param res ResultSet
    * @return Return the id or -1
    */
@@ -102,7 +102,7 @@ public class DatabaseUtils {
 
   /**
    * Repeat a string a certain amount of time with a separator
-   * 
+   *
    * @param str String to repeat
    * @param sep Separator
    * @param repeat Repeat number
@@ -120,7 +120,7 @@ public class DatabaseUtils {
 
   /**
    * Convert a list of auction into a list of itemstacks
-   * 
+   *
    * @param auctions
    * @param adding Biconsumer to apply modifications to the itemstack
    * @return A list of itemstack
@@ -138,7 +138,7 @@ public class DatabaseUtils {
 
   /**
    * Serialize an itemstack into string
-   * 
+   *
    * @param item
    * @return return item serialized
    */
@@ -150,7 +150,7 @@ public class DatabaseUtils {
 
   /**
    * Deserialize an itemstack from string
-   * 
+   *
    * @param content
    * @return return item deserialized
    */
