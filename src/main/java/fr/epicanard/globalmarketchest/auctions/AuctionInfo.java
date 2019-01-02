@@ -86,9 +86,11 @@ public class AuctionInfo {
   }
 
   public void setItemStack(ItemStack item) {
-    this.itemStack = ItemStackUtils.getMinecraftKey(item);
-    this.damage = item.getDurability();
-    this.itemMeta = DatabaseUtils.serialize(item);
+    ItemStack it = item.clone();
+    it.setAmount(1);
+    this.itemStack = ItemStackUtils.getMinecraftKey(it);
+    this.damage = it.getDurability();
+    this.itemMeta = DatabaseUtils.serialize(it);
   }
 
   private String checkPrice(double price) {
