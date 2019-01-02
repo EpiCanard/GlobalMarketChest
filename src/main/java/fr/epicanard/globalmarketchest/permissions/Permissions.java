@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.permissions;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -13,7 +14,12 @@ public enum Permissions {
   GS_CREATESHOP("globalmarketchest.globalshop.createshop"),
   GS_OPENSHOP("globalmarketchest.globalshop.openshop"),
   GS_CREATEAUCTION("globalmarketchest.globalshop.createauction"),
-  GS_BUYAUCTION("globalmarketchest.globalshop.buyauction")
+  GS_BUYAUCTION("globalmarketchest.globalshop.buyauction"),
+  CMD("globalmarketchest.commands"),
+  CMD_OPEN("globalmarketchest.commands.open"),
+  CMD_LIST("globalmarketchest.commands.list"),
+  CMD_LIST_DETAIL("globalmarketchest.commands.list.detail"),
+  CMD_LIST_DETAIL_TP("globalmarketchest.commands.list.detail.tp")
   ;
 
   private String perm;
@@ -37,6 +43,33 @@ public enum Permissions {
       return true;
     return false;
   }
+
+  /**
+   * Define if the permission is set on the CommandSender
+   * If the CommandSender is not a Player (ex: console) the result is set with the value
+   * of param defaultSender
+   *
+   * @param sender CommandSender on which check the permissions
+   * @param defaultSender Value returned if sender is not Player
+   * @return Return a boolean to define if the permission is set
+   */
+  public Boolean isSetOn(CommandSender sender, Boolean defaultSender) {
+    if (sender instanceof Player)
+      return this.isSetOn((Player)sender);
+    return defaultSender;
+  }
+
+  /**
+   * Define if the permission is set on the CommandSender
+   * If the CommandSender is not a Player (ex: console) the result is set to true
+   *
+   * @param sender CommandSender on which check the permissions
+   * @return Return a boolean to define if the permission is set
+   */
+  public Boolean isSetOn(CommandSender sender) {
+    return this.isSetOn(sender, true);
+  }
+
 
   /**
    * Define if the permission is set and print an error message
