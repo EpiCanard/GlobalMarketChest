@@ -82,12 +82,17 @@ public class AuctionGlobalView extends DefaultFooter {
   private void loadTogglers() {
     if (this.current.state == StateAuction.INPROGRESS || this.current.state == StateAuction.EXPIRED)
       this.togglers.forEach((key, toggler) -> {
+        if (key != 10 && key != 11)
+          return;
         String lore = String.format(LangUtils.get("Divers.WithStatus"), this.current.state.getLang());
         ItemStackUtils.setItemStackLore(toggler.getSetItem(), Utils.toList(lore));
         toggler.set();
       });
     else
-      this.togglers.forEach((key, toggler) -> toggler.unset());
+      this.togglers.forEach((key, toggler) -> {
+        if (key == 10 || key == 11)
+          toggler.unset();
+      });
   }
 
   private void editAuction(Integer pos) {
