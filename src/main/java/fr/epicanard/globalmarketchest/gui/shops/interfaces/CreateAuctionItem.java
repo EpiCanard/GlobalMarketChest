@@ -57,6 +57,7 @@ public class CreateAuctionItem extends ShopInterface {
     auction.setItemStack(item);
     this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, 1);
     this.inv.getTransaction().put(TransactionKey.TEMPITEM, item.clone());
+    this.inv.getTransaction().put(TransactionKey.AUCTIONAMOUNT, item.getAmount());
     this.updateItem();
     this.togglers.forEach((k, v) -> v.set());
   }
@@ -66,6 +67,7 @@ public class CreateAuctionItem extends ShopInterface {
    */
   private void unsetItem() {
     this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
+    this.inv.getTransaction().remove(TransactionKey.AUCTIONAMOUNT);
     ItemStack[] items = InterfacesLoader.getInstance().getInterface("CreateAuctionItem");
     this.inv.getInv().setItem(22, items[22]);
     this.togglers.forEach((k, v) -> v.unset());
@@ -127,6 +129,9 @@ public class CreateAuctionItem extends ShopInterface {
     final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
     final Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0,
         (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
+    auction.setAmount(this.inv.getTransactionValue(TransactionKey.AUCTIONAMOUNT));
+    item.setAmount(auction.getAmount());
+    auction.setItemStack(item);
     final Integer auctionNumber = max / auction.getAmount();
 
     GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), inv.getPlayer(), num -> {
@@ -160,5 +165,6 @@ public class CreateAuctionItem extends ShopInterface {
     this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
     this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
     this.inv.getTransaction().remove(TransactionKey.AUCTIONNUMBER);
+    this.inv.getTransaction().remove(TransactionKey.AUCTIONAMOUNT);
   }
 }
