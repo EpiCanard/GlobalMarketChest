@@ -25,7 +25,7 @@ public class WorldUtils {
 
   /**
    * Get all the block in a specific radius around a location
-   * 
+   *
    * @param location  Looking around this location
    * @param radius    Search radius
    * @param consumer  Consumer used with the specific block sent
@@ -48,7 +48,7 @@ public class WorldUtils {
 
   /**
    * Get the nearest block that match with the material in parameter
-   * 
+   *
    * @param location  Looking around this location
    * @param material  Material to search
    */
@@ -71,7 +71,7 @@ public class WorldUtils {
 
   /**
    * Get all the block inside the radius that match with the allowed block specified in config
-   * 
+   *
    * @param location Looking around this location
    * @return Return the list of block that match
    */
@@ -88,7 +88,7 @@ public class WorldUtils {
 
   /**
    * Transform a String into a location
-   * 
+   *
    * @param locatString String location
    * @param location    if not null set location inside this variable
    * @return Location
@@ -100,9 +100,9 @@ public class WorldUtils {
 
     if (args.length != 4)
       return null;
-    
+
     if (location == null)
-      location = new Location(GlobalMarketChest.plugin.getServer().getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]));
+        location = new Location(GlobalMarketChest.plugin.getServer().getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]));
     else {
       World world = GlobalMarketChest.plugin.getServer().getWorld(args[0]);
       if (world == null) {
@@ -116,21 +116,36 @@ public class WorldUtils {
     }
     return location;
   }
-  
+
   /**
    * Transform a Location in a String
-   * 
+   *
+   * @param loc  Location to transform
+   * @param sep String separator
+   * @param world Define if must add world
+   */
+  public String getStringFromLocation(Location loc, String sep, Boolean world) {
+    if (loc == null)
+    return "";
+  String finalString = "";
+  if (world) {
+    finalString += loc.getWorld().getName() + sep;
+  }
+  return finalString + loc.getBlockX() + sep + loc.getBlockY() + sep + loc.getBlockZ();
+}
+
+  /**
+   * Transform a Location in a String
+   *
    * @param loc  Location to transform
    */
   public String getStringFromLocation(Location loc) {
-    if (loc == null)
-      return "";
-    return loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
+    return WorldUtils.getStringFromLocation(loc, ",", true);
   }
 
   /**
    * Compare 2 locations
-   * 
+   *
    * @param first
    * @param second
    * @return Return true if they are equals
@@ -149,7 +164,7 @@ public class WorldUtils {
 
   /**
    * Verify if the specified World is allowed to create shop
-   * 
+   *
    * @throws WorldDoesnExist
    * @return false if it not allowed
    */
