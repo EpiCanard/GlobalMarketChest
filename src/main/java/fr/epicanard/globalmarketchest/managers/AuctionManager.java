@@ -280,7 +280,12 @@ public class AuctionManager {
       builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(starter));
     if (ender != null)
       builder.addCondition("playerEnder", PlayerUtils.getUUIDToString(ender));
-    builder.setExtension("ORDER BY price ASC, end ASC ");
+
+    if (state == StateAuction.INPROGRESS || state == StateAuction.EXPIRED)
+      builder.setExtension("ORDER BY start DESC");
+    else
+      builder.setExtension("ORDER BY end DESC");
+
     if (limit != null)
       builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
