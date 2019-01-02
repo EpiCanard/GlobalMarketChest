@@ -53,7 +53,7 @@ public abstract class ShopInterface {
 
   /**
    * Load specific interface with is className
-   * 
+   *
    * @param gui
    */
   public void load() {
@@ -72,7 +72,7 @@ public abstract class ShopInterface {
 
   /**
    * Update the inventory name with current interface name
-   * 
+   *
    * @param interfaceName
    */
   private void updateInventoryName(String interfaceName) {
@@ -89,7 +89,7 @@ public abstract class ShopInterface {
 
   /**
    * Set and load icon
-   * 
+   *
    * @param item Icon
    */
   protected void setIcon(ItemStack item) {
@@ -111,7 +111,7 @@ public abstract class ShopInterface {
 
   /**
    * Called when a mouse event is done inside inventory
-   * 
+   *
    * @param event
    */
   public void onClick(InventoryClickEvent event, InventoryGUI inv) {
@@ -123,7 +123,7 @@ public abstract class ShopInterface {
 
   /**
    * Called when a mouse drop event is done inside inventory
-   * 
+   *
    * @param event
    */
   public void onDrop(InventoryClickEvent event, InventoryGUI inv) {}

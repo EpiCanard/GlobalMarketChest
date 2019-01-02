@@ -317,16 +317,25 @@ public class AuctionManager {
   }
 
   /**
-   * TODO
+   * Get the price of the last item matching
+   *
+   * @param auction AuctionInfo to search last matching auction
+   * @param consumer Callback to call if price is found
    */
-  public void getLastPrice(ItemStack item, String group, Player owner) {
+  public void getLastPrice(AuctionInfo auction, Consumer<Double> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
-    builder.addCondition("group", group);
-    builder.addCondition("itemMeta", ItemStackUtils.getMinecraftKey(item));
-    builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(owner));
-    builder.setExtension("ORDER BY price, start ASC");
+    builder.addCondition("group", auction.getGroup());
+    builder.addCondition("itemStack", auction.getItemStack());
+    builder.addCondition("itemMeta", auction.getItemMeta());
+    builder.addCondition("playerStarter", auction.getPlayerStarter());
+    builder.setExtension("ORDER BY start DESC LIMIT 1");
     QueryExecutor.of().execute(builder, res -> {
+      try {
+        if (res.next()) {
+          consumer.accept(res.getDouble("price"));
+        }
+      } catch(SQLException e) {}
     });
   }
 

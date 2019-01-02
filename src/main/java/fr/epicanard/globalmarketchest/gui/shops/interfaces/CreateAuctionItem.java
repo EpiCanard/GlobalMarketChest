@@ -47,7 +47,7 @@ public class CreateAuctionItem extends ShopInterface {
 
   /**
    * Set the item in dropzone when drop
-   * 
+   *
    * @param item ItemStack to set in drop zone
    */
   private void setItem(ItemStack item) {
@@ -73,17 +73,21 @@ public class CreateAuctionItem extends ShopInterface {
 
   /**
    * Check if TEMPITEM is set (item dropped in interface)
-   * 
+   *
    * @return false if TEMPITEM is not set else true
    */
   private Boolean checkItem() {
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    if (item != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.UseLastPrice", true)) {
+      AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+      GlobalMarketChest.plugin.auctionManager.getLastPrice(auction, price -> auction.setPrice(price));
+    }
     return (item != null);
   }
 
   /**
    * Get lore with quantity and price for current auction item
-   * 
+   *
    * @return the lore completed
    */
   private void updateItem() {
@@ -133,7 +137,7 @@ public class CreateAuctionItem extends ShopInterface {
 
   /**
    * Called when a mouse drop event is done inside inventory
-   * 
+   *
    * @param event
    */
   @Override
