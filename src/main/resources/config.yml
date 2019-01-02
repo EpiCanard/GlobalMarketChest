@@ -20,7 +20,9 @@ Options:
   # To see auctions that don't have category (button on middle pos 31)
   UncategorizedItems: false
 Auctions:
-  # An auction expire if she is older than NumberDaysExpiration
+  # Use the price of the last similar auction as price of new auction
+  UseLastPrice: true
+  # An auction expire if it is older than NumberDaysExpiration
   NumberDaysExpiration: 7
   # -1 to ignore purge else specific a number of days to purge database every n days
   PurgeInterval: 30

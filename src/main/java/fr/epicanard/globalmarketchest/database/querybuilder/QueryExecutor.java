@@ -67,7 +67,7 @@ public class QueryExecutor {
 
   /**
    * Prepare and execute the query
-   * 
+   *
    * @param builder
    * @param consumer
    */
