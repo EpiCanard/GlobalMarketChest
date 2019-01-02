@@ -99,10 +99,19 @@ public class AuctionInfo {
     return Double.toString(price);
   }
 
-  public ItemStack getRealItemStack() {
+  public ItemStack[] getRealItemStack() {
+    List<ItemStack> items = new ArrayList<>();
+
     ItemStack item = DatabaseUtils.deserialize(this.itemMeta);
-    item.setAmount(this.amount);
-    return item;
+    int amount = this.amount;
+    int stackSize = item.getMaxStackSize();
+    while (amount > 0) {
+      ItemStack it = item.clone();
+      it.setAmount(ItemStackUtils.getMaxStack(it, amount));
+      items.add(it);
+      amount -= stackSize;
+    }
+    return items.toArray(new ItemStack[0]);
   }
 
   private void addLore(List<String> lore, String key, String color, String value) {

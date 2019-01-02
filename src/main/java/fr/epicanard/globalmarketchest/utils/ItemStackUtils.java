@@ -145,4 +145,16 @@ public class ItemStackUtils {
         a[i] = b[i];
     return a;
   }
+
+  /**
+   * Get max stack size
+   * If amount is greater than the maxstacksize of the item it return the maxstacksize
+   *
+   * @param item ItemStack
+   * @param amount Amount to set
+   * @return The max stack size
+   */
+  public Integer getMaxStack(ItemStack item, Integer amount) {
+    return (amount > item.getMaxStackSize()) ? item.getMaxStackSize() : amount;
+  }
 }
