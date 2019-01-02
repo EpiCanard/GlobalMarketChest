@@ -48,7 +48,7 @@ public class AuctionInfo {
   private Timestamp end;
   @Getter
   private String group;
-  
+
   public AuctionInfo(ResultSet res) {
     if (res == null)
       throw new NullPointerException("Fail to get auction from database");
@@ -75,7 +75,7 @@ public class AuctionInfo {
   public AuctionInfo(AuctionType type, Player owner, String group) {
     this.state = StateAuction.INPROGRESS;
     this.type = AuctionType.getAuctionType(type.getType());
-    this.price = 0.0;
+    this.price = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDouble("Auctions.DefaultPrice", 0.0);
     this.playerStarter = owner.getUniqueId().toString();
     this.ended = false;
     this.group = group;
@@ -109,7 +109,7 @@ public class AuctionInfo {
 
   /**
    * Build and return lore for current auction
-   * 
+   *
    * @param status
    * @return the lore
    */
