@@ -121,18 +121,23 @@ public class AuctionInfo {
   /**
    * Build and return lore for current auction
    *
-   * @param status
-   * @return the lore
+   * @param config LoreConfig to use for display
+   * @param auctionNumber Number of auctions to add after quantity
+   * @return The liste of lines for lore
    */
-  public List<String> getLore(AuctionLoreConfig config) {
+  public List<String> getLore(AuctionLoreConfig config, Integer auctionNumber) {
     List<String> lore = new ArrayList<>();
 
     double totalPrice = BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
     lore.add("&6--------------");
     if (config.getState())
       this.addLore(lore, "State", "&2", this.state.getLang());
-    if (config.getQuantity())
-      this.addLore(lore, "Quantity", "&6", this.amount.toString());
+    if (config.getQuantity()){
+      String amountFormat = this.amount.toString();
+      if (auctionNumber != null)
+        amountFormat = String.format("%s &ax&9%s", this.amount.toString(), auctionNumber);
+      this.addLore(lore, "Quantity", "&6", amountFormat);
+    }
     if (config.getUnitPrice())
       this.addLore(lore, "UnitPrice", "&c", this.checkPrice(this.price));
     if (config.getTotalPrice())
@@ -154,5 +159,15 @@ public class AuctionInfo {
     }
     lore.add("&6--------------");
     return lore;
+  }
+
+  /**
+   * Build and return lore for current auction
+   *
+   * @param status
+   * @return the lore
+   */
+  public List<String> getLore(AuctionLoreConfig config) {
+    return this.getLore(config, null);
   }
 }
