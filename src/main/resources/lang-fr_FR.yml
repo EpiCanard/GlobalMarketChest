@@ -118,7 +118,8 @@ Buttons:
   MaxInOne:
     Name: "&fMaximum d'items en une enchère"
   MaxRepeat:
-    Name: "&fRépéter cette enchère;&fautant de fois que possible"
+    Name: "&fRépéter cette enchère"
+    Description: "&fautant de fois que possible"
   InProgressAuction:
     Name: "&aEnchères en cours"
   ExpiredAuction:
