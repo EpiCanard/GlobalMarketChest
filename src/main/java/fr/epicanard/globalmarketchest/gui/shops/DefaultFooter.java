@@ -15,6 +15,7 @@ import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class DefaultFooter extends ShopInterface {
@@ -45,13 +46,14 @@ public class DefaultFooter extends ShopInterface {
     this.inv.getInv().setItem(45, item);
   }
 
-  private void updateAuctionNumber() {
+  protected void updateAuctionNumber() {
     final ItemStack item = this.inv.getInv().getItem(53);
-    final String lore = Utils.fromList(item.getItemMeta().getLore());
-    final Integer maxAuctionNumber = 50;
+    final String lore = LangUtils.get("Buttons.NewAuction.Description");
+    final Integer maxAuctionNumber = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Auctions.MaxAuctionByPlayer");
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), this.inv.getPlayer(), auctionNumber ->  {
+      this.inv.getTransaction().put(TransactionKey.PLAYERAUCTIONS, auctionNumber);
       ItemStackUtils.setItemStackLore(item,
         Utils.toList(String.format(lore, auctionNumber, maxAuctionNumber)
       ));
