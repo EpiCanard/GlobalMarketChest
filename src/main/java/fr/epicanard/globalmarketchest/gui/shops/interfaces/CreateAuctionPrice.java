@@ -46,12 +46,13 @@ public class CreateAuctionPrice extends ShopInterface {
 
     this.size = prices.size();
     List<String> lore = this.getLore();
-    this.inv.getInv().setItem(4, ItemStackUtils.setItemStackLore(item.clone(), lore));
     for (int i = 0; i < prices.size() && i < 9; i++) {
       ItemStack priceItem = ItemStackUtils.getItemStack(items.get(Utils.getIndex(i, items.size())));
       this.inv.getInv().setItem(18 + i, ItemStackUtils.setItemStackMeta(priceItem, "&a+ " + prices.get(i), lore));
       this.inv.getInv().setItem(27 + i, ItemStackUtils.setItemStackMeta(priceItem.clone(), "&c- " + prices.get(i), lore));
     }
+    lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
+    this.inv.getInv().setItem(4, ItemStackUtils.setItemStackLore(item.clone(), lore));
   }
 
   /**
@@ -75,11 +76,12 @@ public class CreateAuctionPrice extends ShopInterface {
     List<String> lore = this.getLore();
     Inventory inventory = this.inv.getInv();
 
-    inventory.setItem(4, ItemStackUtils.setItemStackLore(item.clone(), lore));
     for (int i = 0; i < this.size; i++) {
       inventory.setItem(18 + i, ItemStackUtils.setItemStackLore(inventory.getItem(18 + i), lore));
       inventory.setItem(27 + i, ItemStackUtils.setItemStackLore(inventory.getItem(27 + i), lore));
     }
+    lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
+    inventory.setItem(4, ItemStackUtils.setItemStackLore(item.clone(), lore));
   }
 
   /**

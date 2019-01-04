@@ -1,6 +1,7 @@
 Build:
   DisplayName: "Building Blocks"
   DisplayItem: minecraft:bricks
+  Position: 20
   Items:
     - minecraft:acacia_log
     - minecraft:acacia_planks
@@ -248,6 +249,7 @@ Build:
 Decoration:
   DisplayName: "Decoration Blocks"
   DisplayItem: minecraft:peony
+  Position: 21
   Items:
     - minecraft:acacia_fence
     - minecraft:acacia_leaves
@@ -457,6 +459,7 @@ Decoration:
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
+  Position: 22
   Items:
     - minecraft:acacia_button
     - minecraft:acacia_door
@@ -515,6 +518,7 @@ Redstone:
 Transportation:
   DisplayName: "Transportation"
   DisplayItem: minecraft:powered_rail
+  Position: 23
   Items:
     - minecraft:acacia_boat
     - minecraft:activator_rail
@@ -537,6 +541,7 @@ Transportation:
 Misc:
   DisplayName: "Miscellaneous"
   DisplayItem: minecraft:lava_bucket
+  Position: 24
   Items:
     - minecraft:bat_spawn_egg
     - minecraft:beacon
@@ -692,6 +697,7 @@ Misc:
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
+  Position: 38
   Items:
     - minecraft:apple
     - minecraft:baked_potato
@@ -732,6 +738,7 @@ Food:
 Tools:
   DisplayName: "Tools"
   DisplayItem: minecraft:iron_axe
+  Position: 39
   Items:
     - minecraft:clock
     - minecraft:compass
@@ -763,6 +770,7 @@ Tools:
 Combat:
   DisplayName: "Combat"
   DisplayItem: minecraft:golden_sword
+  Position: 40
   Items:
     - minecraft:arrow
     - minecraft:bow
@@ -800,6 +808,7 @@ Combat:
 Brewing:
   DisplayName: "Brewing"
   DisplayItem: minecraft:potion
+  Position: 41
   Items:
     - minecraft:blaze_powder
     - minecraft:brewing_stand
@@ -819,8 +828,16 @@ Brewing:
 Books:
   DisplayName: "Enchanted books"
   DisplayItem: minecraft:enchanted_book
+  Position: 42
   Items:
     - minecraft:enchanted_book
+# The category '!' is all items that are not inside a category
+# if you want use this category set the config var 'Options.UncategorizedItems' to true
+# !!!! This category should not be deleted
+"!":
+  DisplayName: "Uncategorized"
+  DisplayItem: minecraft:white_stained_glass_pane
+  Position: 31
 
 # Items not categorized
 # - minecraft:barrier

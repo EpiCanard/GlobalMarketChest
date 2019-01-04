@@ -17,7 +17,7 @@ Connection:
   TablePrefix: GMC_
   SimultaneousConnection: 4
 Options:
-  # To see auctions that don't have category (button on middle pos 31)
+  # To see auctions that don't have category
   UncategorizedItems: false
 Auctions:
   # Default price for new auctions

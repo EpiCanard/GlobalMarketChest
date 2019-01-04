@@ -99,6 +99,7 @@ public class CreateAuctionItem extends ShopInterface {
 
     lore.add("&7" + LangUtils.get("Divers.Quantity") + " : &6" + auction.getAmount());
     lore.add("&7" + LangUtils.get("Divers.AuctionNumber") + " : &6" + this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER));
+    lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
     this.inv.getInv().setItem(22, ItemStackUtils.setItemStackLore(item.clone(), lore));
   }
 
