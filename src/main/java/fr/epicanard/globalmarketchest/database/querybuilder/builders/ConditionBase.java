@@ -6,7 +6,7 @@ import fr.epicanard.globalmarketchest.database.querybuilder.MultiConditionMap;
 
 public abstract class ConditionBase extends BaseBuilder {
   protected MultiConditionMap conditions = new MultiConditionMap();
-  
+
   public ConditionBase(String tableName) {
     super(tableName);
   }

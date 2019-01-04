@@ -17,7 +17,7 @@ public class UpdateBuilder extends ConditionBase {
   public UpdateBuilder(String tableName) {
     super(tableName);
   }
-  
+
   /**
    * Add a value to values variable with default ConditionType to equal
    */
@@ -27,7 +27,7 @@ public class UpdateBuilder extends ConditionBase {
 
   /**
    * Build the query
-   * 
+   *
    * @return query string built
    */
   @Override
@@ -40,21 +40,21 @@ public class UpdateBuilder extends ConditionBase {
 
   /**
    * Prepare the query params
-   * 
+   *
    * @param consumer
    */
   @Override
   public void prepare(ExceptionConsumer<List<Object>> consumer) throws TypeNotSupported, SQLException {
-    consumer.accept(this.values.values());    
-    consumer.accept(this.conditions.values());    
+    consumer.accept(this.values.values());
+    consumer.accept(this.conditions.values());
   }
 
   /**
    * Execute the query
-   * 
+   *
    * @param statement
    * @param resultSet
-   * 
+   *
    * @return return if execution succeed
    */
   @Override

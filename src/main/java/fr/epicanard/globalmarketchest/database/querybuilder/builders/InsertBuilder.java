@@ -29,7 +29,7 @@ public class InsertBuilder extends BaseBuilder {
 
   /**
    * Build the query
-   * 
+   *
    * @return query string built
    */
   @Override
@@ -46,20 +46,20 @@ public class InsertBuilder extends BaseBuilder {
 
   /**
    * Prepare the query params
-   * 
+   *
    * @param consumer
    */
   @Override
   public void prepare(ExceptionConsumer<List<Object>> consumer) throws TypeNotSupported, SQLException {
-    consumer.accept(this.values.values());    
-  }  
+    consumer.accept(this.values.values());
+  }
 
   /**
    * Execute the query
-   * 
+   *
    * @param statement
    * @param resultSet
-   * 
+   *
    * @return return if execution succeed
    */
   @Override
