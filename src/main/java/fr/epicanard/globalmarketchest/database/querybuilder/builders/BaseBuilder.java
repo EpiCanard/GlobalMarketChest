@@ -23,7 +23,7 @@ public abstract class BaseBuilder {
 
   /**
    * Get the extension with a default empty string if null
-   * 
+   *
    * @return
    */
   public String getExtension() {
@@ -32,7 +32,7 @@ public abstract class BaseBuilder {
 
   /**
    * Add extension to existing extension
-   * 
+   *
    * @param add
    */
   public void addExtension(String add) {
@@ -41,12 +41,12 @@ public abstract class BaseBuilder {
 
   /**
    * Build a clause
-   * 
+   *
    * @param builder
    * @param clause
    * @param sep
    * @param map
-   * 
+   *
    * @return return the param builder
    */
   protected StringBuilder buildClause(StringBuilder builder, String clause, String sep, MultiConditionMap map) {
@@ -63,7 +63,7 @@ public abstract class BaseBuilder {
 
   /**
    * Build the extension
-   * 
+   *
    * @param builder string builder to use
    * @return return the param builder
    */
@@ -75,24 +75,24 @@ public abstract class BaseBuilder {
 
   /**
    * Build the query
-   * 
+   *
    * @return query string built
    */
   public abstract String build();
 
   /**
    * Prepare the query params
-   * 
+   *
    * @param consumer
    */
   public abstract void prepare(ExceptionConsumer<List<Object>> consumer) throws TypeNotSupported, SQLException;
 
   /**
    * Execute the query
-   * 
+   *
    * @param statement
    * @param resultSet
-   * 
+   *
    * @return return if execution succeed
    */
   public abstract Boolean execute(PreparedStatement statement, AtomicReference<ResultSet> resultSet) throws SQLException;
