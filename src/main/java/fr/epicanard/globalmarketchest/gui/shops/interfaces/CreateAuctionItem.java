@@ -39,10 +39,12 @@ public class CreateAuctionItem extends ShopInterface {
     super.load();
 
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    if (item != null)
+    if (item != null) {
       this.inv.getInv().setItem(22, item);
-    else
+      this.updateItem();
+    } else {
       this.unsetItem();
+    }
   }
 
   /**
