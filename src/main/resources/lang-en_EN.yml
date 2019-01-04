@@ -39,7 +39,7 @@ States:
   Abandoned: "Abandoned"
   Finished: "Finished"
 Shops:
-  ClickChangeGroup: "Click to change shop group name"
+  ClickChangeGroup: "&cClick to change shop group name"
   CurrentShop: "Current shop"
 Buttons:
   Background:
@@ -104,7 +104,6 @@ Buttons:
     Name: "AdminShop"
   EditGroupName:
     Name: "&fEdit Group Name"
-    Description: "&fIf you want to rename the group of your shop"
   PreviousPage:
     Name: "Previous page"
   NextPage:

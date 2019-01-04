@@ -39,7 +39,7 @@ States:
   Abandoned: "Abandonné"
   Finished: "Fini"
 Shops:
-  ClickChangeGroup: "Cliques pour changer le nom de groupe du shop"
+  ClickChangeGroup: "&cCliques pour changer;&cle nom de groupe du shop"
   CurrentShop: "Shop actuel"
 Buttons:
   Background:
@@ -93,7 +93,7 @@ Buttons:
     Description: "Le joueur peut voir les enchères par joueur ?"
   ViewByLastCreated:
     Name: "Vue par dernier créé"
-    Description: "Le joeur peut voir les enchères dernièrement créé ?"
+    Description: "Le joueur peut voir les enchères dernièrement créé ?"
   GlobalShop:
     Name: "GlobalShop"
   AuctionShop:
@@ -104,7 +104,6 @@ Buttons:
     Name: "AdminShop"
   EditGroupName:
     Name: "&fModifier le nom du groupe"
-    Description: "&fSi vous voulez renommer le nom du groupe de votre Shop"
   PreviousPage:
     Name: "Page précédente"
   NextPage:
@@ -119,7 +118,7 @@ Buttons:
   MaxInOne:
     Name: "&fMaximum d'items en une enchère"
   MaxRepeat:
-    Name: "&fRépéter cette enchère autant de fois que possible"
+    Name: "&fRépéter cette enchère;&fautant de fois que possible"
   InProgressAuction:
     Name: "&aEnchères en cours"
   ExpiredAuction:
@@ -143,7 +142,7 @@ ErrorMessages:
   CantRenewEveryAuction: "Impossible de renouveler toutes ;&7les enchères"
   CantUndoEveryAuction: "Impossible d'annuler toutes les enchères"
   PlayerDoesntExist: "Ce joueur n'existe pas"
-  MaxAuctionByPlayer: "Impossible de créer l'enchère;&7Vous avez atteint le nombre d'enchères maximum"
+  MaxAuctionByPlayer: "Impossible de créer l'enchère;&7Vous avez atteint;&7le nombre d'enchères maximum"
   PermissionNotAllowed: "&cVous n'êtes pas autorisé à faire cette action"
   InvalidCommand: "&cCette commande n'est pas valide : "
   PlayerOnly: "&cCette commande peut uniquement être exécutée par un joueur"

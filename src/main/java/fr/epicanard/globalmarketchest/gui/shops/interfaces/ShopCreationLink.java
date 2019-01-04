@@ -69,7 +69,6 @@ public class ShopCreationLink extends ShopCreationInterface {
   public void loadZone(Paginator pag) {
     List<ShopInfo> lst = pag.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
     List<ItemStack> items = pag.getItemstacks();
-    String clickInfo = "&c" + LangUtils.get("Shops.ClickChangeGroup");
     items.clear();
 
     for (int i = 0; i < lst.size(); i++) {
@@ -77,7 +76,7 @@ public class ShopCreationLink extends ShopCreationInterface {
       ShopInfo shop = lst.get(i);
       List<String> lore = ShopUtils.generateLore(shop);
 
-      lore.set(3, clickInfo);
+      lore.addAll(Utils.toList(LangUtils.get("Shops.ClickChangeGroup")));
       item = ItemStackUtils.setItemStackMeta(item, "Shop", lore);
       items.add(item);
     }
