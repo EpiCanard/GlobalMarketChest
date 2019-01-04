@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -131,14 +132,21 @@ public class AuctionGlobalView extends DefaultFooter {
     if ((this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS) || this.current.auctions.size() == 0)
       return;
     this.inv.getWarn().stopWarn();
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final Integer maxAuctionNumber = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Auctions.MaxAuctionByPlayer");
+    final Integer playerAuctions = this.inv.getTransactionValue(TransactionKey.PLAYERAUCTIONS);
+    List<Integer> auctions = Utils.mapList(this.current.auctions, auction -> auction.getId());
+    if (this.current.state == StateAuction.EXPIRED)
+      auctions = new ArrayList<>(auctions.subList(0, Utils.getIndex(maxAuctionNumber - playerAuctions, auctions.size())));
 
-    if (GlobalMarketChest.plugin.auctionManager.renewEveryAuctionOfPlayer(i.getPlayer(), shop.getGroup(), this.current.state) == true)
+    if (auctions.size() > 0 &&
+      GlobalMarketChest.plugin.auctionManager.renewGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), this.current.state, auctions) == true)
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewEveryAuction");
     else
       i.getWarn().warn("CantRenewEveryAuction", 4);
     this.paginator.resetPage();
     this.paginator.reload();
+    this.updateAuctionNumber();
   }
 
   /**
@@ -172,5 +180,11 @@ public class AuctionGlobalView extends DefaultFooter {
     }
     this.paginator.resetPage();
     this.paginator.reload();
+    this.updateAuctionNumber();
+  }
+
+  @Override
+  public void destroy() {
+    this.inv.getWarn().stopWarn();
   }
 }

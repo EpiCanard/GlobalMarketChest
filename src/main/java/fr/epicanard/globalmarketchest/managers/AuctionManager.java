@@ -96,12 +96,12 @@ public class AuctionManager {
    */
 
   /**
-   * Renew all player auctions expired
+   * Renew a group of player auctions expired or in progress
    *
    * @param player
    * @param group
    */
-  public Boolean renewEveryAuctionOfPlayer(Player player, String group, StateAuction state) {
+  public Boolean renewGroupOfPlayerAuctions(Player player, String group, StateAuction state, List<Integer> auctions) {
     UpdateBuilder builder = this.updateToNow(null);
 
     if (state == StateAuction.FINISHED || state == StateAuction.ABANDONED)
@@ -110,6 +110,7 @@ public class AuctionManager {
     this.defineStateCondition(builder, state);
     builder.addCondition("playerStarter", playeruuid);
     builder.addCondition("group", group);
+    builder.addCondition("id", auctions, ConditionType.IN);
     return QueryExecutor.of().execute(builder);
   }
 
@@ -309,8 +310,8 @@ public class AuctionManager {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
     builder.addField("COUNT(id) AS count");
+    this.defineStateCondition(builder, StateAuction.INPROGRESS);
     builder.addCondition("group", group);
-    builder.addCondition("ended", false);
     builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(starter));
 
     QueryExecutor.of().execute(builder, res -> {
