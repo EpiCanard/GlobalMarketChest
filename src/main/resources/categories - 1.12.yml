@@ -1,6 +1,7 @@
 Build:
   DisplayName: "Building Blocks"
   DisplayItem: minecraft:brick_block
+  Position: 20
   Items:
     - minecraft:stone
     - minecraft:grass
@@ -86,6 +87,7 @@ Build:
 Decoration:
   DisplayName: "Decoration Blocks"
   DisplayItem: minecraft:double_plant/5
+  Position: 21
   Items:
     - minecraft:sapling
     - minecraft:leaves
@@ -173,6 +175,7 @@ Decoration:
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
+  Position: 22
   Items:
     - minecraft:dispenser
     - minecraft:noteblock
@@ -216,6 +219,7 @@ Redstone:
 Transportation:
   DisplayName: "Transportation"
   DisplayItem: minecraft:golden_rail
+  Position: 23
   Items:
     - minecraft:golden_rail
     - minecraft:detector_rail
@@ -238,6 +242,7 @@ Transportation:
 Misc:
   DisplayName: "Miscellaneous"
   DisplayItem: minecraft:lava_bucket
+  Position: 24
   Items:
     - minecraft:beacon
     - minecraft:coal
@@ -314,6 +319,7 @@ Misc:
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
+  Position: 38
   Items:
     - minecraft:apple
     - minecraft:mushroom_stew
@@ -347,6 +353,7 @@ Food:
 Tools:
   DisplayName: "Tools"
   DisplayItem: minecraft:iron_axe
+  Position: 39
   Items:
     - minecraft:wooden_shovel
     - minecraft:wooden_pickaxe
@@ -378,6 +385,7 @@ Tools:
 Combat:
   DisplayName: "Combat"
   DisplayItem: minecraft:golden_sword
+  Position: 40
   Items:
     - minecraft:bow
     - minecraft:arrow
@@ -413,6 +421,7 @@ Combat:
 Brewing:
   DisplayName: "Brewing"
   DisplayItem: minecraft:potion
+  Position: 41
   Items:
     - minecraft:ghast_tear
     - minecraft:potion
@@ -431,6 +440,14 @@ Brewing:
 Books:
   DisplayName: "Enchanted books"
   DisplayItem: minecraft:enchanted_book
+  Position: 42
   Items:
     - minecraft:enchanted_book
-  
+
+# The category '!' is all items that are not inside a category
+# if you want use this category set the config var 'Options.UncategorizedItems' to true
+# !!!! This category should not be deleted
+"!":
+  DisplayName: "Uncategorized"
+  DisplayItem: minecraft:stained_glass_pane
+  Position: 31

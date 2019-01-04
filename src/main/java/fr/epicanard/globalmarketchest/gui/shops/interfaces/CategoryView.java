@@ -8,7 +8,6 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.shops.DefaultFooter;
-import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class CategoryView extends DefaultFooter {
 
@@ -22,21 +21,23 @@ public class CategoryView extends DefaultFooter {
     Consumer<InventoryGUI> callable = new NextInterface("AuctionViewGroup");
 
     CategoryHandler h = GlobalMarketChest.plugin.getCatHandler();
-    String[] cat = h.getCategories().toArray(new String[0]);
-    for (int i = 0; i < cat.length; i++) {
-      int pos = Utils.toPos(i % 5 + 2, (i / 5) * 2 + 2);
-      final int j = i;
-      this.setActionCategory(pos, cat[j], callable);
-      this.inv.getInv().setItem(pos, h.getDisplayItem(cat[i]));
+    String[] categories = h.getCategories().toArray(new String[0]);
+
+    for (String category : categories) {
+      this.setCategory(category, callable);
     }
     if (GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.UncategorizedItems"))
-      this.setActionCategory(31, "!", callable);
+      this.setCategory("!", callable);
   }
 
-  private void setActionCategory(final int pos, final String category, final Consumer<InventoryGUI> callable) {
-    this.actions.put(pos, in -> {
+  private void setCategory(final String category, final Consumer<InventoryGUI> callable) {
+    CategoryHandler h = GlobalMarketChest.plugin.getCatHandler();
+
+    this.actions.put(h.getPosition(category), in -> {
       this.inv.getTransaction().put(TransactionKey.CATEGORY, category);
       callable.accept(in);
     });
+
+    this.inv.getInv().setItem(h.getPosition(category), h.getDisplayItem(category));
   }
 }

@@ -153,6 +153,7 @@ public class AuctionInfo {
         DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
     }
     lore.add("&6--------------");
+    lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(this.itemStack));
     return lore;
   }
 }

@@ -208,7 +208,7 @@ public class AuctionManager {
     String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
 
     builder.addCondition("group", group);
-    builder.addCondition("itemStack", Arrays.asList(items), (category == "!") ? ConditionType.NOTIN : ConditionType.IN);
+    builder.addCondition("itemStack", Arrays.asList(items), (category.equals("!")) ? ConditionType.NOTIN : ConditionType.IN);
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
     builder.addField("*");
     builder.addField("COUNT(itemStack) AS count");
