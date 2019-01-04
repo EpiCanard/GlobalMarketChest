@@ -40,7 +40,7 @@ public class BuyAuction extends ShopInterface {
 
   /**
    * Renew the selected auction to current date
-   * 
+   *
    * @param i
    */
   private void buyAuction(InventoryGUI i) {
@@ -49,11 +49,9 @@ public class BuyAuction extends ShopInterface {
 
     item.setAmount(auction.getAmount());
 
-      
-
     try {
       UUID playerStarter = UUID.fromString(auction.getPlayerStarter());
-      if (PlayerUtils.getOfflinePlayer(playerStarter).getPlayer() == null) {
+      if (!PlayerUtils.getOfflinePlayer(playerStarter).hasPlayedBefore()) {
         LoggerUtils.warn(String.format("The player with id : %s doesn't exist but there is still active auctions on his name", auction.getPlayerStarter()));
         LoggerUtils.warn(String.format("Auction ID : %d", auction.getId()));
         throw new WarnException("PlayerDoesntExist");
@@ -72,7 +70,7 @@ public class BuyAuction extends ShopInterface {
       i.getWarn().warn(e.getMessage(), 49);
     }
   }
-  
+
   @Override
   public void destroy() {
     super.destroy();
