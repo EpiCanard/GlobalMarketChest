@@ -95,7 +95,10 @@ public class CreateAuctionPrice extends ShopInterface {
 
     double price = BigDecimal.valueOf(auction.getPrice()).multiply(BigDecimal.valueOf(auction.getAmount())).doubleValue();
     List<String> lore = new ArrayList<>();
-    lore.add(String.format("&7%s : &6%s &ax&9%s", LangUtils.get("Divers.Quantity"), auction.getAmount(), auctionNumber));
+    if (auctionNumber > 1)
+      lore.add(String.format("&7%s : &6%s &ax&9%s", LangUtils.get("Divers.Quantity"), auction.getAmount(), auctionNumber));
+    else
+      lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Quantity"), auction.getAmount()));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.UnitPrice"), auction.getPrice()));
     lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.TotalPrice"), price));
     return lore;
