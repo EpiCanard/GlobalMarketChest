@@ -26,7 +26,14 @@ public class ConfigLoader {
     this.languages = null;
     this.categories =  null;
   }
-  
+
+  /**
+   * Load one file from plugin folder and save it if it doesn't exist
+   *
+   * @throws CantLoadConfigException Throw this exception when the file can't be loaded (InvalidFile or wrong permissions)
+   * @param filename Name of the file that must be load
+   * @return Return the yamlconfiguration file
+   */
   private YamlConfiguration loadOneFile(String fileName) throws CantLoadConfigException {
     if (!fileName.substring(fileName.length() - 4).equals(".yml"))
       fileName += ".yml";
@@ -47,16 +54,29 @@ public class ConfigLoader {
     }
   }
 
+  /**
+   * Load one resource from jar. It doesn't extract it from the jar
+   *
+   * @param filename Name of the file that must be load
+   * @return Return the yamlconfiguration file
+   */
   public YamlConfiguration loadResource(String filename) {
-  	try {
+    try {
       InputStream res = GlobalMarketChest.plugin.getResource(filename);
       return YamlConfiguration.loadConfiguration(new InputStreamReader(res));
-  	} catch (IllegalArgumentException e) {
-  		return null;
-		}
+    } catch (IllegalArgumentException e) {
+      return null;
+    }
   }
-  
+
+  /**
+   * Load all necessary resource files
+   */
   public void loadFiles()  throws CantLoadConfigException {
+    this.config = null;
+    this.categories = null;
+    this.languages = null;
+
     this.config = this.loadOneFile("config.yml");
     this.categories = this.loadOneFile("categories.yml");
     if (this.config != null) {

@@ -33,10 +33,13 @@ permissions:
     description: Can create buy an auction
   # COMMANDS
   globalmarketchest.commands.*:
-    description: Can use all commands and shops
+    description: Can use all commands
     children:
+      globalmarketchest.commands.reload: true
       globalmarketchest.commands.open: true
       globalmarketchest.commands.list: true
+  globalmarketchest.commands.reload:
+    description: Can reload the plugin
   globalmarketchest.commands.open:
     description: Can open a shop with command
   globalmarketchest.commands.list.*:

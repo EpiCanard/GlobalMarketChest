@@ -30,7 +30,7 @@ public class VaultEconomy {
 
     RegisteredServiceProvider<Economy> eco = server.getServicesManager().getRegistration(Economy.class);
     if(eco == null || eco.getProvider() == null)
-      throw new RequiredPluginException("Vault");
+      throw new RequiredPluginException("An economy plugin to use with Vault");
     this.economy = eco.getProvider();
 
     RegisteredServiceProvider<Permission> perm = server.getServicesManager().getRegistration(Permission.class);
