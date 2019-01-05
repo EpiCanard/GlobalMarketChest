@@ -2,6 +2,7 @@ package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import java.util.UUID;
 
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -13,10 +14,14 @@ import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
 public class BuyAuction extends ShopInterface {
 
@@ -65,9 +70,36 @@ public class BuyAuction extends ShopInterface {
       GlobalMarketChest.plugin.economy.exchangeMoney(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice());
 
       i.getPlayer().getInventory().addItem(item);
+
+      this.broadcastMessage(auction, i.getPlayer(), item);
+
       ReturnBack.execute(null, i);
     } catch (WarnException e) {
       i.getWarn().warn(e.getMessage(), 49);
+    }
+  }
+
+  private void broadcastMessage(AuctionInfo auction, Player buyer, ItemStack item) {
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+
+    String message = String.format(LangUtils.get("InfoMessages.AcquireAuction"),
+      buyer.getName(),
+      item.getAmount(),
+      ItemStackUtils.getItemStackDisplayName(item),
+      auction.getTotalPrice(),
+      PlayerUtils.getPlayerName(auction.getPlayerStarter())
+    );
+
+    if (GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.BroadcastInsideWorld")) {
+      WorldUtils.broadcast(shop.getSignLocation().getWorld(), message);
+    }
+
+    if (GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.NotifyPlayer")) {
+      Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
+
+      if (starter != null && !starter.getWorld().equals(shop.getSignLocation().getWorld())) {
+        PlayerUtils.sendMessage(starter, message);
+      }
     }
   }
 

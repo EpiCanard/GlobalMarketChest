@@ -177,6 +177,24 @@ public class VersionSupportUtils {
   }
 
   /**
+   * Get the display name of an itemstack
+   *
+   * @param item ItemStack
+   * @return return the displayname
+   */
+  public String getItemStackDisplayName(ItemStack itemStack) {
+    try {
+      Method asNMSCopy = getClassFromPath(Path.BUKKIT, "inventory.CraftItemStack").getDeclaredMethod("asNMSCopy", ItemStack.class);
+      Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
+
+      return this.invokeMethod(this.invokeMethod(nmsItemStack, "getName"), "getString").toString();
+    } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  /**
    * Update the inventory name update by the player
    *
    * @param title The new inventory Name

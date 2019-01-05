@@ -157,4 +157,14 @@ public class ItemStackUtils {
   public Integer getMaxStack(ItemStack item, Integer amount) {
     return (amount > item.getMaxStackSize()) ? item.getMaxStackSize() : amount;
   }
+
+  /**
+   * Get the item name for an itemstack
+   *
+   * @param item Itemstack to get item name
+   * @return Item display name
+   */
+  public String getItemStackDisplayName(ItemStack item) {
+    return VersionSupportUtils.getInstance().getItemStackDisplayName(item);
+  }
 }

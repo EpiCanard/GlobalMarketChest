@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
@@ -171,5 +172,18 @@ public class WorldUtils {
     if (Bukkit.getWorld(worldName) == null)
       throw new WorldDoesntExist(worldName);
     return GlobalMarketChest.plugin.getConfigLoader().getConfig().getList("WorldAllowed").contains(worldName);
+  }
+
+  /**
+   * Broadcast a message to all player inside a world
+   *
+   * @param world World where broadcast message
+   * @param message Message to broadcast
+   */
+  public void broadcast(World world, String message) {
+    PlayerUtils.sendMessage(GlobalMarketChest.plugin.getServer().getConsoleSender(), message);
+    for (Player player : world.getPlayers()) {
+      PlayerUtils.sendMessage(player, message);
+    }
   }
 }

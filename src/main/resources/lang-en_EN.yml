@@ -153,6 +153,7 @@ InfoMessages:
   CreateAuction: "Auction successfully created"
   UndoEveryAuction: "Every auction successfully deleted"
   RenewEveryAuction: "Every auction successfully renewed"
+  AcquireAuction: "&3%s &6bought &2%d %s &6for &2%.2f&6 $ to &3%s&6."
 Commands:
   Buttons:
     OpenText: "Open"
