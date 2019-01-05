@@ -131,7 +131,7 @@ public class CommandNode {
   public List<String> onTabComplete(CommandSender player, String[] args) {
     List<String> empty = new ArrayList<>();
     if (args.length > 1 && this.subNodes.size() > 0) {
-      CommandNode node = this.getCommandNode(args[0]);
+      CommandNode node = this.getCommandNode(args[0].toLowerCase());
       if (node != null && node.permission != null && node.permission.isSetOn(player) && node.canExecute(player)) {
         return node.onTabComplete(player, Arrays.copyOfRange(args, 1, args.length));
       }
@@ -139,7 +139,7 @@ public class CommandNode {
     } else if (this.subNodes.size() > 0) {
       return this.getSubNodes()
         .stream()
-        .filter(node -> node.permission != null && node.permission.isSetOn(player) && node.canExecute(player) && node.getNodeName().startsWith(args[0]))
+        .filter(node -> node.permission != null && node.permission.isSetOn(player) && node.canExecute(player) && node.getNodeName().startsWith(args[0].toLowerCase()))
         .map(node -> node.getNodeName())
         .collect(Collectors.toList());
     } else if (this.tabConsumer != null) {
@@ -189,8 +189,8 @@ public class CommandNode {
         return this.command.accept(this, cmd, sender, args);
       return true;
     }
-    if (this.getSubNodesName().contains(args[0])) {
-      return this.getCommandNode(args[0]).execute(cmd, sender, Arrays.copyOfRange(args, 1, args.length));
+    if (this.getSubNodesName().contains(args[0].toLowerCase())) {
+      return this.getCommandNode(args[0].toLowerCase()).execute(cmd, sender, Arrays.copyOfRange(args, 1, args.length));
     }
     return this.invalidCommand(sender, cmd);
   }
