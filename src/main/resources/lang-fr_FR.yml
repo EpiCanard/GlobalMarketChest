@@ -155,6 +155,7 @@ InfoMessages:
   RenewEveryAuction: "&2Toutes les enchères sont renouvelées avec succès"
   UndoEveryAuction: "&2Toutes les enchères sont supprimées avec succès"
   ShopDeleted: "Shop supprimé avec succès"
+  AcquireAuction: "&3%s &6a acheté &2%d %s &6pour &2%.2f&6 $ à &3%s&6."
   PluginReloading: "Le plugin est entrain de recharger..."
   PluginReloaded: "Le plugin a fini de recharger."
 Commands:

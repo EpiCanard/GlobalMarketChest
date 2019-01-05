@@ -29,6 +29,8 @@ Auctions:
   # -1 to ignore purge else specific a number of days to purge database every n days
   PurgeInterval: 30
   MaxAuctionByPlayer : 50
+  BroadcastInsideWorld: true
+  NotifyPlayer: true
 WorldAllowed:
   - world
   - world_the_end
