@@ -153,6 +153,8 @@ InfoMessages:
   CreateAuction: "Auction successfully created"
   UndoEveryAuction: "Every auction successfully deleted"
   RenewEveryAuction: "Every auction successfully renewed"
+  PluginReloading: "Plugin is reloading..."
+  PluginReloaded: "Plugin is reloaded."
 Commands:
   Buttons:
     OpenText: "Open"
@@ -166,7 +168,8 @@ Commands:
   HelpCommand:
     Usage: "&6Usage :"
     Help: "&c/globalmarketchest [help]&6 -Show help"
+    Reload: "&c/globalmarketchest reload&6 - Reload the plugin"
     List: "&c/globalmarketchest list [shop]&6 - List all globalshop"
     Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop à distance"
-    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Allow to teleport the player a specific shop position"
-    Open: "&c/globalmarketchest open <shop>&6 - Allow to open a globalshop"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teleport the player a specific shop position"
+    Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"

@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.inventory.ItemStack;
@@ -27,6 +29,8 @@ import fr.epicanard.globalmarketchest.listeners.ShopCreationListener;
 import fr.epicanard.globalmarketchest.listeners.WorldListener;
 import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.Getter;
@@ -101,11 +105,26 @@ public class GlobalMarketChest extends JavaPlugin {
       this.sqlConnection.cleanPool();
     if (this.inventories != null)
       this.inventories.removeAllInventories();
+    if (this.interfaces != null)
+      this.interfaces.clear();
+    HandlerList.unregisterAll(this);
   }
 
   public void disable() {
-    this.getLogger().log(Level.WARNING, "Plugin GlobalMarketChest disabled");
     this.setEnabled(false);
+    this.getLogger().log(Level.WARNING, "Plugin GlobalMarketChest disabled");
+  }
+
+  /**
+   * Reload the plugin and send message to player
+   *
+   * @param sender Sender to send messages
+   */
+  public void reload(CommandSender sender) {
+    PlayerUtils.sendMessage(sender, LangUtils.get("InfoMessages.PluginReloading"));
+    this.setEnabled(false);
+    this.setEnabled(true);
+    PlayerUtils.sendMessage(sender, LangUtils.get("InfoMessages.PluginReloaded"));
   }
 
   /**
