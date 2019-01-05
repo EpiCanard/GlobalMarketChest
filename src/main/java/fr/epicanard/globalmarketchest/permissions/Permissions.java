@@ -16,6 +16,7 @@ public enum Permissions {
   GS_CREATEAUCTION("globalmarketchest.globalshop.createauction"),
   GS_BUYAUCTION("globalmarketchest.globalshop.buyauction"),
   CMD("globalmarketchest.commands"),
+  CMD_RELOAD("globalmarketchest.commands.reload"),
   CMD_OPEN("globalmarketchest.commands.open"),
   CMD_LIST("globalmarketchest.commands.list"),
   CMD_LIST_DETAIL("globalmarketchest.commands.list.detail"),

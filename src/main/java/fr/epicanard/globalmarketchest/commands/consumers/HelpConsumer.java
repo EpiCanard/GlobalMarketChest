@@ -18,6 +18,8 @@ public class HelpConsumer implements CommandConsumer {
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
     PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Usage");
     PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Help");
+    if (Permissions.CMD_RELOAD.isSetOn(sender))
+      PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Reload");
     if (Permissions.CMD_LIST.isSetOn(sender))
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.List");
     if (Permissions.CMD_LIST_DETAIL.isSetOn(sender))

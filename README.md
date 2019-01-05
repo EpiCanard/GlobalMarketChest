@@ -51,40 +51,43 @@ Allow to teleport the player a specific shop position
 
 ```YAML
 # Can use all commands and shops
-globalmarketchest.*:
+globalmarketchest.*
 
 # ==== Global Shop ====
 
 # Can create or use a globalshop
-globalmarketchest.globalshop.*:
+globalmarketchest.globalshop.*
 
 # Can create a globalshop
-globalmarketchest.globalshop.createshop:
+globalmarketchest.globalshop.createshop
 
 # Can open shop
-globalmarketchest.globalshop.openshop:
+globalmarketchest.globalshop.openshop
 
 # Can create an auction
-globalmarketchest.globalshop.createauction:
+globalmarketchest.globalshop.createauction
 
 # Can create buy an auction
-globalmarketchest.globalshop.buyauction:
+globalmarketchest.globalshop.buyauction
 
 # ==== COMMANDS ===
 
 # Can use all commands and shops
-globalmarketchest.commands.*:
+globalmarketchest.commands.*
+
+# Can reload the plugin
+globalmarketchest.commands.reload
 
 # Can open a shop with command
-globalmarketchest.commands.open:
+globalmarketchest.commands.open
 
 # Can list all shops with command
-globalmarketchest.commands.list.*:
+globalmarketchest.commands.list.*
 
 # Can see all shop position for a group of shop
-globalmarketchest.commands.detail.*:
+globalmarketchest.commands.detail.*
 
 # Can be teleport to a specific shop
-globalmarketchest.commands.detail.tp:
+globalmarketchest.commands.detail.tp
 
 ```

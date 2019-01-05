@@ -156,6 +156,8 @@ InfoMessages:
   UndoEveryAuction: "&2Toutes les enchères sont supprimées avec succès"
   ShopDeleted: "Shop supprimé avec succès"
   AcquireAuction: "&3%s &6a acheté &2%d %s &6pour &2%.2f&6 $ à &3%s&6."
+  PluginReloading: "Le plugin est entrain de recharger..."
+  PluginReloaded: "Le plugin a fini de recharger."
 Commands:
   Buttons:
     OpenText: "Ouvrir"
@@ -169,6 +171,7 @@ Commands:
   HelpCommand:
     Usage: "&6Utilisation :"
     Help: "&c/globalmarketchest [help]&6 - Affiche l'aide"
+    Reload: "&c/globalmarketchest reload&6 - Permet de recharger le plugin"
     List: "&c/globalmarketchest list&6 - Liste tous les globalshop"
     Detail: "&c/globalmarketchest list detail <shop>&6 - Permet de lister tous les globalshop à distance"
     TP: "&c/globalmarketchest list tp <shop> <position>&6 - Permet de teleporter le joueur à la position du shop"
