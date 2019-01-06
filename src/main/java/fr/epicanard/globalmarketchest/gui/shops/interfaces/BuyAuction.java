@@ -20,7 +20,6 @@ import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
 public class BuyAuction extends ShopInterface {
