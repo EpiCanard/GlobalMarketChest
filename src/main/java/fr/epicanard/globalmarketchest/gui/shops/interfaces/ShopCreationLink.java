@@ -74,7 +74,7 @@ public class ShopCreationLink extends ShopCreationInterface {
     pag.calculateMaxPage(lst.size());
     items.clear();
 
-    for (ShopInfo shop : pag.getSubList(lst)) {
+    for (ShopInfo shop : lst) {
       ItemStack item = ItemStackUtils.getItemStack("minecraft:ender_chest");
       List<String> lore = ShopUtils.generateLore(shop);
 

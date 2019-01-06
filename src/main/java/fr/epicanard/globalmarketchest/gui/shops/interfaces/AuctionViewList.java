@@ -31,7 +31,8 @@ public class AuctionViewList extends DefaultFooter {
 
       GlobalMarketChest.plugin.auctionManager.getAuctionsByItem(shop.getGroup(), item, this.paginator.getLimit(),
           auctions -> {
-            this.auctions = auctions;
+            if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
+              this.auctions = auctions;
             pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
               ItemStackUtils.addItemStackLore(itemstack, auction.getLore(AuctionLoreConfig.TOSELL));
             }));

@@ -128,7 +128,8 @@ public class AuctionGlobalView extends DefaultFooter {
       this.current.config != AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
       pag.getLimit(),
       auctions -> {
-        this.current.auctions = auctions;
+        if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
+          this.current.auctions = auctions;
         pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
           ItemStackUtils.addItemStackLore(itemstack, auction.getLore(this.current.config));
         }));

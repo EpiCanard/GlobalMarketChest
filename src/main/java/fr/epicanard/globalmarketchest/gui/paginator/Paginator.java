@@ -110,10 +110,16 @@ public class Paginator {
     int prev = this.config.getPage();
     if (this.config.nextPage() == prev)
       return;
+    List<ItemStack> tmp = new ArrayList<>(this.itemstacks);
     if (this.loadConsumer != null)
       this.loadConsumer.accept(this);
-    this.updateCounter();
-    this.loadItems();
+    if (this.itemstacks.size() == 0) {
+      this.config.previousPage();
+      this.setItemStacks(tmp);
+    } else {
+      this.updateCounter();
+      this.loadItems();
+    }
   }
 
   /**
