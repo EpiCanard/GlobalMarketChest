@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 import org.bukkit.inventory.ItemStack;
 
@@ -45,6 +46,16 @@ public class AuctionGlobalView extends DefaultFooter {
     super(inv);
     this.paginator.setLoadConsumer(this::loadAuctions);
     this.paginator.setClickConsumer(this::editAuction);
+    this.paginator.setMaxPageConsumer((setMax) -> {
+      ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+
+      GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), this.current.state,
+        this.current.config == AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
+        this.current.config != AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
+        null,
+        auctions -> setMax.accept(auctions.size()));
+
+    });
 
     ItemStack[] items = InterfacesLoader.getInstance().getInterface(this.getClass().getSimpleName());
 
