@@ -32,7 +32,6 @@ public class WorldListener implements Listener {
         LoggerUtils.info(String.format("%s : [%s:%s<%s>]", LangUtils.get("InfoMessages.ShopDeleted"),
           shop.getSignLocation().toString(), PlayerUtils.getPlayerName(owner), owner));
       }
-
     }
   }
 
@@ -51,8 +50,9 @@ public class WorldListener implements Listener {
         return;
       }
       if (GlobalMarketChest.plugin.inventories.hasInventory(player.getUniqueId())) {
-        InventoryGUI old = GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
-        old.close();
+        if (GlobalMarketChest.plugin.inventories.getInventory(player.getUniqueId()).getChatEditing())
+          return;
+        GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
       }
       InventoryGUI inv = new InventoryGUI(player);
       GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);

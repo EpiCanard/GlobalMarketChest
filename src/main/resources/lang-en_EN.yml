@@ -156,6 +156,7 @@ InfoMessages:
   AcquireAuction: "&3%s &6bought &2%d %s &6for &2%.2f&6 $ to &3%s&6."
   PluginReloading: "Plugin is reloading..."
   PluginReloaded: "Plugin is reloaded."
+  WriteGroupName: "Write the group name that you want"
 Commands:
   Buttons:
     OpenText: "Open"
