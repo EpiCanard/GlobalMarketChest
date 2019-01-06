@@ -35,8 +35,8 @@ public class ChatListener implements Listener {
 
   @EventHandler
   public void onChatEvent(AsyncPlayerChatEvent event) {
-    InventoryGUI inv = GlobalMarketChest.plugin.inventories.getInventory(event.getPlayer().getUniqueId());
-    if (inv != null && inv.getChatEditing()) {
+    if (this.isChatEditing(event.getPlayer())) {
+      InventoryGUI inv = GlobalMarketChest.plugin.inventories.getInventory(event.getPlayer().getUniqueId());
       inv.setChatReturn(event.getMessage());
       event.setCancelled(true);
     }
