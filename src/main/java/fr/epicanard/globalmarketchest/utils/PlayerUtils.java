@@ -14,7 +14,6 @@ import org.bukkit.inventory.PlayerInventory;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
-import lombok.Getter;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -23,7 +22,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class PlayerUtils {
 
-  private static final String prefix = Utils.toColor("&7[&2Global&6Market&3Chest&7] ");
+  private static final String prefix = Utils.toColor("&a[GlobalMarketChest]&7 ");
   /**
    * Get a player from is UUID
    */
