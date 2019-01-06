@@ -14,6 +14,8 @@ import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
 import fr.epicanard.globalmarketchest.utils.ItemUtils;
+import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
 /**
@@ -36,7 +38,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
 
   /**
    * Set or unset glow on item below specific position (if type is set on mask or not)
-   * 
+   *
    * @param pos   Position of the item
    * @param mask  shop mask
    * @param type  Type of shop
@@ -47,7 +49,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
 
   /**
    * Toggle the ShopType in the specific shop
-   * 
+   *
    * @param pos   Position in the inventory of the type
    * @param type  Type to toggle
    */
@@ -62,21 +64,21 @@ public class ShopCreationSelectType extends ShopCreationInterface {
 
   /**
    * Get near allowed block around the sign and add it in paginator
-   * 
+   *
    * @param pag Paginator used
    */
   private void loadNearBlock(Paginator pag) {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
-    List<Block> blocks = pag.getSubList(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()));
-    List<ItemStack> items = blocks.stream().map(block -> new ItemStack(block.getType())).collect(Collectors.toList());
+    List<Block> blocks = Utils.filter(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()), block -> ShopUtils.getShop(block) == null);
+    List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> new ItemStack(block.getType())).collect(Collectors.toList()));
     pag.getItemstacks().clear();
     pag.getItemstacks().addAll(items);
   }
 
   /**
    * Get the block at the position and set as the otherLocation inside the shop
-   * 
+   *
    * @param pos Position inside the inventory
    */
   private void setOtherLocation(int pos) {
@@ -93,7 +95,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
 
   /**
    * Verify if the shop type is set if not display warning
-   * 
+   *
    * @return if there is an error return false else true
    */
   private Boolean checkCreation() {

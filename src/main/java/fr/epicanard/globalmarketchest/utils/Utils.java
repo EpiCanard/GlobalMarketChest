@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.bukkit.ChatColor;
@@ -132,6 +133,17 @@ public class Utils {
    */
   public <T, R> List<T> mapList(List<R> lst, Function<R, T> fct) {
     return lst.stream().map(fct).collect(Collectors.toList());
+  }
+
+  /**
+   * Execute a filter on a list
+   *
+   * @param lst The list on which apply the function
+   * @param fct Function to filter
+   * @return The new list filtered
+   */
+  public <T> List<T> filter(List<T> lst, Predicate<T> fct) {
+    return lst.stream().filter(fct).collect(Collectors.toList());
   }
 
   /**
