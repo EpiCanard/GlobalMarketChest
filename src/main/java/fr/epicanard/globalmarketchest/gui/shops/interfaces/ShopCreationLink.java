@@ -69,13 +69,13 @@ public class ShopCreationLink extends ShopCreationInterface {
    * @param pag Paginator used
    */
   public void loadZone(Paginator pag) {
-    List<ShopInfo> lst = pag.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
+    List<ShopInfo> lst = GlobalMarketChest.plugin.shopManager.getShops();
     List<ItemStack> items = pag.getItemstacks();
+    pag.calculateMaxPage(lst.size());
     items.clear();
 
-    for (int i = 0; i < lst.size(); i++) {
+    for (ShopInfo shop : pag.getSubList(lst)) {
       ItemStack item = ItemStackUtils.getItemStack("minecraft:ender_chest");
-      ShopInfo shop = lst.get(i);
       List<String> lore = ShopUtils.generateLore(shop);
 
       lore.addAll(Utils.toList(LangUtils.get("Shops.ClickChangeGroup")));

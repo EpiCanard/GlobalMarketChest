@@ -72,6 +72,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
 
     List<Block> blocks = Utils.filter(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()), block -> ShopUtils.getShop(block) == null);
     List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> new ItemStack(block.getType())).collect(Collectors.toList()));
+    pag.calculateMaxPage(blocks.size());
     pag.getItemstacks().clear();
     pag.getItemstacks().addAll(items);
   }

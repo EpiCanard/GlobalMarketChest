@@ -27,6 +27,12 @@ public class AuctionViewGroup extends DefaultFooter {
       this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, item);
       this.inv.loadInterface("AuctionViewList");
     });
+    this.paginator.setMaxPageConsumer((setMax) -> {
+      ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+
+      GlobalMarketChest.plugin.auctionManager.getCountItemByCategory(shop.getGroup(), category, setMax);
+    });
+
 
     this.actions.put(0, new PreviousInterface());
   }
