@@ -11,6 +11,7 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.shops.ShopCreationInterface;
+import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
@@ -34,6 +35,7 @@ public class ShopCreationLink extends ShopCreationInterface {
       this.paginator.setClickConsumer(this::changeName);
     }
     this.actions.put(0, new PreviousInterface());
+    this.actions.put(40, new ChatInput("InfoMessages.WriteGroupName", this::changeName));
     this.actions.put(53, this::createShop);
   }
 
@@ -89,10 +91,20 @@ public class ShopCreationLink extends ShopCreationInterface {
    */
   public void changeName(Integer pos) {
     List<ShopInfo> subShops = this.paginator.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
+
+    this.changeName(subShops.get(pos).getGroup());
+  }
+
+  /**
+   * Change the groupe name of the shop
+   *
+   * @param name Name of the group
+   */
+  public void changeName(String name) {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     if (shop != null)
-      shop.setGroup(subShops.get(pos).getGroup());
+      shop.setGroup(name);
     this.updateName();
   }
 }
