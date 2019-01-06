@@ -23,6 +23,7 @@ import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;
 import fr.epicanard.globalmarketchest.gui.CategoryHandler;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoriesHandler;
+import fr.epicanard.globalmarketchest.listeners.ChatListener;
 import fr.epicanard.globalmarketchest.listeners.CloseGUICollector;
 import fr.epicanard.globalmarketchest.listeners.GUIListener;
 import fr.epicanard.globalmarketchest.listeners.ShopCreationListener;
@@ -93,6 +94,7 @@ public class GlobalMarketChest extends JavaPlugin {
 
     getCommand("GlobalMarketChest").setExecutor(new CommandHandler());
 
+    this.register(new ChatListener());
     this.register(new GUIListener());
     this.register(new CloseGUICollector());
     this.register(new WorldListener());

@@ -158,14 +158,15 @@ InfoMessages:
   AcquireAuction: "&3%s &6a acheté &2%d %s &6pour &2%.2f&6 $ à &3%s&6."
   PluginReloading: "Le plugin est entrain de recharger..."
   PluginReloaded: "Le plugin a fini de recharger."
+  WriteGroupName: "Tapez le nom du groupe que vous voulez saisir"
 Commands:
   Buttons:
     OpenText: "Ouvrir"
-    OpenHover: "Cliques pour ouvrir le shop"
+    OpenHover: "Cliquez pour ouvrir le shop"
     DetailText: "Détail"
-    DetailHover: "Cliques pour voir les details"
+    DetailHover: "Cliquez pour voir les details"
     TeleportText: "Téléporter"
-    TeleportHover: "Cliques pour te téléporter au shop"
+    TeleportHover: "Cliquez pour vous téléporter au shop"
   ListShop: "Liste des shops : "
   SeeHelp: "&6Regardes l'aide : &c/globalmarketchest help"
   HelpCommand:

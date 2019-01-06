@@ -6,13 +6,18 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.gui.shops.Warning;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.Getter;
 
@@ -29,6 +34,9 @@ public class InventoryGUI {
   private Player player;
   @Getter
   private Warning warn;
+  @Getter
+  private Boolean chatEditing = false;
+  private Consumer<String> chatConsumer;
 
   public InventoryGUI(Player player) {
     this.player = player;
@@ -38,7 +46,7 @@ public class InventoryGUI {
 
   /**
    * Check if the inventory in param is the same as this inventory
-   * 
+   *
    * @param inventory
    *          Inventory to verify
    */
@@ -48,7 +56,7 @@ public class InventoryGUI {
 
   /**
    * Open current inventory for the specified player
-   * 
+   *
    * @param player
    */
   public void open() {
@@ -57,11 +65,41 @@ public class InventoryGUI {
 
   /**
    * Close current inventory for the specified player
-   * 
+   *
    * @param player
    */
   public void close() {
     this.player.closeInventory();
+  }
+
+  /**
+   * Stop the "ChatEditing" mode, send the value to consumer
+   * and reopen inventory
+   *
+   * @param value Value to send to consumer
+   */
+  public void setChatReturn(String value) {
+    this.chatEditing = false;
+    this.open();
+    this.player.removePotionEffect(PotionEffectType.BLINDNESS);
+    this.chatConsumer.accept(value);
+    this.chatConsumer = null;
+  }
+
+  /**
+   * Close the inventory and set player in "ChatEditing" mode
+   * Until chat value is set
+   *
+   * @param consumer Consumer called when leave the chat
+   */
+  public void openChat(String path, Consumer<String> consumer) {
+    this.chatEditing = true;
+    this.close();
+    this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1), true);
+    this.chatConsumer = consumer;
+    this.player.sendMessage("");
+    PlayerUtils.sendMessage(this.player, LangUtils.get(path));
+    this.player.sendMessage("");
   }
 
   /**
@@ -92,7 +130,7 @@ public class InventoryGUI {
 
   /**
    * Unload all interface
-   * 
+   *
    * @param key
    */
   public void unloadAllInterface() {
@@ -105,7 +143,7 @@ public class InventoryGUI {
 
   /**
    * Load interface with a specific name
-   * 
+   *
    * @param name
    */
   public void loadInterface(String name) {
@@ -131,7 +169,7 @@ public class InventoryGUI {
 
   /**
    * Get Transaction Value
-   * 
+   *
    * @param key
    *          Key to get transcation object
    * @return <T> return the object with these key
@@ -139,5 +177,15 @@ public class InventoryGUI {
   @SuppressWarnings("unchecked")
   public <T> T getTransactionValue(TransactionKey key) {
     return (T) this.transaction.get(key);
+  }
+
+  /**
+   * Destroy all the inventory
+   */
+  public void destroy() {
+    this.unloadAllInterface();
+    this.close();
+    if (this.chatEditing)
+      this.player.removePotionEffect(PotionEffectType.BLINDNESS);
   }
 }
