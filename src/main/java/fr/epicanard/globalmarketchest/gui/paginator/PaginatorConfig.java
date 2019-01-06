@@ -20,6 +20,7 @@ public class PaginatorConfig {
   private int nextPos = -1;
   @Getter
   private int numPagePos = -1;
+  private int maxPage = 1;
 
   public PaginatorConfig(int height, int width, int startPos, int prevPos, int nextPos, int numPagePos) throws InvalidPaginatorParameter {
     if (height < 1 || height > 6)
@@ -54,10 +55,23 @@ public class PaginatorConfig {
   }
 
   /**
+   * Calculate the max page number from content count
+   *
+   * @param contentCount Number of conten (ex: number of auctions)
+   */
+  public void calculateMaxPage(Integer contentCount) {
+    if (contentCount != null) {
+      int maxPage = Double.valueOf(Math.ceil(contentCount.doubleValue() / Integer.valueOf(this.limit).doubleValue())).intValue();
+      this.maxPage = (maxPage > 0) ? maxPage : 1;
+    }
+  }
+
+  /**
    * Increment the number of page
    */
   public int nextPage() {
-    this.page +=1;
+    if (this.page < this.maxPage - 1)
+      this.page +=1;
     return this.page;
   }
 
@@ -70,6 +84,9 @@ public class PaginatorConfig {
     return this.page;
   }
 
+  /**
+   * Reset the page number to zero
+   */
   public int resetPage() {
     this.page = 0;
     return this.page;
