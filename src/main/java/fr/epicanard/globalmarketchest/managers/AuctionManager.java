@@ -196,20 +196,6 @@ public class AuctionManager {
    * =====================
    */
 
-  private SelectBuilder buildItemByCategory(String group, String category) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
-
-    String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
-
-    builder.addCondition("group", group);
-    builder.addCondition("itemStack", Arrays.asList(items), (category.equals("!")) ? ConditionType.NOTIN : ConditionType.IN);
-    this.defineStateCondition(builder, StateAuction.INPROGRESS);
-    builder.setExtension("GROUP BY itemStack, damage");
-    builder.addField("*");
-    builder.addField("COUNT(itemStack) AS count");
-    return builder;
-  }
-
   /**
    * Get all item for one category in one group
    *
@@ -218,8 +204,16 @@ public class AuctionManager {
    * @param consumer
    */
   public void getItemByCategory(String group, String category, Pair<Integer, Integer> limit, Consumer<List<ItemStack>> consumer) {
-    SelectBuilder builder = this.buildItemByCategory(group, category);
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
+    String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
+
+    builder.addCondition("group", group);
+    builder.addCondition("itemStack", Arrays.asList(items), (category.equals("!")) ? ConditionType.NOTIN : ConditionType.IN);
+    this.defineStateCondition(builder, StateAuction.INPROGRESS);
+    builder.addField("*");
+    builder.addField("COUNT(itemStack) AS count");
+    builder.setExtension("GROUP BY itemStack, damage");
     if (limit != null)
       builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
@@ -245,44 +239,13 @@ public class AuctionManager {
    * @param category
    * @param consumer
    */
-  public void getCountItemByCategory(String group, String category, Consumer<Integer> consumer) {
-    SelectBuilder builder = this.buildItemByCategory(group, category);
-
-    QueryExecutor.of().execute(builder, res -> {
-      try {
-        int i = 0;
-        while (res.next()) {
-          i++;
-        }
-        consumer.accept(i);
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    });
-  }
-
-
-  private SelectBuilder buildAuctionsByItem(String group, ItemStack item) {
+  public void getAuctionsByItem(String group, ItemStack item, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
     builder.addCondition("group", group);
     builder.addCondition("itemStack", ItemStackUtils.getMinecraftKey(item));
     builder.addCondition("damage", item.getDurability());
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
-
-    return builder;
-  }
-
-  /**
-   * Get all item for one category in one group
-   *
-   * @param group
-   * @param category
-   * @param consumer
-   */
-  public void getAuctionsByItem(String group, ItemStack item, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
-    SelectBuilder builder = this.buildAuctionsByItem(group, item);
-
     builder.setExtension("ORDER BY price, start ASC");
     if (limit != null)
       builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
@@ -296,29 +259,6 @@ public class AuctionManager {
         e.printStackTrace();
       }
       consumer.accept(lst);
-    });
-  }
-
-  /**
-   * Get all item for one category in one group
-   *
-   * @param group
-   * @param category
-   * @param consumer
-   */
-  public void getCountAuctionsByItem(String group, ItemStack item, Consumer<Integer> consumer) {
-    SelectBuilder builder = this.buildAuctionsByItem(group, item);
-
-    builder.addField("COUNT(id) AS count");
-
-    QueryExecutor.of().execute(builder, res -> {
-      try {
-        if (res.next()) {
-          consumer.accept(res.getInt("count"));
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
     });
   }
 
