@@ -70,6 +70,9 @@ public class PaginatorConfig {
     return this.page;
   }
 
+  /**
+   * Reset the page number to zero
+   */
   public int resetPage() {
     this.page = 0;
     return this.page;

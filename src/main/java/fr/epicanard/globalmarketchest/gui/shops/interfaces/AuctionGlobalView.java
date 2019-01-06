@@ -15,6 +15,7 @@ import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
+import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.shops.DefaultFooter;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.SingleToggler;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
@@ -42,7 +43,7 @@ public class AuctionGlobalView extends DefaultFooter {
 
   public AuctionGlobalView(InventoryGUI inv) {
     super(inv);
-    this.paginator.setLoadConsumer(pag -> this.loadAuctions());
+    this.paginator.setLoadConsumer(this::loadAuctions);
     this.paginator.setClickConsumer(this::editAuction);
 
     ItemStack[] items = InterfacesLoader.getInstance().getInterface(this.getClass().getSimpleName());
@@ -108,16 +109,17 @@ public class AuctionGlobalView extends DefaultFooter {
     }
   }
 
-  private void loadAuctions() {
+  private void loadAuctions(Paginator pag) {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), this.current.state,
       this.current.config == AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
       this.current.config != AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
-      this.paginator.getLimit(),
+      pag.getLimit(),
       auctions -> {
-        this.current.auctions = auctions;
-        this.paginator.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
+        if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
+          this.current.auctions = auctions;
+        pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
           ItemStackUtils.addItemStackLore(itemstack, auction.getLore(this.current.config));
         }));
       });

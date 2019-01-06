@@ -73,9 +73,8 @@ public class ShopCreationLink extends ShopCreationInterface {
     List<ItemStack> items = pag.getItemstacks();
     items.clear();
 
-    for (int i = 0; i < lst.size(); i++) {
+    for (ShopInfo shop : lst) {
       ItemStack item = ItemStackUtils.getItemStack("minecraft:ender_chest");
-      ShopInfo shop = lst.get(i);
       List<String> lore = ShopUtils.generateLore(shop);
 
       lore.addAll(Utils.toList(LangUtils.get("Shops.ClickChangeGroup")));
