@@ -69,9 +69,8 @@ public class ShopCreationLink extends ShopCreationInterface {
    * @param pag Paginator used
    */
   public void loadZone(Paginator pag) {
-    List<ShopInfo> lst = GlobalMarketChest.plugin.shopManager.getShops();
+    List<ShopInfo> lst = pag.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
     List<ItemStack> items = pag.getItemstacks();
-    pag.calculateMaxPage(lst.size());
     items.clear();
 
     for (ShopInfo shop : lst) {

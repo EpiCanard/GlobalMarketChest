@@ -39,13 +39,6 @@ public class AuctionViewList extends DefaultFooter {
           });
     });
 
-    this.paginator.setMaxPageConsumer((setMax) -> {
-      ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-      ItemStack item = this.inv.getTransactionValue(TransactionKey.AUCTIONITEM);
-
-      GlobalMarketChest.plugin.auctionManager.getCountAuctionsByItem(shop.getGroup(), item, setMax);
-    });
-
     this.paginator.setClickConsumer(this::selectAuction);
 
     this.actions.put(0, new PreviousInterface());
