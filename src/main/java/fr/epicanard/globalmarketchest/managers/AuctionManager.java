@@ -3,12 +3,12 @@ package fr.epicanard.globalmarketchest.managers;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,9 +24,11 @@ import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuild
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.UpdateBuilder;
+import fr.epicanard.globalmarketchest.exceptions.EmptyCategoryException;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
@@ -196,129 +198,52 @@ public class AuctionManager {
    * =====================
    */
 
-  private SelectBuilder buildItemByCategory(String group, String category) {
+    /**
+     * List auctions depnding of group level
+     *
+     * @param level GroupLevel to analyse
+     * @param group Group of auction
+     * @param category Category of items to search
+     * @param item Item to search
+     * @param limit Limit of auctions to get from database
+     * @param consumer Callback called when the sql request is executed
+     */
+  public void getAuctions(GroupLevels level, String group, String category, ItemStack item, Pair<Integer, Integer> limit, Consumer<List<Pair<ItemStack, AuctionInfo>>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
-    String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
 
     builder.addCondition("group", group);
-    builder.addCondition("itemStack", Arrays.asList(items), (category.equals("!")) ? ConditionType.NOTIN : ConditionType.IN);
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
-    builder.setExtension("GROUP BY itemStack, damage");
     builder.addField("*");
-    builder.addField("COUNT(itemStack) AS count");
-    return builder;
-  }
-
-  /**
-   * Get all item for one category in one group
-   *
-   * @param group
-   * @param category
-   * @param consumer
-   */
-  public void getItemByCategory(String group, String category, Pair<Integer, Integer> limit, Consumer<List<ItemStack>> consumer) {
-    SelectBuilder builder = this.buildItemByCategory(group, category);
+    try {
+      level.configBuilder(builder, category, item);
+    } catch (EmptyCategoryException e) {
+      LoggerUtils.warn(e.getMessage());
+      consumer.accept(new ArrayList<>());
+      return;
+    }
 
     if (limit != null)
       builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
-      List<ItemStack> lst = new ArrayList<>();
+      List<Pair<ItemStack, AuctionInfo>> lst = new ArrayList<>();
       try {
         while (res.next()) {
-          ItemStack item = ItemStackUtils.getItemStack(res.getString("itemStack"));
-          item.setDurability(res.getShort("damage"));
-          ItemStackUtils.setItemStackLore(item, Utils.toList(String.format("%s : %d", LangUtils.get("Divers.AuctionNumber"), res.getInt("count"))));
-          lst.add(item);
+          ItemStack it;
+          if (level == GroupLevels.LEVEL1 && GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category) == 3)
+            it = ItemStackUtils.getItemStack(res.getString("itemStack"));
+          else
+            it = DatabaseUtils.deserialize(res.getString("itemMeta"));
+
+          try {
+            ItemStackUtils.setItemStackLore(it, Utils.toList(String.format("%s : %d", LangUtils.get("Divers.AuctionNumber"), res.getInt("count"))));
+          } catch (SQLException e) {}
+          lst.add(new ImmutablePair<>(it, new AuctionInfo(res)));
         }
       } catch (SQLException e) {
         e.printStackTrace();
       }
       consumer.accept(lst);
-    });
-  }
-
-  /**
-   * Get all item for one category in one group
-   *
-   * @param group
-   * @param category
-   * @param consumer
-   */
-  public void getCountItemByCategory(String group, String category, Consumer<Integer> consumer) {
-    SelectBuilder builder = this.buildItemByCategory(group, category);
-
-    QueryExecutor.of().execute(builder, res -> {
-      try {
-        int i = 0;
-        while (res.next()) {
-          i++;
-        }
-        consumer.accept(i);
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    });
-  }
-
-
-  private SelectBuilder buildAuctionsByItem(String group, ItemStack item) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
-
-    builder.addCondition("group", group);
-    builder.addCondition("itemStack", ItemStackUtils.getMinecraftKey(item));
-    builder.addCondition("damage", item.getDurability());
-    this.defineStateCondition(builder, StateAuction.INPROGRESS);
-
-    return builder;
-  }
-
-  /**
-   * Get all item for one category in one group
-   *
-   * @param group
-   * @param category
-   * @param consumer
-   */
-  public void getAuctionsByItem(String group, ItemStack item, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
-    SelectBuilder builder = this.buildAuctionsByItem(group, item);
-
-    builder.setExtension("ORDER BY price, start ASC");
-    if (limit != null)
-      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
-    QueryExecutor.of().execute(builder, res -> {
-      List<AuctionInfo> lst = new ArrayList<>();
-      try {
-        while (res.next()) {
-          lst.add(new AuctionInfo(res));
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-      consumer.accept(lst);
-    });
-  }
-
-  /**
-   * Get all item for one category in one group
-   *
-   * @param group
-   * @param category
-   * @param consumer
-   */
-  public void getCountAuctionsByItem(String group, ItemStack item, Consumer<Integer> consumer) {
-    SelectBuilder builder = this.buildAuctionsByItem(group, item);
-
-    builder.addField("COUNT(id) AS count");
-
-    QueryExecutor.of().execute(builder, res -> {
-      try {
-        if (res.next()) {
-          consumer.accept(res.getInt("count"));
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
     });
   }
 

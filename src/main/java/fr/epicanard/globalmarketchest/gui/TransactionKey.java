@@ -9,6 +9,7 @@ public enum TransactionKey {
   AUCTIONAMOUNT,
   CATEGORY,
   AUCTIONITEM,
-  SIGNLOCATION
+  SIGNLOCATION,
+  GROUPLEVEL
   ;
 }

@@ -8,6 +8,7 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.shops.DefaultFooter;
+import fr.epicanard.globalmarketchest.managers.GroupLevels;
 
 public class CategoryView extends DefaultFooter {
 
@@ -18,7 +19,7 @@ public class CategoryView extends DefaultFooter {
   @Override
   public void load() {
     super.load();
-    Consumer<InventoryGUI> callable = new NextInterface("AuctionViewGroup");
+    Consumer<InventoryGUI> callable = new NextInterface("AuctionViewList");
 
     CategoryHandler h = GlobalMarketChest.plugin.getCatHandler();
     String[] categories = h.getCategories().toArray(new String[0]);
@@ -35,6 +36,8 @@ public class CategoryView extends DefaultFooter {
 
     this.actions.put(h.getPosition(category), in -> {
       this.inv.getTransaction().put(TransactionKey.CATEGORY, category);
+      this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, GlobalMarketChest.plugin.getCatHandler().getDisplayItem(category));
+      this.inv.getTransaction().put(TransactionKey.GROUPLEVEL, GroupLevels.LEVEL1);
       callable.accept(in);
     });
 

@@ -1,6 +1,6 @@
 InterfacesTitle:
   CategoryView: "&2Category view"
-  AuctionViewGroup: "&2AuctionViewGroup"
+  AuctionViewList: "&2Auctions list"
   ConfigShop : "&2Shop configuration"
   # Auction Creation
   CreateAuctionItem: "&2Select auction item"

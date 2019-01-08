@@ -28,8 +28,6 @@ public class Paginator {
   private Consumer<Paginator> loadConsumer;
   @Setter
   private Consumer<Integer> clickConsumer;
-  @Setter
-  private Consumer<Consumer<Integer>> maxPageConsumer;
   @Getter
   private List<ItemStack> itemstacks = new ArrayList<ItemStack>();
 
@@ -72,24 +70,6 @@ public class Paginator {
   }
 
   /**
-   * Recalculate the max page number
-   */
-  private void updateMaxPage() {
-    Optional.ofNullable(this.maxPageConsumer).ifPresent(consumer -> {
-      consumer.accept(page -> this.config.calculateMaxPage(page));
-    });
-  }
-
-  /**
-   * Calculate the max page number from content count
-   *
-   * @param contentCount Number of conten (ex: number of auctions)
-   */
-  public void calculateMaxPage(int contentCount) {
-    this.config.calculateMaxPage(contentCount);
-  }
-
-  /**
    * Reset page to 0
    */
   public void resetPage() {
@@ -106,7 +86,6 @@ public class Paginator {
    * Change to next page
    */
   public void nextPage() {
-    this.updateMaxPage();
     int prev = this.config.getPage();
     if (this.config.nextPage() == prev)
       return;
@@ -126,7 +105,6 @@ public class Paginator {
    * Change to previous page
    */
   public void previousPage() {
-    this.updateMaxPage();
     int prev = this.config.getPage();
     if (this.config.previousPage() == prev)
       return;
