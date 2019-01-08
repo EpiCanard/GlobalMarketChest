@@ -24,9 +24,11 @@ import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuild
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.UpdateBuilder;
+import fr.epicanard.globalmarketchest.exceptions.EmptyCategoryException;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
@@ -213,7 +215,13 @@ public class AuctionManager {
     builder.addCondition("group", group);
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
     builder.addField("*");
-    level.configBuilder(builder, category, item);
+    try {
+      level.configBuilder(builder, category, item);
+    } catch (EmptyCategoryException e) {
+      LoggerUtils.warn(e.getMessage());
+      consumer.accept(new ArrayList<>());
+      return;
+    }
 
     if (limit != null)
       builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));

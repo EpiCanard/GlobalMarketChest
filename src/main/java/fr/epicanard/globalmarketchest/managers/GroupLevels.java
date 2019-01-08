@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
+import fr.epicanard.globalmarketchest.exceptions.EmptyCategoryException;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 
@@ -44,7 +45,7 @@ public enum GroupLevels {
    * @param category The auctions category
    * @param match ItemStack to match for research
    */
-  public void configBuilder(SelectBuilder builder, String category, ItemStack match) {
+  public void configBuilder(SelectBuilder builder, String category, ItemStack match) throws EmptyCategoryException {
     Integer groupLevels = GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category);
 
     switch (this) {
@@ -69,8 +70,13 @@ public enum GroupLevels {
    * @param groupLevels GroupLevels of the category
    * @param category The auctions category
    * @param match ItemStack to match for research
+   * @throws EmptyCategoryException
    */
-  private void level1(SelectBuilder builder, Integer groupLevels, ItemStack match, String category) {
+  private void level1(SelectBuilder builder, Integer groupLevels, ItemStack match, String category) throws EmptyCategoryException {
+    String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
+    if (items.length == 0)
+      throw new EmptyCategoryException(category);
+    builder.addCondition("itemStack", Arrays.asList(items), (category.equals("!")) ? ConditionType.NOTIN : ConditionType.IN);
     switch (groupLevels) {
       case 3:
         builder.addField("COUNT(itemStack) AS count");
@@ -81,8 +87,6 @@ public enum GroupLevels {
         builder.setExtension("GROUP BY itemMeta");
         break;
     }
-    String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
-    builder.addCondition("itemStack", Arrays.asList(items), (category.equals("!")) ? ConditionType.NOTIN : ConditionType.IN);
   }
 
   /**
