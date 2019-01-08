@@ -110,6 +110,19 @@ public class CategoryHandler {
   }
 
   /**
+   * Get the group levels of this category
+   *
+   * @param category Category name
+   * @return Return the group levels
+   */
+  public Integer getGroupLevels(String category) {
+    Integer levels = this.config.getInt(category + ".GroupLevels", 3);
+    if (levels < 0 || levels > 3)
+      return 3;
+    return levels;
+  }
+
+  /**
    * Get the category name from an itemstack
    *
    * @param item ItemStack to define his category

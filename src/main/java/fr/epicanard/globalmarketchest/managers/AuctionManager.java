@@ -3,12 +3,12 @@ package fr.epicanard.globalmarketchest.managers;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -196,65 +196,41 @@ public class AuctionManager {
    * =====================
    */
 
-  /**
-   * Get all item for one category in one group
-   *
-   * @param group
-   * @param category
-   * @param consumer
-   */
-  public void getItemByCategory(String group, String category, Pair<Integer, Integer> limit, Consumer<List<ItemStack>> consumer) {
+    /**
+     * List auctions depnding of group level
+     *
+     * @param level GroupLevel to analyse
+     * @param group Group of auction
+     * @param category Category of items to search
+     * @param item Item to search
+     * @param limit Limit of auctions to get from database
+     * @param consumer Callback called when the sql request is executed
+     */
+  public void getAuctions(GroupLevels level, String group, String category, ItemStack item, Pair<Integer, Integer> limit, Consumer<List<Pair<ItemStack, AuctionInfo>>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
-    String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
 
     builder.addCondition("group", group);
-    builder.addCondition("itemStack", Arrays.asList(items), (category.equals("!")) ? ConditionType.NOTIN : ConditionType.IN);
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
     builder.addField("*");
-    builder.addField("COUNT(itemStack) AS count");
-    builder.setExtension("GROUP BY itemStack, damage");
+    level.configBuilder(builder, category, item);
 
     if (limit != null)
       builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
-      List<ItemStack> lst = new ArrayList<>();
+      List<Pair<ItemStack, AuctionInfo>> lst = new ArrayList<>();
       try {
         while (res.next()) {
-          ItemStack item = ItemStackUtils.getItemStack(res.getString("itemStack"));
-          item.setDurability(res.getShort("damage"));
-          ItemStackUtils.setItemStackLore(item, Utils.toList(String.format("%s : %d", LangUtils.get("Divers.AuctionNumber"), res.getInt("count"))));
-          lst.add(item);
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-      consumer.accept(lst);
-    });
-  }
+          ItemStack it;
+          if (level == GroupLevels.LEVEL1 && GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category) == 3)
+            it = ItemStackUtils.getItemStack(res.getString("itemStack"));
+          else
+            it = DatabaseUtils.deserialize(res.getString("itemMeta"));
 
-  /**
-   * Get all item for one category in one group
-   *
-   * @param group
-   * @param category
-   * @param consumer
-   */
-  public void getAuctionsByItem(String group, ItemStack item, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
-
-    builder.addCondition("group", group);
-    builder.addCondition("itemStack", ItemStackUtils.getMinecraftKey(item));
-    builder.addCondition("damage", item.getDurability());
-    this.defineStateCondition(builder, StateAuction.INPROGRESS);
-    builder.setExtension("ORDER BY price, start ASC");
-    if (limit != null)
-      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
-    QueryExecutor.of().execute(builder, res -> {
-      List<AuctionInfo> lst = new ArrayList<>();
-      try {
-        while (res.next()) {
-          lst.add(new AuctionInfo(res));
+          try {
+            ItemStackUtils.setItemStackLore(it, Utils.toList(String.format("%s : %d", LangUtils.get("Divers.AuctionNumber"), res.getInt("count"))));
+          } catch (SQLException e) {}
+          lst.add(new ImmutablePair<>(it, new AuctionInfo(res)));
         }
       } catch (SQLException e) {
         e.printStackTrace();

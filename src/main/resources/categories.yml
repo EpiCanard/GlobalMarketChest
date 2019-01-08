@@ -1,6 +1,7 @@
 Build:
   DisplayName: "Building Blocks"
   DisplayItem: minecraft:bricks
+  GroupLevels: 2
   Position: 20
   Items:
     - minecraft:acacia_log
@@ -249,6 +250,7 @@ Build:
 Decoration:
   DisplayName: "Decoration Blocks"
   DisplayItem: minecraft:peony
+  GroupLevels: 2
   Position: 21
   Items:
     - minecraft:acacia_fence
@@ -459,6 +461,7 @@ Decoration:
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
+  GroupLevels: 2
   Position: 22
   Items:
     - minecraft:acacia_button
@@ -518,6 +521,7 @@ Redstone:
 Transportation:
   DisplayName: "Transportation"
   DisplayItem: minecraft:powered_rail
+  GroupLevels: 2
   Position: 23
   Items:
     - minecraft:acacia_boat
@@ -541,6 +545,7 @@ Transportation:
 Misc:
   DisplayName: "Miscellaneous"
   DisplayItem: minecraft:lava_bucket
+  GroupLevels: 2
   Position: 24
   Items:
     - minecraft:bat_spawn_egg
@@ -697,6 +702,7 @@ Misc:
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
+  GroupLevels: 2
   Position: 38
   Items:
     - minecraft:apple
@@ -738,6 +744,7 @@ Food:
 Tools:
   DisplayName: "Tools"
   DisplayItem: minecraft:iron_axe
+  GroupLevels: 3
   Position: 39
   Items:
     - minecraft:clock
@@ -770,6 +777,7 @@ Tools:
 Combat:
   DisplayName: "Combat"
   DisplayItem: minecraft:golden_sword
+  GroupLevels: 3
   Position: 40
   Items:
     - minecraft:arrow
@@ -808,6 +816,7 @@ Combat:
 Brewing:
   DisplayName: "Brewing"
   DisplayItem: minecraft:potion
+  GroupLevels: 2
   Position: 41
   Items:
     - minecraft:blaze_powder
@@ -828,6 +837,7 @@ Brewing:
 Books:
   DisplayName: "Enchanted books"
   DisplayItem: minecraft:enchanted_book
+  GroupLevels: 2
   Position: 42
   Items:
     - minecraft:enchanted_book
@@ -837,6 +847,7 @@ Books:
 "!":
   DisplayName: "Uncategorized"
   DisplayItem: minecraft:white_stained_glass_pane
+  GroupLevels: 2
   Position: 31
 
 # Items not categorized
