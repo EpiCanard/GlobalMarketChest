@@ -52,12 +52,6 @@ Interfaces:
     Items:
       9: Search
 
-  # View to list every group item of one category
-  AuctionViewGroup:
-    Base:
-      - DefaultShopInterface
-      - DefaultFooter
-
   # View to see every auctions of one item
   AuctionViewList:
     Base:
@@ -143,7 +137,7 @@ Interfaces:
       Height: 1
       Width: 7
       StartPos: 19
-      PreviousPos: 18 
+      PreviousPos: 18
       NextPos: 26
     Items:
       18-26: None
