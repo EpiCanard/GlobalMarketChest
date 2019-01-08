@@ -91,3 +91,7 @@ globalmarketchest.commands.detail.*
 globalmarketchest.commands.detail.tp
 
 ```
+
+## Discord
+
+GlobalMarketChest discord : https://discord.gg/UuGAcCa
