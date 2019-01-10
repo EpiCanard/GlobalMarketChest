@@ -17,7 +17,7 @@ Connection:
   TablePrefix: GMC_
   SimultaneousConnection: 4
 Options:
-  # To see auctions that don't have category
+  # To see auctions that don't have category (in categories.yml it's category '!')
   UncategorizedItems: false
 Auctions:
   # Default price for new auctions

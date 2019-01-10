@@ -155,7 +155,11 @@ InfoMessages:
   RenewEveryAuction: "&2Toutes les enchères sont renouvelées avec succès"
   UndoEveryAuction: "&2Toutes les enchères sont supprimées avec succès"
   ShopDeleted: "Shop supprimé avec succès"
+  # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
+  # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
+  # If you don't have them a message will pop in console and no message will broadcast
   AcquireAuction: "&3%s &6a acheté &2%d %s &6pour &2%.2f&6 $ à &3%s&6."
+  AcquireAuctionOwner: "&3%s &6a acheté votre enchère &2%d %s &6pour &2%.2f&6 $."
   PluginReloading: "Le plugin est entrain de recharger..."
   PluginReloaded: "Le plugin a fini de recharger."
   WriteGroupName: "Tapez le nom du groupe que vous voulez saisir"
