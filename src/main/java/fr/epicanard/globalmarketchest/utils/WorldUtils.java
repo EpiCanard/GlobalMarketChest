@@ -179,11 +179,14 @@ public class WorldUtils {
    *
    * @param world World where broadcast message
    * @param message Message to broadcast
+   * @param excludes Players to excludes from broadcast
    */
-  public void broadcast(World world, String message) {
+  public void broadcast(World world, String message, List<Player> excludes) {
     PlayerUtils.sendMessage(GlobalMarketChest.plugin.getServer().getConsoleSender(), message);
     for (Player player : world.getPlayers()) {
-      PlayerUtils.sendMessage(player, message);
+      if (!excludes.contains(player)) {
+        PlayerUtils.sendMessage(player, message);
+      }
     }
   }
 }

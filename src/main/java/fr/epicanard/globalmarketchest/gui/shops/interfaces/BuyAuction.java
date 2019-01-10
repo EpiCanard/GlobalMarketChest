@@ -1,6 +1,9 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
+import java.util.Arrays;
+import java.util.MissingFormatArgumentException;
 import java.util.UUID;
+import java.util.function.Function;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -78,27 +81,44 @@ public class BuyAuction extends ShopInterface {
     }
   }
 
+  private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
+    String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
+    try {
+      if (isOwner) {
+        return String.format(LangUtils.get(langVariable),
+          buyer.getName(),
+          item.getAmount(),
+          ItemStackUtils.getItemStackDisplayName(item),
+          auction.getTotalPrice()
+        );
+      }
+      return String.format(LangUtils.get(langVariable),
+        buyer.getName(),
+        item.getAmount(),
+        ItemStackUtils.getItemStackDisplayName(item),
+        auction.getTotalPrice(),
+        PlayerUtils.getPlayerName(auction.getPlayerStarter())
+      );
+    } catch (MissingFormatArgumentException e) {
+      LoggerUtils.warn(String.format("Missing or malformed language variable '%s'. Please add it in language file.", langVariable));
+    }
+    return null;
+  }
+
   private void broadcastMessage(AuctionInfo auction, Player buyer, ItemStack item) {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
-    String message = String.format(LangUtils.get("InfoMessages.AcquireAuction"),
-      buyer.getName(),
-      item.getAmount(),
-      ItemStackUtils.getItemStackDisplayName(item),
-      auction.getTotalPrice(),
-      PlayerUtils.getPlayerName(auction.getPlayerStarter())
-    );
+    Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
 
-    if (GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.BroadcastInsideWorld")) {
-      WorldUtils.broadcast(shop.getSignLocation().getWorld(), message);
+    String message = formatMessage(true, auction, buyer, item);
+    if (message != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.BroadcastInsideWorld", true)) {
+      WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(starter));
     }
 
-    if (GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.NotifyPlayer")) {
-      Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
-
-      if (starter != null && !starter.getWorld().equals(shop.getSignLocation().getWorld())) {
-        PlayerUtils.sendMessage(starter, message);
-      }
+    if (starter != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.NotifyPlayer", true)) {
+      String messageOwner = formatMessage(false, auction, buyer, item);
+      if (messageOwner != null)
+        PlayerUtils.sendMessage(starter, messageOwner);
     }
   }
 

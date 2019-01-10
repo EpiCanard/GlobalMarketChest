@@ -153,7 +153,11 @@ InfoMessages:
   CreateAuction: "Auction successfully created"
   UndoEveryAuction: "Every auction successfully deleted"
   RenewEveryAuction: "Every auction successfully renewed"
+  # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
+  # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
+  # If you don't have them a message will pop in console and no message will broadcast
   AcquireAuction: "&3%s &6bought &2%d %s &6for &2%.2f&6 $ to &3%s&6."
+  AcquireAuctionOwner: "&3%s &6bought your auction &2%d %s &6for &2%.2f&6 $."
   PluginReloading: "Plugin is reloading..."
   PluginReloaded: "Plugin is reloaded."
   WriteGroupName: "Write the group name that you want"
