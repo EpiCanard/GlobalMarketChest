@@ -10,13 +10,13 @@ import org.bukkit.inventory.PlayerInventory;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
+import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class CreateAuctionPrice extends ShopInterface {
@@ -51,7 +51,6 @@ public class CreateAuctionPrice extends ShopInterface {
       this.inv.getInv().setItem(18 + i, ItemStackUtils.setItemStackMeta(priceItem, "&a+ " + prices.get(i), lore));
       this.inv.getInv().setItem(27 + i, ItemStackUtils.setItemStackMeta(priceItem.clone(), "&c- " + prices.get(i), lore));
     }
-    lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
     this.inv.getInv().setItem(4, ItemStackUtils.setItemStackLore(item.clone(), lore));
   }
 
@@ -93,14 +92,9 @@ public class CreateAuctionPrice extends ShopInterface {
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
     Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
 
-    double price = BigDecimal.valueOf(auction.getPrice()).multiply(BigDecimal.valueOf(auction.getAmount())).doubleValue();
-    List<String> lore = new ArrayList<>();
+    List<String> lore = auction.getLore(AuctionLoreConfig.SELECTPRICE);
     if (auctionNumber > 1)
-      lore.add(String.format("&7%s : &6%s &ax&9%s", LangUtils.get("Divers.Quantity"), auction.getAmount(), auctionNumber));
-    else
-      lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.Quantity"), auction.getAmount()));
-    lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.UnitPrice"), auction.getPrice()));
-    lore.add(String.format("&7%s : &6%s", LangUtils.get("Divers.TotalPrice"), price));
+      lore.set(0,String.format("%s &ax&9%s", lore.get(0), auctionNumber));
     return lore;
   }
 

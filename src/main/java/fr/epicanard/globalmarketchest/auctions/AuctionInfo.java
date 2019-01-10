@@ -128,7 +128,8 @@ public class AuctionInfo {
     List<String> lore = new ArrayList<>();
 
     double totalPrice = BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
-    lore.add("&6--------------");
+    if (config.getFrame())
+      lore.add("&6--------------");
     if (config.getState())
       this.addLore(lore, "State", "&2", this.state.getLang());
     if (config.getQuantity())
@@ -152,7 +153,8 @@ public class AuctionInfo {
       this.addLore(lore, path, "&6",
         DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
     }
-    lore.add("&6--------------");
+    if (config.getFrame())
+      lore.add("&6--------------");
     lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(this.itemStack));
     return lore;
   }
