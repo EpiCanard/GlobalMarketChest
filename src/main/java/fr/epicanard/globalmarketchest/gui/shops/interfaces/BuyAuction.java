@@ -3,7 +3,6 @@ package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 import java.util.Arrays;
 import java.util.MissingFormatArgumentException;
 import java.util.UUID;
-import java.util.function.Function;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
