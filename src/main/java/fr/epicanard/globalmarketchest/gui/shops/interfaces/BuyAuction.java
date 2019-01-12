@@ -109,13 +109,13 @@ public class BuyAuction extends ShopInterface {
 
     Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
 
-    String message = formatMessage(true, auction, buyer, item);
+    String message = formatMessage(false, auction, buyer, item);
     if (message != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.BroadcastInsideWorld", true)) {
       WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(starter));
     }
 
     if (starter != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.NotifyPlayer", true)) {
-      String messageOwner = formatMessage(false, auction, buyer, item);
+      String messageOwner = formatMessage(true, auction, buyer, item);
       if (messageOwner != null)
         PlayerUtils.sendMessage(starter, messageOwner);
     }

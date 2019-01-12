@@ -26,9 +26,9 @@ public class ShopCreationSelectType extends ShopCreationInterface {
 
   public ShopCreationSelectType(InventoryGUI inv) {
     super(inv);
-    this.actions.put(11, i -> this.toggleShop(11, ShopType.GLOBALSHOP));
-    this.actions.put(13, i -> this.toggleShop(13, ShopType.AUCTIONSHOP));
-    this.actions.put(15, i -> this.toggleShop(15, ShopType.ADMINSHOP));
+    // this.actions.put(11, i -> this.toggleShop(11, ShopType.GLOBALSHOP));
+    // this.actions.put(13, i -> this.toggleShop(13, ShopType.AUCTIONSHOP));
+    // this.actions.put(15, i -> this.toggleShop(15, ShopType.ADMINSHOP));
     this.actions.put(53, new NextInterface("ShopCreationLink", this::checkCreation));
     if (this.paginator != null) {
       this.paginator.setLoadConsumer(this::loadNearBlock);
@@ -117,8 +117,9 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     super.load();
 
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-    this.setGlow(11, shop.getType(), ShopType.GLOBALSHOP);
-    this.setGlow(13, shop.getType(), ShopType.AUCTIONSHOP);
-    this.setGlow(15, shop.getType(), ShopType.ADMINSHOP);
+    this.setGlow(13, shop.getType(), ShopType.GLOBALSHOP);
+    // this.setGlow(11, shop.getType(), ShopType.GLOBALSHOP);
+    // this.setGlow(13, shop.getType(), ShopType.AUCTIONSHOP);
+    // this.setGlow(15, shop.getType(), ShopType.ADMINSHOP);
   }
 }
