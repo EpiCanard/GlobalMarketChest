@@ -25,8 +25,6 @@ public class AuctionInfo {
   @Getter
   private String itemStack;
   @Getter
-  private Short damage;
-  @Getter
   private String itemMeta;
   @Getter @Setter
   private Integer amount;
@@ -55,7 +53,6 @@ public class AuctionInfo {
     try {
       this.id = res.getInt("id");
       this.itemStack = res.getString("itemStack");
-      this.damage = res.getShort("damage");
       this.itemMeta = res.getString("itemMeta");
       this.amount = res.getInt("amount");
       this.price = res.getDouble("price");
@@ -89,7 +86,6 @@ public class AuctionInfo {
     ItemStack it = item.clone();
     it.setAmount(1);
     this.itemStack = ItemStackUtils.getMinecraftKey(it);
-    this.damage = it.getDurability();
     this.itemMeta = DatabaseUtils.serialize(it);
   }
 
