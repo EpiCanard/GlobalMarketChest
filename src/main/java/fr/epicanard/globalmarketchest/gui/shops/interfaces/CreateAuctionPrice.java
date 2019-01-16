@@ -79,7 +79,6 @@ public class CreateAuctionPrice extends ShopInterface {
       inventory.setItem(18 + i, ItemStackUtils.setItemStackLore(inventory.getItem(18 + i), lore));
       inventory.setItem(27 + i, ItemStackUtils.setItemStackLore(inventory.getItem(27 + i), lore));
     }
-    lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
     inventory.setItem(4, ItemStackUtils.setItemStackLore(item.clone(), lore));
   }
 
