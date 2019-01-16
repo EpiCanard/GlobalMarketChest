@@ -77,7 +77,7 @@ Buttons:
     Name: "&cAnnuler toutes les enchères"
   GlobalView:
     Name: "&fVue d'ensemble"
-    Description: "&fHistorique des enchères"
+    Description: "&5Historique des enchères"
   Search:
     Name: "&3Chercher une enchère"
   DragItem:
