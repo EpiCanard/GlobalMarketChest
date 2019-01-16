@@ -70,7 +70,7 @@ public class BuyAuction extends ShopInterface {
 
       GlobalMarketChest.plugin.economy.exchangeMoney(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice());
 
-      i.getPlayer().getInventory().addItem(item);
+      i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
 
       this.broadcastMessage(auction, i.getPlayer(), item);
 
@@ -80,20 +80,28 @@ public class BuyAuction extends ShopInterface {
     }
   }
 
+  /**
+   * Format the message that must be broadcasted
+   * The message is different if the destination player is the owner or not
+   *
+   * @param isOwner Define the player is owner of the auctions
+   * @param buyer Player that buy the auction
+   * @param item ItemStack bought
+   */
   private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
     String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
     try {
       if (isOwner) {
         return String.format(LangUtils.get(langVariable),
           buyer.getName(),
-          item.getAmount(),
+          auction.getAmount(),
           ItemStackUtils.getItemStackDisplayName(item),
           auction.getTotalPrice()
         );
       }
       return String.format(LangUtils.get(langVariable),
         buyer.getName(),
-        item.getAmount(),
+        auction.getAmount(),
         ItemStackUtils.getItemStackDisplayName(item),
         auction.getTotalPrice(),
         PlayerUtils.getPlayerName(auction.getPlayerStarter())
@@ -104,6 +112,13 @@ public class BuyAuction extends ShopInterface {
     return null;
   }
 
+  /**
+   * Broadcast a message inside server to inform about a purchase
+   *
+   * @param auction Information of auction
+   * @param buyer Player that buy the auction
+   * @param item ItemStack bought
+   */
   private void broadcastMessage(AuctionInfo auction, Player buyer, ItemStack item) {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 

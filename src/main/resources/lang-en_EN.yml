@@ -134,7 +134,7 @@ ErrorMessages:
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
   MissingItems: "Wrong number of items, some items are missing"
   FailCreateAuction: "Fail to create auction in database"
-  NotEnoughSpace: "Not enough space to add all items;&fin player inventory"
+  NotEnoughSpace: "Not enough space to add all items;in player inventory"
   NotEnoughMoney: "Not enough money to buy this auction"
   CantBuyAuction: "Fail to buy auction (expired or already sold)"
   CantRenewAuction: "Fail to renew auction"
