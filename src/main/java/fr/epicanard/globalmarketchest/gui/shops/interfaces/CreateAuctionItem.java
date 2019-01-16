@@ -105,6 +105,9 @@ public class CreateAuctionItem extends ShopInterface {
     this.inv.getInv().setItem(22, ItemStackUtils.setItemStackLore(item.clone(), lore));
   }
 
+  /**
+   * Put all items matching with droppped item in one auction
+   */
   private void defineMaxInOne() {
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
@@ -121,6 +124,10 @@ public class CreateAuctionItem extends ShopInterface {
     this.updateItem();
   }
 
+  /**
+   * Repeat the item dropped in as many auctions as possible.
+   * The auction number is limited by config
+   */
   private void defineMaxRepeat() {
     final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);

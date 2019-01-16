@@ -74,7 +74,7 @@ public class CategoryHandler {
    * @return Return the category display name
    */
   public String getDisplayName(String category) {
-    return "&f" + this.config.getString(category + ".DisplayName", "");
+    return this.config.getString(category + ".DisplayName", "");
   }
 
   /**
@@ -89,7 +89,7 @@ public class CategoryHandler {
       item = "minecraft:barrier";
 
     ItemStack it = ItemStackUtils.getItemStack(item);
-    ItemStackUtils.setItemStackMeta(it, this.getDisplayName(category), null);
+    ItemStackUtils.setItemStackMeta(it, "&f" + this.getDisplayName(category), null);
     return it;
   }
 
