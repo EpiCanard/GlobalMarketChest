@@ -167,4 +167,30 @@ public class ItemStackUtils {
   public String getItemStackDisplayName(ItemStack item) {
     return VersionSupportUtils.getInstance().getItemStackDisplayName(item);
   }
+
+  /**
+   * Create n itemStack to don't overload maxItemStackSize
+   *
+   * @param item Reference itemstack
+   * @param amount Number of items in total
+   * @return The item splitted to don't exceed maxStackSize
+   */
+  public ItemStack[] splitStack(ItemStack item, Integer amount) {
+    List<ItemStack> items = new ArrayList<>();
+    int i = amount;
+    ItemStack tmp;
+    Integer max;
+
+    while (i > 0) {
+      tmp = item.clone();
+      max = ItemStackUtils.getMaxStack(item, i);
+      tmp.setAmount(max);
+      items.add(tmp);
+      i -= max;
+      if (max == 0)
+        break;
+    }
+
+    return items.toArray(new ItemStack[0]);
+  }
 }

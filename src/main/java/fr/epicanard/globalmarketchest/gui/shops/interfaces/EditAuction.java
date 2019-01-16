@@ -61,7 +61,7 @@ public class EditAuction extends ShopInterface {
     try {
       PlayerUtils.hasEnoughPlaceWarn(i.getPlayer().getInventory(), item);
       if (GlobalMarketChest.plugin.auctionManager.undoAuction(auction.getId(), auction.getPlayerStarter()) == true) {
-        i.getPlayer().getInventory().addItem(item);
+        i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
         PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoAuction");
         ReturnBack.execute(null, i);
       } else
