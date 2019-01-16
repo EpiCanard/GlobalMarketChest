@@ -62,7 +62,7 @@ Buttons:
     Name: "&2Create Shop"
   NewAuction:
     Name: "&2Create new auction"
-    Description: "&Auctions number (%d/%d);&7Click here to sell your items"
+    Description: "&7Auctions number (%d/%d);&7Click here to sell your items"
   CreateAuction:
     Name: "&2Create auction"
   BuyAuction:
@@ -77,7 +77,7 @@ Buttons:
     Name: "&cUndo every auctions"
   GlobalView:
     Name: "&fOverview"
-    Description: "&fAuction history"
+    Description: "&5Auction history"
   Search:
     Name: "&3Search for an auction"
   DragItem:
