@@ -2,7 +2,7 @@ Build:
   DisplayName: "Building Blocks"
   DisplayItem: minecraft:bricks
   GroupLevels: 2
-  Position: 20
+  Position: 11
   Items:
     - minecraft:acacia_log
     - minecraft:acacia_planks
@@ -251,7 +251,7 @@ Decoration:
   DisplayName: "Decoration Blocks"
   DisplayItem: minecraft:peony
   GroupLevels: 2
-  Position: 21
+  Position: 12
   Items:
     - minecraft:acacia_fence
     - minecraft:acacia_leaves
@@ -462,7 +462,7 @@ Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
   GroupLevels: 2
-  Position: 22
+  Position: 13
   Items:
     - minecraft:acacia_button
     - minecraft:acacia_door
@@ -522,7 +522,7 @@ Transportation:
   DisplayName: "Transportation"
   DisplayItem: minecraft:powered_rail
   GroupLevels: 2
-  Position: 23
+  Position: 14
   Items:
     - minecraft:acacia_boat
     - minecraft:activator_rail
@@ -546,7 +546,7 @@ Misc:
   DisplayName: "Miscellaneous"
   DisplayItem: minecraft:lava_bucket
   GroupLevels: 2
-  Position: 24
+  Position: 15
   Items:
     - minecraft:bat_spawn_egg
     - minecraft:beacon
@@ -703,7 +703,7 @@ Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
   GroupLevels: 2
-  Position: 38
+  Position: 29
   Items:
     - minecraft:apple
     - minecraft:baked_potato
@@ -745,7 +745,7 @@ Tools:
   DisplayName: "Tools"
   DisplayItem: minecraft:iron_axe
   GroupLevels: 3
-  Position: 39
+  Position: 30
   Items:
     - minecraft:clock
     - minecraft:compass
@@ -778,7 +778,7 @@ Combat:
   DisplayName: "Combat"
   DisplayItem: minecraft:golden_sword
   GroupLevels: 3
-  Position: 40
+  Position: 31
   Items:
     - minecraft:arrow
     - minecraft:bow
@@ -817,7 +817,7 @@ Brewing:
   DisplayName: "Brewing"
   DisplayItem: minecraft:potion
   GroupLevels: 2
-  Position: 41
+  Position: 32
   Items:
     - minecraft:blaze_powder
     - minecraft:brewing_stand
@@ -838,7 +838,7 @@ Books:
   DisplayName: "Enchanted books"
   DisplayItem: minecraft:enchanted_book
   GroupLevels: 2
-  Position: 42
+  Position: 33
   Items:
     - minecraft:enchanted_book
 # The category '!' is all items that are not inside a category
@@ -848,7 +848,7 @@ Books:
   DisplayName: "Uncategorized"
   DisplayItem: minecraft:white_stained_glass_pane
   GroupLevels: 2
-  Position: 31
+  Position: 22
 
 # Items not categorized
 # - minecraft:barrier
