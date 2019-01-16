@@ -74,7 +74,7 @@ public class CategoryHandler {
    * @return Return the category display name
    */
   public String getDisplayName(String category) {
-    return this.config.getString(category + ".DisplayName", "");
+    return "&f" + this.config.getString(category + ".DisplayName", "");
   }
 
   /**
