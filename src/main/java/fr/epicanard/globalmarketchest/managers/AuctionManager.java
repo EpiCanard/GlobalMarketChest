@@ -55,7 +55,6 @@ public class AuctionManager {
 
     for (int i = 0; i < repeat; i++) {
       builder.addValue("itemStack", auction.getItemStack());
-      builder.addValue("damage", auction.getDamage());
       builder.addValue("itemMeta", auction.getItemMeta());
       builder.addValue("amount", auction.getAmount());
       builder.addValue("price", auction.getPrice());

@@ -80,7 +80,7 @@ public enum GroupLevels {
     switch (groupLevels) {
       case 3:
         builder.addField("COUNT(itemStack) AS count");
-        builder.setExtension("GROUP BY itemStack, damage");
+        builder.setExtension("GROUP BY itemStack");
         break;
       case 2:
         builder.addField("COUNT(itemMeta) AS count");
