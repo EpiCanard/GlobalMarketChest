@@ -32,6 +32,9 @@ permissions:
   globalmarketchest.globalshop.buyauction:
     description: Can create buy an auction
   # COMMANDS
+  globalmarketchest.commands:
+    description: Base permission for command
+    default: true
   globalmarketchest.commands.*:
     description: Can use all commands
     children:

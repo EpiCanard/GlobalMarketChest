@@ -173,9 +173,9 @@ Commands:
   SeeHelp: "&6See help : &c/globalmarketchest help"
   HelpCommand:
     Usage: "&6Usage :"
-    Help: "&c/globalmarketchest [help]&6 -Show help"
+    Help: "&c/globalmarketchest [help]&6 - Show help"
     Reload: "&c/globalmarketchest reload&6 - Reload the plugin"
-    List: "&c/globalmarketchest list [shop]&6 - List all globalshop"
+    List: "&c/globalmarketchest list&6 - List all globalshop"
     Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop à distance"
     TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teleport the player a specific shop position"
     Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"
