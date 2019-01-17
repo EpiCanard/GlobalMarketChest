@@ -104,6 +104,7 @@ Interfaces:
       - Return
       - Exit
     Items:
+      40: FreePrice
       53: CreateAuction
 
   # =============

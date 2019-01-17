@@ -129,6 +129,9 @@ Buttons:
     Name: "&9Bought auctions"
   CanceledAuction:
     Name: "&6Canceled auctions"
+  FreePrice:
+    Name: "&aFree"
+    Description: "&7Set the price to zero"
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"

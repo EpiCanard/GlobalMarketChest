@@ -94,6 +94,7 @@ Interfaces:
     SoldAuction: minecraft:book
     BoughtAuction: minecraft:book
     CanceledAuction: minecraft:book
+    FreePrice: minecraft:stained_glass_pane/5
   Circle:
     SetItem: "minecraft:stained_glass_pane/5"
     UnsetItem: "minecraft:stained_glass_pane/11"

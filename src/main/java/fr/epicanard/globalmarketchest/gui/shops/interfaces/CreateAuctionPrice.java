@@ -1,7 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.inventory.Inventory;
@@ -27,13 +26,14 @@ public class CreateAuctionPrice extends ShopInterface {
     this.isTemp = true;
     this.actions.put(0, new PreviousInterface());
     this.actions.put(53, this::createAuction);
+    this.actions.put(40, i -> this.setPrice(0, true));
 
     List<Double> prices = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDoubleList("Price.Ranges");
 
     for (int i = 0; i < prices.size() && i < 9; i++) {
       final int j = i;
-      this.actions.put(18 + i, iv -> this.setPrice(prices.get(j)));
-      this.actions.put(27 + i, iv -> this.setPrice(-1 * prices.get(j)));
+      this.actions.put(18 + i, iv -> this.setPrice(prices.get(j), false));
+      this.actions.put(27 + i, iv -> this.setPrice(-1 * prices.get(j), false));
     }
   }
 
@@ -57,13 +57,18 @@ public class CreateAuctionPrice extends ShopInterface {
   /**
    * Add the price gave in parameter to the current price and update interface
    *
-   * @param addPrice price to add
+   * @param price price to set or add
+   * @param set Define if price must be set or added
    */
-  private void setPrice(double addPrice) {
+  private void setPrice(double price, Boolean set) {
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
 
-    BigDecimal dec = BigDecimal.valueOf(auction.getPrice()).add(BigDecimal.valueOf(addPrice));
-    auction.setPrice((dec.doubleValue() < 0.0) ? 0 : dec.doubleValue());
+    if (!set) {
+      BigDecimal dec = BigDecimal.valueOf(auction.getPrice()).add(BigDecimal.valueOf(price));
+      auction.setPrice((dec.doubleValue() < 0.0) ? 0 : dec.doubleValue());
+    } else {
+      auction.setPrice(price);
+    }
     this.updatePrice();
   }
 
