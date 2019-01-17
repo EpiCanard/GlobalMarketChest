@@ -1,4 +1,6 @@
 InterfacesTitle:
+  EditAuction: "&2Modification de l'enchère"
+  BuyAuction: "&2Achat de l'enchère"
   CategoryView: "&2Vue par catégorie"
   AuctionViewList: "&2Liste des enchères"
   ConfigShop : "&2Configuration du shop"
