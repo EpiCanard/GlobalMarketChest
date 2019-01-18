@@ -33,6 +33,7 @@ Divers:
   Days: "days"
   Hours: "hours"
   Minutes: "minutes"
+  Seconds: "seconds"
   PastDate: "%sago"
   UnknownPlayer: "Unknown player"
 States:
