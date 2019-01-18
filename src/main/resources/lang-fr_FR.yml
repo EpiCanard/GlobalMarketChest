@@ -33,6 +33,7 @@ Divers:
   Days: "jours"
   Hours: "heures"
   Minutes: "minutes"
+  Seconds: "secondes"
   PastDate: "il y a %s"
   UnknownPlayer: "Inconnu au bataillon"
 States:

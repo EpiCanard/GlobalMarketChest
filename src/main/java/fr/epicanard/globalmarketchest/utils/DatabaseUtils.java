@@ -73,13 +73,19 @@ public class DatabaseUtils {
       diff *= -1;
       ago = true;
     }
-    diff = diff / 1000 / 60;
-    long day = diff / 60 / 24;
-    if (full || (!full && day > 0))
-      sb.append(DatabaseUtils.getLanguageTime(diff / 60 / 24, "Days"));
-    sb.append(DatabaseUtils.getLanguageTime(diff / 60 % 24, "Hours"));
-    if (full || (!full && day <= 0))
-      sb.append(DatabaseUtils.getLanguageTime(diff % 24, "Minutes"));
+    diff = diff / 1000;
+    long days = diff / 60 / 60 / 24;
+    long hours = diff / 60 / 60 % 24;
+    long minutes = diff / 60 % 24;
+    long seconds = diff % 60;
+    if (full || days > 0)
+      sb.append(DatabaseUtils.getLanguageTime(days, "Days"));
+    if (full || hours > 0)
+      sb.append(DatabaseUtils.getLanguageTime(hours, "Hours"));
+    if (full || (minutes > 0 && days == 0))
+      sb.append(DatabaseUtils.getLanguageTime(minutes, "Minutes"));
+    if (days == 0 && hours == 0 && (seconds > 0 || minutes == 0))
+      sb.append(DatabaseUtils.getLanguageTime(seconds, "Seconds"));
     if (ago)
       return String.format(LangUtils.getOrElse("Divers.PastDate", "%s"), sb.toString());
     return sb.toString();
