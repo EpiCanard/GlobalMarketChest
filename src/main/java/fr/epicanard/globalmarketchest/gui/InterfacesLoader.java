@@ -46,7 +46,7 @@ public class InterfacesLoader {
 
   /**
    * Get list of ItemStack for one interface
-   * 
+   *
    * @param interfaceName
    * @return
    */
@@ -141,7 +141,7 @@ public class InterfacesLoader {
    * Load interfaces inside a map, where the key is the name of the interface
    * and the value a list of ItemStack
    * When there no item specified for a position it's filled with background item
-   * 
+   *
    * @param interfaceConfig YamlConfiguration
    * @param loadBase if set to true get base interfaces and it in final interface
    * @return
@@ -170,7 +170,7 @@ public class InterfacesLoader {
 
   /**
    * Load all interfaces in a map of string and itemstacks
-   * 
+   *
    * @param interfaceConfig YamlConfiguration
    * @return
    */
@@ -179,7 +179,7 @@ public class InterfacesLoader {
     this.paginators.clear();
     this.baseInterfaces.clear();
     this.basePaginators.clear();
-    
+
     this.loadInterfaces(interfaceConfig.getConfigurationSection("BaseInterfaces"), false);
     this.loadInterfaces(interfaceConfig.getConfigurationSection("Interfaces"), true);
     return this.interfaces;
@@ -188,7 +188,7 @@ public class InterfacesLoader {
   /**
    * Parse items defined for the interface (ex: "2-5" to [2, 3, 4, 5] of the
    * current item) Generate map, to each position number assign an item
-   * 
+   *
    * @param its
    * @return
    */

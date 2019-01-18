@@ -148,7 +148,7 @@ ErrorMessages:
   CantRenewEveryAuction: "Impossible de renouveler toutes ;&7les enchères"
   CantUndoEveryAuction: "Impossible d'annuler toutes les enchères"
   PlayerDoesntExist: "Ce joueur n'existe pas"
-  MaxAuctionByPlayer: "Impossible de créer l'enchère;&7Vous avez atteint;&7le nombre d'enchères maximum"
+  MaxAuctionByPlayer: "Impossible de créer l'enchère;&7Vous avez atteint le nombre;&7d'enchères maximum"
   PermissionNotAllowed: "&cVous n'êtes pas autorisé à faire cette action"
   InvalidCommand: "&cCette commande n'est pas valide : "
   PlayerOnly: "&cCette commande peut uniquement être exécutée par un joueur"

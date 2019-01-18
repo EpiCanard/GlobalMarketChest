@@ -153,11 +153,11 @@ ErrorMessages:
   PlayerOnly: "&cThis command can only be executed by a player"
   UnknownShop: "&cUnknown Shop : "
 InfoMessages:
-  UndoAuction: "Auction successfully deleted"
-  RenewAuction: "Auction successfully renewed"
-  CreateAuction: "Auction successfully created"
-  UndoEveryAuction: "Every auction successfully deleted"
-  RenewEveryAuction: "Every auction successfully renewed"
+  UndoAuction: "&2Auction successfully deleted"
+  RenewAuction: "&2Auction successfully renewed"
+  CreateAuction: "&2Auction successfully created"
+  UndoEveryAuction: "&2Every auction successfully deleted"
+  RenewEveryAuction: "&2Every auction successfully renewed"
   # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
   # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
   # If you don't have them a message will pop in console and no message will broadcast
