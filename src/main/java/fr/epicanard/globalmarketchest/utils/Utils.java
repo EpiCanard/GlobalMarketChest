@@ -149,12 +149,14 @@ public class Utils {
   /**
    * If the index is bigger than size return the size to prevent IndexOutOfBOundException
    *
+   * @param index Index to compare
+   * @param size Max size
    * @return index
    */
   public int getIndex(int index, int size) {
     if (index < 0)
       return 0;
-    return (index >= size) ? size : index;
+    return (index >= size) ? size - 1 : index;
   }
 
   /**
