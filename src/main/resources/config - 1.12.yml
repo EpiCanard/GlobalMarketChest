@@ -39,6 +39,7 @@ AllowedLinkBlock:
   - minecraft:ender_chest
   - minecraft:chest
 Price:
+  DynamicFreePosition: true
   Ranges:
     - 1000
     - 100

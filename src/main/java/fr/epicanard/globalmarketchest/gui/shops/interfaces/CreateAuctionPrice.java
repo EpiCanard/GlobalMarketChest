@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -16,42 +17,51 @@ import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class CreateAuctionPrice extends ShopInterface {
-  private int size = 0;
+  private List<Double> prices;
+  private List<String> priceItems;
+  private Boolean dynamicFreePos;
 
   public CreateAuctionPrice(InventoryGUI inv) {
     super(inv);
     this.isTemp = true;
     this.actions.put(0, new PreviousInterface());
     this.actions.put(53, this::createAuction);
-    this.actions.put(40, i -> this.setPrice(0, true));
 
-    List<Double> prices = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDoubleList("Price.Ranges");
+    YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
 
-    for (int i = 0; i < prices.size() && i < 9; i++) {
+    this.prices = config.getDoubleList("Price.Ranges");
+    this.prices = this.prices.subList(0, Utils.getIndex(8, this.prices.size()) + 1);
+    this.priceItems = config.getStringList("Price.Items");
+    this.dynamicFreePos = config.getBoolean("Price.DynamicFreePosition", true);
+
+    int i = 0;
+    for (i = 0; i < this.prices.size(); i++) {
       final int j = i;
-      this.actions.put(18 + i, iv -> this.setPrice(prices.get(j), false));
-      this.actions.put(27 + i, iv -> this.setPrice(-1 * prices.get(j), false));
+      this.actions.put(18 + i, iv -> this.setPrice(this.prices.get(j), false));
+      this.actions.put(27 + i, iv -> this.setPrice(-1 * this.prices.get(j), false));
     }
+    this.actions.put((i == 9 || !this.dynamicFreePos) ? 40 : 27 + i, iv -> this.setPrice(0, true));
   }
 
   @Override
   public void load() {
     super.load();
-    List<Double> prices = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDoubleList("Price.Ranges");
-    List<String> items = GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("Price.Items");
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
 
-    this.size = prices.size();
     List<String> lore = this.getLore();
-    for (int i = 0; i < prices.size() && i < 9; i++) {
-      ItemStack priceItem = ItemStackUtils.getItemStack(items.get(Utils.getIndex(i, items.size())));
+
+    int i = 0;
+    for (i = 0; i < this.prices.size(); i++) {
+      ItemStack priceItem = ItemStackUtils.getItemStack(this.priceItems.get(Utils.getIndex(i, this.priceItems.size())));
       this.inv.getInv().setItem(18 + i, ItemStackUtils.setItemStackMeta(priceItem, "&a+ " + prices.get(i), lore));
       this.inv.getInv().setItem(27 + i, ItemStackUtils.setItemStackMeta(priceItem.clone(), "&c- " + prices.get(i), lore));
     }
-    this.inv.getInv().setItem(4, ItemStackUtils.setItemStackLore(item.clone(), lore));
+    this.inv.getInv().setItem((i == 9 || !this.dynamicFreePos) ? 40 : 27 + i, Utils.getButton("FreePrice"));
+    this.setIcon(ItemStackUtils.setItemStackLore(item.clone(), lore));
   }
 
   /**
@@ -80,11 +90,11 @@ public class CreateAuctionPrice extends ShopInterface {
     List<String> lore = this.getLore();
     Inventory inventory = this.inv.getInv();
 
-    for (int i = 0; i < this.size; i++) {
+    for (int i = 0; i < this.prices.size(); i++) {
       inventory.setItem(18 + i, ItemStackUtils.setItemStackLore(inventory.getItem(18 + i), lore));
       inventory.setItem(27 + i, ItemStackUtils.setItemStackLore(inventory.getItem(27 + i), lore));
     }
-    inventory.setItem(4, ItemStackUtils.setItemStackLore(item.clone(), lore));
+    this.setIcon(ItemStackUtils.setItemStackLore(item.clone(), lore));
   }
 
   /**
@@ -130,6 +140,7 @@ public class CreateAuctionPrice extends ShopInterface {
       playerInv.removeItem(it);
       totalAmount -= stackSize;
     }
+    PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.CreateAuction");
     ReturnBack.execute(null, i);
   }
 
