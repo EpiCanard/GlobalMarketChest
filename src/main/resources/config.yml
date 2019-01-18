@@ -41,6 +41,7 @@ AllowedLinkBlock:
   - minecraft:ender_chest
   - minecraft:chest
 Price:
+  DynamicFreePosition: true
   Ranges:
     - 1000
     - 100
@@ -96,6 +97,7 @@ Interfaces:
     SoldAuction: minecraft:book
     BoughtAuction: minecraft:book
     CanceledAuction: minecraft:book
+    FreePrice: minecraft:lime_stained_glass_pane
   Circle:
     SetItem: "minecraft:lime_stained_glass_pane"
     UnsetItem: "minecraft:blue_stained_glass_pane"
