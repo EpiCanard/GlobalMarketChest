@@ -44,9 +44,12 @@ public class AuctionViewList extends DefaultFooter {
             if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
               this.auctions = auctions;
             pag.setItemStacks(Utils.mapList(auctions, auction -> {
-              if (this.level.getNextLevel(this.category) == null)
-                ItemStackUtils.addItemStackLore(auction.getLeft(), auction.getRight().getLore(AuctionLoreConfig.TOSELL));
-              return auction.getLeft();
+              ItemStack it = auction.getLeft();
+              if (this.level.getNextLevel(this.category) == null) {
+                it.setAmount(auction.getRight().getAmount() > 64 ? 64 : auction.getRight().getAmount());
+                ItemStackUtils.addItemStackLore(it, auction.getRight().getLore(AuctionLoreConfig.TOSELL));
+              }
+              return it;
             }));
           });
     });
