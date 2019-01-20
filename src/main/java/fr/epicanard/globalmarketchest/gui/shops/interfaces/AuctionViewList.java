@@ -45,8 +45,9 @@ public class AuctionViewList extends DefaultFooter {
               this.auctions = auctions;
             pag.setItemStacks(Utils.mapList(auctions, auction -> {
               ItemStack it = auction.getLeft();
+              int max = inv.getInv().getMaxStackSize();
               if (this.level.getNextLevel(this.category) == null) {
-                it.setAmount(auction.getRight().getAmount() > 64 ? 64 : auction.getRight().getAmount());
+                it.setAmount(auction.getRight().getAmount() > max ? max : auction.getRight().getAmount());
                 ItemStackUtils.addItemStackLore(it, auction.getRight().getLore(AuctionLoreConfig.TOSELL));
               }
               return it;
