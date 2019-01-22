@@ -9,8 +9,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
 import fr.epicanard.globalmarketchest.gui.paginator.PaginatorConfig;
+import fr.epicanard.globalmarketchest.gui.shops.toggler.TogglerConfig;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
@@ -32,8 +31,8 @@ public class InterfacesLoader {
   private Map<String, PaginatorConfig> paginators = new HashMap<>();
   private Map<String, ItemStack[]> baseInterfaces = new HashMap<>();
   private Map<String, PaginatorConfig> basePaginators = new HashMap<>();
-  private Map<String, List<Pair<Integer, Boolean>>> circleTogglers = new HashMap<>();
-  private Map<String, List<Pair<Integer, Boolean>>> baseCircleTogglers = new HashMap<>();
+  private Map<String, List<TogglerConfig>> togglers = new HashMap<>();
+  private Map<String, List<TogglerConfig>> baseTogglers = new HashMap<>();
 
   private InterfacesLoader() {
   }
@@ -64,31 +63,34 @@ public class InterfacesLoader {
     return (conf != null) ? conf.duplicate() : null;
   }
 
-  public List<Pair<Integer, Boolean>> getCircleTogglers(String interfaceName) {
-    return this.circleTogglers.get(interfaceName);
+  /**
+   * Get togglers of one interface
+   *
+   * @param interfaceName Name of the interface
+   * @return Togglers of interface sent in param
+   */
+  public List<TogglerConfig> getTogglers(String interfaceName) {
+    return this.togglers.get(interfaceName);
   }
+
   /**
    * Load Circle Togle from config if exist and add it inside circleToggler map
    * @param config
    * @param name
    */
-  private void loadCircleToggler(ConfigurationSection config, String name, Map<String, List<Pair<Integer, Boolean>>> map) {
-    List<Map<?, ?>> circles = config.getMapList(name + ".CircleToggler");
+  private void loadTogglers(ConfigurationSection config, String name, Map<String, List<TogglerConfig>> map) {
+    List<Map<?, ?>> togglers = config.getMapList(name + ".Togglers");
 
-    if (circles.isEmpty())
+    if (togglers.isEmpty())
       return;
-    List<Pair<Integer, Boolean>> circleList = new ArrayList<>();
-    for (Map<?, ?> circle : circles) {
-      Integer pos = (Integer)circle.get("Pos");
-      if (pos == null)
-        continue;
-      Boolean set = (Boolean)circle.get("Set");
-      if (set == null)
-        set = false;
-      circleList.add(new ImmutablePair<Integer,Boolean>(pos, set));
+    List<TogglerConfig> togglerList = Utils.getOrElse(map.get(name), new ArrayList<>());
+    for (Map<?, ?> toggler : togglers) {
+      TogglerConfig conf = new TogglerConfig(toggler);
+      togglerList.removeIf(e -> e.getPosition() == conf.getPosition());
+      togglerList.add(conf);
     }
-    if (!circleList.isEmpty())
-      map.put(name, circleList);
+    if (!togglerList.isEmpty())
+      map.put(name, togglerList); 
   }
 
   /**
@@ -159,12 +161,12 @@ public class InterfacesLoader {
               ItemStackUtils.mergeArray(this.interfaces.get(name), i);
           });
           Optional.ofNullable(this.basePaginators.get(base)).ifPresent(p -> this.paginators.put(name, p.duplicate()));
-          Optional.ofNullable(this.baseCircleTogglers.get(base)).ifPresent(c -> this.circleTogglers.put(name, c));
+          Optional.ofNullable(this.baseTogglers.get(base)).ifPresent(c -> this.togglers.put(name, new ArrayList<TogglerConfig>(c)));
         }
       }
       this.loadInterface(interfaceConfig, name, (loadBase) ? this.interfaces : this.baseInterfaces);
       this.loadPaginator(interfaceConfig, name, (loadBase) ? this.paginators : this.basePaginators);
-      this.loadCircleToggler(interfaceConfig, name, (loadBase) ? this.circleTogglers : this.baseCircleTogglers);
+      this.loadTogglers(interfaceConfig, name, (loadBase) ? this.togglers : this.baseTogglers);
     }
   }
 

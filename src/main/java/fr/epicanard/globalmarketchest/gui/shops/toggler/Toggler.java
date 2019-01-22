@@ -16,6 +16,14 @@ public abstract class Toggler {
   protected Inventory inv;
   protected int pos;
 
+  public Toggler(Inventory inv, TogglerConfig config) {
+    this.inv = inv;
+    this.setItem = config.getSetItem();
+    this.unsetItem = config.getUnsetItem();
+    this.isSet = config.getSet();
+    this.pos = config.getPosition();
+  }
+
   public Toggler(Inventory inv, int pos, ItemStack setItem, ItemStack unsetItem) {
     this.inv = inv;
     this.pos = pos;
@@ -49,6 +57,9 @@ public abstract class Toggler {
     this.isSet = false;
   }
 
+  /**
+   * Toggle the toggler, change from setItem to unsetItem or reverse
+   */
   public void toggle() {
     if (this.isSet)
       this.unset();

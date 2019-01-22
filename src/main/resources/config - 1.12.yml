@@ -102,9 +102,8 @@ Interfaces:
     BoughtAuction: minecraft:book
     CanceledAuction: minecraft:book
     FreePrice: minecraft:stained_glass_pane/5
-  Circle:
-    SetItem: "minecraft:stained_glass_pane/5"
-    UnsetItem: "minecraft:stained_glass_pane/11"
+    CircleSetItem: "minecraft:stained_glass_pane/5"
+    CircleUnsetItem: "minecraft:stained_glass_pane/11"
 Sign:
   Appearance:
     GlobalShop:

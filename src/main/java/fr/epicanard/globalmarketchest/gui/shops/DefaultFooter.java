@@ -4,14 +4,11 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.economy.VaultEconomy;
-import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.NewAuction;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
-import fr.epicanard.globalmarketchest.gui.shops.toggler.SingleToggler;
-import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
@@ -23,14 +20,9 @@ public class DefaultFooter extends ShopInterface {
   public DefaultFooter(InventoryGUI inv) {
     super(inv);
 
-    ItemStack[] items = InterfacesLoader.getInstance().getInterface(this.getClass().getSimpleName());
-
-    Toggler toggler = new SingleToggler(inv.getInv(), 53, items[53], Utils.getBackground(), false);
-    this.togglers.put(53, toggler);
-
     if (Permissions.GS_CREATEAUCTION.isSetOn(this.inv.getPlayer())) {
       this.actions.put(53, new NewAuction());
-      toggler.set();
+      this.togglers.get(53).set();
     }
     this.actions.put(46, new NextInterface("AuctionGlobalView"));
   }

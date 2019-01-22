@@ -4,20 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.auctions.StateAuction;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
-import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.shops.DefaultFooter;
-import fr.epicanard.globalmarketchest.gui.shops.toggler.SingleToggler;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
@@ -46,10 +42,6 @@ public class AuctionGlobalView extends DefaultFooter {
     this.paginator.setLoadConsumer(this::loadAuctions);
     this.paginator.setClickConsumer(this::editAuction);
 
-    ItemStack[] items = InterfacesLoader.getInstance().getInterface(this.getClass().getSimpleName());
-
-    this.togglers.put(10, new SingleToggler(inv.getInv(), 10, items[10], Utils.getBackground(), true));
-    this.togglers.put(11, new SingleToggler(inv.getInv(), 11, items[11], Utils.getBackground(), true));
     this.actions.put(0, new PreviousInterface());
     this.actions.put(10, this::undoEveryAuction);
     this.actions.put(11, this::renewEveryAuction);

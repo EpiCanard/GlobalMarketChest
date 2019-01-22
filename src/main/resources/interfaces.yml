@@ -13,10 +13,13 @@ BaseInterfaces:
     Items:
       53: NewAuction
   DefaultFooter:
+    Togglers:
+      - Pos: 53
+        Set: false
+        SetItem: NewAuction
     Items:
       45: Money
       46: GlobalView
-      53: NewAuction
   DefaultShopInterface:
     Paginator:
       Height: 3
@@ -62,8 +65,9 @@ Interfaces:
     Base:
       - Return
       - Exit
-    CircleToggler:
+    Togglers:
       - Pos: 31
+        Type: "circle"
         Set: false
     Items:
       31: BuyAuction
@@ -72,10 +76,12 @@ Interfaces:
     Base:
       - Return
       - Exit
-    CircleToggler:
+    Togglers:
       - Pos: 29
+        Type: "circle"
         Set: false
       - Pos: 33
+        Type: "circle"
         Set: true
     Items:
       33: RenewAuction
@@ -91,12 +97,20 @@ Interfaces:
       - Return
       - Exit
       - Validate
-    CircleToggler:
+    Togglers:
       - Pos: 22
+        Type: "circle"
+      - Pos: 48
+        Set: false
+        SetItem: MaxInOne
+      - Pos: 50
+        Set: false
+        SetItem: MaxRepeat
+      - Pos: 53
+        Set: false
+        SetItem: CreateAuction
     Items:
       22: AuctionMiddle
-      48: MaxInOne
-      50: MaxRepeat
 
   # Auction view to select item price
   CreateAuctionPrice:
@@ -155,9 +169,12 @@ Interfaces:
       - DefaultShopInterface
       - DefaultFooter
       - GlobalViewButtons
+    Togglers:
+      - Pos: 10
+        SetItem: UndoEveryAuction
+      - Pos: 11
+        SetItem: RenewEveryAuction
     Items:
-      10: UndoEveryAuction
-      11: RenewEveryAuction
       46: Background
 
   # =============
