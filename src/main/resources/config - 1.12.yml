@@ -21,7 +21,7 @@ Options:
   UncategorizedItems: false
   # Define if the button MaxInOne in CreateAuction view must be here
   EnableMaxInOne: true
-  # Define if the button MaaxRepeat in CreateAuction view must be here
+  # Define if the button MaxRepeat in CreateAuction view must be here
   EnableMaxRepeat: true
   # Default price for new auctions
   DefaultPrice: 100

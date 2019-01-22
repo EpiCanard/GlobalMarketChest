@@ -16,21 +16,28 @@ import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
-import fr.epicanard.globalmarketchest.gui.shops.toggler.SingleToggler;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class CreateAuctionItem extends ShopInterface {
   public CreateAuctionItem(InventoryGUI inv) {
     super(inv);
     this.isTemp = true;
-    this.togglers.put(53, new SingleToggler(inv.getInv(), 53, inv.getInv().getItem(53), Utils.getBackground()));
     this.actions.put(22, i -> this.unsetItem());
     this.actions.put(0, new PreviousInterface());
-    this.actions.put(48, i -> this.defineMaxInOne());
-    this.actions.put(50, i -> this.defineMaxRepeat());
+
+    Boolean max = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxRepeat", true);
+    Boolean one = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxInOne", true);
+
+    if (one) {
+      this.actions.put(48, i -> this.defineMaxInOne());
+      this.togglers.get(48).set();
+    }
+    if (max) {
+      this.actions.put(50, i -> this.defineMaxRepeat());
+      this.togglers.get(50).set();
+    }
     this.actions.put(53, new NextInterface("CreateAuctionPrice", this::checkItem));
   }
 
@@ -61,7 +68,10 @@ public class CreateAuctionItem extends ShopInterface {
     this.inv.getTransaction().put(TransactionKey.TEMPITEM, item.clone());
     this.inv.getTransaction().put(TransactionKey.AUCTIONAMOUNT, item.getAmount());
     this.updateItem();
-    this.togglers.forEach((k, v) -> v.set());
+    this.togglers.forEach((k, v) -> {
+      if (k == 22 || k == 53)
+        v.set();
+    });
   }
 
   /**
@@ -72,7 +82,10 @@ public class CreateAuctionItem extends ShopInterface {
     this.inv.getTransaction().remove(TransactionKey.AUCTIONAMOUNT);
     ItemStack[] items = InterfacesLoader.getInstance().getInterface("CreateAuctionItem");
     this.inv.getInv().setItem(22, items[22]);
-    this.togglers.forEach((k, v) -> v.unset());
+    this.togglers.forEach((k, v) -> {
+      if (k == 22 || k == 53)
+        v.unset();
+    });
   }
 
   /**
@@ -82,7 +95,7 @@ public class CreateAuctionItem extends ShopInterface {
    */
   private Boolean checkItem() {
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    if (item != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Auctions.UseLastPrice", true)) {
+    if (item != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.UseLastPrice", true)) {
       AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
       GlobalMarketChest.plugin.auctionManager.getLastPrice(auction, price -> auction.setPrice(price));
     }
