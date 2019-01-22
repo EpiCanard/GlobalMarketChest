@@ -1,6 +1,7 @@
 name: GlobalMarketChest
 version: 0.0.1
 author: EpiCanard
+api-version: 1.13
 depend: [Vault]
 description: Shop plugin to create economy between user
 main: fr.epicanard.globalmarketchest.GlobalMarketChest
