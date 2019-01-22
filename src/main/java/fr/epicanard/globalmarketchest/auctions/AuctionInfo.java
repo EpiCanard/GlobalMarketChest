@@ -72,7 +72,7 @@ public class AuctionInfo {
   public AuctionInfo(AuctionType type, Player owner, String group) {
     this.state = StateAuction.INPROGRESS;
     this.type = AuctionType.getAuctionType(type.getType());
-    this.price = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDouble("Auctions.DefaultPrice", 0.0);
+    this.price = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDouble("Options.DefaultPrice", 0.0);
     this.playerStarter = owner.getUniqueId().toString();
     this.ended = false;
     this.group = group;

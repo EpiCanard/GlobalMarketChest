@@ -17,7 +17,7 @@ public class NewAuction implements Consumer<InventoryGUI> {
   @Override
   public void accept(InventoryGUI inv) {
     ShopInfo shop = inv.getTransactionValue(TransactionKey.SHOPINFO);
-    Integer maxAuctions = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Auctions.MaxAuctionByPlayer");
+    Integer maxAuctions = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.MaxAuctionByPlayer");
 
     GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), inv.getPlayer(), auctionNumber -> {
       if (auctionNumber >= maxAuctions) {

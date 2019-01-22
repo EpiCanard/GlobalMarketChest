@@ -5,6 +5,8 @@ target/
 .settings/
 .vscode/
 Notes.java
+.classpath
+.factorypath
 
 # Compiled class file
 *.class

@@ -49,7 +49,7 @@ public class DefaultFooter extends ShopInterface {
   protected void updateAuctionNumber() {
     final ItemStack item = this.inv.getInv().getItem(53);
     final String lore = LangUtils.get("Buttons.NewAuction.Description");
-    final Integer maxAuctionNumber = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Auctions.MaxAuctionByPlayer");
+    final Integer maxAuctionNumber = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.MaxAuctionByPlayer");
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), this.inv.getPlayer(), auctionNumber ->  {

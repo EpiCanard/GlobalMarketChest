@@ -19,18 +19,24 @@ Connection:
 Options:
   # To see auctions that don't have category
   UncategorizedItems: false
-Auctions:
+  # Define if the button MaxInOne in CreateAuction view must be here
+  EnableMaxInOne: true
+  # Define if the button MaaxRepeat in CreateAuction view must be here
+  EnableMaxRepeat: true
   # Default price for new auctions
   DefaultPrice: 100
   # Use the price of the last similar auction as price of new auction
   UseLastPrice: true
+  # Define the maximum auctions by player
+  MaxAuctionByPlayer : 50
+  # Broadcast a message inside the current world when a player buy an auction
+  BroadcastInsideWorld: true
+  # Notify the player everywhere on the server when a player buy one of his auctions
+  NotifyPlayer: true
   # An auction expire if it is older than NumberDaysExpiration
   NumberDaysExpiration: 7
   # -1 to ignore purge else specific a number of days to purge database every n days
   PurgeInterval: 30
-  MaxAuctionByPlayer : 50
-  BroadcastInsideWorld: true
-  NotifyPlayer: true
 WorldAllowed:
   - world
   - world_the_end
