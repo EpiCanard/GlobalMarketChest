@@ -106,6 +106,9 @@ Interfaces:
     FreePrice: minecraft:lime_stained_glass_pane
     CircleSetItem: "minecraft:lime_stained_glass_pane"
     CircleUnsetItem: "minecraft:blue_stained_glass_pane"
+    YesButton: "minecraft:lime_wool"
+    NoButton: "minecraft:red_wool"
+    Question: "minecraft:redstone_torch"
 Sign:
   Appearance:
     GlobalShop:

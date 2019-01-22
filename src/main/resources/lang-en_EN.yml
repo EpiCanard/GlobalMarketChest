@@ -139,6 +139,12 @@ Buttons:
     Name: " "
   CircleUnsetItem:
     Name: " "
+  YesButton:
+    Name: "YES"
+  NoButton:
+    Name: "NO"
+  Question:
+    Name: " "
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
@@ -173,6 +179,7 @@ InfoMessages:
   PluginReloading: "Plugin is reloading..."
   PluginReloaded: "Plugin is reloaded."
   WriteGroupName: "Write the group name that you want"
+  DeleteShopQuestion: "Are you sure you want to delete this shop ?"
 Commands:
   Buttons:
     OpenText: "Open"

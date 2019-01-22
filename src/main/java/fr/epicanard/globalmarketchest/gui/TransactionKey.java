@@ -10,6 +10,7 @@ public enum TransactionKey {
   CATEGORY,
   AUCTIONITEM,
   SIGNLOCATION,
-  GROUPLEVEL
+  GROUPLEVEL,
+  QUESTION
   ;
 }

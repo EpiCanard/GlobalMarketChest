@@ -104,6 +104,9 @@ Interfaces:
     FreePrice: minecraft:stained_glass_pane/5
     CircleSetItem: "minecraft:stained_glass_pane/5"
     CircleUnsetItem: "minecraft:stained_glass_pane/11"
+    YesButton: "minecraft:wool/5"
+    NoButton: "minecraft:wool/14"
+    Question: "minecraft:redstone_torch"
 Sign:
   Appearance:
     GlobalShop:

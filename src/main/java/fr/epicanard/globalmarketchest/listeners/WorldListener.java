@@ -2,7 +2,9 @@ package fr.epicanard.globalmarketchest.listeners;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -97,12 +99,21 @@ public class WorldListener implements Listener {
       });
 
       if (!asLinkedShop) {
-        if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
-          PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopDeleted");
-          String owner = shop.getOwner();
-          LoggerUtils.info(String.format("%s : [%s:%s<%s>]", LangUtils.get("InfoMessages.ShopDeleted"),
-            shop.getSignLocation().toString(), PlayerUtils.getPlayerName(owner), owner));
-        }
+        Consumer<Boolean> deleteConsumer = (b) -> {
+          if (b) {
+            if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
+              PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopDeleted");
+              String owner = shop.getOwner();
+              LoggerUtils.info(String.format("%s : [%s:%s<%s>]", LangUtils.get("InfoMessages.ShopDeleted"),
+                shop.getSignLocation().toString(), PlayerUtils.getPlayerName(owner), owner));
+              block.breakNaturally();
+            }
+          }
+        };
+        InventoryGUI inv = openShop(player, shop);
+        inv.getTransaction().put(TransactionKey.QUESTION, Pair.of(LangUtils.get("InfoMessages.DeleteShopQuestion"), deleteConsumer));
+        inv.loadInterface("ConfirmView");
+        event.setCancelled(true);
         return;
       }
 
@@ -111,6 +122,26 @@ public class WorldListener implements Listener {
       PlayerUtils.sendMessageConfig(player, "ErrorMessages.CantRemoveBlock");
       event.setCancelled(true);
     }
+  }
+
+  /**
+   * Open a shop interface for player
+   *
+   * @param player Player on which open the open the shop
+   * @param shop Informations about the shop opened
+   * @return
+   */
+  private InventoryGUI openShop(Player player, ShopInfo shop) {
+    if (GlobalMarketChest.plugin.inventories.hasInventory(player.getUniqueId())) {
+      if (GlobalMarketChest.plugin.inventories.getInventory(player.getUniqueId()).getChatEditing())
+        return null;
+      GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
+    }
+    InventoryGUI inv = new InventoryGUI(player);
+    GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
+    inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
+    inv.open();
+    return inv;
   }
 
   /**
@@ -132,15 +163,7 @@ public class WorldListener implements Listener {
       if (!Permissions.GS_OPENSHOP.isSetOnWithMessage(player)) {
         return;
       }
-      if (GlobalMarketChest.plugin.inventories.hasInventory(player.getUniqueId())) {
-        if (GlobalMarketChest.plugin.inventories.getInventory(player.getUniqueId()).getChatEditing())
-          return;
-        GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
-      }
-      InventoryGUI inv = new InventoryGUI(player);
-      GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
-      inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
-      inv.open();
+      InventoryGUI inv = openShop(player, shop);
       inv.loadInterface("CategoryView");
     }
   }

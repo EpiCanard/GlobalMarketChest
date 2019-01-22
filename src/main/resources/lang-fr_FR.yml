@@ -140,6 +140,12 @@ Buttons:
     Name: " "
   CircleUnsetItem:
     Name: " "
+  YesButton:
+    Name: "OUI"
+  NoButton:
+    Name: "NON"
+  Question:
+    Name: " "
 ErrorMessages:
   UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
@@ -174,6 +180,7 @@ InfoMessages:
   PluginReloading: "Le plugin est entrain de recharger..."
   PluginReloaded: "Le plugin a fini de recharger."
   WriteGroupName: "Tapez le nom du groupe que vous voulez saisir"
+  DeleteShopQuestion: "Êtes-vous sûr de vouloir supprimer ce shop ?"
 Commands:
   Buttons:
     OpenText: "Ouvrir"
