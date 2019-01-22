@@ -74,7 +74,11 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     List<Block> blocks = Utils.filter(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()), block -> ShopUtils.getShop(block) == null);
-    List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> new ItemStack(block.getType())).collect(Collectors.toList()));
+    List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> {
+      ItemStack item = new ItemStack(block.getType());
+      ItemStackUtils.addItemStackLore(item, Arrays.asList(ShopUtils.generateKeyValue(LangUtils.get("Divers.OtherLocation"), WorldUtils.getStringFromLocation(block.getLocation()))));
+      return item;
+    }).collect(Collectors.toList()));
     pag.getItemstacks().clear();
     pag.getItemstacks().addAll(items);
   }
