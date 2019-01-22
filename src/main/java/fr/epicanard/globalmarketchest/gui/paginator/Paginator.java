@@ -233,8 +233,8 @@ public class Paginator {
    * @return List<T>
    */
   public <T> List<T> getSubList(List<T> list) {
-    int start = Utils.getIndex(this.getConfig().getStartLimit(), list.size());
-    int end = Utils.getIndex(this.getConfig().getStartLimit() + this.getConfig().getLimit(), list.size());
+    int start = Utils.getIndex(this.getConfig().getStartLimit(), list.size(), true);
+    int end = Utils.getIndex(this.getConfig().getStartLimit() + this.getConfig().getLimit(), list.size(), true);
     return list.subList(start, end);
   }
 
