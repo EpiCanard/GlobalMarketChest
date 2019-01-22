@@ -11,6 +11,7 @@ import fr.epicanard.globalmarketchest.utils.PlayerUtils;
  * Class that handle permissions of plugin
  */
 public enum Permissions {
+  ADMIN_DELETESHOP("globalmarketchest.admin.deleteshop"),
   GS_CREATESHOP("globalmarketchest.globalshop.createshop"),
   GS_OPENSHOP("globalmarketchest.globalshop.openshop"),
   GS_CREATEAUCTION("globalmarketchest.globalshop.createauction"),
@@ -82,10 +83,19 @@ public enum Permissions {
     final Boolean isSet = this.isSetOn(player);
 
     if (!isSet) {
-      PlayerUtils.sendMessageConfig(player, "ErrorMessages.PermissionNotAllowed");
+      Permissions.sendMessage(player);
     }
 
     return isSet;
+  }
+
+  /**
+   * Send permission denied to the player
+   *
+   * @param player Player that must receive the message
+   */
+  public static final void sendMessage(Player player) {
+    PlayerUtils.sendMessageConfig(player, "ErrorMessages.PermissionNotAllowed");
   }
 
   private String getBasicPerm() {

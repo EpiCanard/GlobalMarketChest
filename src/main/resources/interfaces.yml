@@ -178,6 +178,25 @@ Interfaces:
       46: Background
 
   # =============
+  #    DIVERS
+  # =============
+
+  # View to configure this shop
+  ConfirmView:
+    Base:
+      - Exit
+    Togglers:
+      - Pos: 29
+        Type: "circle"
+        Set: true
+      - Pos: 33
+        Type: "circle"
+        Set: false
+    Items:
+      29: YesButton
+      33: NoButton
+
+  # =============
   # CONFIGURATION
   # =============
 

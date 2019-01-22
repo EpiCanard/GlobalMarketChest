@@ -131,7 +131,7 @@ public class AuctionGlobalView extends DefaultFooter {
     final Integer playerAuctions = this.inv.getTransactionValue(TransactionKey.PLAYERAUCTIONS);
     List<Integer> auctions = Utils.mapList(this.current.auctions, auction -> auction.getId());
     if (this.current.state == StateAuction.EXPIRED)
-      auctions = new ArrayList<>(auctions.subList(0, Utils.getIndex(maxAuctionNumber - playerAuctions, auctions.size() + 1)));
+      auctions = new ArrayList<>(auctions.subList(0, Utils.getIndex(maxAuctionNumber - playerAuctions, auctions.size(), true)));
 
     if (auctions.size() > 0 &&
       GlobalMarketChest.plugin.auctionManager.renewGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), this.current.state, auctions) == true)

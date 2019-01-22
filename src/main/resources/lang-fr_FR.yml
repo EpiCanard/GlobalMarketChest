@@ -140,6 +140,12 @@ Buttons:
     Name: " "
   CircleUnsetItem:
     Name: " "
+  YesButton:
+    Name: "OUI"
+  NoButton:
+    Name: "NON"
+  Question:
+    Name: " "
 ErrorMessages:
   UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
@@ -158,6 +164,7 @@ ErrorMessages:
   InvalidCommand: "&cCette commande n'est pas valide : "
   PlayerOnly: "&cCette commande peut uniquement être exécutée par un joueur"
   UnknownShop: "&cShop inconnu : "
+  CantRemoveBlock: "&cVous ne pouvez pas supprimer ce bloc car un shop y est rattaché"
 InfoMessages:
   UndoAuction: "&2Enchère supprimé avec succès"
   RenewAuction: "&2Enchère renouvelé avec succès"
@@ -173,6 +180,7 @@ InfoMessages:
   PluginReloading: "Le plugin est entrain de recharger..."
   PluginReloaded: "Le plugin a fini de recharger."
   WriteGroupName: "Tapez le nom du groupe que vous voulez saisir"
+  DeleteShopQuestion: "Êtes-vous sûr de vouloir supprimer ce shop ?"
 Commands:
   Buttons:
     OpenText: "Ouvrir"

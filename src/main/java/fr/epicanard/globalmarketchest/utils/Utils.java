@@ -154,9 +154,11 @@ public class Utils {
    * @param size Max size
    * @return index
    */
-  public int getIndex(int index, int size) {
-    if (index < 0)
+  public int getIndex(int index, int size, Boolean exclusive) {
+    if (index <= 0 || size == 0)
       return 0;
+    if (exclusive)
+      return (index > size) ? size : index;
     return (index >= size) ? size - 1 : index;
   }
 

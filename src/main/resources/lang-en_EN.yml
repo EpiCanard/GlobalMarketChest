@@ -139,6 +139,12 @@ Buttons:
     Name: " "
   CircleUnsetItem:
     Name: " "
+  YesButton:
+    Name: "YES"
+  NoButton:
+    Name: "NO"
+  Question:
+    Name: " "
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
@@ -157,12 +163,14 @@ ErrorMessages:
   InvalidCommand: "&cThis command is not valid : "
   PlayerOnly: "&cThis command can only be executed by a player"
   UnknownShop: "&cUnknown Shop : "
+  CantRemoveBlock: "&cYou can't remove this block because a shop is attached to it"
 InfoMessages:
   UndoAuction: "&2Auction successfully deleted"
   RenewAuction: "&2Auction successfully renewed"
   CreateAuction: "&2Auction successfully created"
-  UndoEveryAuction: "&2Every auction successfully deleted"
   RenewEveryAuction: "&2Every auction successfully renewed"
+  UndoEveryAuction: "&2Every auction successfully deleted"
+  ShopDeleted: "Shop successfully deleted"
   # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
   # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
   # If you don't have them a message will pop in console and no message will broadcast
@@ -171,6 +179,7 @@ InfoMessages:
   PluginReloading: "Plugin is reloading..."
   PluginReloaded: "Plugin is reloaded."
   WriteGroupName: "Write the group name that you want"
+  DeleteShopQuestion: "Are you sure you want to delete this shop ?"
 Commands:
   Buttons:
     OpenText: "Open"

@@ -34,7 +34,7 @@ public class CreateAuctionPrice extends ShopInterface {
     YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
 
     this.prices = config.getDoubleList("Price.Ranges");
-    this.prices = this.prices.subList(0, Utils.getIndex(8, this.prices.size()) + 1);
+    this.prices = this.prices.subList(0, Utils.getIndex(9, this.prices.size(), true));
     this.priceItems = config.getStringList("Price.Items");
     this.dynamicFreePos = config.getBoolean("Price.DynamicFreePosition", true);
 
@@ -56,7 +56,7 @@ public class CreateAuctionPrice extends ShopInterface {
 
     int i = 0;
     for (i = 0; i < this.prices.size(); i++) {
-      ItemStack priceItem = ItemStackUtils.getItemStack(this.priceItems.get(Utils.getIndex(i, this.priceItems.size())));
+      ItemStack priceItem = ItemStackUtils.getItemStack(this.priceItems.get(Utils.getIndex(i, this.priceItems.size(), false)));
       this.inv.getInv().setItem(18 + i, ItemStackUtils.setItemStackMeta(priceItem, "&a+ " + prices.get(i), lore));
       this.inv.getInv().setItem(27 + i, ItemStackUtils.setItemStackMeta(priceItem.clone(), "&c- " + prices.get(i), lore));
     }
