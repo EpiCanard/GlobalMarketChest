@@ -158,6 +158,7 @@ ErrorMessages:
   InvalidCommand: "&cCette commande n'est pas valide : "
   PlayerOnly: "&cCette commande peut uniquement être exécutée par un joueur"
   UnknownShop: "&cShop inconnu : "
+  CantRemoveBlock: "&cVous ne pouvez pas supprimer ce bloc car un shop y est rattaché"
 InfoMessages:
   UndoAuction: "&2Enchère supprimé avec succès"
   RenewAuction: "&2Enchère renouvelé avec succès"
