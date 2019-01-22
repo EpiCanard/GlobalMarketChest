@@ -4,6 +4,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class SingleToggler extends Toggler{
+  public SingleToggler(Inventory inv, TogglerConfig config) {
+    super(inv, config);
+  }
+
   public SingleToggler(Inventory inv, int pos, ItemStack setItem, ItemStack unsetItem) {
     super(inv, pos, setItem, unsetItem);
   }
@@ -13,10 +17,16 @@ public class SingleToggler extends Toggler{
     this.setIsSet(set);
   }
 
+  /**
+   * Change displayed item with setItem
+   */
   public void setInView() {
     this.inv.setItem(this.pos, this.setItem);
   }
 
+  /**
+   * Change displayed item with unsetItem
+   */
   public void unsetInView() {
     this.inv.setItem(this.pos, this.unsetItem);
   }

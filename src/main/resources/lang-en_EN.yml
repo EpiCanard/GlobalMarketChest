@@ -135,6 +135,10 @@ Buttons:
   FreePrice:
     Name: "&aFree"
     Description: "&7Set the price to zero"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"

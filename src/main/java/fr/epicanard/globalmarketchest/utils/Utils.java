@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.utils;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -157,6 +158,17 @@ public class Utils {
     if (index < 0)
       return 0;
     return (index >= size) ? size - 1 : index;
+  }
+
+  /**
+   * If first param is null return the defaut param
+   * 
+   * @param obj Param to get
+   * @param defaut Param return when obj is null
+   * @return Return obj or defaut of obj is null
+   */
+  public <T> T getOrElse(T obj, T defaut) {
+    return Optional.ofNullable(obj).orElse(defaut);
   }
 
   /**

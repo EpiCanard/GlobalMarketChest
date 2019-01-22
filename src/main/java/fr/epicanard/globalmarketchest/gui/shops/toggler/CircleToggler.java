@@ -7,6 +7,12 @@ import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class CircleToggler extends Toggler{
+  public CircleToggler(Inventory inv, TogglerConfig config) {
+    super(inv, config);
+    ItemStackUtils.setItemStackMeta(this.setItem, null, null);
+    ItemStackUtils.setItemStackMeta(this.unsetItem, null, null);
+  }
+
   public CircleToggler(Inventory inv, Integer pos, ItemStack setItem, ItemStack unsetItem) {
     super(inv, pos, setItem, unsetItem);
   }
@@ -17,6 +23,11 @@ public class CircleToggler extends Toggler{
     ItemStackUtils.setItemStackMeta(this.unsetItem, null, null);
  }
 
+  /**
+   * Fill the circle with item
+   *
+   * @param item Item to set on circle
+   */
   private void setCircle(ItemStack item) {
     int start = this.pos - 10;
     for (int i = 0; i < 9; i++) {
@@ -26,10 +37,16 @@ public class CircleToggler extends Toggler{
     }
   }
 
+  /**
+   * Fill the circle with setItem
+   */
   public void setInView() {
     this.setCircle(this.setItem);
   }
 
+  /**
+   * Fill the circle with unsetItem
+   */
   public void unsetInView() {
     this.setCircle(this.unsetItem);
   }

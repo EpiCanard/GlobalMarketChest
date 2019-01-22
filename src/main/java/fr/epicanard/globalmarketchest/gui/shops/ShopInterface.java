@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -16,8 +15,8 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.paginator.PaginatorConfig;
-import fr.epicanard.globalmarketchest.gui.shops.toggler.CircleToggler;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
+import fr.epicanard.globalmarketchest.gui.shops.toggler.TogglerConfig;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
@@ -40,12 +39,10 @@ public abstract class ShopInterface {
     PaginatorConfig conf = InterfacesLoader.getInstance().getPaginatorConfig(className);
     if (conf != null)
       this.paginator = new Paginator(this.inv.getInv(), conf);
-    List<Pair<Integer, Boolean>> circles = InterfacesLoader.getInstance().getCircleTogglers(className);
-    if (circles != null) {
-      circles.forEach(circle -> {
-        Toggler toggler = new CircleToggler(inv.getInv(), circle.getLeft());
-        this.togglers.put(circle.getLeft(), toggler);
-        toggler.setIsSet(circle.getRight());
+    List<TogglerConfig> togglersConfig = InterfacesLoader.getInstance().getTogglers(className);
+    if (togglersConfig != null) {
+      togglersConfig.forEach(togglerConfig -> {
+        this.togglers.put(togglerConfig.getPosition(), togglerConfig.instanceToggler(inv.getInv()));
       });
     }
     this.actions.put(8, new LeaveShop());
