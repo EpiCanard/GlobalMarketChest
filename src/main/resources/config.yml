@@ -37,6 +37,8 @@ Options:
   NumberDaysExpiration: 7
   # -1 to ignore purge else specific a number of days to purge database every n days
   PurgeInterval: 30
+  # Define if the player can create auctions with an item damaged
+  AcceptDamagedItems: false
 Logs:
   HidePrefix: false
 WorldAllowed:
@@ -65,6 +67,17 @@ Price:
     - minecraft:coal
     - minecraft:redstone
     - minecraft:lapis_lazuli
+# Items that can't be sold
+ItemsBlacklist:
+  - minecraft:barrier
+  - minecraft:chain_command_block
+  - minecraft:command_block
+  - minecraft:command_block_minecart
+  - minecraft:debug_stick
+  - minecraft:knowledge_book
+  - minecraft:repeating_command_block
+  - minecraft:structure_block
+  - minecraft:structure_void
 Interfaces:
   Warn: minecraft:red_stained_glass_pane
   Buttons:

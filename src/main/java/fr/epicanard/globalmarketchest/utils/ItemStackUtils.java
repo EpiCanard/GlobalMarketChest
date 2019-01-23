@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -192,5 +193,26 @@ public class ItemStackUtils {
     }
 
     return items.toArray(new ItemStack[0]);
+  }
+
+  /**
+   * Define if the item is damaged
+   * 
+   * @param item ItemStack to define if it is damaged
+   * @return
+   */
+  public Boolean isDamaged(ItemStack item) {
+    return ((Damageable)item.getItemMeta()).getDamage() > 0;
+  }
+
+  /**
+   * Define if the block is black listed or not
+   * 
+   * @param item Item to define if blacklisted
+   * @return
+   */
+  public Boolean isBlacklisted(ItemStack item) {
+    String mk = ItemStackUtils.getMinecraftKey(item);
+    return GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("ItemsBlacklist").contains(mk);
   }
 }

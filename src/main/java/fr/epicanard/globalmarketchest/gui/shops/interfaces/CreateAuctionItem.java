@@ -21,11 +21,15 @@ import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 
 public class CreateAuctionItem extends ShopInterface {
+  private Boolean accepteDamagedItems;
+
   public CreateAuctionItem(InventoryGUI inv) {
     super(inv);
     this.isTemp = true;
     this.actions.put(22, i -> this.unsetItem());
     this.actions.put(0, new PreviousInterface());
+
+    this.accepteDamagedItems = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AcceptDamagedItems", true);
 
     Boolean max = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxRepeat", true);
     Boolean one = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxInOne", true);
@@ -78,6 +82,7 @@ public class CreateAuctionItem extends ShopInterface {
    * Remove the item from drop zone
    */
   private void unsetItem() {
+    this.inv.getWarn().stopWarn();
     this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
     this.inv.getTransaction().remove(TransactionKey.AUCTIONAMOUNT);
     ItemStack[] items = InterfacesLoader.getInstance().getInterface("CreateAuctionItem");
@@ -122,6 +127,7 @@ public class CreateAuctionItem extends ShopInterface {
    * Put all items matching with droppped item in one auction
    */
   private void defineMaxInOne() {
+    this.inv.getWarn().stopWarn();
     ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
 
@@ -142,6 +148,7 @@ public class CreateAuctionItem extends ShopInterface {
    * The auction number is limited by config
    */
   private void defineMaxRepeat() {
+    this.inv.getWarn().stopWarn();
     final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
     if (item == null || auction == null)
@@ -180,8 +187,15 @@ public class CreateAuctionItem extends ShopInterface {
       event.getWhoClicked().getInventory().addItem(item.clone());
       event.setCancelled(true);
     }
-    if (item != null)
-      this.setItem(item);
+    if (item != null) {
+      this.inv.getWarn().stopWarn();
+      if (ItemStackUtils.isBlacklisted(item))
+        this.inv.getWarn().warn("BlacklistedItem", 40);
+      else if (!this.accepteDamagedItems && ItemStackUtils.isDamaged(item))
+        this.inv.getWarn().warn("DamagedItem", 40);
+      else
+        this.setItem(item);
+    }
   }
 
   @Override
