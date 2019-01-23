@@ -189,7 +189,9 @@ public class CreateAuctionItem extends ShopInterface {
     }
     if (item != null) {
       this.inv.getWarn().stopWarn();
-      if (!this.accepteDamagedItems && ItemStackUtils.isDamaged(item))
+      if (ItemStackUtils.isBlacklisted(item))
+        this.inv.getWarn().warn("BlacklistedItem", 40);
+      else if (!this.accepteDamagedItems && ItemStackUtils.isDamaged(item))
         this.inv.getWarn().warn("DamagedItem", 40);
       else
         this.setItem(item);

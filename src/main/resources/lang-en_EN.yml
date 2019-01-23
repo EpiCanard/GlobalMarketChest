@@ -165,6 +165,7 @@ ErrorMessages:
   UnknownShop: "&cUnknown Shop : "
   CantRemoveBlock: "&cYou can't remove this block because a shop is attached to it"
   DamagedItem: "You can't sell a damaged item"
+  BlacklistedItem: "You can't sell a blacklisted item"
 InfoMessages:
   UndoAuction: "&2Auction successfully deleted"
   RenewAuction: "&2Auction successfully renewed"

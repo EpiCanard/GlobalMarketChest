@@ -166,6 +166,7 @@ ErrorMessages:
   UnknownShop: "&cShop inconnu : "
   CantRemoveBlock: "&cVous ne pouvez pas supprimer ce bloc car un shop y est rattaché"
   DamagedItem: "Vous ne pouvez pas vendre un item endommagé"
+  BlacklistedItem: "Vous ne pouvez pas vendre un item blacklisté"
 InfoMessages:
   UndoAuction: "&2Enchère supprimé avec succès"
   RenewAuction: "&2Enchère renouvelé avec succès"

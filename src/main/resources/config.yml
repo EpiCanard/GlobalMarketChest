@@ -67,6 +67,17 @@ Price:
     - minecraft:coal
     - minecraft:redstone
     - minecraft:lapis_lazuli
+# Items that can't be sold
+ItemsBlacklist:
+  - minecraft:barrier
+  - minecraft:chain_command_block
+  - minecraft:command_block
+  - minecraft:command_block_minecart
+  - minecraft:debug_stick
+  - minecraft:knowledge_book
+  - minecraft:repeating_command_block
+  - minecraft:structure_block
+  - minecraft:structure_void
 Interfaces:
   Warn: minecraft:red_stained_glass_pane
   Buttons:

@@ -204,4 +204,15 @@ public class ItemStackUtils {
   public Boolean isDamaged(ItemStack item) {
     return ((Damageable)item.getItemMeta()).getDamage() > 0;
   }
+
+  /**
+   * Define if the block is black listed or not
+   * 
+   * @param item Item to define if blacklisted
+   * @return
+   */
+  public Boolean isBlacklisted(ItemStack item) {
+    String mk = ItemStackUtils.getMinecraftKey(item);
+    return GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("ItemsBlacklist").contains(mk);
+  }
 }
