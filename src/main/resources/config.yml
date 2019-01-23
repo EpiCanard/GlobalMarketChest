@@ -38,7 +38,7 @@ Options:
   # -1 to ignore purge else specific a number of days to purge database every n days
   PurgeInterval: 30
   # Define if the player can create auctions with an item damaged
-  AcceptDamagedItems: true
+  AcceptDamagedItems: false
 Logs:
   HidePrefix: false
 WorldAllowed:
