@@ -86,6 +86,9 @@ public enum GroupLevels {
         builder.addField("COUNT(itemMeta) AS count");
         builder.setExtension("GROUP BY itemMeta");
         break;
+      case 1:
+        builder.setExtension("ORDER BY price ASC, start ASC");
+        break;
     }
   }
 
@@ -108,6 +111,7 @@ public enum GroupLevels {
         break;
       case 2:
         builder.addCondition("itemMeta", DatabaseUtils.serialize(match));
+        builder.setExtension("ORDER BY price ASC, start ASC");
         break;
     }
   }
@@ -126,6 +130,7 @@ public enum GroupLevels {
     switch (groupLevels) {
       case 3:
         builder.addCondition("itemMeta", DatabaseUtils.serialize(match));
+        builder.setExtension("ORDER BY price ASC, start ASC");
         break;
     }
   }
