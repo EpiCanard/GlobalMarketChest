@@ -48,9 +48,10 @@ public class AuctionManager {
   public Boolean createAuction(AuctionInfo auction, Integer repeat) {
     InsertBuilder builder = new InsertBuilder(DatabaseConnection.tableAuctions);
     Timestamp ts = DatabaseUtils.getTimestamp();
+    int days = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.NumberDaysExpiration", 7);
     String[] stringTs = {
       ts.toString(),
-      DatabaseUtils.addDays(ts, 7).toString()
+      DatabaseUtils.addDays(ts, days).toString()
     };
 
     for (int i = 0; i < repeat; i++) {
@@ -345,9 +346,10 @@ public class AuctionManager {
     Timestamp ts = DatabaseUtils.getTimestamp();
     if (builder == null)
       builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+    int days = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.NumberDaysExpiration", 7);
 
     builder.addValue("start", ts.toString());
-    builder.addValue("end", DatabaseUtils.addDays(ts, 7).toString());
+    builder.addValue("end", DatabaseUtils.addDays(ts, days).toString());
     builder.addValue("ended", false);
 
     return builder;
