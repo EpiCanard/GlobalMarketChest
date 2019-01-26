@@ -76,7 +76,7 @@ public class DatabaseUtils {
     diff = diff / 1000;
     long days = diff / 60 / 60 / 24;
     long hours = diff / 60 / 60 % 24;
-    long minutes = diff / 60 % 24;
+    long minutes = diff / 60 % 60;
     long seconds = diff % 60;
     if (full || days > 0)
       sb.append(DatabaseUtils.getLanguageTime(days, "Days"));
