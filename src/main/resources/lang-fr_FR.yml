@@ -8,10 +8,10 @@ InterfacesTitle:
   CreateAuctionItem: "&2Sélection de l'item pour l'enchère"
   CreateAuctionPrice: "&2Sélection du prix de l'enchère"
   # Shop Creation
-  ShopCreationSelectType: "&2Sélection type shop et block lié"
+  ShopCreationSelectType: "&2Sélection type shop et bloc lié"
   ShopCreationLink: "&2Définition du nom de groupe"
 Divers:
-  State: "Status"
+  State: "Statut"
   Quantity: "Quantité"
   UnitPrice: "Prix unitaire"
   TotalPrice: "Prix total"
@@ -42,7 +42,7 @@ States:
   Abandoned: "Abandonné"
   Finished: "Fini"
 Shops:
-  ClickChangeGroup: "&cCliques pour changer;&cle nom de groupe du shop"
+  ClickChangeGroup: "&cClique pour changer;&cle nom de groupe du shop"
   CurrentShop: "Shop actuel"
 Buttons:
   Background:
@@ -95,8 +95,8 @@ Buttons:
     Name: "Vue par joueur"
     Description: "Le joueur peut voir les enchères par joueur ?"
   ViewByLastCreated:
-    Name: "Vue par dernier créé"
-    Description: "Le joueur peut voir les enchères dernièrement créé ?"
+    Name: "Vue par dernières créées"
+    Description: "Le joueur peut voir les enchères dernièrement créées ?"
   GlobalShop:
     Name: "GlobalShop"
   AuctionShop:
@@ -117,7 +117,7 @@ Buttons:
     Name: " "
   AuctionMiddle:
     Name: "&2Déposez un item ici"
-    Description: "&2ou utilises SHIFT-Click"
+    Description: "&2ou utilisez SHIFT-Click"
   MaxInOne:
     Name: "&fMaximum d'items en une enchère"
   MaxRepeat:
@@ -168,18 +168,18 @@ ErrorMessages:
   DamagedItem: "Vous ne pouvez pas vendre un item endommagé"
   BlacklistedItem: "Vous ne pouvez pas vendre un item blacklisté"
 InfoMessages:
-  UndoAuction: "&2Enchère supprimé avec succès"
-  RenewAuction: "&2Enchère renouvelé avec succès"
-  CreateAuction: "&2Enchère créé avec succès"
-  RenewEveryAuction: "&2Toutes les enchères sont renouvelées avec succès"
-  UndoEveryAuction: "&2Toutes les enchères sont supprimées avec succès"
+  UndoAuction: "&2Enchère supprimée avec succès"
+  RenewAuction: "&2Enchère renouvelée avec succès"
+  CreateAuction: "&2Enchère créée avec succès"
+  RenewEveryAuction: "&2Toutes les enchères ont été renouvelées avec succès"
+  UndoEveryAuction: "&2Toutes les enchères ont été supprimées avec succès"
   ShopDeleted: "Shop supprimé avec succès"
   # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
   # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
   # If you don't have them a message will pop in console and no message will broadcast
   AcquireAuction: "&3%s &6a acheté &2%d %s &6pour &2%.2f&6 $ à &3%s&6."
   AcquireAuctionOwner: "&3%s &6a acheté votre enchère &2%d %s &6pour &2%.2f&6 $."
-  PluginReloading: "Le plugin est entrain de recharger..."
+  PluginReloading: "Le plugin est en train de recharger..."
   PluginReloaded: "Le plugin a fini de recharger."
   WriteGroupName: "Tapez le nom du groupe que vous voulez saisir"
   DeleteShopQuestion: "Êtes-vous sûr de vouloir supprimer ce shop ?"
@@ -187,7 +187,7 @@ Commands:
   Buttons:
     OpenText: "Ouvrir"
     OpenHover: "Cliquez pour ouvrir le shop"
-    DetailText: "Détail"
+    DetailText: "Détails"
     DetailHover: "Cliquez pour voir les details"
     TeleportText: "Téléporter"
     TeleportHover: "Cliquez pour vous téléporter au shop"
