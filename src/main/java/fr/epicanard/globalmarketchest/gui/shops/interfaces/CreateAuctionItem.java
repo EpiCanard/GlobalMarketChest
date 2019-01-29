@@ -180,12 +180,10 @@ public class CreateAuctionItem extends ShopInterface {
     ItemStack item = null;
     if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
       item = event.getCurrentItem();
-      event.setCancelled(true);
     } else if (event.getSlot() == 22) {
       item = event.getCursor();
       event.getWhoClicked().setItemOnCursor(null);
       event.getWhoClicked().getInventory().addItem(item.clone());
-      event.setCancelled(true);
     }
     if (item != null) {
       this.inv.getWarn().stopWarn();
