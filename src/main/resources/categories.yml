@@ -1,3 +1,22 @@
+# ======================= File categories.yml =======================
+#
+# This file contains all categories available for global shop
+#
+# Each category is composed of following config variables :
+# - DisplayName => The name displayed inside inventory for current category
+# - DisplayItem => The minecraft key of item used for display
+# - GroupsLevels => Level of ordering used for this category (There is 3 levels max, see wiki)
+# - Position => The position of the item inside chest (value must be between 0 and 53)
+# - Items => list of items (minecraft key)
+# - IsActive (Optional, default: true) => Define if this category is active or not 
+#       (if false, this category is not used inside shops)
+#
+# /!\ Important :
+# All categories can be changed or removed except category "!"
+# This category contains all uncategorized items and is mandatory
+#
+# ===================================================================
+
 Build:
   DisplayName: "Building Blocks"
   DisplayItem: minecraft:bricks
