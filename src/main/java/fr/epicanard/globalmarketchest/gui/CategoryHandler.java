@@ -21,7 +21,10 @@ public class CategoryHandler {
 
   public CategoryHandler(YamlConfiguration conf) {
     this.config = conf;
-    this.categories = this.config.getKeys(false);
+    this.categories = this.config.getKeys(false)
+      .stream()
+      .filter(cat -> this.config.getBoolean(cat + ".IsActive", true))
+      .collect(Collectors.toSet());
   }
 
   /**
