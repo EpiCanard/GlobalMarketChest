@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,7 +38,9 @@ public class GUIListener implements Listener {
       if (event.getAction() == InventoryAction.PLACE_ALL || event.getAction() == InventoryAction.PLACE_ONE || event.getAction() == InventoryAction.SWAP_WITH_CURSOR)
         interf.onDrop(event, inv);
       else
-        interf.onClick(event, inv);
+        Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> {
+          interf.onClick(event, inv);
+        });
       return;
     }
 

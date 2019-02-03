@@ -55,15 +55,20 @@ public abstract class ShopInterface {
    */
   public void load() {
     String className = this.getClass().getSimpleName();
-    ItemStack[] items = InterfacesLoader.getInstance().getInterface(className);
+    ItemStack[] items = InterfacesLoader.getInstance().getInterface(className).clone();
     if (items == null)
       return;
+
+    this.togglers.forEach((k, v) -> {
+      v.getItems().forEach((pos, item) -> {
+        items[pos] = item;
+      });
+    });
     for (int i = 0; i < 54; i++)
       this.inv.getInv().setItem(i, items[i]);
     if (this.paginator != null)
       this.paginator.reloadInterface();
     this.updateInventoryName(className);
-    this.togglers.forEach((k, v) -> v.load());
     this.loadIcon();
   }
 

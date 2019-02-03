@@ -1,5 +1,7 @@
 package fr.epicanard.globalmarketchest.gui.shops.toggler;
 
+import java.util.Map;
+
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -12,7 +14,7 @@ public abstract class Toggler {
   @Setter @Getter
   protected ItemStack unsetItem;
   @Setter
-  private Boolean isSet = false;
+  protected Boolean isSet = false;
   protected Inventory inv;
   protected int pos;
 
@@ -35,26 +37,23 @@ public abstract class Toggler {
    * Load the toggler, Set or unset the element
    */
   public void load() {
-    if (this.isSet)
-      this.setInView();
-    else
-      this.unsetInView();
+    this.setItemsView();
   }
 
   /**
    * Change set boolean and load item in view
    */
   public void set() {
-    this.setInView();
     this.isSet = true;
+    this.setItemsView();
   }
 
   /**
    * Change unset boolean and load/unload item in view
    */
   public void unset() {
-    this.unsetInView();
     this.isSet = false;
+    this.setItemsView();
   }
 
   /**
@@ -67,6 +66,16 @@ public abstract class Toggler {
       this.set();
   }
 
-  protected abstract void setInView();
-  protected abstract void unsetInView();
+  /**
+   * Set items in loaded view
+   */
+  private void setItemsView() {
+    Map<Integer, ItemStack> items = this.getItems();
+    items.forEach((position, itemstack) -> {
+      this.inv.setItem(position, itemstack);
+    });
+  }
+
+  public abstract Map<Integer, ItemStack> getItems();
+
 }

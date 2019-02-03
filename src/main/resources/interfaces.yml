@@ -100,6 +100,7 @@ Interfaces:
     Togglers:
       - Pos: 22
         Type: "circle"
+        Set: false
       - Pos: 48
         Set: false
         SetItem: MaxInOne
