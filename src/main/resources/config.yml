@@ -1,20 +1,20 @@
 General:
-  Lang: "lang-fr_FR.yml"
-# Connection:
-#   Host: localhost
-#   Port: 3306
-#   Database: gmctest
-#   User: gmc
-#   Password: gmc
-#   TablePrefix: GMC_
-#   SimultaneousConnection: 4
+  # Possible values : lang-fr_FR.yml and lang-en_EN.yml
+  Lang: "lang-en_EN.yml"
 Connection:
-  Host: bol3vp5cj-mysql.services.clever-cloud.com
+  # The url/ip to access to your database server
+  Host: localhost
+  # Port used by your database server
   Port: 3306
-  Database: bol3vp5cj
-  User: ulymnspjd93n0dqa
-  Password: bGz7GYeLxFPvQXG84Ug
+  # The database name that you have already created
+  Database: my_database
+  # The user you want to use to login
+  User: my_user
+  # The password of the user set above
+  Password: my_password
+  # The prefix you want to user of tables to avoid conflicts with other tables
   TablePrefix: GMC_
+  # The simultaneous connection always active to reduce time of interface execution
   SimultaneousConnection: 4
 Options:
   # To see auctions that don't have category
@@ -36,20 +36,26 @@ Options:
   # An auction expire if it is older than NumberDaysExpiration
   NumberDaysExpiration: 7
   # -1 to ignore purge else specific a number of days to purge database every n days
+  # NOT YET SUPPORTED
   PurgeInterval: 30
   # Define if the player can create auctions with an item damaged
   AcceptDamagedItems: false
 Logs:
+  # If set to true the prefix [GlobalMarketChest] inside messages will be removed
   HidePrefix: false
+# Worlds on which you can create shop
 WorldAllowed:
   - world
   - world_the_end
   - world_nether
+# Block that you can link with shop's sign
 AllowedLinkBlock:
   - minecraft:ender_chest
   - minecraft:chest
 Price:
+  # Define if the button "Free" must be place dynamically at the end of the line or at a fixed position
   DynamicFreePosition: true
+  # All price ranges value, you can have maximum 9 ranges (chest width)
   Ranges:
     - 1000
     - 100
@@ -57,6 +63,7 @@ Price:
     - 1
     - 0.1
     - 0.01
+  # Items used for price ranges, if there is less items than price ranges the last item 
   Items:
     - minecraft:emerald_block
     - minecraft:emerald
@@ -79,7 +86,9 @@ ItemsBlacklist:
   - minecraft:structure_block
   - minecraft:structure_void
 Interfaces:
+  # Warning interface messages are represented by flashing item alternating Background this item
   Warn: minecraft:red_stained_glass_pane
+  # All others buttons used inside interface are defined here
   Buttons:
     Background: minecraft:black_stained_glass_pane
     NewAuction: minecraft:nether_star
@@ -124,16 +133,13 @@ Interfaces:
     Question: "minecraft:redstone_torch"
 Sign:
   Appearance:
+    # Config for GobalShop creation
     GlobalShop:
+      # The text displayed on the sign when shop creation is successful
       DisplayName: "&a[GlobalShop]"
+      # The item used inside the shop as icon
       DisplayItem: minecraft:compass
+      # The first line that must write on sign to create shop
       FirstLineToCreate: "globalshop"
-    LocalShop:
-      DisplayName: '&a[LocalShop]'
-      UsePlayerHead: true
-      FirstLineToCreate: "localshop"
-    AdminShop:
-      DisplayName: '&a[AdminShop]'
-      DisplayItem: minecraft:end_crystal
-      FirstLineToCreate: "adminshop"
+    # The text displayed on the sign when shop creation failed
     NotWorkingShopDisplayName : "&c[DisableShop]"
