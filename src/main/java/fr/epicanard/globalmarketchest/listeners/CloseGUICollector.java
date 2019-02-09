@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 /**
  * Listener for every close event link to an inventory
@@ -37,6 +38,7 @@ public class CloseGUICollector implements Listener {
   @EventHandler
   public void onInventoryCloseEvent(InventoryCloseEvent event) {
     this.closeGUI(event.getPlayer(), false);
+    PlayerUtils.removeDuplicateItems(event.getPlayer().getInventory());
   }
 
   @EventHandler

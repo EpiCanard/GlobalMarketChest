@@ -19,6 +19,7 @@ import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
 
 public class CreateAuctionItem extends ShopInterface {
   private Boolean accepteDamagedItems;
@@ -120,7 +121,7 @@ public class CreateAuctionItem extends ShopInterface {
     lore.add("&7" + LangUtils.get("Divers.Quantity") + " : &6" + auction.getAmount());
     lore.add("&7" + LangUtils.get("Divers.AuctionNumber") + " : &6" + this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER));
     lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
-    this.inv.getInv().setItem(22, ItemStackUtils.setItemStackLore(item.clone(), lore));
+    this.inv.getInv().setItem(22, VersionSupportUtils.getInstance().setNbtTag(ItemStackUtils.setItemStackLore(item.clone(), lore)));
   }
 
   /**

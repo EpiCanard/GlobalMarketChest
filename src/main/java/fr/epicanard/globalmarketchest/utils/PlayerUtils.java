@@ -9,11 +9,13 @@ import java.util.stream.Collectors;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
+import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -55,6 +57,11 @@ public class PlayerUtils {
     return pl.getName();
   }
 
+  /**
+   * Return the prefix to use in front of messages
+   * 
+   * @return
+   */
   public String getPrefix() {
     if (GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Logs.HidePrefix", false)) {
       return Utils.toColor("&7");
@@ -62,22 +69,53 @@ public class PlayerUtils {
     return PlayerUtils.prefix;
   }
 
+  /**
+   * Send a message in chat to a player
+   * 
+   * @param pl Target player of the message
+   * @param message Message to send
+   */
   public void sendMessage(Player pl, String message) {
     pl.sendMessage(PlayerUtils.getPrefix() + Utils.toColor(message));
   }
 
+  /**
+   * Send a message in chat to a player from a config language variable
+   * 
+   * @param pl Target player of the message
+   * @param path Language variable path
+   */
   public void sendMessageConfig(Player pl, String path) {
     pl.sendMessage(PlayerUtils.getPrefix() + LangUtils.get(path));
   }
 
+  /**
+   * Send a message to a command sender (can be player and console)
+   * 
+   * @param pl Target command sender of the message
+   * @param message Message to send
+   */
   public void sendMessage(CommandSender pl, String message) {
     pl.sendMessage(PlayerUtils.getPrefix() + Utils.toColor(message));
   }
 
+  /**
+   * Send a message in chat to a command sender from a config language variable
+   * 
+   * @param pl Target command sender of the message
+   * @param path Language variable path
+   */
   public void sendMessageConfig(CommandSender pl, String path) {
     pl.sendMessage(PlayerUtils.getPrefix() + LangUtils.get(path));
   }
 
+  /**
+   * Define if there is enough place to add the item inside player inventory
+   * 
+   * @param i Inventory of the player
+   * @param item Itemstack that must be put in
+   * @return
+   */
   public Boolean hasEnoughPlace(PlayerInventory i, ItemStack item) {
     ItemStack[] items = i.getStorageContents();
     return Arrays.asList(items).stream().reduce(0, (res, val) -> {
@@ -89,6 +127,14 @@ public class PlayerUtils {
     }, (s1, s2) -> s1 + s2) >= item.getAmount();
   }
 
+  /**
+   * Split an itemStack with too big amount in a group of smaller itemstack
+   * 
+   * @param items Final list on which add item splitted
+   * @param item Item to split
+   * @param size Max size allowed for the list
+   * @return
+   */
   private Boolean addToList(List<ItemStack> items, ItemStack item, Integer size) {
     Integer amount = item.getAmount();
 
@@ -116,6 +162,14 @@ public class PlayerUtils {
     return true;
   }
 
+  /**
+   * Define if there is enough place to add a group of items
+   * 
+   * @param i Inventory of the player
+   * @param itemsAdd Items to add inside inventory
+   * @param auctionsToAdd Define de number of items that can be put inside inventory
+   * @return
+   */
   public Boolean hasEnoughPlace(PlayerInventory i, List<ItemStack> itemsAdd, AtomicInteger auctionsToAdd) {
     ItemStack[] storage = i.getStorageContents();
     List<ItemStack> itemsStorage = Arrays.asList(storage).stream().filter(it -> it != null).map(it -> it.clone()).collect(Collectors.toList());
@@ -128,8 +182,30 @@ public class PlayerUtils {
     return true;
   }
 
+  /**
+   * Define if there is enough place to add the item inside player inventory
+   * It send un warning to player if there is not enough place
+   * 
+   * @param i Inventory of the player
+   * @param item Itemstack that must be put in
+   * @throws WarnException
+   */
   public void hasEnoughPlaceWarn(PlayerInventory i, ItemStack item) throws WarnException {
     if (!PlayerUtils.hasEnoughPlace(i, item))
       throw new WarnException("NotEnoughSpace");
+  }
+
+  /**
+   * Check all items in inventory and if one have GMC nbt tag it remove it
+   * 
+   * @param playerInventory inventory of the player
+   */
+  public void removeDuplicateItems(Inventory playerInventory) {
+    ItemStack[] items = playerInventory.getContents();
+    for (int i = 0; i < items.length; i++) {
+      if (VersionSupportUtils.getInstance().hasNbtTag(items[i])) {
+        playerInventory.setItem(i, null);
+      }
+    }
   }
 }
