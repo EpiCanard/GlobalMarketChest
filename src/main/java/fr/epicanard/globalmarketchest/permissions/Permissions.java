@@ -1,6 +1,5 @@
 package fr.epicanard.globalmarketchest.permissions;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -97,13 +96,4 @@ public enum Permissions {
   public static final void sendMessage(Player player) {
     PlayerUtils.sendMessageConfig(player, "ErrorMessages.PermissionNotAllowed");
   }
-
-  private String getBasicPerm() {
-    String[] perms = this.perm.split(".");
-    ArrayUtils.remove(perms, perms.length - 1);
-    String basicPerm = String.join(".", perms);
-
-    return basicPerm;
-  }
-
 }
