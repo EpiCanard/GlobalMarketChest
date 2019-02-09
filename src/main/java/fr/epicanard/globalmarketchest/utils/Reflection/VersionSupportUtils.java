@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 
 public class VersionSupportUtils {
 
+  private final String NBTTAG = "GMCItem";
+
   enum Path {
     BUKKIT("org.bukkit.craftbukkit"),
     MINECRAFT("net.minecraft.server");
@@ -138,7 +140,7 @@ public class VersionSupportUtils {
       Method asNewCraftStack = getClassFromPath(Path.BUKKIT, "inventory.CraftItemStack").getMethod("asNewCraftStack", getClassFromPath(Path.MINECRAFT, "Item"));
       ItemStack itemStack = (ItemStack)asNewCraftStack.invoke(null, item);
 
-      return itemStack;
+      return this.setNbtTag(itemStack);
 
     } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
       e.printStackTrace();
@@ -221,8 +223,59 @@ public class VersionSupportUtils {
     } catch(NoSuchFieldException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException  e) {
       e.printStackTrace();
     }
+  }
 
+  /**
+   * Define if the GMC NBT TAG is set on this item
+   * 
+   * @param itemStack Item to analyze
+   * @return Return if the item as gmc nbt tag
+   */
+  public boolean hasNbtTag(ItemStack itemStack) {
+    try {
+      Method asNMSCopy = getClassFromPath(Path.BUKKIT, "inventory.CraftItemStack").getDeclaredMethod("asNMSCopy", ItemStack.class);
+      Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
 
+      Object tagCompound = this.invokeMethod(nmsItemStack, "getTag");
+
+      return (tagCompound != null && (Boolean)this.invokeMethod(tagCompound, "hasKey", this.NBTTAG));
+
+    } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  /**
+   * Set the custom GMC NBT TAG on item in parameter
+   * 
+   * @param itemStack Item on which add NBT TAG
+   * @return ItemStack modified
+   */
+  public ItemStack setNbtTag(ItemStack itemStack) {
+    if (itemStack == null) { return null; }
+    if (this.hasNbtTag(itemStack)) { return itemStack; }
+
+    try {
+      Class<?> craftItemStack = getClassFromPath(Path.BUKKIT, "inventory.CraftItemStack");
+      Method asNMSCopy = craftItemStack.getDeclaredMethod("asNMSCopy", ItemStack.class);
+      Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
+
+      Object tagCompound = this.invokeMethod(nmsItemStack, "getTag");
+
+      if (tagCompound == null) {
+        tagCompound = this.newInstance("NBTTagCompound");
+      }
+
+      tagCompound.getClass().getMethod("setBoolean", String.class, boolean.class).invoke(tagCompound, this.NBTTAG, true);
+
+      this.invokeMethod(nmsItemStack, "setTag", tagCompound);
+      return (ItemStack)craftItemStack.getDeclaredMethod("asBukkitCopy", nmsItemStack.getClass()).invoke(null, nmsItemStack);
+
+    } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+      e.printStackTrace();
+    }
+    return itemStack;
   }
 
 }

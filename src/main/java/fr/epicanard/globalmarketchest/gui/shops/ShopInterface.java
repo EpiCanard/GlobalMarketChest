@@ -95,7 +95,7 @@ public abstract class ShopInterface {
    * @param item Icon
    */
   protected void setIcon(ItemStack item) {
-    this.icon = item;
+    this.icon = VersionSupportUtils.getInstance().setNbtTag(item);
     this.loadIcon();
   }
 
