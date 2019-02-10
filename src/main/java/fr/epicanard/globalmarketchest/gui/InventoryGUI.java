@@ -5,15 +5,20 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.gui.shops.Warning;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.Getter;
 
 /**
@@ -24,21 +29,26 @@ public class InventoryGUI {
   private Inventory inv;
   private Deque<ShopInterface> shopStack = new ArrayDeque<ShopInterface>();
   @Getter
-  private Map<String, Object> transaction = new HashMap<String, Object>();
+  private Map<TransactionKey, Object> transaction = new HashMap<TransactionKey, Object>();
   @Getter
   private Player player;
   @Getter
   private Warning warn;
+  @Getter
+  private Boolean chatEditing = false;
+  private Consumer<String> chatConsumer;
 
-  public InventoryGUI() {
-    this.inv = Bukkit.createInventory(null, 54, "§8GlobalMarketChest");
+  public InventoryGUI(Player player) {
+    this.player = player;
+    this.inv = Bukkit.createInventory(null, 54, Utils.toColor("&2GlobalMarketChest"));
     this.warn = new Warning(this.inv);
   }
 
   /**
    * Check if the inventory in param is the same as this inventory
-   * 
-   * @param inventory Inventory to verify
+   *
+   * @param inventory
+   *          Inventory to verify
    */
   public Boolean inventoryEquals(Inventory inventory) {
     return this.inv.equals(inventory);
@@ -46,74 +56,106 @@ public class InventoryGUI {
 
   /**
    * Open current inventory for the specified player
-   * 
+   *
    * @param player
    */
-  public void open(Player player) {
-    this.player = player;
+  public void open() {
     player.openInventory(this.inv);
   }
 
   /**
    * Close current inventory for the specified player
-   * 
+   *
    * @param player
    */
-  public void close(Player player) {
-    if (player != null)
-      player.closeInventory();
+  public void close() {
     this.player.closeInventory();
+  }
+
+  /**
+   * Stop the "ChatEditing" mode, send the value to consumer
+   * and reopen inventory
+   *
+   * @param value Value to send to consumer
+   */
+  public void setChatReturn(String value) {
+    this.chatEditing = false;
+    this.open();
+    this.player.removePotionEffect(PotionEffectType.BLINDNESS);
+    this.chatConsumer.accept(value);
+    this.chatConsumer = null;
+  }
+
+  /**
+   * Close the inventory and set player in "ChatEditing" mode
+   * Until chat value is set
+   *
+   * @param consumer Consumer called when leave the chat
+   */
+  public void openChat(String path, Consumer<String> consumer) {
+    this.chatEditing = true;
+    this.close();
+    this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1), true);
+    this.chatConsumer = consumer;
+    this.player.sendMessage("");
+    PlayerUtils.sendMessage(this.player, LangUtils.get(path));
+    this.player.sendMessage("");
   }
 
   /**
    * Unload temporary interface and come back to principal
    */
   public void unloadTempInterface() {
-    try {
-      ShopInterface peek;
-      do {
-        this.shopStack.pop().unload();
-        peek = this.shopStack.peek();
-      } while(peek != null && peek.isTemp());
-      Optional.ofNullable(peek).ifPresent(e -> e.load());
-    } catch (NoSuchElementException e) {}
+    if (this.shopStack.isEmpty())
+      return;
+    ShopInterface peek;
+    do {
+      this.shopStack.peek().unload();
+      this.shopStack.pop().destroy();
+      peek = this.shopStack.peek();
+    } while (peek != null && peek.isTemp());
+    Optional.ofNullable(peek).ifPresent(e -> e.load());
   }
-  
+
   /**
    * Unload last loaded Interface and load the previous one
    */
   public void unloadLastInterface() {
-    try {
-      this.shopStack.pop().unload();
-      Optional.ofNullable(this.shopStack.peek()).ifPresent(e -> e.load());
-    } catch (NoSuchElementException e) {}
+    if (this.shopStack.isEmpty())
+      return;
+    this.shopStack.peek().unload();
+    this.shopStack.pop().destroy();
+    Optional.ofNullable(this.shopStack.peek()).ifPresent(e -> e.load());
   }
 
   /**
    * Unload all interface
-   * 
-   * @param name
+   *
+   * @param key
    */
   public void unloadAllInterface() {
-    try {
-      this.shopStack.pop().unload();
-      this.shopStack.clear();
-    } catch (NoSuchElementException e) {}
+    if (this.shopStack.isEmpty())
+      return;
+    this.shopStack.peek().unload();
+    while (!this.shopStack.isEmpty())
+      this.shopStack.pop().destroy();
   }
 
   /**
    * Load interface with a specific name
-   * 
+   *
    * @param name
    */
   public void loadInterface(String name) {
     try {
-      ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops.interfaces." + name).getDeclaredConstructor(InventoryGUI.class).newInstance(this);
+      ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops.interfaces." + name)
+          .getDeclaredConstructor(InventoryGUI.class).newInstance(this);
       Optional.ofNullable(this.shopStack.peek()).ifPresent(ShopInterface::unload);
-     
+
       shop.load();
       this.shopStack.push(shop);
-    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
+    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
+        | InvocationTargetException e) {
       e.printStackTrace();
     }
   }
@@ -126,13 +168,24 @@ public class InventoryGUI {
   }
 
   /**
-   * Get Transiction Value
-   * 
-   * @param name Key to get transcation object
+   * Get Transaction Value
+   *
+   * @param key
+   *          Key to get transcation object
    * @return <T> return the object with these key
    */
   @SuppressWarnings("unchecked")
-  public <T> T getTransValue(String name) {
-    return (T) this.transaction.get(name);
+  public <T> T getTransactionValue(TransactionKey key) {
+    return (T) this.transaction.get(key);
+  }
+
+  /**
+   * Destroy all the inventory
+   */
+  public void destroy() {
+    this.unloadAllInterface();
+    this.close();
+    if (this.chatEditing)
+      this.player.removePotionEffect(PotionEffectType.BLINDNESS);
   }
 }

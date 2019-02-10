@@ -8,15 +8,19 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.shops.ShopCreationInterface;
+import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.shops.ShopType;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 /**
  * Shop Interface for Creation Process
@@ -31,45 +35,49 @@ public class ShopCreationLink extends ShopCreationInterface {
       this.paginator.setClickConsumer(this::changeName);
     }
     this.actions.put(0, new PreviousInterface());
+    this.actions.put(40, new ChatInput("InfoMessages.WriteGroupName", this::changeName));
     this.actions.put(53, this::createShop);
   }
 
   /**
    * Create the shop inside the database and leave the GUI
    * Drop the sign if the shop already exist
-   * 
+   *
    * @param gui InventoryGUI used shop creation
    */
   private void createShop(InventoryGUI gui) {
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
     try {
       GlobalMarketChest.plugin.shopManager.createShop(shop);
+
+      Utils.editSign(this.inv.getTransactionValue(TransactionKey.SIGNLOCATION), new String[] {
+        ShopType.GLOBALSHOP.getDisplayName()
+      });
+
     } catch (ShopAlreadyExistException e) {
-      PlayerUtils.sendMessagePlayer(gui.getPlayer(), e.getMessage());
+      PlayerUtils.sendMessage(gui.getPlayer(), e.getMessage());
       shop.getSignLocation().getBlock().breakNaturally();
     } finally {
       Consumer<InventoryGUI> exit = new LeaveShop();
       exit.accept(gui);
     }
-}
+  }
 
   /**
    * Load the shop link zone
-   * 
+   *
    * @param pag Paginator used
    */
   public void loadZone(Paginator pag) {
     List<ShopInfo> lst = pag.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
     List<ItemStack> items = pag.getItemstacks();
-    String clickInfo = "&c" + LangUtils.get("Shops.ClickChangeGroup");
     items.clear();
 
-    for (int i = 0; i < lst.size(); i++) {
+    for (ShopInfo shop : lst) {
       ItemStack item = ItemStackUtils.getItemStack("minecraft:ender_chest");
-      ShopInfo shop = lst.get(i);
-      String[] lore = ShopUtils.generateLore(shop);
+      List<String> lore = ShopUtils.generateLore(shop);
 
-      lore[3] = clickInfo;
+      lore.addAll(Utils.toList(LangUtils.get("Shops.ClickChangeGroup")));
       item = ItemStackUtils.setItemStackMeta(item, "Shop", lore);
       items.add(item);
     }
@@ -77,30 +85,25 @@ public class ShopCreationLink extends ShopCreationInterface {
 
   /**
    * Get the group name of the shop at position inside the inventory and set on current shop
-   * 
+   *
    * @param pos Position inside the inventory
    */
   public void changeName(Integer pos) {
     List<ShopInfo> subShops = this.paginator.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+
+    this.changeName(subShops.get(pos).getGroup());
+  }
+
+  /**
+   * Change the groupe name of the shop
+   *
+   * @param name Name of the group
+   */
+  public void changeName(String name) {
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     if (shop != null)
-      shop.setGroup(subShops.get(pos).getGroup());
+      shop.setGroup(name);
     this.updateName();
-  }
-
-  /**
-   * Called when loading the interface
-   */
-  @Override
-  public void load() {
-    super.load();
-  }
-
-  /**
-   * Called when unloading the interface
-   */
-  @Override
-  public void unload() {
   }
 }

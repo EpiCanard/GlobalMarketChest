@@ -13,7 +13,10 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
-import fr.epicanard.globalmarketchest.database.querybuilder.QueryBuilder;
+import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuilder;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuilder;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
 import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
@@ -42,14 +45,16 @@ public class ShopManager {
   public void updateShops() {
     this.resetShopList();
 
-    QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableShops);
-    builder.execute(builder.select(), res -> {
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableShops);
+    QueryExecutor.of().execute(builder, res -> {
       try {
         while (res.next()) {
           ShopInfo shop = new ShopInfo(res);
-          shop.getSignLocation().getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, shop));
-          Optional.ofNullable(shop.getOtherLocation()).ifPresent(loc -> loc.getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, shop)));
-          this.shops.add(shop);
+          if (shop.getSignLocation() != null) {
+            shop.getSignLocation().getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, shop));
+            Optional.ofNullable(shop.getOtherLocation()).ifPresent(loc -> loc.getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, shop)));
+            this.shops.add(shop);
+          }
         }
       } catch(SQLException e) {e.printStackTrace();}
     });
@@ -83,7 +88,7 @@ public class ShopManager {
     if (!this.shops.stream().allMatch(shop -> !WorldUtils.compareLocations(shop.getSignLocation(), sign)))
       throw new ShopAlreadyExistException(sign);
 
-    QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableShops);
+    InsertBuilder builder = new InsertBuilder(DatabaseConnection.tableShops);
 
     builder.addValue("owner", owner);
     builder.addValue("signLocation", WorldUtils.getStringFromLocation(sign));
@@ -95,7 +100,7 @@ public class ShopManager {
     Consumer<ResultSet> cs = res -> {
       id.set(DatabaseUtils.getId(res));
     };
-    if (builder.execute(builder.insert(), cs))
+    if (QueryExecutor.of().execute(builder, cs))
       this.updateShops();
     return id.get();
   }
@@ -124,9 +129,9 @@ public class ShopManager {
     this.shops.removeIf(s -> s.getId() == shop.getId());
     shop.removeMetadata();
 
-    QueryBuilder builder = new QueryBuilder(DatabaseConnection.tableShops);
+    DeleteBuilder builder = new DeleteBuilder(DatabaseConnection.tableShops);
 
     builder.addCondition("id", shop.getId());
-    return builder.execute(builder.delete());
+    return QueryExecutor.of().execute(builder);
   }
 }

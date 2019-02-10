@@ -1,14 +1,21 @@
-GUITitle:
-  SelectShop: "Select a shop"
-  ChooseTypeShop : "&5Choose a shop type"
-  NewAuction: "&2Creating new auction"
-  CreationShop:
-    GlobalShop: "Creation of Global Shop"
+InterfacesTitle:
+  EditAuction: "&2Edit auction"
+  BuyAuction: "&2Buy auction"
+  CategoryView: "&2Category view"
+  AuctionViewList: "&2Auctions list"
+  ConfigShop : "&2Shop configuration"
+  # Auction Creation
+  CreateAuctionItem: "&2Select auction item"
+  CreateAuctionPrice: "&2Select auction price"
+  # Shop Creation
+  ShopCreationSelectType: "&2Select shop Type and link block"
+  ShopCreationLink: "&2Set group name / link shop"
 Divers:
   State: "Status"
   Quantity: "Amount"
   UnitPrice: "PriceEach"
   TotalPrice: "PriceTotal"
+  AuctionNumber: "Auction Number"
   Seller: "Seller"
   Buyer: "Buyer"
   Start: "Started"
@@ -17,32 +24,63 @@ Divers:
   Group: "Group"
   Type: "Type"
   Warning: "Warning"
+  ExpireIn: "Expire in"
+  Expired: "Expired"
+  Started: "Started"
+  Ended: "Ended"
+  Free: "Free"
+  WithStatus: "&fWith status : &2%s"
+  Days: "days"
+  Hours: "hours"
+  Minutes: "minutes"
+  Seconds: "seconds"
+  PastDate: "%sago"
+  UnknownPlayer: "Unknown player"
+States:
+  InProgress: "In Progress"
+  Expired: "Expired"
+  Abandoned: "Abandoned"
+  Finished: "Finished"
 Shops:
-  ClickChangeGroup: "Click to change shop group name"
+  ClickChangeGroup: "&cClick to change shop group name"
   CurrentShop: "Current shop"
 Buttons:
+  Background:
+    Name: " "
   Money:
-    Name: "Your money"
+    Name: "&6Your money"
   PreviousButton:
     Name: "Return"
-    Description: "Go back to previous inventory"
+    Description: "&fGo back to previous inventory"
   ExitButton:
     Name: "&4Exit"
-    Description: "Close this inventory"
+    Description: "&fClose this inventory"
   Validate:
     Name: "&2Validate"
-    Description: "Go to next step"
+    Description: "&fGo to next step"
   Return:
     Name: "&4Return"
-    Description: "Return to previous step"
+    Description: "&fReturn to previous step"
   CreateShop:
     Name: "&2Create Shop"
   NewAuction:
     Name: "&2Create new auction"
-    Description: "&7Click here to sell your items"
+    Description: "&7Auctions number (%d/%d);&7Click here to sell your items"
+  CreateAuction:
+    Name: "&2Create auction"
+  BuyAuction:
+    Name: "&2Buy this auction"
+  RenewAuction:
+    Name: "&6Renew this auction"
+  UndoAuction:
+    Name: "&cUndo this auction"
+  RenewEveryAuction:
+    Name: "&6Renew every auctions"
+  UndoEveryAuction:
+    Name: "&cUndo every auctions"
   GlobalView:
-    Name: "Overview"
-    Description: "Auction history"
+    Name: "&fOverview"
+    Description: "&5Auction history"
   Search:
     Name: "&3Search for an auction"
   DragItem:
@@ -68,13 +106,97 @@ Buttons:
   AdminShop:
     Name: "AdminShop"
   EditGroupName:
-    Name: "Edit Group Name"
-    Description: "If you want to rename the group of your shop"
+    Name: "&fEdit Group Name"
   PreviousPage:
     Name: "Previous page"
   NextPage:
     Name: "Next page"
   NumPage:
     Name: "Page number"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2Drop an item here"
+    Description: "&2or use SHIFT-Click"
+  MaxInOne:
+    Name: "&fMaximum items in one auction"
+  MaxRepeat:
+    Name: "&fRepeat auction as many as possible"
+  InProgressAuction:
+    Name: "&aIn progress auctions"
+  ExpiredAuction:
+    Name: "&cExpired auctions"
+  SoldAuction:
+    Name: "&bSold auctions"
+  BoughtAuction:
+    Name: "&9Bought auctions"
+  CanceledAuction:
+    Name: "&6Canceled auctions"
+  FreePrice:
+    Name: "&aFree"
+    Description: "&7Set the price to zero"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
+  YesButton:
+    Name: "YES"
+  NoButton:
+    Name: "NO"
+  Question:
+    Name: " "
 ErrorMessages:
+  UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
+  MissingItems: "Wrong number of items, some items are missing"
+  FailCreateAuction: "Fail to create auction in database"
+  NotEnoughSpace: "Not enough space to add all items;in player inventory"
+  NotEnoughMoney: "Not enough money to buy this auction"
+  CantBuyAuction: "Fail to buy auction (expired or already sold)"
+  CantRenewAuction: "Fail to renew auction"
+  CantUndoAuction: "Fail to undo auction"
+  CantRenewEveryAuction: "Fail to renew every auction"
+  CantUndoEveryAuction: "Fail to undo every auction"
+  PlayerDoesntExist: "This player doesn't exist"
+  MaxAuctionByPlayer: "Can't create more auction;&7You have reached the maximum auction number"
+  PermissionNotAllowed: "&cYou are not allowed to do this action"
+  InvalidCommand: "&cThis command is not valid : "
+  PlayerOnly: "&cThis command can only be executed by a player"
+  UnknownShop: "&cUnknown Shop : "
+  CantRemoveBlock: "&cYou can't remove this block because a shop is attached to it"
+  DamagedItem: "You can't sell a damaged item"
+  BlacklistedItem: "You can't sell a blacklisted item"
+InfoMessages:
+  UndoAuction: "&2Auction successfully deleted"
+  RenewAuction: "&2Auction successfully renewed"
+  CreateAuction: "&2Auction successfully created"
+  RenewEveryAuction: "&2Every auction successfully renewed"
+  UndoEveryAuction: "&2Every auction successfully deleted"
+  ShopDeleted: "Shop successfully deleted"
+  # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
+  # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
+  # If you don't have them a message will pop in console and no message will broadcast
+  AcquireAuction: "&3%s &6bought &2%d %s &6for &2%.2f&6 $ to &3%s&6."
+  AcquireAuctionOwner: "&3%s &6bought your auction &2%d %s &6for &2%.2f&6 $."
+  PluginReloading: "Plugin is reloading..."
+  PluginReloaded: "Plugin is reloaded."
+  WriteGroupName: "Write the group name that you want"
+  DeleteShopQuestion: "Are you sure you want to delete this shop ?"
+Commands:
+  Buttons:
+    OpenText: "Open"
+    OpenHover: "Click to open the shop"
+    DetailText: "Detail"
+    DetailHover: "Click see detail"
+    TeleportText: "Teleport"
+    TeleportHover: "Click to teleport to the shop"
+  ListShop: "List of shops : "
+  SeeHelp: "&6See help : &c/globalmarketchest help"
+  HelpCommand:
+    Usage: "&6Usage :"
+    Help: "&c/globalmarketchest [help]&6 - Show help"
+    Reload: "&c/globalmarketchest reload&6 - Reload the plugin"
+    List: "&c/globalmarketchest list&6 - List all globalshop"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop à distance"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teleport the player a specific shop position"
+    Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"

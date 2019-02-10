@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -20,7 +21,7 @@ public class MySQLConnection extends DatabaseConnection {
   public MySQLConnection() throws ConfigException {
     super();
 
-    this.pool = new LinkedBlockingQueue<Connection>();
+    this.pool = new LinkedBlockingQueue<>();
     this.simultaneousConnections = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Connection.SimultaneousConnection");
     if (this.simultaneousConnections == null)
       this.simultaneousConnections = 1;
@@ -42,7 +43,7 @@ public class MySQLConnection extends DatabaseConnection {
         "  `itemMeta` TEXT," +
         "  `amount` INT UNSIGNED NOT NULL," +
         "  `price` DOUBLE NOT NULL," +
-        "  `state` TINYINT(1) NOT NULL," +
+        "  `ended` BOOLEAN NOT NULL DEFAULT FALSE," +
         "  `type` TINYINT(1) NOT NULL," +
         "  `playerStarter` TEXT NOT NULL," +
         "  `playerEnder` TEXT DEFAULT NULL," +
@@ -80,7 +81,7 @@ public class MySQLConnection extends DatabaseConnection {
     this.database = config.getString("Connection.Database");
     this.user = config.getString("Connection.User");
     this.password = config.getString("Connection.Password");
-    
+
     if (this.host == null || this.port == null || this.database == null || this.user == null
         || this.password == null)
       throw new ConfigException("Some database informations are missing");
@@ -94,15 +95,14 @@ public class MySQLConnection extends DatabaseConnection {
   protected Connection connect() {
     try {
       Class.forName("com.mysql.jdbc.Driver");
-      Connection con = DriverManager.getConnection("jdbc:mysql://" + this.buildUrl(),
+      return DriverManager.getConnection("jdbc:mysql://" + this.buildUrl(),
           this.user, this.password);
-      return con;
     } catch (SQLException | ClassNotFoundException e) {
       e.printStackTrace();
     }
     return null;
   }
-  
+
   /**
    * Disconnection connection
    */
@@ -113,7 +113,7 @@ public class MySQLConnection extends DatabaseConnection {
     try {
       if (!connection.isClosed())
         connection.close();
-    } catch (SQLException e) {}      
+    } catch (SQLException e) {}
   }
 
   /**
@@ -124,7 +124,7 @@ public class MySQLConnection extends DatabaseConnection {
   public Connection getConnection() {
     try {
       Connection co = this.pool.take();
-      if (co == null || co.isClosed())
+      if (co == null || !co.isValid(0) || co.isClosed())
         return this.connect();
       return co;
     } catch (SQLException | InterruptedException e) {
@@ -144,7 +144,7 @@ public class MySQLConnection extends DatabaseConnection {
         this.disconnect(connection);
       else
         this.pool.put(connection);
-    } catch (InterruptedException e) {}      
+    } catch (InterruptedException e) {}
   }
 
   /**
@@ -179,5 +179,10 @@ public class MySQLConnection extends DatabaseConnection {
       if (prepared != null)
         prepared.close();
     } catch (SQLException e) {}
+  }
+
+  @Override
+  public String buildLimit(Pair<Integer, Integer> limit) {
+    return String.format("LIMIT %d, %d", limit.getLeft(), limit.getRight());
   }
 }

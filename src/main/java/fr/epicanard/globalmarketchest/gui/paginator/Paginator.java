@@ -6,12 +6,15 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -68,16 +71,35 @@ public class Paginator {
   }
 
   /**
+   * Reset page to 0
+   */
+  public void resetPage() {
+    if (this.config.getPage() <= 0)
+      return;
+    this.config.resetPage();
+    if (this.loadConsumer != null)
+      this.loadConsumer.accept(this);
+    this.updateCounter();
+    this.loadItems();
+  }
+
+  /**
    * Change to next page
    */
   public void nextPage() {
     int prev = this.config.getPage();
     if (this.config.nextPage() == prev)
       return;
+    List<ItemStack> tmp = new ArrayList<>(this.itemstacks);
     if (this.loadConsumer != null)
       this.loadConsumer.accept(this);
-    this.updateCounter();
-    this.loadItems();
+    if (this.itemstacks.size() == 0) {
+      this.config.previousPage();
+      this.setItemStacks(tmp);
+    } else {
+      this.updateCounter();
+      this.loadItems();
+    }
   }
 
   /**
@@ -99,7 +121,7 @@ public class Paginator {
   private void loadItems() {
     for (int i = 0; i < this.config.getLimit(); i++) {
       if (i < this.itemstacks.size())
-        this.inv.setItem(this.getPos(i), this.itemstacks.get(i));        
+        this.inv.setItem(this.getPos(i), this.itemstacks.get(i));
       else
         this.inv.clear(this.getPos(i));
     }
@@ -136,16 +158,16 @@ public class Paginator {
 
   /**
    * Define if the position is a button previous or next
-   * 
+   *
    * @return Boolean
    */
   public Boolean isButton(int pos) {
-    return (pos >= 0 && (pos == this.config.getPreviousPos() || pos == this.config.getNextPos()));
+    return (pos >= 0 && (pos == this.config.getPreviousPos() || pos == this.config.getNextPos() || pos == this.config.getNumPagePos()));
   }
 
   /**
    * Define if the position is inside the click zone
-   * 
+   *
    * @return Boolean
    */
   public Boolean isInZone(int pos) {
@@ -168,6 +190,8 @@ public class Paginator {
         this.previousPage();
       if (pos == this.config.getNextPos())
         this.nextPage();
+      if (pos == this.config.getNumPagePos())
+        this.resetPage();
       return true;
     }
     if (this.isInZone(pos)) {
@@ -180,7 +204,7 @@ public class Paginator {
 
   /**
    * Get the real position inside the inventory depending of the index (the case number x from the paginator (not the same than the inventory))
-   * 
+   *
    * @param int index
    * @return int
    */
@@ -192,7 +216,7 @@ public class Paginator {
 
   /**
    * Get index inside paginator from the real inventory position
-   * 
+   *
    * @param int pos
    * @return int
    */
@@ -205,13 +229,32 @@ public class Paginator {
 
   /**
    * Get Sublist from a given list depending of the page
-   * 
+   *
    * @param List<T> list
    * @return List<T>
    */
   public <T> List<T> getSubList(List<T> list) {
-    int start = Utils.getIndex(this.getConfig().getStartLimit(), list.size());
-    int end = Utils.getIndex(this.getConfig().getStartLimit() + this.getConfig().getLimit(), list.size());
+    int start = Utils.getIndex(this.getConfig().getStartLimit(), list.size(), true);
+    int end = Utils.getIndex(this.getConfig().getStartLimit() + this.getConfig().getLimit(), list.size(), true);
     return list.subList(start, end);
+  }
+
+  /**
+   * Get the limit for the paginator
+   */
+  public Pair<Integer, Integer> getLimit() {
+    return new ImmutablePair<Integer,Integer>(this.config.getStartLimit(), this.config.getLimit());
+  }
+
+  public void setItemStacks(List<ItemStack> items) {
+    this.itemstacks.clear();
+    items = Utils.mapList(items, itemStack -> VersionSupportUtils.getInstance().setNbtTag(itemStack));
+    this.itemstacks.addAll(items);
+  }
+
+  public ItemStack getItemStack(int pos) {
+    if (pos < 0 || pos >= this.itemstacks.size())
+      return null;
+    return this.itemstacks.get(pos);
   }
 }

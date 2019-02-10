@@ -1,76 +1,211 @@
-GlobalShop:
-  Height: 6
-  Items:
-    8: ExitButton
-    9: Search
-    45: GlobalView
-    46: Money
-    53: NewAuction
+# Base interface used for real interface
+BaseInterfaces:
+  Exit:
+    Items:
+      8: ExitButton
+  Validate:
+    Items:
+      53: Validate
+  Return:
+    Items:
+      0: Return
+  NewAuction:
+    Items:
+      53: NewAuction
+  DefaultFooter:
+    Togglers:
+      - Pos: 53
+        Set: false
+        SetItem: NewAuction
+    Items:
+      45: Money
+      46: GlobalView
+  DefaultShopInterface:
+    Paginator:
+      Height: 3
+      Width: 9
+      StartPos: 18
+      PreviousPos: 48
+      NextPos: 50
+      NumPagePos: 49
+    Items:
+      0: Return
+      8: ExitButton
+      18-44: None
+  GlobalViewButtons:
+    Items:
+      13: InProgressAuction
+      14: ExpiredAuction
+      15: SoldAuction
+      16: BoughtAuction
+      17: CanceledAuction
 
-DefaultShopInterface:
-  Height: 6
-  Paginator:
-    Height: 3
-    Width: 9
-    StartPos: 18
-  Items:
-    8: ExitButton
-    18-44: None
-    45: GlobalView
-    46: Money
-    53: NewAuction
+# Real interface implemented
+Interfaces:
 
-PhysicalShopType:
-  Height: 3
-  Items:
-    8: ExitButton
+  # ================
+  # AUCTION VIEWS
+  # ================
 
-ConfigShop:
-  Height: 4
-  Items:
-    8: ExitButton
-    20: ViewByCategory
-    22: ViewByPlayer
-    24: ViewByLastCreated
+  # View for category
+  CategoryView:
+    Base:
+      - Exit
+      - DefaultFooter
+    # Items:
+    #   9: Search
 
-CreateAuction:
-  Height: 6
-  Items:
-    12-14: AuctionSide
-    21-23: AuctionSide
-    22: DragItem
-    30-32: AuctionSide
+  # View to see every auctions of one item
+  AuctionViewList:
+    Base:
+      - DefaultShopInterface
+      - DefaultFooter
 
-ShopCreationSelectType:
-  Height: 6
-  Paginator:
-    Height: 1
-    Width: 7
-    StartPos: 28
-    PreviousPos: 27
-    NextPos: 35
-  Items:
-    8: ExitButton
-    11: GlobalShop
-    13: AuctionShop
-    15: AdminShop
-    27-35: None
-    49: ShopIcon
-    53: Validate
+  BuyAuction:
+    Base:
+      - Return
+      - Exit
+    Togglers:
+      - Pos: 31
+        Type: "circle"
+        Set: false
+    Items:
+      31: BuyAuction
 
-ShopCreationLink:
-  Height: 6
-  Paginator:
-    Height: 1
-    Width: 7
-    StartPos: 19
-    PreviousPos: 18 
-    NextPos: 26
-  Items:
-    0: Return
-    8: ExitButton
-    18-26: None
-    40: EditGroupName
-    49: ShopIcon
-    53: CreateShop
-    
+  EditAuction:
+    Base:
+      - Return
+      - Exit
+    Togglers:
+      - Pos: 29
+        Type: "circle"
+        Set: false
+      - Pos: 33
+        Type: "circle"
+        Set: true
+    Items:
+      33: RenewAuction
+      29: UndoAuction
+
+  # ================
+  # AUCTION CREATION
+  # ================
+
+  # Auction View to select/drop item
+  CreateAuctionItem:
+    Base:
+      - Return
+      - Exit
+      - Validate
+    Togglers:
+      - Pos: 22
+        Type: "circle"
+        Set: false
+      - Pos: 48
+        Set: false
+        SetItem: MaxInOne
+      - Pos: 50
+        Set: false
+        SetItem: MaxRepeat
+      - Pos: 53
+        Set: false
+        SetItem: CreateAuction
+    Items:
+      22: AuctionMiddle
+
+  # Auction view to select item price
+  CreateAuctionPrice:
+    Base:
+      - Return
+      - Exit
+    Items:
+      53: CreateAuction
+
+  # =============
+  # SHOP CREATION
+  # =============
+
+  # View to select type and linked block with shop
+  ShopCreationSelectType:
+    Base:
+      - Exit
+      - Validate
+    Paginator:
+      Height: 1
+      Width: 7
+      StartPos: 28
+      PreviousPos: 27
+      NextPos: 35
+    Items:
+      13: GlobalShop
+      # 11: GlobalShop
+      # 13: AuctionShop
+      # 15: AdminShop
+      27-35: None
+      49: ShopIcon
+
+  # View to edit shop group or select another shop to set his group name on current
+  ShopCreationLink:
+    Base:
+      - Return
+      - Exit
+    Paginator:
+      Height: 1
+      Width: 7
+      StartPos: 19
+      PreviousPos: 18
+      NextPos: 26
+    Items:
+      18-26: None
+      40: EditGroupName
+      49: ShopIcon
+      53: CreateShop
+
+  # ===================
+  # AUCTION GLOBAL VIEW
+  # ===================
+
+  AuctionGlobalView:
+    Base:
+      - DefaultShopInterface
+      - DefaultFooter
+      - GlobalViewButtons
+    Togglers:
+      - Pos: 10
+        SetItem: UndoEveryAuction
+      - Pos: 11
+        SetItem: RenewEveryAuction
+    Items:
+      46: Background
+
+  # =============
+  #    DIVERS
+  # =============
+
+  # View to configure this shop
+  ConfirmView:
+    Base:
+      - Exit
+    Togglers:
+      - Pos: 29
+        Type: "circle"
+        Set: true
+      - Pos: 33
+        Type: "circle"
+        Set: false
+    Items:
+      29: YesButton
+      33: NoButton
+
+  # =============
+  # CONFIGURATION
+  # =============
+
+  # View to configure this shop
+  ConfigShop:
+    Base:
+      - Exit
+    Items:
+      20: ViewByCategory
+      22: ViewByPlayer
+      24: ViewByLastCreated

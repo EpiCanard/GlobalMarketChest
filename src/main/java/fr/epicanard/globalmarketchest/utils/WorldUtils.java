@@ -10,7 +10,9 @@ import com.google.common.util.concurrent.AtomicDouble;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
@@ -24,7 +26,7 @@ public class WorldUtils {
 
   /**
    * Get all the block in a specific radius around a location
-   * 
+   *
    * @param location  Looking around this location
    * @param radius    Search radius
    * @param consumer  Consumer used with the specific block sent
@@ -47,12 +49,11 @@ public class WorldUtils {
 
   /**
    * Get the nearest block that match with the material in parameter
-   * 
+   *
    * @param location  Looking around this location
    * @param material  Material to search
    */
-  public Block getNearestMaterial(Location location, Material material)
-  {
+  public Block getNearestMaterial(Location location, Material material) {
     AtomicDouble distance = new AtomicDouble(6.0D);
     AtomicReference<Block> finalBlock = new AtomicReference<Block>();
 
@@ -70,7 +71,7 @@ public class WorldUtils {
 
   /**
    * Get all the block inside the radius that match with the allowed block specified in config
-   * 
+   *
    * @param location Looking around this location
    * @return Return the list of block that match
    */
@@ -87,7 +88,7 @@ public class WorldUtils {
 
   /**
    * Transform a String into a location
-   * 
+   *
    * @param locatString String location
    * @param location    if not null set location inside this variable
    * @return Location
@@ -99,32 +100,52 @@ public class WorldUtils {
 
     if (args.length != 4)
       return null;
-    
-    if (location == null)
+
+    if (location == null) {
       location = new Location(GlobalMarketChest.plugin.getServer().getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]));
-    else {
-      location.setWorld(GlobalMarketChest.plugin.getServer().getWorld(args[0]));
+    } else {
+      World world = GlobalMarketChest.plugin.getServer().getWorld(args[0]);
+      if (world == null) {
+        LoggerUtils.warn(LangUtils.get("ErrorMessages.UnkownWorld") + " " + locatString);
+        return null;
+      }
+      location.setWorld(world);
       location.setX(Double.parseDouble(args[1]));
       location.setY(Double.parseDouble(args[2]));
       location.setZ(Double.parseDouble(args[3]));
     }
     return location;
   }
-  
+
   /**
    * Transform a Location in a String
-   * 
+   *
+   * @param loc  Location to transform
+   * @param sep String separator
+   * @param world Define if must add world
+   */
+  public String getStringFromLocation(Location loc, String sep, Boolean world) {
+    if (loc == null)
+      return "";
+    String finalString = "";
+    if (world) {
+      finalString += loc.getWorld().getName() + sep;
+    }
+    return finalString + loc.getBlockX() + sep + loc.getBlockY() + sep + loc.getBlockZ();
+  }
+
+  /**
+   * Transform a Location in a String
+   *
    * @param loc  Location to transform
    */
   public String getStringFromLocation(Location loc) {
-    if (loc == null)
-      return "";
-    return loc.getWorld().getName() + "," + loc.getBlockX() + "," + loc.getBlockY() + "," + loc.getBlockZ();
+    return WorldUtils.getStringFromLocation(loc, ",", true);
   }
 
   /**
    * Compare 2 locations
-   * 
+   *
    * @param first
    * @param second
    * @return Return true if they are equals
@@ -143,13 +164,29 @@ public class WorldUtils {
 
   /**
    * Verify if the specified World is allowed to create shop
-   * 
+   *
    * @throws WorldDoesnExist
    * @return false if it not allowed
    */
   public Boolean isAllowedWorld(String worldName) throws WorldDoesntExist {
     if (Bukkit.getWorld(worldName) == null)
       throw new WorldDoesntExist(worldName);
-    return GlobalMarketChest.plugin.getConfigLoader().getConfig().getList("WorldAllowed").contains(worldName);
+    return GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("WorldAllowed").contains(worldName);
+  }
+
+  /**
+   * Broadcast a message to all player inside a world
+   *
+   * @param world World where broadcast message
+   * @param message Message to broadcast
+   * @param excludes Players to excludes from broadcast
+   */
+  public void broadcast(World world, String message, List<Player> excludes) {
+    PlayerUtils.sendMessage(GlobalMarketChest.plugin.getServer().getConsoleSender(), message);
+    for (Player player : world.getPlayers()) {
+      if (!excludes.contains(player)) {
+        PlayerUtils.sendMessage(player, message);
+      }
+    }
   }
 }

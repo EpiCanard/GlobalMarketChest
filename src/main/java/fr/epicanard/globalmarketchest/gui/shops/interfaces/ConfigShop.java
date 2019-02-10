@@ -8,13 +8,4 @@ public class ConfigShop extends ShopInterface {
   public ConfigShop(InventoryGUI inv) {
     super(inv);
   }
-
-  @Override
-  public void load() {
-    super.load();
-  }
-
-  @Override
-  public void unload() {
-  }
 }

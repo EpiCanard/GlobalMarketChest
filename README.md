@@ -5,27 +5,93 @@ GUI Plugin of shop for spigot
 To work you will need the plugin **Vault** to handle the economy.
 
 ## Commands
-    /globalmarketchest
-**Open gui to select global, local or admin of your choice**
 
-    /globalmarketchest locate [item]
-**Give 5 best places that sell this item**
+**Help**
 
-    
-    /globalmarketchest reload
+Show help
+
+`/globalmarketchest [help]`
+
+
+**List**
+
+List all globalshop
+
+`/globalmarketchest list`
+
+
+**Detail**
+
+List all physical globalshop à distance
+
+`/globalmarketchest list detail <group_name>`
+
+
+**Open**
+
+Allow to open a globalshop
+
+`/globalmarketchest open <group_name>`
+
+
+**TP**
+
+Allow to teleport the player a specific shop position
+
+`/globalmarketchest list tp <group_name> <coordinates>`
+
+
+#TODO
+
 **Reload the plugin**
 
-    /globalmarketchest purge  [local | admin | global | all] [group_name]
-**Delete local, admin, global or all shops in groupe_name**
-- if kind of shop is not specified it apply to all kind of shops by default
-- if group_name is not specified it apply to all shop by default
+`/globalmarketchest reload`
 
 ## Permissions
-    globalmarketchest.localshop.create
-    globalmarketchest.localshop.use_command
-    globalmarketchest.localshop.use_chest
-    globalmarketchest.localshop.
-    globalmarketchest.globalshop.create
-    globalmarketchest.globalshop.use
-    globalmarketchest.adminshop.create
-    globalmarketchest.adminshop.use
+
+```YAML
+# Can use all commands and shops
+globalmarketchest.*
+
+# ==== Global Shop ====
+
+# Can create or use a globalshop
+globalmarketchest.globalshop.*
+
+# Can create a globalshop
+globalmarketchest.globalshop.createshop
+
+# Can open shop
+globalmarketchest.globalshop.openshop
+
+# Can create an auction
+globalmarketchest.globalshop.createauction
+
+# Can create buy an auction
+globalmarketchest.globalshop.buyauction
+
+# ==== COMMANDS ===
+
+# Can use all commands and shops
+globalmarketchest.commands.*
+
+# Can reload the plugin
+globalmarketchest.commands.reload
+
+# Can open a shop with command
+globalmarketchest.commands.open
+
+# Can list all shops with command
+globalmarketchest.commands.list.*
+
+# Can see all shop position for a group of shop
+globalmarketchest.commands.detail.*
+
+# Can be teleport to a specific shop
+globalmarketchest.commands.detail.tp
+
+```
+
+## Discord
+
+GlobalMarketChest discord : https://discord.gg/UuGAcCa

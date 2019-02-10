@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitTask;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 /**
  * Warning class used to make blinking item inside Inventory
@@ -27,19 +28,19 @@ public class Warning {
 
   /**
    * Set warning meta on the itemstack
-   * 
+   *
    * @param message Message to set on the itemstack
    * @param item    ItemStack used to set metadata on
    */
   private ItemStack setWarn(String message, ItemStack item) {
-    return ItemStackUtils.setItemStackMeta(item, 
+    return ItemStackUtils.setItemStackMeta(item,
       "/!\\ " + LangUtils.get("Divers.Warning"),
-      "&7" + message);
+      Utils.toList("&7" + message));
   }
 
   /**
    * Make a blinking warning inside the inventory, create an infinite task
-   * 
+   *
    * @param message Message to set on blinking warning
    * @param pos     Position where to place the warning
    */

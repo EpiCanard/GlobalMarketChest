@@ -1,14 +1,21 @@
-GUITitle:
-  SelectShop: "Sélection d'un shop"
-  ChooseTypeShop : "&5Choisissez un type de shop"
-  NewAuction: "&2Création d'une nouvelle enchère"
-  CreationShop:
-    GlobalShop: "Création d'un Global Shop"
+InterfacesTitle:
+  EditAuction: "&2Modification de l'enchère"
+  BuyAuction: "&2Achat de l'enchère"
+  CategoryView: "&2Vue par catégorie"
+  AuctionViewList: "&2Liste des enchères"
+  ConfigShop : "&2Configuration du shop"
+  # Auction Creation
+  CreateAuctionItem: "&2Sélection de l'item pour l'enchère"
+  CreateAuctionPrice: "&2Sélection du prix de l'enchère"
+  # Shop Creation
+  ShopCreationSelectType: "&2Sélection type shop et bloc lié"
+  ShopCreationLink: "&2Définition du nom de groupe"
 Divers:
-  State: "Status"
+  State: "Statut"
   Quantity: "Quantité"
   UnitPrice: "Prix unitaire"
   TotalPrice: "Prix total"
+  AuctionNumber: "Nombre d'enchères"
   Seller: "Vendeur"
   Buyer: "Acheteur"
   Start: "Débuté"
@@ -17,32 +24,63 @@ Divers:
   Group: "Groupe"
   Type: "Type"
   Warning: "Attention"
+  ExpireIn: "Expire dans"
+  Expired: "Expiré"
+  Started: "Débuté"
+  Ended: "Terminé"
+  Free: "Gratuit"
+  WithStatus: "&fAvec le statut : &2%s"
+  Days: "jours"
+  Hours: "heures"
+  Minutes: "minutes"
+  Seconds: "secondes"
+  PastDate: "il y a %s"
+  UnknownPlayer: "Inconnu au bataillon"
+States:
+  InProgress: "En Cours"
+  Expired: "Expiré"
+  Abandoned: "Abandonné"
+  Finished: "Fini"
 Shops:
-  ClickChangeGroup: "Cliques pour changer le nom de groupe du shop"
+  ClickChangeGroup: "&cClique pour changer;&cle nom de groupe du shop"
   CurrentShop: "Shop actuel"
 Buttons:
+  Background:
+    Name: " "
   Money:
-    Name: "Votre argent"
+    Name: "&6Votre argent"
   PreviousButton:
-    Name: "Retour"
-    Description: "Revenir à l'inventaire précédent"
+    Name: "&fRetour"
+    Description: "&fRevenir à l'inventaire précédent"
   ExitButton:
     Name: "&4Sortie"
-    Description: "Fermer cet inventaire"
+    Description: "&fFermer cet inventaire"
   Validate:
     Name: "&4Valider"
-    Description: "Aller à l'étape suivante"
+    Description: "&fAller à l'étape suivante"
   Return:
     Name: "&4Revenir"
-    Description: "Revenir à l'étape précédente"
+    Description: "&fRevenir à l'étape précédente"
   CreateShop:
     Name: "&2Créer le Shop"
   NewAuction:
     Name: "&2Créer une nouvelle enchère"
-    Description: "&7Cliquer ici pour vendre vos objets"
+    Description: "&7Nombre d'enchères (%d/%d);&7Cliquer ici pour vendre vos objets"
+  CreateAuction:
+    Name: "&2Créer l'enchère"
+  BuyAuction:
+    Name: "&2Acheter l'enchère"
+  RenewAuction:
+    Name: "&6Renouveler l'enchère"
+  UndoAuction:
+    Name: "&cAnnuler l'enchère"
+  RenewEveryAuction:
+    Name: "&6Renouveler toutes les enchères"
+  UndoEveryAuction:
+    Name: "&cAnnuler toutes les enchères"
   GlobalView:
-    Name: "Vue d'ensemble"
-    Description: "Historique des enchères"
+    Name: "&fVue d'ensemble"
+    Description: "&5Historique des enchères"
   Search:
     Name: "&3Chercher une enchère"
   DragItem:
@@ -57,8 +95,8 @@ Buttons:
     Name: "Vue par joueur"
     Description: "Le joueur peut voir les enchères par joueur ?"
   ViewByLastCreated:
-    Name: "Vue par dernier créé"
-    Description: "Le joeur peut voir les enchères dernièrement créé ?"
+    Name: "Vue par dernières créées"
+    Description: "Le joueur peut voir les enchères dernièrement créées ?"
   GlobalShop:
     Name: "GlobalShop"
   AuctionShop:
@@ -68,13 +106,98 @@ Buttons:
   AdminShop:
     Name: "AdminShop"
   EditGroupName:
-    Name: "Modifier le nom du groupe"
-    Description: "Si vous voulez renommer le nom du groupe de votre Shop"
+    Name: "&fModifier le nom du groupe"
   PreviousPage:
     Name: "Page précédente"
   NextPage:
     Name: "Page suivante"
   NumPage:
     Name: "Numéro de la page"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2Déposez un item ici"
+    Description: "&2ou utilisez SHIFT-Click"
+  MaxInOne:
+    Name: "&fMaximum d'items en une enchère"
+  MaxRepeat:
+    Name: "&fRépéter cette enchère"
+    Description: "&fautant de fois que possible"
+  InProgressAuction:
+    Name: "&aEnchères en cours"
+  ExpiredAuction:
+    Name: "&cEnchères expirées"
+  SoldAuction:
+    Name: "&bEnchères vendues"
+  BoughtAuction:
+    Name: "&9Enchères achetées"
+  CanceledAuction:
+    Name: "&6Enchères annulées"
+  FreePrice:
+    Name: "&aGratuit"
+    Description: "&7Définit le prix à zéro"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
+  YesButton:
+    Name: "OUI"
+  NoButton:
+    Name: "NON"
+  Question:
+    Name: " "
 ErrorMessages:
+  UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
+  MissingItems: "Mauvais nombre d'items, certains items sont manquants"
+  FailCreationAuction: "Impossible de créer l'enchère en base de données"
+  NotEnoughSpace: "Pas assez de place pour ajouter;les items dans l'inventaire du joueur"
+  NotEnoughMoney: "Pas assez d'argent pour ;acheter cette enchère"
+  CantBuyAuction: "Impossible d'acheter l'enchère (expirée ou déjà vendue)"
+  CantRenewAuction: "Impossible de renouveler l'enchère"
+  CantUndoAuction: "Impossible d'annuler l'enchère"
+  CantRenewEveryAuction: "Impossible de renouveler toutes ;&7les enchères"
+  CantUndoEveryAuction: "Impossible d'annuler toutes les enchères"
+  PlayerDoesntExist: "Ce joueur n'existe pas"
+  MaxAuctionByPlayer: "Impossible de créer l'enchère;&7Vous avez atteint le nombre;&7d'enchères maximum"
+  PermissionNotAllowed: "&cVous n'êtes pas autorisé à faire cette action"
+  InvalidCommand: "&cCette commande n'est pas valide : "
+  PlayerOnly: "&cCette commande peut uniquement être exécutée par un joueur"
+  UnknownShop: "&cShop inconnu : "
+  CantRemoveBlock: "&cVous ne pouvez pas supprimer ce bloc car un shop y est rattaché"
+  DamagedItem: "Vous ne pouvez pas vendre un item endommagé"
+  BlacklistedItem: "Vous ne pouvez pas vendre un item blacklisté"
+InfoMessages:
+  UndoAuction: "&2Enchère supprimée avec succès"
+  RenewAuction: "&2Enchère renouvelée avec succès"
+  CreateAuction: "&2Enchère créée avec succès"
+  RenewEveryAuction: "&2Toutes les enchères ont été renouvelées avec succès"
+  UndoEveryAuction: "&2Toutes les enchères ont été supprimées avec succès"
+  ShopDeleted: "Shop supprimé avec succès"
+  # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
+  # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
+  # If you don't have them a message will pop in console and no message will broadcast
+  AcquireAuction: "&3%s &6a acheté &2%d %s &6pour &2%.2f&6 $ à &3%s&6."
+  AcquireAuctionOwner: "&3%s &6a acheté votre enchère &2%d %s &6pour &2%.2f&6 $."
+  PluginReloading: "Le plugin est en train de recharger..."
+  PluginReloaded: "Le plugin a fini de recharger."
+  WriteGroupName: "Tapez le nom du groupe que vous voulez saisir"
+  DeleteShopQuestion: "Êtes-vous sûr de vouloir supprimer ce shop ?"
+Commands:
+  Buttons:
+    OpenText: "Ouvrir"
+    OpenHover: "Cliquez pour ouvrir le shop"
+    DetailText: "Détails"
+    DetailHover: "Cliquez pour voir les details"
+    TeleportText: "Téléporter"
+    TeleportHover: "Cliquez pour vous téléporter au shop"
+  ListShop: "Liste des shops : "
+  SeeHelp: "&6Regardes l'aide : &c/globalmarketchest help"
+  HelpCommand:
+    Usage: "&6Utilisation :"
+    Help: "&c/globalmarketchest [help]&6 - Affiche l'aide"
+    Reload: "&c/globalmarketchest reload&6 - Permet de recharger le plugin"
+    List: "&c/globalmarketchest list&6 - Liste tous les globalshop"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - Permet de lister tous les globalshop à distance"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Permet de teleporter le joueur à la position du shop"
+    Open: "&c/globalmarketchest open <shop>&6 - Permet d'ouvrir un globalshop à distance"

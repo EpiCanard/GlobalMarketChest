@@ -58,7 +58,7 @@ public class PaginatorConfig {
    */
   public int nextPage() {
     this.page +=1;
-    return page;
+    return this.page;
   }
 
   /**
@@ -67,13 +67,21 @@ public class PaginatorConfig {
   public int previousPage() {
     if (this.page > 0)
       this.page -=1;
-    return page;
+    return this.page;
+  }
+
+  /**
+   * Reset the page number to zero
+   */
+  public int resetPage() {
+    this.page = 0;
+    return this.page;
   }
 
   /**
    * Give the start limit for database limit request
    */
   public int getStartLimit() {
-    return this.page * limit;
+    return this.page * this.limit;
   }
 }

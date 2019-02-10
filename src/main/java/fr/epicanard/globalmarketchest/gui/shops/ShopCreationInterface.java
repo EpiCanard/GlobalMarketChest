@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.gui.shops;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
@@ -19,7 +20,7 @@ public abstract class ShopCreationInterface extends ShopInterface {
    * Update the lore of the current shop
    */
   protected void updateName() {
-    ShopInfo shop = this.inv.getTransValue("ShopInfo");
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
     ItemStack item = this.inv.getInv().getItem(49);
 
     if (shop == null)

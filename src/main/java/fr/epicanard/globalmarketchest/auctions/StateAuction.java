@@ -1,30 +1,46 @@
 package fr.epicanard.globalmarketchest.auctions;
 
-import lombok.Getter;
+import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
 
 public enum StateAuction {
-  INPROGRESS(1, "InProgress"),
-  EXPIRED(2, "Expired"),
-  ABANDONED(3, "Abandoned"),
-  FINISHED(4, "Finished")
+  INPROGRESS("InProgress"),
+  EXPIRED("Expired"),
+  ABANDONED("Abandoned"),
+  FINISHED("Finished")
   ;
   
-  @Getter
-  private int state;
-  @Getter
   private String keyLang;
 
 
-  StateAuction(int id, String keyLang) {
-    this.state = id;
+  StateAuction(String keyLang) {
     this.keyLang = keyLang;
   }
 
-  public static final StateAuction getStateAuction(int value) {
-    for (StateAuction state : StateAuction.values()) {
-      if (state.getState() == value)
-        return state;
-    }
+  /**
+   * Get translate language for state
+   * Path inside language file : States.<keyLang>
+   * 
+   * @return Translated keylang
+   */
+  public String getLang() {
+    return LangUtils.get("States." + this.keyLang);
+  }
+
+  /**
+   * Static method to get StateAuction enum from int state value
+   * if StateAuction is not valid return StateAuction.FINISHED
+   * 
+   * @param value state value
+   * @return StateAuction
+   */
+  public static final StateAuction getStateAuction(AuctionInfo auction) {
+    if (auction.getEnded() == false && auction.getEnd().getTime() < DatabaseUtils.getTimestamp().getTime())
+      return StateAuction.EXPIRED;
+    if (auction.getEnded() == false)
+      return StateAuction.INPROGRESS;
+    if (auction.getEnded() == true && auction.getPlayerStarter() == auction.getPlayerEnder())
+      return StateAuction.ABANDONED;
     return StateAuction.FINISHED;
   }
 }
