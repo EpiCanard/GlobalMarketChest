@@ -1,97 +1,90 @@
-# GlobalMarketChest
-GUI Plugin of shop for spigot
+![banner](https://user-images.githubusercontent.com/29657498/52167675-07369d80-271f-11e9-86ff-362db527f854.png)
 
-## Dependecy
+GlobalMarketChest is a spigot plugin that allows to easily create global shops to sell and buy auctions. You interact with shops through graphical interfaces. It can be easily configured and customized.
+
+![dependencies](https://user-images.githubusercontent.com/29657498/52743417-45af4080-2fda-11e9-8be7-4b645e77e898.png)
+
 To work you will need the plugin **Vault** to handle the economy.
 
-## Commands
+While there is no other storage system you will also need **MySQL**.
 
-**Help**
+![features](https://user-images.githubusercontent.com/29657498/52743424-4ba52180-2fda-11e9-8fe1-dded69d0dd85.png)
 
-Show help
+ - User friendly shop graphical interfaces
+ - Fluid graphical interfaces
+ - Simple and instinctive shop creation process
+ - A unique place to sell/buy items and improve interaction between players
+ - Smart sorting system to see first cheapest auctions and than oldest
+ - Paginator to see auctions 27 by 27
+ - Easy process to create / buy auction
+ - Easy price selector
+ - Advanced feature to repeat the auction that you are creating as many as possible
+ - Advanced feature to put all similar items of your inventory  in the auction that you are creating (you can go higher than 64 items)
+ - Advanced categories system by default inspired by creative tabs but can be totally customized
+ - Detailed permissions system
+ - Complete commands to list, teleport to and open shops (with autocompletion)
+ - High configurability
+   - All items composing interfaces can be changed (item used, title and lore)
+   - Language can easily be configured
+   - Categories totally configurable (display item, title, position, items contains, GroupLevels)
+    - Many features can be configured/disabled
 
-`/globalmarketchest [help]`
+**Technical features :**
 
+- Highly configurable interfaces through config file
+- Interface loader that auto adapt to available interfaces
 
-**List**
+**In coming features**
 
-List all globalshop
+- Multi database support (yml, postgresql, SQLite, mongodb)
+- AuctionShop (maybe another name) - Here roles are reversed, the player ask for an item and a quantity he need and players come to sell to him the wanted item
+- AdminShop - Here players can find all item they want infinitely.
+- LocalShop - With this shop only the owner can sell auctions in it.
+- Maybe the split of this plugin in multiple little plugins (core, globalshop,adminshop,...)  to improve scalability of this plugin
 
-`/globalmarketchest list`
+![installation](https://user-images.githubusercontent.com/29657498/52743428-4ea01200-2fda-11e9-94eb-3f9bba72e926.png)
 
+1. Download the file **GlobalMarketChest.jar**
+2. Add the file in the folder **plugins** of your server.
+3. Launch your server, it will generate all necessary configuration files in **plugins/GlobalMarketChest**. The plugin will disable from itself because your database is not configured.
+4. In file **plugins/GlobalMarketChest/config.yml** change the database informations in variable **Database**. See [wiki](https://github.com/EpiCanard/GlobalMarketChest/wiki/resources-:-config.yml#database).
+5. Reload the plugin or server
+6. If your database informations are correct, the plugin should now work :) If it's not the case don't hesitate to come on Discord ([https://discord.gg/UuGAcCa](https://discord.gg/UuGAcCa)) to ask for help.
 
-**Detail**
+![documentation](https://user-images.githubusercontent.com/29657498/52743420-48119a80-2fda-11e9-8076-582a7617be7c.png)
 
-List all physical globalshop à distance
+You can find all information that you need to use and configure this plugin in the [wiki](https://github.com/EpiCanard/GlobalMarketChest/wiki).
 
-`/globalmarketchest list detail <group_name>`
+![support](https://user-images.githubusercontent.com/29657498/52744544-439ab100-2fdd-11e9-8ec8-b18edd602689.png)
 
+If you find a bug or want to make a suggestion to improve the plugin please open an [issue](https://github.com/EpiCanard/GlobalMarketChest/issues) on GitHub.
 
-**Open**
+If you want to participate to development of this plugin, fork the GitHub, make your modifications and open a Pull Request.
 
-Allow to open a globalshop
+If you have questions, you can contact me on discord.
+Discord: [https://discord.gg/UuGAcCa](https://discord.gg/UuGAcCa)
 
-`/globalmarketchest open <group_name>`
+Source GitHub: [https://github.com/EpiCanard/GlobalMarketChest](https://github.com/EpiCanard/GlobalMarketChest)
 
+![screenshots](https://user-images.githubusercontent.com/29657498/52745804-4ea31080-2fe0-11e9-8604-8e5081c75605.png)
 
-**TP**
+![buy_auction](https://user-images.githubusercontent.com/29657498/52537867-c1578600-2d6b-11e9-8657-7f4efb43ac27.gif)
 
-Allow to teleport the player a specific shop position
+![create_auction](https://user-images.githubusercontent.com/29657498/52538701-fcf74d80-2d75-11e9-972b-de74812f337b.gif)
 
-`/globalmarketchest list tp <group_name> <coordinates>`
+![edit_auction_overview](https://user-images.githubusercontent.com/29657498/52537956-e993b480-2d6c-11e9-9c5c-1316c9908de7.gif)
 
+![using](https://user-images.githubusercontent.com/29657498/52744655-970cff00-2fdd-11e9-9dbe-697f46eafd12.png)
 
-#TODO
+- Freebuild.fr - play.freebuild.fr [website](https://freebuild.fr)
 
-**Reload the plugin**
+![thanks](https://user-images.githubusercontent.com/29657498/52743433-5069d580-2fda-11e9-8d34-ae14557c1311.png)
 
-`/globalmarketchest reload`
+I would like to thanks the server Freebuild.fr that helps me during development of this plugin.
 
-## Permissions
+I would like to thanks the player Icodak that make the logo of this plugin.
 
-```YAML
-# Can use all commands and shops
-globalmarketchest.*
+### Donation
+If you want to donate for work done, it will be a pleasure. Thank you.
 
-# ==== Global Shop ====
-
-# Can create or use a globalshop
-globalmarketchest.globalshop.*
-
-# Can create a globalshop
-globalmarketchest.globalshop.createshop
-
-# Can open shop
-globalmarketchest.globalshop.openshop
-
-# Can create an auction
-globalmarketchest.globalshop.createauction
-
-# Can create buy an auction
-globalmarketchest.globalshop.buyauction
-
-# ==== COMMANDS ===
-
-# Can use all commands and shops
-globalmarketchest.commands.*
-
-# Can reload the plugin
-globalmarketchest.commands.reload
-
-# Can open a shop with command
-globalmarketchest.commands.open
-
-# Can list all shops with command
-globalmarketchest.commands.list.*
-
-# Can see all shop position for a group of shop
-globalmarketchest.commands.detail.*
-
-# Can be teleport to a specific shop
-globalmarketchest.commands.detail.tp
-
-```
-
-## Discord
-
-GlobalMarketChest discord : https://discord.gg/UuGAcCa
+[![paypal](https://www.paypalobjects.com/en_US/FR/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ALYLAVBZCPC7C&source=url)
