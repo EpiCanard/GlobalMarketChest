@@ -87,4 +87,4 @@ I would like to thanks the player Icodak that make the logo of this plugin.
 ### Donation
 If you want to donate for work done, it will be a pleasure. Thank you.
 
-[![paypal](https://www.paypalobjects.com/en_US/FR/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ALYLAVBZCPC7C&source=url)
+![https://www.paypal.me/globalmarketchest42](https://www.paypal.me/globalmarketchest42)
