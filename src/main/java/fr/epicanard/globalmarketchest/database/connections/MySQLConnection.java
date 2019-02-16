@@ -92,13 +92,15 @@ public class MySQLConnection extends DatabaseConnection {
    * @return Connection
    */
   @Override
-  protected Connection connect() {
+  protected Connection connect() throws ConfigException {
     try {
       Class.forName("com.mysql.jdbc.Driver");
       return DriverManager.getConnection("jdbc:mysql://" + this.buildUrl(),
           this.user, this.password);
-    } catch (SQLException | ClassNotFoundException e) {
+    } catch (ClassNotFoundException e) {
       e.printStackTrace();
+    } catch (SQLException e) {
+      throw new ConfigException("Can't connect to your database, please check your configuration file or the access to your database");
     }
     return null;
   }
@@ -127,9 +129,10 @@ public class MySQLConnection extends DatabaseConnection {
       if (co == null || !co.isValid(0) || co.isClosed())
         return this.connect();
       return co;
-    } catch (SQLException | InterruptedException e) {
-      return this.connect();
+    } catch (SQLException | ConfigException | InterruptedException e) {
+      e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -151,7 +154,7 @@ public class MySQLConnection extends DatabaseConnection {
    * Fill pool with connection from the size specified in config file
    */
   @Override
-  public void fillPool() {
+  public void fillPool() throws ConfigException {
     for (int i = 0; i < this.simultaneousConnections; i++) {
       Connection co = this.connect();
       this.getBackConnection(co);
