@@ -34,7 +34,7 @@ public abstract class DatabaseConnection {
     return this.host + ":" + this.port + "/" + this.database;
   }
 
-  protected abstract Connection connect();
+  protected abstract Connection connect() throws ConfigException;
 
   protected abstract void disconnect(Connection connection);
 
@@ -44,7 +44,7 @@ public abstract class DatabaseConnection {
 
   public abstract void getBackConnection(Connection connection);
 
-  public abstract void fillPool();
+  public abstract void fillPool() throws ConfigException;
 
   public abstract void cleanPool();
 
