@@ -2,6 +2,10 @@ package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import java.util.function.Consumer;
 
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.CategoryHandler;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
@@ -42,5 +46,46 @@ public class CategoryView extends DefaultFooter {
     });
 
     this.inv.getInv().setItem(h.getPosition(category), h.getDisplayItem(category));
+  }
+
+  /**
+   * Called when a mouse drop event is done inside inventory
+   *
+   * @param event
+   */
+  @Override
+  public void onDrop(InventoryClickEvent event, InventoryGUI inv) {
+    if (!GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableSimilarAuctions", true)) {
+      return;
+    }
+    ItemStack item = null;
+
+    if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+      item = event.getCurrentItem();
+    } else {
+      item = event.getCursor();
+    }
+
+    String category = GlobalMarketChest.plugin.getCatHandler().getCategory(item);
+    Integer numberLevels = GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category);
+    GroupLevels lastLevel = this.getLastLevel(GroupLevels.LEVEL1, numberLevels);
+
+    this.inv.getTransaction().put(TransactionKey.GROUPLEVEL, lastLevel);
+    this.inv.getTransaction().put(TransactionKey.CATEGORY, category);
+    this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, item);
+
+    new NextInterface("AuctionViewList").accept(inv);
+  }
+
+  /**
+   * Get the last level possible with numberLevels specified
+   * 
+   * @param level GroupLevels to compare
+   * @param numberLevels Number of levels for category
+   * @return Return the last group level of category
+   */
+  private GroupLevels getLastLevel(GroupLevels level, Integer numberLevels) {
+    GroupLevels nextLevel = level.getNextLevel(numberLevels);
+    return (nextLevel == null) ? level : this.getLastLevel(nextLevel, numberLevels);
   }
 }
