@@ -23,6 +23,8 @@ Options:
   EnableMaxInOne: true
   # Define if the button MaxRepeat in CreateAuction view must be here
   EnableMaxRepeat: true
+  # Define if a player can find similar auctions with drag and drop on category view 
+  EnableSimilarAuctions: true
   # Default price for new auctions
   DefaultPrice: 100
   # Use the price of the last similar auction as price of new auction
