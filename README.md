@@ -66,6 +66,8 @@ Discord: [https://discord.gg/UuGAcCa](https://discord.gg/UuGAcCa)
 
 Source GitHub: [https://github.com/EpiCanard/GlobalMarketChest](https://github.com/EpiCanard/GlobalMarketChest)
 
+Spigot : [https://www.spigotmc.org/resources/globalmarketchest-gui-shop-plugin.64921/](https://www.spigotmc.org/resources/globalmarketchest-gui-shop-plugin.64921/)
+
 ![screenshots](https://user-images.githubusercontent.com/29657498/52745804-4ea31080-2fe0-11e9-8604-8e5081c75605.png)
 
 ![buy_auction](https://user-images.githubusercontent.com/29657498/52537867-c1578600-2d6b-11e9-8657-7f4efb43ac27.gif)
