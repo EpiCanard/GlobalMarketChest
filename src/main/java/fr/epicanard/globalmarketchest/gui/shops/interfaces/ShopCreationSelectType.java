@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
-import fr.epicanard.globalmarketchest.gui.shops.ShopCreationInterface;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopCreationInterface;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
