@@ -50,9 +50,11 @@ public class ShopManager {
       try {
         while (res.next()) {
           ShopInfo shop = new ShopInfo(res);
-          if (shop.getSignLocation() != null) {
+          if (shop.getSignLocation() != null && shop.getSignLocation().getWorld() != null) {
             shop.getSignLocation().getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, shop));
-            Optional.ofNullable(shop.getOtherLocation()).ifPresent(loc -> loc.getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, shop)));
+            Optional.ofNullable(shop.getOtherLocation()).ifPresent(loc -> {
+              loc.getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, shop));
+            });
             this.shops.add(shop);
           }
         }
