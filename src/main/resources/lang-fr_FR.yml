@@ -146,6 +146,13 @@ Buttons:
     Name: "NON"
   Question:
     Name: " "
+  SearchItemDrop:
+    Name: "Rechercher des items similaires"
+    Description: "Cliques avec l'item;Ou utilises SHIFT+Click"
+  SearchItemText:
+    Name: "Rechercher un item avec son nom"
+  SearchByPlayer:
+    Name: "Rechercher les enchères d'un joueur"
 ErrorMessages:
   UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
@@ -182,6 +189,8 @@ InfoMessages:
   PluginReloading: "Le plugin est en train de recharger..."
   PluginReloaded: "Le plugin a fini de recharger."
   WriteGroupName: "Tapez le nom du groupe que vous voulez saisir"
+  WriteItemName: "Tapez le nom de l'item que vous recherchez"
+  WritePlayerName: "Tapez le nom du joueur que vous cherchez"
   DeleteShopQuestion: "Êtes-vous sûr de vouloir supprimer ce shop ?"
 Commands:
   Buttons:

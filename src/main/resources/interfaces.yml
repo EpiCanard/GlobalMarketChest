@@ -52,8 +52,18 @@ Interfaces:
     Base:
       - Exit
       - DefaultFooter
-    # Items:
-    #   9: Search
+    Items:
+      0: Search
+
+  SearchView:
+    Base:
+      - Return
+      - Exit
+      - DefaultFooter
+    Items:
+      19: SearchItemDrop
+      22: SearchItemText
+      25: SearchByPlayer
 
   # View to see every auctions of one item
   AuctionViewList:

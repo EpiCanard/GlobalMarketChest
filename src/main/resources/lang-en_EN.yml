@@ -145,6 +145,13 @@ Buttons:
     Name: "NO"
   Question:
     Name: " "
+  SearchItemDrop:
+    Name: "Find similar items"
+    Description: "Click with the wanted item;Or use SHIFT+Click"
+  SearchItemText:
+    Name: "Find an item with his name"
+  SearchByPlayer:
+    Name: "Find auctions of a player"
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
@@ -181,6 +188,8 @@ InfoMessages:
   PluginReloading: "Plugin is reloading..."
   PluginReloaded: "Plugin is reloaded."
   WriteGroupName: "Write the group name that you want"
+  WriteItemName: "Write the name of the item you are looking for"
+  WritePlayerName: "Write the name of the player you are looking for"
   DeleteShopQuestion: "Are you sure you want to delete this shop ?"
 Commands:
   Buttons:

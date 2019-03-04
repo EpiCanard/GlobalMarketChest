@@ -107,6 +107,9 @@ Interfaces:
     Money: minecraft:gold_ingot
     GlobalView: minecraft:enchanted_book
     Search: minecraft:hopper
+    SearchItemDrop: minecraft:grass_block
+    SearchItemText: minecraft:paper
+    SearchByPlayer: minecraft:player_head
     ViewByCategory: minecraft:compass
     ViewByPlayer: minecraft:chest
     ViewByLastCreated: minecraft:apple
