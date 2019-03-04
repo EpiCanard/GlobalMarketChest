@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -257,7 +258,7 @@ public class AuctionManager {
    * @param limit limit to use in request
    * @param consumer callable, send database return to this callabke
    */
-  public void getAuctions(String group, StateAuction state, Player starter, Player ender, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
+  public void getAuctions(String group, StateAuction state, OfflinePlayer starter, OfflinePlayer ender, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
     builder.addCondition("group", group);

@@ -11,6 +11,7 @@ public enum TransactionKey {
   AUCTIONITEM,
   SIGNLOCATION,
   GROUPLEVEL,
-  QUESTION
+  QUESTION,
+  PLAYER
   ;
 }

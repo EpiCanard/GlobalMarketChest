@@ -6,12 +6,14 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
@@ -38,7 +40,7 @@ public class PlayerUtils {
    * @param player
    * @return
    */
-  public String getUUIDToString(Player player) {
+  public String getUUIDToString(OfflinePlayer player) {
     return player.getUniqueId().toString();
   }
 
@@ -207,5 +209,22 @@ public class PlayerUtils {
         playerInventory.setItem(i, null);
       }
     }
+  }
+
+  /**
+   * Get the head of a player
+   * 
+   * @param player Offline player
+   * @return Return itemstack of player head
+   */
+  public ItemStack getPlayerHead(OfflinePlayer player) {
+    final ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
+    final SkullMeta headMeta = (SkullMeta) playerHead.getItemMeta();
+    
+    headMeta.setOwningPlayer(player);
+    headMeta.setDisplayName(player.getName());
+    playerHead.setItemMeta(headMeta);
+
+    return playerHead;
   }
 }

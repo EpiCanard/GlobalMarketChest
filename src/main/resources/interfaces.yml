@@ -64,6 +64,11 @@ Interfaces:
       19: SearchItemDrop
       22: SearchItemText
       25: SearchByPlayer
+    
+  AuctionViewByPlayer:
+    Base:
+      - DefaultShopInterface
+      - DefaultFooter
 
   # View to see every auctions of one item
   AuctionViewList:
