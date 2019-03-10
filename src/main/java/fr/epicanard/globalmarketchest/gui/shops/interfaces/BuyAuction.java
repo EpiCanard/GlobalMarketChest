@@ -15,7 +15,7 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
-import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
@@ -30,8 +30,8 @@ public class BuyAuction extends ShopInterface {
     super(inv);
 
     this.isTemp = true;
-    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-    ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
     this.setIcon(item);
     this.actions.put(0, new PreviousInterface());
     this.actions.put(31, this::buyAuction);
@@ -40,7 +40,7 @@ public class BuyAuction extends ShopInterface {
   @Override
   public void load() {
     super.load();
-    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
     this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(AuctionLoreConfig.TOSELL)));
   }
 
@@ -50,8 +50,8 @@ public class BuyAuction extends ShopInterface {
    * @param i
    */
   private void buyAuction(InventoryGUI i) {
-    AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
-    ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
+    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
 
     item.setAmount(auction.getAmount());
 
@@ -89,7 +89,8 @@ public class BuyAuction extends ShopInterface {
    * @param item ItemStack bought
    */
   private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
-    String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
+    final String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
+
     try {
       if (isOwner) {
         return String.format(LangUtils.get(langVariable),
@@ -120,17 +121,17 @@ public class BuyAuction extends ShopInterface {
    * @param item ItemStack bought
    */
   private void broadcastMessage(AuctionInfo auction, Player buyer, ItemStack item) {
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
-    Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
+    final Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
 
-    String message = formatMessage(false, auction, buyer, item);
+    final String message = formatMessage(false, auction, buyer, item);
     if (message != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.BroadcastInsideWorld", true)) {
       WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(starter));
     }
 
     if (starter != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.NotifyPlayer", true)) {
-      String messageOwner = formatMessage(true, auction, buyer, item);
+      final String messageOwner = formatMessage(true, auction, buyer, item);
       if (messageOwner != null)
         PlayerUtils.sendMessage(starter, messageOwner);
     }

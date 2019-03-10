@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.gui.shops;
+package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
 import org.bukkit.inventory.ItemStack;
 
@@ -8,7 +8,6 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.NewAuction;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
-import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;

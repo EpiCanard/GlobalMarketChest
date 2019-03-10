@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.gui.shops;
+package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
 import java.util.HashMap;
 import java.util.List;

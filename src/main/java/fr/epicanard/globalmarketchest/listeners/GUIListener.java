@@ -10,7 +10,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
-import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 
 /**
  * Listener for each interaction done inside a chest
