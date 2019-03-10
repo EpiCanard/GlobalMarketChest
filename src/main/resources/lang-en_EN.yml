@@ -36,6 +36,7 @@ Divers:
   Seconds: "seconds"
   PastDate: "%sago"
   UnknownPlayer: "Unknown player"
+  SearchItemTextIcon: "&7Search: &3%s"
 States:
   InProgress: "In Progress"
   Expired: "Expired"
@@ -146,12 +147,12 @@ Buttons:
   Question:
     Name: " "
   SearchItemDrop:
-    Name: "Find similar items"
-    Description: "Click with the wanted item;Or use SHIFT+Click"
+    Name: "&fFind similar items"
+    Description: "&7Click with the wanted item;&7Or use SHIFT+Click"
   SearchItemText:
-    Name: "Find an item with his name"
+    Name: "&fFind an item with his name"
   SearchByPlayer:
-    Name: "Find auctions of a player"
+    Name: "&fFind auctions of a player"
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"

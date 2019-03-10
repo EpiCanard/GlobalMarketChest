@@ -12,6 +12,7 @@ public enum TransactionKey {
   SIGNLOCATION,
   GROUPLEVEL,
   QUESTION,
-  PLAYER
+  PLAYER,
+  ITEMSEARCH
   ;
 }

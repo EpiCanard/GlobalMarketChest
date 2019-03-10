@@ -9,12 +9,9 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
-import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.DefaultFooter;
 import fr.epicanard.globalmarketchest.managers.GroupLevels;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.ItemUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class SearchView extends DefaultFooter {
@@ -79,7 +76,8 @@ public class SearchView extends DefaultFooter {
   }
   
   private void searchItem(String itemName) {
-    System.out.println("ITEM " + itemName);
+    this.inv.getTransaction().put(TransactionKey.ITEMSEARCH, itemName);
+    this.inv.loadInterface("AuctionViewItem");
   }
 
   private void searchPlayer(String player) {

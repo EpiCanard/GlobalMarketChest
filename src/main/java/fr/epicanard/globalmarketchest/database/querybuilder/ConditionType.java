@@ -13,7 +13,8 @@ public enum ConditionType {
   INFERIOR("<"),
   INFERIOR_EQUAL("<="),
   IN("IN"),
-  NOTIN("NOT IN")
+  NOTIN("NOT IN"),
+  LIKE("LIKE")
   ;
 
   @Getter

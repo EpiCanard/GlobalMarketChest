@@ -286,6 +286,34 @@ public class AuctionManager {
   }
 
   /**
+   * Get all auctions matching minecraft key 'search'
+   * 
+   * @param group group of auction
+   * @param search minecraft key searched
+   * @param limit limit to use in request
+   * @param consumer callable, send database return to this callabke
+   */
+  public void getAuctionsByItemName(String group, String search, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+
+    builder.addCondition("group", group);
+    this.defineStateCondition(builder, StateAuction.INPROGRESS);
+    builder.setExtension("ORDER BY start DESC");
+    builder.addCondition("itemStack", "%:%" + search + "%", ConditionType.LIKE);
+
+    if (limit != null)
+      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
+    QueryExecutor.of().execute(builder, res -> {
+      List<AuctionInfo> auctions = new ArrayList<>();
+      try {
+        while (res.next())
+          auctions.add(new AuctionInfo(res));
+        consumer.accept(auctions);
+      } catch (SQLException e) {}
+    });
+  }
+
+  /**
    * Get number of auctions for a player
    *
    * @param group group of auction

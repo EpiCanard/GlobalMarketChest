@@ -36,6 +36,7 @@ Divers:
   Seconds: "secondes"
   PastDate: "il y a %s"
   UnknownPlayer: "Inconnu au bataillon"
+  SearchItemTextIcon: "&7Recherche: &3%s"
 States:
   InProgress: "En Cours"
   Expired: "Expiré"
@@ -122,7 +123,7 @@ Buttons:
     Name: "&fMaximum d'items en une enchère"
   MaxRepeat:
     Name: "&fRépéter cette enchère"
-    Description: "&fautant de fois que possible"
+    Description: "&7autant de fois que possible"
   InProgressAuction:
     Name: "&aEnchères en cours"
   ExpiredAuction:
@@ -147,12 +148,12 @@ Buttons:
   Question:
     Name: " "
   SearchItemDrop:
-    Name: "Rechercher des items similaires"
-    Description: "Cliques avec l'item;Ou utilises SHIFT+Click"
+    Name: "&fRechercher des items similaires"
+    Description: "&7Cliques avec l'item;&7Ou utilises SHIFT+Click"
   SearchItemText:
-    Name: "Rechercher un item avec son nom"
+    Name: "&fRechercher un item avec son nom"
   SearchByPlayer:
-    Name: "Rechercher les enchères d'un joueur"
+    Name: "&fRechercher les enchères d'un joueur"
 ErrorMessages:
   UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
