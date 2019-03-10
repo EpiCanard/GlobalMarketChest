@@ -31,7 +31,7 @@ public class CreateAuctionPrice extends ShopInterface {
     this.actions.put(0, new PreviousInterface());
     this.actions.put(53, this::createAuction);
 
-    YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
+    final YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
 
     this.prices = config.getDoubleList("Price.Ranges");
     this.prices = this.prices.subList(0, Utils.getIndex(9, this.prices.size(), true));
@@ -50,9 +50,9 @@ public class CreateAuctionPrice extends ShopInterface {
   @Override
   public void load() {
     super.load();
-    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
 
-    List<String> lore = this.getLore();
+    final List<String> lore = this.getLore();
 
     int i = 0;
     for (i = 0; i < this.prices.size(); i++) {
@@ -71,10 +71,10 @@ public class CreateAuctionPrice extends ShopInterface {
    * @param set Define if price must be set or added
    */
   private void setPrice(double price, Boolean set) {
-    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
 
     if (!set) {
-      BigDecimal dec = BigDecimal.valueOf(auction.getPrice()).add(BigDecimal.valueOf(price));
+      final BigDecimal dec = BigDecimal.valueOf(auction.getPrice()).add(BigDecimal.valueOf(price));
       auction.setPrice((dec.doubleValue() < 0.0) ? 0 : dec.doubleValue());
     } else {
       auction.setPrice(price);
@@ -86,9 +86,9 @@ public class CreateAuctionPrice extends ShopInterface {
    * Update lore of buttons with auction price
    */
   private void updatePrice() {
-    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    List<String> lore = this.getLore();
-    Inventory inventory = this.inv.getInv();
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final List<String> lore = this.getLore();
+    final Inventory inventory = this.inv.getInv();
 
     for (int i = 0; i < this.prices.size(); i++) {
       inventory.setItem(18 + i, ItemStackUtils.setItemStackLore(inventory.getItem(18 + i), lore));
@@ -103,10 +103,10 @@ public class CreateAuctionPrice extends ShopInterface {
    * @return the lore completed
    */
   private List<String> getLore() {
-    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-    Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
 
-    List<String> lore = auction.getLore(AuctionLoreConfig.SELECTPRICE);
+    final List<String> lore = auction.getLore(AuctionLoreConfig.SELECTPRICE);
     if (auctionNumber > 1)
       lore.set(0,String.format("%s &ax&9%s", lore.get(0), auctionNumber));
     return lore;
@@ -118,23 +118,23 @@ public class CreateAuctionPrice extends ShopInterface {
    * @param i InventoryGui used
    */
   private void createAuction(InventoryGUI i) {
-    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-    Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
-    ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    PlayerInventory playerInv = i.getPlayer().getInventory();
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final PlayerInventory playerInv = i.getPlayer().getInventory();
 
     if (!playerInv.containsAtLeast(item, auction.getAmount() * auctionNumber)) {
       this.inv.getWarn().warn("MissingItems", 49);
       return;
     }
-    Boolean ret = GlobalMarketChest.plugin.auctionManager.createAuction(auction, auctionNumber);
+    final Boolean ret = GlobalMarketChest.plugin.auctionManager.createAuction(auction, auctionNumber);
     if (!ret) {
       this.inv.getWarn().warn("FailCreateAuction", 49);
       return;
     }
     Integer totalAmount = auction.getAmount() * auctionNumber;
-    ItemStack it = item.clone();
-    Integer stackSize = it.getMaxStackSize();
+    final ItemStack it = item.clone();
+    final Integer stackSize = it.getMaxStackSize();
     while (totalAmount > 0) {
       it.setAmount(ItemStackUtils.getMaxStack(it, totalAmount));
       playerInv.removeItem(it);

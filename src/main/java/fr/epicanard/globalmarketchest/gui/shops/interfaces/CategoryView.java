@@ -20,10 +20,10 @@ public class CategoryView extends DefaultFooter {
   @Override
   public void load() {
     super.load();
-    Consumer<InventoryGUI> callable = new NextInterface("AuctionViewList");
+    final Consumer<InventoryGUI> callable = new NextInterface("AuctionViewList");
 
-    CategoryHandler h = GlobalMarketChest.plugin.getCatHandler();
-    String[] categories = h.getCategories().toArray(new String[0]);
+    final CategoryHandler h = GlobalMarketChest.plugin.getCatHandler();
+    final String[] categories = h.getCategories().toArray(new String[0]);
 
     for (String category : categories) {
       this.setCategory(category, callable);
@@ -33,7 +33,7 @@ public class CategoryView extends DefaultFooter {
   }
 
   private void setCategory(final String category, final Consumer<InventoryGUI> callable) {
-    CategoryHandler h = GlobalMarketChest.plugin.getCatHandler();
+    final CategoryHandler h = GlobalMarketChest.plugin.getCatHandler();
 
     this.actions.put(h.getPosition(category), in -> {
       this.inv.getTransaction().put(TransactionKey.CATEGORY, category);

@@ -52,9 +52,9 @@ public class SearchView extends DefaultFooter {
       event.getWhoClicked().getInventory().addItem(item.clone());
     }
 
-    String category = GlobalMarketChest.plugin.getCatHandler().getCategory(item);
-    Integer numberLevels = GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category);
-    GroupLevels lastLevel = this.getLastLevel(GroupLevels.LEVEL1, numberLevels);
+    final String category = GlobalMarketChest.plugin.getCatHandler().getCategory(item);
+    final Integer numberLevels = GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category);
+    final GroupLevels lastLevel = this.getLastLevel(GroupLevels.LEVEL1, numberLevels);
 
     this.inv.getTransaction().put(TransactionKey.GROUPLEVEL, lastLevel);
     this.inv.getTransaction().put(TransactionKey.CATEGORY, category);
@@ -71,7 +71,7 @@ public class SearchView extends DefaultFooter {
    * @return Return the last group level of category
    */
   private GroupLevels getLastLevel(GroupLevels level, Integer numberLevels) {
-    GroupLevels nextLevel = level.getNextLevel(numberLevels);
+    final GroupLevels nextLevel = level.getNextLevel(numberLevels);
     return (nextLevel == null) ? level : this.getLastLevel(nextLevel, numberLevels);
   }
   
@@ -81,7 +81,7 @@ public class SearchView extends DefaultFooter {
   }
 
   private void searchPlayer(String player) {
-    OfflinePlayer offlinePlayer = GlobalMarketChest.plugin.getServer().getOfflinePlayer(player);
+    final OfflinePlayer offlinePlayer = GlobalMarketChest.plugin.getServer().getOfflinePlayer(player);
     this.inv.getTransaction().put(TransactionKey.PLAYER, offlinePlayer);
     this.inv.loadInterface("AuctionViewByPlayer");
   }

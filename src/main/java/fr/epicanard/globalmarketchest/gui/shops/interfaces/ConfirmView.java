@@ -25,6 +25,7 @@ public class ConfirmView extends ShopInterface {
 
   /**
    * Call the consumer and leave the shop
+   *
    * @param i
    * @param value
    */
@@ -36,7 +37,7 @@ public class ConfirmView extends ShopInterface {
   @Override
   public void load() {
     super.load();
-    ItemStack item = Utils.getButton("Question");
+    final ItemStack item = Utils.getButton("Question");
     ItemStackUtils.setItemStackMeta(item, this.question.getLeft(), null);
     inv.getInv().setItem(13, item);
   }

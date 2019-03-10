@@ -78,7 +78,7 @@ public class AuctionGlobalView extends DefaultFooter {
       this.togglers.forEach((key, toggler) -> {
         if (key != 10 && key != 11)
           return;
-        String lore = String.format(LangUtils.get("Divers.WithStatus"), this.current.state.getLang());
+        final String lore = String.format(LangUtils.get("Divers.WithStatus"), this.current.state.getLang());
         ItemStackUtils.setItemStackLore(toggler.getSetItem(), Utils.toList(lore));
         toggler.set();
       });
@@ -94,7 +94,7 @@ public class AuctionGlobalView extends DefaultFooter {
       return;
     if (pos >= this.current.auctions.size())
       return;
-    AuctionInfo auction = this.current.auctions.get(pos);
+    final AuctionInfo auction = this.current.auctions.get(pos);
     if (auction != null) {
       this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, auction);
       this.inv.loadInterface("EditAuction");
@@ -102,7 +102,7 @@ public class AuctionGlobalView extends DefaultFooter {
   }
 
   private void loadAuctions(Paginator pag) {
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), this.current.state,
       this.current.config == AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
@@ -152,12 +152,12 @@ public class AuctionGlobalView extends DefaultFooter {
     if ((this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS) || this.current.auctions.size() == 0)
       return;
     this.inv.getWarn().stopWarn();
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-    AtomicInteger pos = new AtomicInteger(0);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final AtomicInteger pos = new AtomicInteger(0);
 
     try {
-      Boolean ret = PlayerUtils.hasEnoughPlace(i.getPlayer().getInventory(), DatabaseUtils.toItemStacks(this.current.auctions, (item, auction) -> item.setAmount(auction.getAmount())), pos);
-      List<AuctionInfo> auctions = this.current.auctions.subList(0, pos.get());
+      final Boolean ret = PlayerUtils.hasEnoughPlace(i.getPlayer().getInventory(), DatabaseUtils.toItemStacks(this.current.auctions, (item, auction) -> item.setAmount(auction.getAmount())), pos);
+      final List<AuctionInfo> auctions = this.current.auctions.subList(0, pos.get());
 
       if (GlobalMarketChest.plugin.auctionManager.undoGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), Utils.mapList(auctions, act -> act.getId()))) {
         for (AuctionInfo auction : auctions)

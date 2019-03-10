@@ -19,7 +19,7 @@ public class AuctionViewByPlayer extends AuctionViewBase {
 
     this.paginator.setLoadConsumer(pag -> {
       final OfflinePlayer player = this.inv.getTransactionValue(TransactionKey.PLAYER);
-      ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+      final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
       GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), StateAuction.INPROGRESS, player, null, this.paginator.getLimit(),
           auctions -> {

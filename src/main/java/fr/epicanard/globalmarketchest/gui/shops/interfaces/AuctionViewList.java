@@ -30,7 +30,7 @@ public class AuctionViewList extends AuctionViewBase {
       .orElse(GroupLevels.LEVEL1);
 
     this.paginator.setLoadConsumer(pag -> {
-      ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+      final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
       GlobalMarketChest.plugin.auctionManager.getAuctions(this.level, shop.getGroup(), this.category, item, this.paginator.getLimit(),
           auctions -> {
@@ -68,8 +68,8 @@ public class AuctionViewList extends AuctionViewBase {
   protected void selectAuction(Integer pos) {
     if (pos >= this.auctions.size() || pos < 0)
       return;
-      
-    AuctionInfo auction = this.auctions.get(pos);
+
+    final AuctionInfo auction = this.auctions.get(pos);
 
     if (this.level.getNextLevel(category) == null) {
       super.selectAuction(pos);

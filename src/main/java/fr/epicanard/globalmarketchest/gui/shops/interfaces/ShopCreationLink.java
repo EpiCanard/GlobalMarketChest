@@ -46,7 +46,7 @@ public class ShopCreationLink extends ShopCreationInterface {
    * @param gui InventoryGUI used shop creation
    */
   private void createShop(InventoryGUI gui) {
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
     try {
       GlobalMarketChest.plugin.shopManager.createShop(shop);
 
@@ -69,13 +69,13 @@ public class ShopCreationLink extends ShopCreationInterface {
    * @param pag Paginator used
    */
   public void loadZone(Paginator pag) {
-    List<ShopInfo> lst = pag.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
-    List<ItemStack> items = pag.getItemstacks();
+    final List<ShopInfo> lst = pag.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
+    final List<ItemStack> items = pag.getItemstacks();
     items.clear();
 
     for (ShopInfo shop : lst) {
       ItemStack item = ItemStackUtils.getItemStack("minecraft:ender_chest");
-      List<String> lore = ShopUtils.generateLore(shop);
+      final List<String> lore = ShopUtils.generateLore(shop);
 
       lore.addAll(Utils.toList(LangUtils.get("Shops.ClickChangeGroup")));
       item = ItemStackUtils.setItemStackMeta(item, "Shop", lore);
@@ -89,7 +89,7 @@ public class ShopCreationLink extends ShopCreationInterface {
    * @param pos Position inside the inventory
    */
   public void changeName(Integer pos) {
-    List<ShopInfo> subShops = this.paginator.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
+    final List<ShopInfo> subShops = this.paginator.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
 
     this.changeName(subShops.get(pos).getGroup());
   }
@@ -100,7 +100,7 @@ public class ShopCreationLink extends ShopCreationInterface {
    * @param name Name of the group
    */
   public void changeName(String name) {
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     if (shop != null)
       shop.setGroup(name);

@@ -57,7 +57,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param type  Type to toggle
    */
   private void toggleShop(int pos, ShopType type) {
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
     shop.toggleType(type);
 
     this.setGlow(pos, shop.getType(), type);
@@ -71,11 +71,11 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param pag Paginator used
    */
   private void loadNearBlock(Paginator pag) {
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
-    List<Block> blocks = Utils.filter(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()), block -> ShopUtils.getShop(block) == null);
-    List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> {
-      ItemStack item = new ItemStack(block.getType());
+    final List<Block> blocks = Utils.filter(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()), block -> ShopUtils.getShop(block) == null);
+    final List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> {
+      final ItemStack item = new ItemStack(block.getType());
       ItemStackUtils.addItemStackLore(item, Arrays.asList(ShopUtils.generateKeyValue(LangUtils.get("Divers.OtherLocation"), WorldUtils.getStringFromLocation(block.getLocation()))));
       return item;
     }).collect(Collectors.toList()));
@@ -89,11 +89,11 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param pos Position inside the inventory
    */
   private void setOtherLocation(int pos) {
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-    List<Block> blocks = this.paginator.getSubList(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()));
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final List<Block> blocks = this.paginator.getSubList(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()));
 
     try {
-      Block block = blocks.get(pos);
+      final Block block = blocks.get(pos);
 
       shop.setOtherLocation(block.getLocation());
       this.updateName();
@@ -106,7 +106,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @return if there is an error return false else true
    */
   private Boolean checkCreation() {
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
     if (shop != null && shop.getType() > 0) {
       this.inv.getWarn().stopWarn();
