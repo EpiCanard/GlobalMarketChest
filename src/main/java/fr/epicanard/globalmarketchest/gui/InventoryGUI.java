@@ -14,7 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.gui.shops.Warning;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;

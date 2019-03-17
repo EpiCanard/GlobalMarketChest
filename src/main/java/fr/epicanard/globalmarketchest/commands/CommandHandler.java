@@ -16,6 +16,7 @@ import fr.epicanard.globalmarketchest.commands.consumers.ListConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.OpenConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.ReloadConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.TPConsumer;
+import fr.epicanard.globalmarketchest.commands.consumers.VersionConsumer;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
@@ -31,6 +32,10 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     this.command.setCommand(new HelpConsumer());
     this.command.addSubNode(new CommandNode("help", Permissions.CMD, false, false))
       .setCommand(new HelpConsumer());
+
+    // Version
+    this.command.addSubNode(new CommandNode("version", Permissions.CMD, false, false))
+      .setCommand(new VersionConsumer());
 
     // Reload
     this.command.addSubNode(new CommandNode("reload", Permissions.CMD_RELOAD, false, false))

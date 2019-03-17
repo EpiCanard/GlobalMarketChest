@@ -23,6 +23,8 @@ Options:
   EnableMaxInOne: true
   # Define if the button MaxRepeat in CreateAuction view must be here
   EnableMaxRepeat: true
+  # Define if a player can find similar auctions with drag and drop on category view 
+  EnableSimilarAuctions: true
   # Default price for new auctions
   DefaultPrice: 100
   # Use the price of the last similar auction as price of new auction
@@ -105,6 +107,9 @@ Interfaces:
     Money: minecraft:gold_ingot
     GlobalView: minecraft:enchanted_book
     Search: minecraft:hopper
+    SearchItemDrop: minecraft:grass_block
+    SearchItemText: minecraft:paper
+    SearchByPlayer: minecraft:player_head
     ViewByCategory: minecraft:compass
     ViewByPlayer: minecraft:chest
     ViewByLastCreated: minecraft:apple

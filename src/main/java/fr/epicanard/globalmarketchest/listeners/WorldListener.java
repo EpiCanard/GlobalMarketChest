@@ -111,6 +111,8 @@ public class WorldListener implements Listener {
           }
         };
         InventoryGUI inv = openShop(player, shop);
+        if (inv == null)
+          return;
         inv.getTransaction().put(TransactionKey.QUESTION, Pair.of(LangUtils.get("InfoMessages.DeleteShopQuestion"), deleteConsumer));
         inv.loadInterface("ConfirmView");
         event.setCancelled(true);
@@ -164,7 +166,8 @@ public class WorldListener implements Listener {
         return;
       }
       InventoryGUI inv = openShop(player, shop);
-      inv.loadInterface("CategoryView");
+      if (inv != null)
+        inv.loadInterface("CategoryView");
     }
   }
 }

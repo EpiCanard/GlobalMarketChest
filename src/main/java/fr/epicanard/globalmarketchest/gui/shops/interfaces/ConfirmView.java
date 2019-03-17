@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
-import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
@@ -25,6 +25,7 @@ public class ConfirmView extends ShopInterface {
 
   /**
    * Call the consumer and leave the shop
+   *
    * @param i
    * @param value
    */
@@ -36,7 +37,7 @@ public class ConfirmView extends ShopInterface {
   @Override
   public void load() {
     super.load();
-    ItemStack item = Utils.getButton("Question");
+    final ItemStack item = Utils.getButton("Question");
     ItemStackUtils.setItemStackMeta(item, this.question.getLeft(), null);
     inv.getInv().setItem(13, item);
   }

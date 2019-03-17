@@ -31,7 +31,7 @@ public abstract class DatabaseConnection {
   }
 
   protected String buildUrl() {
-    return this.host + ":" + this.port + "/" + this.database;
+    return String.format("%s:%s/%s?autoReconnect=true", this.host, this.port, this.database);
   }
 
   protected abstract Connection connect() throws ConfigException;

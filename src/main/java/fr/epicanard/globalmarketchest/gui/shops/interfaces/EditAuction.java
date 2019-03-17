@@ -10,7 +10,7 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
-import fr.epicanard.globalmarketchest.gui.shops.ShopInterface;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
@@ -29,7 +29,7 @@ public class EditAuction extends ShopInterface {
   @Override
   public void load() {
     super.load();
-    AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
     this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(AuctionLoreConfig.OWN)));
   }
 
@@ -39,7 +39,7 @@ public class EditAuction extends ShopInterface {
    * @param i
    */
   private void renewAuction(InventoryGUI i) {
-    AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
 
     if (GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId()) == true) {
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewAuction");
@@ -54,9 +54,9 @@ public class EditAuction extends ShopInterface {
    * @param i
    */
   private void undoAuction(InventoryGUI i) {
-    AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
 
-    ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
+    final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
     item.setAmount(auction.getAmount());
     try {
       PlayerUtils.hasEnoughPlaceWarn(i.getPlayer().getInventory(), item);

@@ -33,6 +33,16 @@ public enum GroupLevels {
   public GroupLevels getNextLevel(String category) {
     Integer numberLevels = GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category);
 
+    return this.getNextLevel(numberLevels);
+  }
+
+  /**
+   * Get the next level
+   *
+   * @param numberLevels The number of levels for this category
+   * @return GroupLevels found or null
+   */
+  public GroupLevels getNextLevel(Integer numberLevels) {
     if (this.nextLevel != null && this.numLayers < numberLevels)
       return this.nextLevel;
     return null;

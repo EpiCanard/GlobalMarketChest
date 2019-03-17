@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -257,7 +258,7 @@ public class AuctionManager {
    * @param limit limit to use in request
    * @param consumer callable, send database return to this callabke
    */
-  public void getAuctions(String group, StateAuction state, Player starter, Player ender, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
+  public void getAuctions(String group, StateAuction state, OfflinePlayer starter, OfflinePlayer ender, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
 
     builder.addCondition("group", group);
@@ -271,6 +272,34 @@ public class AuctionManager {
       builder.setExtension("ORDER BY start DESC");
     else
       builder.setExtension("ORDER BY end DESC");
+
+    if (limit != null)
+      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
+    QueryExecutor.of().execute(builder, res -> {
+      List<AuctionInfo> auctions = new ArrayList<>();
+      try {
+        while (res.next())
+          auctions.add(new AuctionInfo(res));
+        consumer.accept(auctions);
+      } catch (SQLException e) {}
+    });
+  }
+
+  /**
+   * Get all auctions matching minecraft key 'search'
+   * 
+   * @param group group of auction
+   * @param search minecraft key searched
+   * @param limit limit to use in request
+   * @param consumer callable, send database return to this callabke
+   */
+  public void getAuctionsByItemName(String group, String search, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+
+    builder.addCondition("group", group);
+    this.defineStateCondition(builder, StateAuction.INPROGRESS);
+    builder.setExtension("ORDER BY start DESC");
+    builder.addCondition("itemStack", "%:%" + search + "%", ConditionType.LIKE);
 
     if (limit != null)
       builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));

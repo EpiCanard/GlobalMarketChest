@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.epicanard</groupId>
   <artifactId>globalmarketchest</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <name>GlobalMarketChest</name>
-  <description>GUI Plugin of shop for spigot</description>
+  <description>Shop plugin to create economy between user</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -13,7 +13,7 @@
     <powermock.version>1.7.1</powermock.version>
   </properties>
   <build>
-    <finalName>GlobalMarketChest</finalName>
+    <finalName>${project.name}-${project.version}</finalName>
     <resources>
       <resource>
         <targetPath>.</targetPath>
@@ -29,7 +29,7 @@
     </repository>
     <repository>
       <id>vault-repo</id>
-      <url>http://nexus.hc.to/content/repositories/pub_releases</url>
+      <url>https://ci.ender.zone/plugin/repository/everything</url>
     </repository>
     <repository>
       <id>lombok-repo</id>
@@ -67,7 +67,7 @@
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
       <artifactId>VaultAPI</artifactId>
-      <version>1.6</version>
+      <version>1.7</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
