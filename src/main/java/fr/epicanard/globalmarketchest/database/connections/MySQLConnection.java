@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -82,21 +83,28 @@ public class MySQLConnection extends DatabaseConnection {
     this.user = config.getString("Connection.User");
     this.password = config.getString("Connection.Password");
 
-    if (this.host == null || this.port == null || this.database == null || this.user == null
-        || this.password == null)
+    final String useSSL = config.getString("Connection.UseSSL");
+    if (useSSL != null) {
+      this.properties.put("useSSL", useSSL);
+    }
+    this.properties.put("autoReconnect", "true");
+    this.properties.put("user", this.user);
+    this.properties.put("password", this.password);
+
+    if (this.host == null || this.port == null || this.database == null || this.user == null || this.password == null)
       throw new ConfigException("Some database informations are missing");
   }
 
   /**
    * Create connection to database
+   * 
    * @return Connection
    */
   @Override
   protected Connection connect() throws ConfigException {
     try {
       Class.forName("com.mysql.jdbc.Driver");
-      return DriverManager.getConnection("jdbc:mysql://" + this.buildUrl(),
-          this.user, this.password);
+      return DriverManager.getConnection("jdbc:mysql://" + this.buildUrl(), new Properties(this.properties));
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     } catch (SQLException e) {
@@ -120,6 +128,7 @@ public class MySQLConnection extends DatabaseConnection {
 
   /**
    * Get a connection from the pool or create it is no connected
+   * 
    * @return Connection
    */
   @Override
