@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.database.connections;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Properties;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -10,6 +11,7 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
 public abstract class DatabaseConnection {
+  protected Properties properties = new Properties();
   protected String host;
   protected String port;
   protected String database;
@@ -19,7 +21,7 @@ public abstract class DatabaseConnection {
   public static String tableAuctions = "GMC_auctions";
   public static String tableShops = "GMC_shops";
 
-  public static void configureTables() throws ConfigException  {
+  public static void configureTables() throws ConfigException {
     String prefix = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Connection.TablePrefix");
     if (prefix == null)
       return;
@@ -31,7 +33,7 @@ public abstract class DatabaseConnection {
   }
 
   protected String buildUrl() {
-    return String.format("%s:%s/%s?autoReconnect=true", this.host, this.port, this.database);
+    return String.format("%s:%s/%s", this.host, this.port, this.database);
   }
 
   protected abstract Connection connect() throws ConfigException;
