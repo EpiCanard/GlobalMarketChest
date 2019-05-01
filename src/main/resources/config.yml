@@ -87,6 +87,8 @@ ItemsBlacklist:
   - minecraft:repeating_command_block
   - minecraft:structure_block
   - minecraft:structure_void
+  - minecraft:jigsaw
+  - minecraft:suspicious_stew
 Interfaces:
   # Warning interface messages are represented by flashing item alternating Background this item
   Warn: minecraft:red_stained_glass_pane
