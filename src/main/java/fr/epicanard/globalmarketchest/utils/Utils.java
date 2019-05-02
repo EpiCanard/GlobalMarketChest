@@ -190,4 +190,14 @@ public class Utils {
       signBlock.update();
     }
   }
+
+  /**
+   * Get the version of minecraft.
+   * It get only the major version (ex: version 1.13.2 will get 1.13)
+   * 
+   * @return Minecraft version (ex: 1.14)
+   */
+  public String getVersion() {
+    return GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 4);
+  }
 }

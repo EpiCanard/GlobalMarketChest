@@ -1,3 +1,4 @@
+# 1.14
 General:
   # Possible values : lang-fr_FR.yml and lang-en_EN.yml
   Lang: "lang-en_EN.yml"

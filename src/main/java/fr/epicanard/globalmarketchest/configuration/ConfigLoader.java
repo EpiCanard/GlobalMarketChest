@@ -1,15 +1,18 @@
 package fr.epicanard.globalmarketchest.configuration;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.Getter;
 
 public class ConfigLoader {
@@ -28,6 +31,54 @@ public class ConfigLoader {
   }
 
   /**
+   * Save an InputStream inside a file already opened
+   * 
+   * @param file File opened
+   * @param stream Stream to right inside
+   * @throws IOException
+   */
+  private void saveStream(File file, InputStream stream) throws IOException {
+    OutputStream out = new FileOutputStream(file);
+    byte[] buf = new byte[1024];
+    int len;
+    while ((len = stream.read(buf)) > 0) {
+      out.write(buf, 0, len);
+    }
+    out.close();
+    stream.close();
+  }
+
+  /**
+   * Load one file from plugin folder and save it if it doesn't exist
+   *
+   * @throws CantLoadConfigException Throw this exception when the file can't be loaded (InvalidFile or wrong permissions)
+   * @param filename Name of the file that must be load
+   * @param path Path to get the file inside jar
+   * @return Return the yamlconfiguration file
+   */
+  private YamlConfiguration loadOneFile(String fileName, String path) throws CantLoadConfigException {
+    if (!fileName.substring(fileName.length() - 4).equals(".yml"))
+      fileName += ".yml";
+
+    final File confFile = new File(GlobalMarketChest.plugin.getDataFolder(), fileName);
+    final YamlConfiguration conf = new YamlConfiguration();
+
+    try {
+      if (!confFile.exists()) {
+        confFile.getParentFile().mkdirs();
+        final String filePath = (path != null ? path + "/" : "") + fileName;
+        final InputStream stream = GlobalMarketChest.plugin.getResource(filePath);
+        this.saveStream(confFile, stream);
+      }
+
+      conf.load(confFile);
+      return conf;
+    } catch (IOException | IllegalArgumentException | InvalidConfigurationException e) {
+      throw new CantLoadConfigException(fileName);
+    }
+  }
+
+  /**
    * Load one file from plugin folder and save it if it doesn't exist
    *
    * @throws CantLoadConfigException Throw this exception when the file can't be loaded (InvalidFile or wrong permissions)
@@ -35,23 +86,7 @@ public class ConfigLoader {
    * @return Return the yamlconfiguration file
    */
   private YamlConfiguration loadOneFile(String fileName) throws CantLoadConfigException {
-    if (!fileName.substring(fileName.length() - 4).equals(".yml"))
-      fileName += ".yml";
-
-    File confFile = new File(GlobalMarketChest.plugin.getDataFolder(), fileName);
-
-    if (!confFile.exists()) {
-      confFile.getParentFile().mkdirs();
-      GlobalMarketChest.plugin.saveResource(fileName, false);
-    }
-
-    YamlConfiguration conf = new YamlConfiguration();
-    try {
-      conf.load(confFile);
-      return conf;
-    } catch (IOException | IllegalArgumentException | InvalidConfigurationException e) {
-      throw new CantLoadConfigException(fileName);
-    }
+    return this.loadOneFile(fileName, null);
   }
 
   /**
@@ -77,8 +112,8 @@ public class ConfigLoader {
     this.categories = null;
     this.languages = null;
 
-    this.config = this.loadOneFile("config.yml");
-    this.categories = this.loadOneFile("categories.yml");
+    this.config = this.loadOneFile("config.yml", Utils.getVersion());
+    this.categories = this.loadOneFile("categories.yml", Utils.getVersion());
     if (this.config != null) {
       String tmp = this.config.getString("General.Lang");
       if (tmp == null)
