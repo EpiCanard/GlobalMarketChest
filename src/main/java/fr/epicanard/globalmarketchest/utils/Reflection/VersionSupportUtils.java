@@ -7,6 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import fr.epicanard.globalmarketchest.utils.Annotations.MethodName;
+import fr.epicanard.globalmarketchest.utils.Annotations.Version;
+
 public class VersionSupportUtils {
 
   private final String NBTTAG = "GMCItem";
@@ -202,7 +205,9 @@ public class VersionSupportUtils {
    * @param title The new inventory Name
    * @param player The player
    */
-  public void updateInventoryName(String title, Player player) {
+  @MethodName("updateInventoryName")
+  @Version("1.13")
+  public void updateInventoryName_1_13(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
       Object chatMessage = newInstance("ChatMessage", title, new Object[]{});
@@ -214,6 +219,37 @@ public class VersionSupportUtils {
       Object packet = getClassFromPath(Path.MINECRAFT, "PacketPlayOutOpenWindow").getConstructor(Integer.TYPE, String.class, iChat, Integer.TYPE)
         .newInstance( windowId, "minecraft:chest", iChat.cast(chatMessage), player.getOpenInventory().getTopInventory().getSize());
 
+
+      Object playerConnection = entityPlayer.getClass().getDeclaredField("playerConnection").get(entityPlayer);
+
+      playerConnection.getClass().getMethod("sendPacket", getClassFromPath(Path.MINECRAFT, "Packet")).invoke(playerConnection, packet);
+      entityPlayer.getClass().getMethod("updateInventory", getClassFromPath(Path.MINECRAFT, "Container")).invoke(entityPlayer, activeContainerVF.value());
+
+    } catch(NoSuchFieldException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException  e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Update the inventory name update by the player
+   *
+   * @param title The new inventory Name
+   * @param player The player
+   */
+  @MethodName("updateInventoryName")
+  @Version
+  public void updateInventoryName_latest(String title, Player player) {
+    try {
+      Object entityPlayer = invokeMethod(player, "getHandle");
+      Object chatMessage = newInstance("ChatMessage", title, new Object[]{});
+      VersionField activeContainerVF = VersionField.from(entityPlayer).get("activeContainer");
+      Object windowId = activeContainerVF.get("windowId").value();
+
+      Class<?> iChat = getClassFromPath(Path.MINECRAFT, "IChatBaseComponent");
+      Class<?> containers = getClassFromPath(Path.MINECRAFT, "Containers");
+
+      Object packet = getClassFromPath(Path.MINECRAFT, "PacketPlayOutOpenWindow").getConstructor(Integer.TYPE, containers, iChat)
+        .newInstance( windowId, containers.getField("GENERIC_9X6").get(null), iChat.cast(chatMessage));
 
       Object playerConnection = entityPlayer.getClass().getDeclaredField("playerConnection").get(entityPlayer);
 

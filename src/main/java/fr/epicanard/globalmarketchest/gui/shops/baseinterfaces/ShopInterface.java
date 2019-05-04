@@ -6,10 +6,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
@@ -19,6 +21,7 @@ import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.TogglerConfig;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.Annotations.AnnotationCaller;
 import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -79,7 +82,11 @@ public abstract class ShopInterface {
    */
   private void updateInventoryName(String interfaceName) {
     String title = LangUtils.getOrElse("InterfacesTitle." + interfaceName, "&2GlobalMarketChest");
-    VersionSupportUtils.getInstance().updateInventoryName(title, this.inv.getPlayer());
+    try {
+      AnnotationCaller.call("updateInventoryName", VersionSupportUtils.getInstance(), title, (Player)this.inv.getPlayer());
+    } catch (MissingMethodException e) {
+      e.printStackTrace();
+    }
   }
 
   /**
