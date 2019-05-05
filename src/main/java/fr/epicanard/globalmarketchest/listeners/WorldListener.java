@@ -8,6 +8,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +17,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.material.Sign;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
@@ -35,18 +36,31 @@ public class WorldListener implements Listener {
   final List<BlockFace> faces = Arrays.asList(BlockFace.UP, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
 
   /**
+   * Get attached block to sign
+   * 
+   * @param block Sign block
+   * @return Attached block
+   */
+  private Block getAttachedBlock(Block block) {
+    final BlockData data = block.getState().getBlockData();
+
+    if (data instanceof Directional) {
+      return block.getRelative(((Directional)data).getFacing().getOppositeFace());
+    }
+    return block.getRelative(BlockFace.DOWN);
+  }
+
+  /**
    * Every break of sign by drop is detect to remove the shop and prevent ghost shop (without sign)
    * 
    * @param event Block physics event
    */
   @EventHandler
   public void onBlockPhysics(BlockPhysicsEvent event) {
-    Block block = event.getBlock();
+    final Block block = event.getBlock();
     if (ShopUtils.isSign(block.getType())) {
-      Sign s = (Sign) block.getState().getData();
-      Block attachedBlock = block.getRelative(s.getAttachedFace());
-      if (attachedBlock.getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
-        ShopInfo shop = ShopUtils.getShop(block);
+      if (this.getAttachedBlock(block).getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
+        final ShopInfo shop = ShopUtils.getShop(block);
         if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
           LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event", 
             shop.getGroup(), shop.getSignLocation().toString(), PlayerUtils.getPlayerName(shop.getOwner())));
@@ -64,10 +78,9 @@ public class WorldListener implements Listener {
    * @return Define if the block at the specific face is attached
    */
   private Boolean isAttachedTo(Block block, BlockFace face) {
-    Block faceBlock = block.getRelative(face);
+    final Block faceBlock = block.getRelative(face);
     if (ShopUtils.isSign(faceBlock.getType()) && faceBlock.hasMetadata(ShopUtils.META_KEY)) {
-      Sign s = (Sign) faceBlock.getState().getData();
-      return (faceBlock.getRelative(s.getAttachedFace()).getLocation().distance(block.getLocation()) == 0);
+      return (this.getAttachedBlock(faceBlock).getLocation().distance(block.getLocation()) == 0);
     }
     return false;
   }
@@ -148,7 +161,7 @@ public class WorldListener implements Listener {
 
   /**
    * Event to open shop when clicking on shop sign or sign linked block
-
+   * 
    * @param event Player interact event
    */
   @EventHandler
