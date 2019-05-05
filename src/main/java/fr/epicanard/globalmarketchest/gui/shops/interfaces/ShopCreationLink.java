@@ -91,7 +91,9 @@ public class ShopCreationLink extends ShopCreationInterface {
   public void changeName(Integer pos) {
     final List<ShopInfo> subShops = this.paginator.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
 
-    this.changeName(subShops.get(pos).getGroup());
+    if (pos < subShops.size()) {
+      this.changeName(subShops.get(pos).getGroup());
+    }
   }
 
   /**
