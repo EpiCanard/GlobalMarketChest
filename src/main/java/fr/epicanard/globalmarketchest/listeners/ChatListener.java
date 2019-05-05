@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,7 +38,9 @@ public class ChatListener implements Listener {
   public void onChatEvent(AsyncPlayerChatEvent event) {
     if (this.isChatEditing(event.getPlayer())) {
       InventoryGUI inv = GlobalMarketChest.plugin.inventories.getInventory(event.getPlayer().getUniqueId());
-      inv.setChatReturn(event.getMessage());
+      Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> {
+        inv.setChatReturn(event.getMessage());
+      });
       event.setCancelled(true);
     }
   }
