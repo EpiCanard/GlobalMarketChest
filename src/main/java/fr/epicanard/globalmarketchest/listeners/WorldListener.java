@@ -42,7 +42,7 @@ public class WorldListener implements Listener {
   @EventHandler
   public void onBlockPhysics(BlockPhysicsEvent event) {
     Block block = event.getBlock();
-    if (block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN) {
+    if (ShopUtils.isSign(block.getType())) {
       Sign s = (Sign) block.getState().getData();
       Block attachedBlock = block.getRelative(s.getAttachedFace());
       if (attachedBlock.getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
@@ -65,7 +65,7 @@ public class WorldListener implements Listener {
    */
   private Boolean isAttachedTo(Block block, BlockFace face) {
     Block faceBlock = block.getRelative(face);
-    if ((faceBlock.getType() == Material.WALL_SIGN || faceBlock.getType() == Material.SIGN) && faceBlock.hasMetadata(ShopUtils.META_KEY)) {
+    if (ShopUtils.isSign(faceBlock.getType()) && faceBlock.hasMetadata(ShopUtils.META_KEY)) {
       Sign s = (Sign) faceBlock.getState().getData();
       return (faceBlock.getRelative(s.getAttachedFace()).getLocation().distance(block.getLocation()) == 0);
     }

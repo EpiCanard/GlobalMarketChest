@@ -1,7 +1,10 @@
 package fr.epicanard.globalmarketchest.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Material;
@@ -9,8 +12,12 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
+import fr.epicanard.globalmarketchest.utils.Annotations.AnnotationCaller;
+import fr.epicanard.globalmarketchest.utils.Annotations.MethodName;
+import fr.epicanard.globalmarketchest.utils.Annotations.Version;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -130,4 +137,62 @@ public class ShopUtils {
     return ShopUtils.allowedBlock;
   }
 
+  /**
+   * Get a list of materials for sign (sign and wall sign) for 1.13 version
+   * 
+   * @return Return a set of material string name
+   */
+  @MethodName("getMaterialSigns")
+  @Version("1.13")
+  public Set<String> getMaterialSigns_1_13() {
+    return new HashSet<>(Arrays.asList(
+      "SIGN",
+      "WALL_SIGN"
+    ));
+  }
+
+  /**
+   * Get a list of materials for sign (sign and wall sign) for 1.14 and higer version
+   * 
+   * @return Return a set of material string name
+   */
+  @MethodName("getMaterialSigns")
+  @Version
+  public Set<String> getMaterialSigns_latest() {
+    return new HashSet<>(Arrays.asList(
+      "OAK_SIGN",
+      "OAK_WALL_SIGN",
+      "SPRUCE_SIGN",
+      "SPRUCE_WALL_SIGN",
+      "BIRCH_SIGN",
+      "BIRCH_WALL_SIGN",
+      "JUNGLE_SIGN",
+      "JUNGLE_WALL_SIGN",
+      "ACACIA_SIGN",
+      "ACACIA_WALL_SIGN",
+      "DARK_OAK_SIGN",
+      "DARK_OAK_WALL_SIGN"
+    ));
+  }
+
+  /**
+   * Define if the block is a sign
+   * 
+   * @param block The block
+   * @return
+   */
+  public boolean isSign(Material material) {
+    try {
+      final Set<String> signs = AnnotationCaller.call("getMaterialSigns", ShopUtils.class, null, (Object[])null);
+
+      return signs.stream().map((name) -> {
+        return Material.getMaterial(name);
+      }).filter((mat) -> {
+        return mat.equals(material);
+      }).findFirst().isPresent();
+    } catch (MissingMethodException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
 }
