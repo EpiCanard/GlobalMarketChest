@@ -21,8 +21,8 @@ import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.TogglerConfig;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import fr.epicanard.globalmarketchest.utils.Annotations.AnnotationCaller;
-import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
+import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
+import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 

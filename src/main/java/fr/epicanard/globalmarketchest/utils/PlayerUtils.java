@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
-import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
+import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.experimental.UtilityClass;
 
 /**

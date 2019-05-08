@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.utils.Annotations;
+package fr.epicanard.globalmarketchest.utils.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

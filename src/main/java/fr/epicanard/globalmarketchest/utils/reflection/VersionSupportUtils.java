@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.utils.Reflection;
+package fr.epicanard.globalmarketchest.utils.reflection;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -7,8 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.utils.Annotations.MethodName;
-import fr.epicanard.globalmarketchest.utils.Annotations.Version;
+import fr.epicanard.globalmarketchest.utils.annotations.MethodName;
+import fr.epicanard.globalmarketchest.utils.annotations.Version;
 
 public class VersionSupportUtils {
 

@@ -15,9 +15,9 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
-import fr.epicanard.globalmarketchest.utils.Annotations.AnnotationCaller;
-import fr.epicanard.globalmarketchest.utils.Annotations.MethodName;
-import fr.epicanard.globalmarketchest.utils.Annotations.Version;
+import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
+import fr.epicanard.globalmarketchest.utils.annotations.MethodName;
+import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import lombok.experimental.UtilityClass;
 
 /**

@@ -1,5 +1,6 @@
-package fr.epicanard.globalmarketchest.utils;
+package fr.epicanard.globalmarketchest.utils.chat;
 
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;

@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.utils.Annotations;
+package fr.epicanard.globalmarketchest.utils.annotations;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -56,8 +56,8 @@ public class AnnotationCaller {
    * 
    * AnnotationCaller.call("test", my_obj, null)
    * 
-   * See: fr.epicanard.globalmarketchest.utils.Annotations.MethodName
-   * See: fr.epicanard.globalmarketchest.utils.Annotations.Version
+   * See: fr.epicanard.globalmarketchest.utils.annotations.MethodName
+   * See: fr.epicanard.globalmarketchest.utils.annotations.Version
    * 
    * @param <T> Return type of called method
    * @param methodName Name of the annotation to find
@@ -83,8 +83,8 @@ public class AnnotationCaller {
    * 
    * AnnotationCaller.call("test", my_obj, null)
    * 
-   * See: fr.epicanard.globalmarketchest.utils.Annotations.MethodName
-   * See: fr.epicanard.globalmarketchest.utils.Annotations.Version
+   * See: fr.epicanard.globalmarketchest.utils.annotations.MethodName
+   * See: fr.epicanard.globalmarketchest.utils.annotations.Version
    * 
    * @param <T> Return type of called method
    * @param methodName Name of the annotation to find
