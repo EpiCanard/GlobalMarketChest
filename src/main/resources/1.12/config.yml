@@ -1,3 +1,11 @@
+# ========================= File config.yml =========================
+#
+# Version : 1.12
+#
+# This file contains all config for GlobalMarketChest plugin
+#
+# ===================================================================
+
 General:
   # Possible values : lang-fr_FR.yml and lang-en_EN.yml
   Lang: "lang-en_EN.yml"
@@ -106,6 +114,9 @@ Interfaces:
     Money: minecraft:gold_ingot
     GlobalView: minecraft:enchanted_book
     Search: minecraft:hopper
+    SearchItemDrop: minecraft:grass
+    SearchItemText: minecraft:paper
+    SearchByPlayer: minecraft:skull
     ViewByCategory: minecraft:compass
     ViewByPlayer: minecraft:chest
     ViewByLastCreated: minecraft:apple

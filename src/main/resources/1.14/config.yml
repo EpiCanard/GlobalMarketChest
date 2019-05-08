@@ -1,4 +1,11 @@
-# 1.14
+# ========================= File config.yml =========================
+#
+# Version : 1.14
+#
+# This file contains all config for GlobalMarketChest plugin
+#
+# ===================================================================
+
 General:
   # Possible values : lang-fr_FR.yml and lang-en_EN.yml
   Lang: "lang-en_EN.yml"

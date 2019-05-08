@@ -1,5 +1,7 @@
 # ======================= File categories.yml =======================
 #
+# Version : 1.14
+#
 # This file contains all categories available for global shop
 #
 # Each category is composed of following config variables :
@@ -16,7 +18,6 @@
 # This category contains all uncategorized items and is mandatory
 #
 # ===================================================================
-# 1.14
 
 Build:
   DisplayName: "Building Blocks"
