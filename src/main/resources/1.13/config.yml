@@ -156,3 +156,15 @@ Sign:
       FirstLineToCreate: "globalshop"
     # The text displayed on the sign when shop creation failed
     NotWorkingShopDisplayName : "&c[DisableShop]"
+Chat:
+  # Define if a timeout must be used when the player is in chat mode (ex: when search auction by name)
+  UseTimeout: true
+  # Timeout in seconds used when the player is in chat mode (ex: when search auction by name)
+  Timeout: 10
+  # Define if the player can use a specific sequence to exit the chat mode
+  UseExitSequence: true
+  # Sequence to write to exit the chat mode
+  ExitSequence: "exit"
+  # Define if the display message (Divers.ExitChatMode) must be displayed
+  DisplayHelpExit: true
+  

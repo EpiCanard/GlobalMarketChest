@@ -1,5 +1,12 @@
 package fr.epicanard.globalmarketchest.utils.chat;
 
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.conversations.Conversation;
+import org.bukkit.conversations.ConversationFactory;
+import org.bukkit.entity.Player;
+
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import lombok.experimental.UtilityClass;
 import net.md_5.bungee.api.ChatColor;
@@ -58,5 +65,33 @@ public class ChatUtils {
     TextComponent component = new TextComponent(PlayerUtils.getPrefix());
     component.addExtra(text);
     return component;
+  }
+
+  /**
+   * Create a conversation to dialog with a player
+   * 
+   * @param player Player to dialog with
+   * @param message Prompt message to display
+   * @return Return the conversation started
+   */
+  public Conversation newConversation(Player player, String message) {
+    final ConversationFactory factory = new ConversationFactory(GlobalMarketChest.plugin);
+    factory
+      .withFirstPrompt(new ChatPrompt(message))
+      .withLocalEcho(false)
+      .addConversationAbandonedListener(new ChatAbandon())
+      .thatExcludesNonPlayersWithMessage(LangUtils.get("ErrorMessages.PlayerOnly"));
+
+    final YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
+    if (config.getBoolean("Chat.UseExitSequence", false)) {
+      factory.withEscapeSequence(config.getString("Chat.ExitSequence", "exit"));
+    }
+    if (config.getBoolean("Chat.UseTimeout", false)) {
+      factory.withTimeout(config.getInt("Chat.Timeout", 10));
+    }
+
+    final Conversation conv = factory.buildConversation(player);
+    conv.getContext().getAllSessionData().put(ChatSessionData.PLAYER, player.getUniqueId());
+    return conv;
   }
 }

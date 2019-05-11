@@ -37,6 +37,7 @@ Divers:
   PastDate: "il y a %s"
   UnknownPlayer: "Inconnu au bataillon"
   SearchItemTextIcon: "&7Recherche: &3%s"
+  ExitChatMode: "&7 - (Ecris &9%s&7 pour quitter le mode tchat)"
 States:
   InProgress: "En Cours"
   Expired: "Expiré"

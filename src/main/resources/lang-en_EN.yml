@@ -37,6 +37,7 @@ Divers:
   PastDate: "%sago"
   UnknownPlayer: "Unknown player"
   SearchItemTextIcon: "&7Search: &3%s"
+  ExitChatMode: "&7 - (Write &9%s&7 to leave the chat mode)"
 States:
   InProgress: "In Progress"
   Expired: "Expired"
