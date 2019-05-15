@@ -208,6 +208,7 @@ Commands:
     Usage: "&6Utilisation :"
     Help: "&c/globalmarketchest [help]&6 - Affiche l'aide"
     Reload: "&c/globalmarketchest reload&6 - Permet de recharger le plugin"
+    Version: "&c/globalmarketchest version&6 - Affiche la version du plugin"
     List: "&c/globalmarketchest list&6 - Liste tous les globalshop"
     Detail: "&c/globalmarketchest list detail <shop>&6 - Permet de lister tous les globalshop à distance"
     TP: "&c/globalmarketchest list tp <shop> <position>&6 - Permet de teleporter le joueur à la position du shop"
