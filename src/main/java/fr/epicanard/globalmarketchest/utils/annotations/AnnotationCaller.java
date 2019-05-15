@@ -13,13 +13,13 @@ import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.experimental.UtilityClass;
 
 /**
- * Class that allow to call method with annotations @MethodName and @Version
+ * Class that allow to call method with annotations @Version
  */
 @UtilityClass
 public class AnnotationCaller {
 
   /**
-   * Get all methods of a class with the annotation @MethodName.value = methodName
+   * Get all methods of a class with the annotation @Version.name = methodName
    * And @Version.value = server version or "latest"
    * 
    * @param methodName Name of annotation to search
@@ -31,12 +31,14 @@ public class AnnotationCaller {
     final Map<String, Method> finalMethods = new HashMap<>();
 
     methods.stream().forEach((method) -> {
-      final MethodName methodAno = method.getDeclaredAnnotation(MethodName.class);
-      if (methodAno != null && methodAno.value().equals(methodName)) {
-        final Version versionAno = method.getDeclaredAnnotation(Version.class);
- 
-        if (versionAno != null && (versionAno.value().equals(Utils.getVersion()) || versionAno.value().equals("latest"))) {
-          finalMethods.put(versionAno.value(), method);
+      final Version versionAno = method.getDeclaredAnnotation(Version.class);
+      if (versionAno != null && versionAno.name().equals(methodName)) {
+        final List<String> versions = Arrays.asList(versionAno.versions());
+        System.out.println(String.format("%s - %s", methodName, versions));
+        if (versions.contains(Utils.getVersion()) || versions.contains("latest")) {
+          versions.forEach(version -> {
+            finalMethods.put(version, method);
+          });
         }
       }
     });
@@ -44,14 +46,13 @@ public class AnnotationCaller {
   }
 
   /**
-   * Search a method with annotation MethodName.value=@param methodName
-   * And Version.value=Server version or Version.value=value
+   * Search a method with annotation Version.name=@param methodName
+   * And Version.versions=Server version or Version.versions=value
    * 
    * This process allow to have multi version of one method tagged for each version
    * 
    * Exemple:
-   * @MethodName("test")
-   * @Version("1.13")
+   * @Version(name="test", versions={"1.13"})
    * myMethod() {}
    * 
    * AnnotationCaller.call("test", my_obj, null)
@@ -71,14 +72,13 @@ public class AnnotationCaller {
   }
 
   /**
-   * Search a method with annotation MethodName.value=@param methodName
-   * And Version.value=Server version or Version.value=value
+   * Search a method with annotation Version.name=@param methodName
+   * And Version.versions=Server version or Version.versions=value
    * 
    * This process allow to have multi version of one method tagged for each version
    * 
    * Exemple:
-   * @MethodName("test")
-   * @Version("1.13")
+   * @Version(name="test", versions={"1.13"})
    * myMethod() {}
    * 
    * AnnotationCaller.call("test", my_obj, null)

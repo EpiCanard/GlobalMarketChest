@@ -16,7 +16,6 @@ import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
 import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
-import fr.epicanard.globalmarketchest.utils.annotations.MethodName;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import lombok.experimental.UtilityClass;
 
@@ -142,8 +141,7 @@ public class ShopUtils {
    * 
    * @return Return a set of material string name
    */
-  @MethodName("getMaterialSigns")
-  @Version("1.13")
+  @Version(name="getMaterialSigns", versions={"1.13"})
   public Set<String> getMaterialSigns_1_13() {
     return new HashSet<>(Arrays.asList(
       "SIGN",
@@ -152,12 +150,11 @@ public class ShopUtils {
   }
 
   /**
-   * Get a list of materials for sign (sign and wall sign) for 1.14 and higer version
+   * Get a list of materials for sign (sign and wall sign) for 1.14 and higher version
    * 
    * @return Return a set of material string name
    */
-  @MethodName("getMaterialSigns")
-  @Version
+  @Version(name="getMaterialSigns")
   public Set<String> getMaterialSigns_latest() {
     return new HashSet<>(Arrays.asList(
       "OAK_SIGN",
@@ -188,7 +185,7 @@ public class ShopUtils {
       return signs.stream().map((name) -> {
         return Material.getMaterial(name);
       }).filter((mat) -> {
-        return mat.equals(material);
+        return mat != null && mat.equals(material);
       }).findFirst().isPresent();
     } catch (MissingMethodException e) {
       e.printStackTrace();
