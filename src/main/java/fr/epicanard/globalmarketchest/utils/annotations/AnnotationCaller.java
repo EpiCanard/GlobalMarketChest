@@ -34,7 +34,6 @@ public class AnnotationCaller {
       final Version versionAno = method.getDeclaredAnnotation(Version.class);
       if (versionAno != null && versionAno.name().equals(methodName)) {
         final List<String> versions = Arrays.asList(versionAno.versions());
-        System.out.println(String.format("%s - %s", methodName, versions));
         if (versions.contains(Utils.getVersion()) || versions.contains("latest")) {
           versions.forEach(version -> {
             finalMethods.put(version, method);

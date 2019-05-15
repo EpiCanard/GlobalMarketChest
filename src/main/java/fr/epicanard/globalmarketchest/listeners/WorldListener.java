@@ -17,8 +17,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.material.Sign;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
@@ -28,6 +30,9 @@ import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
+import fr.epicanard.globalmarketchest.utils.annotations.Version;
+import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 
 /**
  * Listener for every world interact like opennin a chest
@@ -41,8 +46,21 @@ public class WorldListener implements Listener {
    * @param block Sign block
    * @return Attached block
    */
-  private Block getAttachedBlock(Block block) {
-    final BlockData data = block.getState().getBlockData();
+  @Version(name="getAttachedBlock", versions={"1.12"})
+  public Block gettAttachedBlock_1_12(Block block) {
+    final Sign sign = (Sign) block.getState().getData();
+    return block.getRelative(sign.getAttachedFace());
+  }
+
+  /**
+   * Get attached block to sign
+   * 
+   * @param block Sign block
+   * @return Attached block
+   */
+  @Version(name="getAttachedBlock")
+  public Block getAttachedBlock_latest(Block block) {
+    final BlockData data = (BlockData)VersionSupportUtils.getInstance().invokeMethod(block.getState(), "getBlockData", (Object[])null);
 
     if (data instanceof Directional) {
       return block.getRelative(((Directional)data).getFacing().getOppositeFace());
@@ -58,16 +76,22 @@ public class WorldListener implements Listener {
   @EventHandler
   public void onBlockPhysics(BlockPhysicsEvent event) {
     final Block block = event.getBlock();
+
     if (ShopUtils.isSign(block.getType())) {
-      if (this.getAttachedBlock(block).getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
-        final ShopInfo shop = ShopUtils.getShop(block);
-        if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
-          LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event", 
-            shop.getGroup(), shop.getSignLocation().toString(), PlayerUtils.getPlayerName(shop.getOwner())));
+      try {
+        final Block attached = AnnotationCaller.call("getAttachedBlock", WorldListener.class, this, block);
+
+        if (attached.getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
+          final ShopInfo shop = ShopUtils.getShop(block);
+          if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
+            LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event", 
+              shop.getGroup(), shop.getSignLocation().toString(), PlayerUtils.getPlayerName(shop.getOwner())));
+          }
         }
+      } catch (MissingMethodException e) {
+        e.printStackTrace();
       }
     }
-
   }
 
   /**
@@ -80,7 +104,12 @@ public class WorldListener implements Listener {
   private Boolean isAttachedTo(Block block, BlockFace face) {
     final Block faceBlock = block.getRelative(face);
     if (ShopUtils.isSign(faceBlock.getType()) && faceBlock.hasMetadata(ShopUtils.META_KEY)) {
-      return (this.getAttachedBlock(faceBlock).getLocation().distance(block.getLocation()) == 0);
+      try {
+        final Block attached = AnnotationCaller.call("getAttachedBlock", WorldListener.class, this, faceBlock);
+        return (attached.getLocation().distance(block.getLocation()) == 0);
+      } catch (MissingMethodException e) {
+        e.printStackTrace();
+      }
     }
     return false;
   }

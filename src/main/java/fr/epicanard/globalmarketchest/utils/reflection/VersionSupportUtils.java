@@ -7,7 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.utils.annotations.MethodName;
+import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
+import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
 
 public class VersionSupportUtils {
@@ -85,7 +86,7 @@ public class VersionSupportUtils {
    * @param args all the arguments that must be send to the method
    * @return return the object return by the method
    */
-  private Object invokeMethod(Object object, String method, Object ...args) {
+  public Object invokeMethod(Object object, String method, Object ...args) {
     try {
       return object.getClass().getMethod(method, fromObjectToClass(args)).invoke(object, args);
     } catch(InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
@@ -121,6 +122,15 @@ public class VersionSupportUtils {
     return null;
   }
 
+  @Version(name="getRegistryItem", versions={"1.12"})
+  public Object getRegistryItem_1_12(Object registry, Object minecraftKey) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    return registry.getClass().getMethod("get", Object.class).invoke(registry, minecraftKey);
+  }
+
+  @Version(name="getRegistryItem")
+  public Object getRegistryItem(Object registry, Object minecraftKey) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    return registry.getClass().getMethod("get", minecraftKey.getClass()).invoke(registry, minecraftKey);
+  }
 
   // ======= SPECIFIC METHOD ===========
 
@@ -136,7 +146,7 @@ public class VersionSupportUtils {
       Object minecraftKey = minecraftKeyClass.getConstructor(String.class).newInstance(name);
 
       Object registry = getRegistry();
-      Object item = registry.getClass().getMethod("get", minecraftKeyClass).invoke(registry, minecraftKey);
+      Object item = AnnotationCaller.call("getRegistryItem", VersionSupportUtils.getInstance(), registry, minecraftKey);
       if (item == null)
         return null;
 
@@ -145,7 +155,7 @@ public class VersionSupportUtils {
 
       return this.setNbtTag(itemStack);
 
-    } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+    } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException | MissingMethodException e) {
       e.printStackTrace();
     }
 
@@ -205,8 +215,7 @@ public class VersionSupportUtils {
    * @param title The new inventory Name
    * @param player The player
    */
-  @MethodName("updateInventoryName")
-  @Version("1.13")
+  @Version(name="updateInventoryName", versions={"1.12", "1.13"})
   public void updateInventoryName_1_13(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
@@ -236,8 +245,7 @@ public class VersionSupportUtils {
    * @param title The new inventory Name
    * @param player The player
    */
-  @MethodName("updateInventoryName")
-  @Version
+  @Version(name="updateInventoryName")
   public void updateInventoryName_latest(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");

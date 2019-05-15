@@ -116,7 +116,7 @@ Interfaces:
     Search: minecraft:hopper
     SearchItemDrop: minecraft:grass
     SearchItemText: minecraft:paper
-    SearchByPlayer: minecraft:skull
+    SearchByPlayer: minecraft:skull/3
     ViewByCategory: minecraft:compass
     ViewByPlayer: minecraft:chest
     ViewByLastCreated: minecraft:apple

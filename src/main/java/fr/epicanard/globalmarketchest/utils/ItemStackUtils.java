@@ -1,7 +1,9 @@
 package fr.epicanard.globalmarketchest.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.bukkit.inventory.ItemStack;
@@ -9,6 +11,9 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
+import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
+import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.experimental.UtilityClass;
 
@@ -17,6 +22,15 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class ItemStackUtils {
+
+  /**
+   * Define items that are dommageable for 1.12
+   */
+  private List<String> DAMAGEABLE_1_12 = Arrays.asList(
+    "ANVIL", "FLINT_AND_STEEL", "FISHING_ROD", "SHIELD", "ELYTRA", "BOW", "SHEARS",
+    "_HOE", "_SWORD", "_SPADE", "_PICKAXE", "_AXE",
+    "_HELMET", "_CHESTPLATE", "_LEGGINGS", "_BOOTS"
+  );
 
   /**
    * Get the itemstack from the specify key
@@ -201,8 +215,36 @@ public class ItemStackUtils {
    * @param item ItemStack to define if it is damaged
    * @return
    */
-  public Boolean isDamaged(ItemStack item) {
+  @Version(name="isDamaged", versions={"1.12"})
+  public Boolean isDamaged_1_12(ItemStack item) {
+    final Predicate<String> match = damageable -> item.getType().name().matches(String.format("(.*)%s(.*)", damageable));
+    return ItemStackUtils.DAMAGEABLE_1_12.stream().anyMatch(match) && item.getDurability() > 0;
+  }
+
+  /**
+   * Define if the item is damaged
+   * 
+   * @param item ItemStack to define if it is damaged
+   * @return
+   */
+  @Version(name="isDamaged")
+  public Boolean isDamaged_latest(ItemStack item) {
     return ((Damageable)item.getItemMeta()).getDamage() > 0;
+  }
+
+  /**
+   * Define if the item is damaged
+   * 
+   * @param item ItemStack to define if it is damaged
+   * @return
+   */
+  public Boolean isDamaged(ItemStack item) {
+    try {
+      return AnnotationCaller.call("isDamaged", ItemStackUtils.class, null, item);
+    } catch (MissingMethodException e) {
+      e.printStackTrace();
+    }
+    return false;
   }
 
   /**

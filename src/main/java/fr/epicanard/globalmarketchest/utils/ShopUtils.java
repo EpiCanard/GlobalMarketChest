@@ -12,11 +12,8 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
-import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
-import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -26,6 +23,40 @@ import lombok.experimental.UtilityClass;
 public class ShopUtils {
   public final String META_KEY = "GMC_SHOP";
   private List<Material> allowedBlock = new ArrayList<Material>();
+
+  private Set<String> SIGN_MATERIALS;
+
+  static {
+    switch (Utils.getVersion()) {
+      case "1.12" :
+        SIGN_MATERIALS = new HashSet<>(Arrays.asList(
+          "SIGN_POST",
+          "WALL_SIGN"
+        ));
+        break;
+      case "1.13" :
+        SIGN_MATERIALS = new HashSet<>(Arrays.asList(
+          "SIGN",
+          "WALL_SIGN"
+        ));
+        break;
+      default:
+        SIGN_MATERIALS = new HashSet<>(Arrays.asList(
+          "OAK_SIGN",
+          "OAK_WALL_SIGN",
+          "SPRUCE_SIGN",
+          "SPRUCE_WALL_SIGN",
+          "BIRCH_SIGN",
+          "BIRCH_WALL_SIGN",
+          "JUNGLE_SIGN",
+          "JUNGLE_WALL_SIGN",
+          "ACACIA_SIGN",
+          "ACACIA_WALL_SIGN",
+          "DARK_OAK_SIGN",
+          "DARK_OAK_WALL_SIGN"
+        ));
+    }
+  }
 
   public void init()  {
     List<String> blocks = GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("AllowedLinkBlock");
@@ -137,59 +168,15 @@ public class ShopUtils {
   }
 
   /**
-   * Get a list of materials for sign (sign and wall sign) for 1.13 version
-   * 
-   * @return Return a set of material string name
-   */
-  @Version(name="getMaterialSigns", versions={"1.13"})
-  public Set<String> getMaterialSigns_1_13() {
-    return new HashSet<>(Arrays.asList(
-      "SIGN",
-      "WALL_SIGN"
-    ));
-  }
-
-  /**
-   * Get a list of materials for sign (sign and wall sign) for 1.14 and higher version
-   * 
-   * @return Return a set of material string name
-   */
-  @Version(name="getMaterialSigns")
-  public Set<String> getMaterialSigns_latest() {
-    return new HashSet<>(Arrays.asList(
-      "OAK_SIGN",
-      "OAK_WALL_SIGN",
-      "SPRUCE_SIGN",
-      "SPRUCE_WALL_SIGN",
-      "BIRCH_SIGN",
-      "BIRCH_WALL_SIGN",
-      "JUNGLE_SIGN",
-      "JUNGLE_WALL_SIGN",
-      "ACACIA_SIGN",
-      "ACACIA_WALL_SIGN",
-      "DARK_OAK_SIGN",
-      "DARK_OAK_WALL_SIGN"
-    ));
-  }
-
-  /**
    * Define if the block is a sign
    * 
    * @param block The block
    * @return
    */
   public boolean isSign(Material material) {
-    try {
-      final Set<String> signs = AnnotationCaller.call("getMaterialSigns", ShopUtils.class, null, (Object[])null);
-
-      return signs.stream().map((name) -> {
-        return Material.getMaterial(name);
-      }).filter((mat) -> {
-        return mat != null && mat.equals(material);
-      }).findFirst().isPresent();
-    } catch (MissingMethodException e) {
-      e.printStackTrace();
-    }
-    return false;
+    return SIGN_MATERIALS.stream().filter((name) -> {
+      final Material mat = Material.getMaterial(name);
+      return mat != null && mat.equals(material);
+    }).count() > 0;
   }
 }
