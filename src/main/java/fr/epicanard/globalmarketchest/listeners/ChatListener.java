@@ -1,13 +1,17 @@
 package fr.epicanard.globalmarketchest.listeners;
 
+import java.util.UUID;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 public class ChatListener implements Listener {
   /**
@@ -45,6 +49,22 @@ public class ChatListener implements Listener {
   public void onPlayerBreakBlock(BlockBreakEvent  event) {
     if (this.isChatEditing(event.getPlayer())) {
       event.setCancelled(true);
+    }
+  }
+
+  /**
+   * Prevent the execution of commands inside chat when th player is in chat mode
+   * 
+   * @param event Evnt PlayerCommandPreprocessEvent
+   */
+  @EventHandler
+  public void preProcessCommand(PlayerCommandPreprocessEvent event) {
+    if (event.getPlayer() != null) {
+      final UUID uuidPlayer = event.getPlayer().getUniqueId();
+      if (GlobalMarketChest.plugin.inventories.hasInventory(uuidPlayer) && GlobalMarketChest.plugin.inventories.getInventory(uuidPlayer).getChatEditing()) {
+        event.setCancelled(true);
+        PlayerUtils.sendMessageConfig(event.getPlayer(), "ErrorMessages.CommandInChat");
+      }
     }
   }
 }

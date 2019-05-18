@@ -159,7 +159,7 @@ ErrorMessages:
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
   MissingItems: "Wrong number of items, some items are missing"
   FailCreateAuction: "Fail to create auction in database"
-  NotEnoughSpace: "Not enough space to add all items;in player inventory"
+  NotEnoughSpace: "Not enough space to add all items;&7in player inventory"
   NotEnoughMoney: "Not enough money to buy this auction"
   CantBuyAuction: "Fail to buy auction (expired or already sold)"
   CantRenewAuction: "Fail to renew auction"
@@ -175,6 +175,7 @@ ErrorMessages:
   CantRemoveBlock: "&cYou can't remove this block because a shop is attached to it"
   DamagedItem: "You can't sell a damaged item"
   BlacklistedItem: "You can't sell a blacklisted item"
+  CommandInChat: "&cYou are not allowed to execute commands in chat mode"
 InfoMessages:
   UndoAuction: "&2Auction successfully deleted"
   RenewAuction: "&2Auction successfully renewed"

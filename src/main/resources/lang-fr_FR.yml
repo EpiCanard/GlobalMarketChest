@@ -160,8 +160,8 @@ ErrorMessages:
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
   MissingItems: "Mauvais nombre d'items, certains items sont manquants"
   FailCreationAuction: "Impossible de créer l'enchère en base de données"
-  NotEnoughSpace: "Pas assez de place pour ajouter;les items dans l'inventaire du joueur"
-  NotEnoughMoney: "Pas assez d'argent pour ;acheter cette enchère"
+  NotEnoughSpace: "Pas assez de place pour ajouter;&7les items dans l'inventaire du joueur"
+  NotEnoughMoney: "Pas assez d'argent pour ;&7acheter cette enchère"
   CantBuyAuction: "Impossible d'acheter l'enchère (expirée ou déjà vendue)"
   CantRenewAuction: "Impossible de renouveler l'enchère"
   CantUndoAuction: "Impossible d'annuler l'enchère"
@@ -176,6 +176,7 @@ ErrorMessages:
   CantRemoveBlock: "&cVous ne pouvez pas supprimer ce bloc car un shop y est rattaché"
   DamagedItem: "Vous ne pouvez pas vendre un item endommagé"
   BlacklistedItem: "Vous ne pouvez pas vendre un item blacklisté"
+  CommandInChat: "&cVous n'êtes pas autorisé à exécuter des commandes dans le mode tchat"
 InfoMessages:
   UndoAuction: "&2Enchère supprimée avec succès"
   RenewAuction: "&2Enchère renouvelée avec succès"

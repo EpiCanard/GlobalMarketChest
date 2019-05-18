@@ -79,6 +79,7 @@ public class ChatUtils {
     factory
       .withFirstPrompt(new ChatPrompt(message))
       .withLocalEcho(false)
+      .withModality(false)
       .addConversationAbandonedListener(new ChatAbandon())
       .thatExcludesNonPlayersWithMessage(LangUtils.get("ErrorMessages.PlayerOnly"));
 
