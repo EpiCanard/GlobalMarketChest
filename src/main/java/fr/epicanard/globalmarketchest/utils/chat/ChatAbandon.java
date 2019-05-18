@@ -16,12 +16,12 @@ class ChatAbandon implements ConversationAbandonedListener {
    * 
    * @param abandon Abandon event
    */
-	public void conversationAbandoned(ConversationAbandonedEvent abandon) {
+  public void conversationAbandoned(ConversationAbandonedEvent abandon) {
     final UUID playerUuid = (UUID)abandon.getContext().getAllSessionData().get(ChatSessionData.PLAYER);
     final String response = (String)abandon.getContext().getAllSessionData().get(ChatSessionData.RESPONSE);
     final InventoryGUI inv = GlobalMarketChest.plugin.inventories.getInventory(playerUuid);
     if (inv != null) {
       inv.setChatReturn(response);
     }
-	}
+  }
 }

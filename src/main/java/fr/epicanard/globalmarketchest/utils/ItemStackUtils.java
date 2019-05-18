@@ -24,7 +24,7 @@ import lombok.experimental.UtilityClass;
 public class ItemStackUtils {
 
   /**
-   * Define items that are dommageable for 1.12
+   * Define items that are damageable for 1.12
    */
   private List<String> DAMAGEABLE_1_12 = Arrays.asList(
     "ANVIL", "FLINT_AND_STEEL", "FISHING_ROD", "SHIELD", "ELYTRA", "BOW", "SHEARS",

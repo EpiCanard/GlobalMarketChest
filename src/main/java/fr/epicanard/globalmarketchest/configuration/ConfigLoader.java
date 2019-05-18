@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.function.UnaryOperator;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -41,6 +42,7 @@ public class ConfigLoader {
     OutputStream out = new FileOutputStream(file);
     byte[] buf = new byte[1024];
     int len;
+
     while ((len = stream.read(buf)) > 0) {
       out.write(buf, 0, len);
     }
@@ -56,9 +58,10 @@ public class ConfigLoader {
    * @param path Path to get the file inside jar
    * @return Return the yamlconfiguration file
    */
-  private YamlConfiguration loadOneFile(String fileName, String path) throws CantLoadConfigException {
+  private YamlConfiguration loadOneFile(String fileName, String path, String alternatePath) throws CantLoadConfigException {
     if (!fileName.substring(fileName.length() - 4).equals(".yml"))
       fileName += ".yml";
+    final String finalFileName = fileName;
 
     final File confFile = new File(GlobalMarketChest.plugin.getDataFolder(), fileName);
     final YamlConfiguration conf = new YamlConfiguration();
@@ -66,8 +69,16 @@ public class ConfigLoader {
     try {
       if (!confFile.exists()) {
         confFile.getParentFile().mkdirs();
-        final String filePath = (path != null ? path + "/" : "") + fileName;
-        final InputStream stream = GlobalMarketChest.plugin.getResource(filePath);
+        final UnaryOperator<String> processPath = (p) -> (p != null ? p + "/" : "") + finalFileName;
+        InputStream stream = GlobalMarketChest.plugin.getResource(processPath.apply(path));
+        if (stream == null) {
+          if (alternatePath != null) {
+            stream = GlobalMarketChest.plugin.getResource(processPath.apply(alternatePath));
+          } else {
+            throw new CantLoadConfigException(fileName);
+          }
+        }
+
         this.saveStream(confFile, stream);
       }
 
@@ -86,7 +97,7 @@ public class ConfigLoader {
    * @return Return the yamlconfiguration file
    */
   private YamlConfiguration loadOneFile(String fileName) throws CantLoadConfigException {
-    return this.loadOneFile(fileName, null);
+    return this.loadOneFile(fileName, null, null);
   }
 
   /**
@@ -112,8 +123,8 @@ public class ConfigLoader {
     this.categories = null;
     this.languages = null;
 
-    this.config = this.loadOneFile("config.yml", Utils.getVersion());
-    this.categories = this.loadOneFile("categories.yml", Utils.getVersion());
+    this.config = this.loadOneFile("config.yml", Utils.getVersion(), Utils.getLastSupportedVersion());
+    this.categories = this.loadOneFile("categories.yml", Utils.getVersion(), Utils.getLastSupportedVersion());
     if (this.config != null) {
       String tmp = this.config.getString("General.Lang");
       if (tmp == null)

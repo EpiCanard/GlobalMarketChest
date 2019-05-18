@@ -227,6 +227,6 @@ public class PlayerUtils {
     headMeta.setDisplayName(player.getName());
     playerHead.setItemMeta(headMeta);
 
-    return playerHead;  
+    return playerHead;
   }
 }

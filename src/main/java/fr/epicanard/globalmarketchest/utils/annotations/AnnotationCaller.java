@@ -56,7 +56,6 @@ public class AnnotationCaller {
    * 
    * AnnotationCaller.call("test", my_obj, null)
    * 
-   * See: fr.epicanard.globalmarketchest.utils.annotations.MethodName
    * See: fr.epicanard.globalmarketchest.utils.annotations.Version
    * 
    * @param <T> Return type of called method
@@ -82,7 +81,6 @@ public class AnnotationCaller {
    * 
    * AnnotationCaller.call("test", my_obj, null)
    * 
-   * See: fr.epicanard.globalmarketchest.utils.annotations.MethodName
    * See: fr.epicanard.globalmarketchest.utils.annotations.Version
    * 
    * @param <T> Return type of called method

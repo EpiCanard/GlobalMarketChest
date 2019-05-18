@@ -53,7 +53,7 @@ public class ChatListener implements Listener {
   }
 
   /**
-   * Prevent the execution of commands inside chat when th player is in chat mode
+   * Prevent the execution of commands inside chat when the player is in chat mode
    * 
    * @param event Evnt PlayerCommandPreprocessEvent
    */

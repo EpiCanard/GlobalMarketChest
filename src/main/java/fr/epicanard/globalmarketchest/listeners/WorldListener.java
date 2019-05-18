@@ -79,7 +79,7 @@ public class WorldListener implements Listener {
 
     if (ShopUtils.isSign(block.getType())) {
       try {
-        final Block attached = AnnotationCaller.call("getAttachedBlock", WorldListener.class, this, block);
+        final Block attached = AnnotationCaller.call("getAttachedBlock", this, block);
 
         if (attached.getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
           final ShopInfo shop = ShopUtils.getShop(block);
@@ -105,7 +105,7 @@ public class WorldListener implements Listener {
     final Block faceBlock = block.getRelative(face);
     if (ShopUtils.isSign(faceBlock.getType()) && faceBlock.hasMetadata(ShopUtils.META_KEY)) {
       try {
-        final Block attached = AnnotationCaller.call("getAttachedBlock", WorldListener.class, this, faceBlock);
+        final Block attached = AnnotationCaller.call("getAttachedBlock", this, faceBlock);
         return (attached.getLocation().distance(block.getLocation()) == 0);
       } catch (MissingMethodException e) {
         e.printStackTrace();

@@ -15,7 +15,8 @@ import lombok.experimental.UtilityClass;
 public class ItemUtils {
 
   /**
-   * Add glow effect to item Add Curse Binding effect and hide enchants
+   * Add glow effect to item
+   * Add Curse Binding effect and hide enchants
    * 
    * /!\ Don't use on selling items
    * 
@@ -33,7 +34,8 @@ public class ItemUtils {
   }
 
   /**
-   * Remove glow effect to item Remove Curse Binding effect and show enchants
+   * Remove glow effect to item
+   * Remove Curse Binding effect and show enchants
    * 
    * /!\ Don't use on selling items
    * 
