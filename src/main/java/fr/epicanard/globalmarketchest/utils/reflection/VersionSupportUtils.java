@@ -201,8 +201,12 @@ public class VersionSupportUtils {
     try {
       Method asNMSCopy = getClassFromPath(Path.BUKKIT, "inventory.CraftItemStack").getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
+      Object name = this.invokeMethod(nmsItemStack, "getName");
 
-      return this.invokeMethod(this.invokeMethod(nmsItemStack, "getName"), "getString").toString();
+      if (name instanceof String) {
+        return (String)name;
+      }
+      return this.invokeMethod(name, "getString").toString();
     } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
       e.printStackTrace();
     }
