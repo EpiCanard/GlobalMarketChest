@@ -210,6 +210,6 @@ Commands:
     Version: "&c/globalmarketchest version&6 - Display the plugin version"
     Reload: "&c/globalmarketchest reload&6 - Reload the plugin"
     List: "&c/globalmarketchest list&6 - List all globalshop"
-    Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop à distance"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop"
     TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teleport the player a specific shop position"
     Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"

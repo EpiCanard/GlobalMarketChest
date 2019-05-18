@@ -126,10 +126,8 @@ public class ConfigLoader {
     this.config = this.loadOneFile("config.yml", Utils.getVersion(), Utils.getLastSupportedVersion());
     this.categories = this.loadOneFile("categories.yml", Utils.getVersion(), Utils.getLastSupportedVersion());
     if (this.config != null) {
-      String tmp = this.config.getString("General.Lang");
-      if (tmp == null)
-        tmp = "lang-en_EN.yml";
-      this.languages = this.loadOneFile(tmp);
+      final String langFilename = this.config.getString("General.Lang", "lang-en_US.yml");
+      this.languages = this.loadOneFile(langFilename, "langs", null);
     }
   }
 }
