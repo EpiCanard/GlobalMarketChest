@@ -27,6 +27,23 @@ public class Utils {
   @Getter
   private ItemStack background = null;
 
+  /**
+   * Version of minecraft server
+   * It get only the major version (ex: version 1.13.2 will get 1.13)
+   */
+  @Getter
+  private final String version;
+  /**
+   * Last Support Version of minecraft for current plugin
+   * Prevent loading config issues for versions not fully supported by the plugin
+   */
+  @Getter
+  private final String lastSupportedVersion = "1.14";
+
+  static {
+    version = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 4);
+  }
+
   public void init() {
     Utils.background = ItemStackUtils.getItemStackFromConfig("Interfaces.Buttons.Background");
     Utils.background = ItemStackUtils.setItemStackMeta(background, null, null);

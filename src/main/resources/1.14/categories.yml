@@ -1,5 +1,7 @@
 # ======================= File categories.yml =======================
 #
+# Version : 1.14
+#
 # This file contains all categories available for global shop
 #
 # Each category is composed of following config variables :
@@ -266,6 +268,36 @@ Build:
     - minecraft:yellow_stained_glass
     - minecraft:yellow_terracotta
     - minecraft:yellow_wool
+    - minecraft:andesite_slab
+    - minecraft:andesite_stairs
+    - minecraft:cut_red_sandstone_slab
+    - minecraft:cut_sandstone_slab
+    - minecraft:diorite_slab
+    - minecraft:diorite_stairs
+    - minecraft:end_stone_brick_slab
+    - minecraft:end_stone_brick_stairs
+    - minecraft:granite_slab
+    - minecraft:granite_stairs
+    - minecraft:mossy_cobblestone_slab
+    - minecraft:mossy_cobblestone_stairs
+    - minecraft:mossy_stone_brick_slab
+    - minecraft:mossy_stone_brick_stairs
+    - minecraft:polished_andesite_slab
+    - minecraft:polished_andesite_stairs
+    - minecraft:polished_diorite_slab
+    - minecraft:polished_diorite_stairs
+    - minecraft:polished_granite_slab
+    - minecraft:polished_granite_stairs
+    - minecraft:red_nether_brick_slab
+    - minecraft:red_nether_brick_stairs
+    - minecraft:smooth_quartz_slab
+    - minecraft:smooth_quartz_stairs
+    - minecraft:smooth_red_sandstone_slab
+    - minecraft:smooth_red_sandstone_stairs
+    - minecraft:smooth_sandstone_slab
+    - minecraft:smooth_sandstone_stairs
+    - minecraft:smooth_stone_slab
+    - minecraft:stone_stairs
 Decoration:
   DisplayName: "Decoration Blocks"
   DisplayItem: minecraft:peony
@@ -450,7 +482,6 @@ Decoration:
     - minecraft:sea_pickle
     - minecraft:seagrass
     - minecraft:shulker_box
-    - minecraft:sign
     - minecraft:skeleton_skull
     - minecraft:slime_block
     - minecraft:spruce_fence
@@ -477,6 +508,40 @@ Decoration:
     - minecraft:yellow_shulker_box
     - minecraft:yellow_stained_glass_pane
     - minecraft:zombie_head
+    - minecraft:acacia_sign
+    - minecraft:andesite_wall
+    - minecraft:barrel
+    - minecraft:bell
+    - minecraft:birch_sign
+    - minecraft:blast_furnace
+    - minecraft:brick_wall
+    - minecraft:campfire
+    - minecraft:cartography_table
+    - minecraft:cornflower
+    - minecraft:dark_oak_sign
+    - minecraft:diorite_wall
+    - minecraft:end_stone_brick_wall
+    - minecraft:fletching_table
+    - minecraft:granite_wall
+    - minecraft:grindstone
+    - minecraft:jungle_sign
+    - minecraft:lantern
+    - minecraft:lily_of_the_valley
+    - minecraft:loom
+    - minecraft:mossy_stone_brick_wall
+    - minecraft:nether_brick_wall
+    - minecraft:oak_sign
+    - minecraft:prismarine_wall
+    - minecraft:red_nether_brick_wall
+    - minecraft:red_sandstone_wall
+    - minecraft:sandstone_wall
+    - minecraft:scaffolding
+    - minecraft:smithing_table
+    - minecraft:smoker
+    - minecraft:spruce_sign
+    - minecraft:stonecutter
+    - minecraft:stone_brick_wall
+    - minecraft:wither_rose
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
@@ -537,6 +602,7 @@ Redstone:
     - minecraft:tnt
     - minecraft:trapped_chest
     - minecraft:tripwire_hook
+    - minecraft:lectern
 Transportation:
   DisplayName: "Transportation"
   DisplayItem: minecraft:powered_rail
@@ -578,7 +644,6 @@ Misc:
     - minecraft:bowl
     - minecraft:brick
     - minecraft:bucket
-    - minecraft:cactus_green
     - minecraft:cave_spider_spawn_egg
     - minecraft:charcoal
     - minecraft:chicken_spawn_egg
@@ -592,7 +657,6 @@ Misc:
     - minecraft:cow_spawn_egg
     - minecraft:creeper_spawn_egg
     - minecraft:cyan_dye
-    - minecraft:dandelion_yellow
     - minecraft:diamond
     - minecraft:diamond_horse_armor
     - minecraft:dolphin_spawn_egg
@@ -678,7 +742,6 @@ Misc:
     - minecraft:quartz
     - minecraft:rabbit_hide
     - minecraft:rabbit_spawn_egg
-    - minecraft:rose_red
     - minecraft:salmon_bucket
     - minecraft:salmon_spawn_egg
     - minecraft:scute
@@ -718,6 +781,28 @@ Misc:
     - minecraft:zombie_pigman_spawn_egg
     - minecraft:zombie_spawn_egg
     - minecraft:zombie_villager_spawn_egg
+    - minecraft:bamboo
+    - minecraft:black_dye
+    - minecraft:blue_dye
+    - minecraft:brown_dye
+    - minecraft:cat_spawn_egg
+    - minecraft:composter
+    - minecraft:creeper_banner_pattern
+    - minecraft:flower_banner_pattern
+    - minecraft:fox_spawn_egg
+    - minecraft:globe_banner_pattern
+    - minecraft:green_dye
+    - minecraft:leather_horse_armor
+    - minecraft:mojang_banner_pattern
+    - minecraft:panda_spawn_egg
+    - minecraft:pillager_spawn_egg
+    - minecraft:ravager_spawn_egg
+    - minecraft:red_dye
+    - minecraft:skull_banner_pattern
+    - minecraft:trader_llama_spawn_egg
+    - minecraft:wandering_trader_spawn_egg
+    - minecraft:white_dye
+    - minecraft:yellow_dye
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
@@ -760,6 +845,7 @@ Food:
     - minecraft:salmon
     - minecraft:spider_eye
     - minecraft:tropical_fish
+    - minecraft:sweet_berries
 Tools:
   DisplayName: "Tools"
   DisplayItem: minecraft:iron_axe
@@ -832,6 +918,7 @@ Combat:
     - minecraft:trident
     - minecraft:turtle_helmet
     - minecraft:wooden_sword
+    - minecraft:crossbow
 Brewing:
   DisplayName: "Brewing"
   DisplayItem: minecraft:potion
@@ -879,3 +966,5 @@ Books:
 # - minecraft:repeating_command_block
 # - minecraft:structure_block
 # - minecraft:structure_void
+# - minecraft:jigsaw
+# - minecraft:suspicious_stew

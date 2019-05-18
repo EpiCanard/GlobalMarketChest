@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
+import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.Setter;
 
