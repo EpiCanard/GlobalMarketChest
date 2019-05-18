@@ -7,8 +7,8 @@
 # ===================================================================
 
 General:
-  # Possible values : lang-fr_FR.yml and lang-en_EN.yml
-  Lang: "lang-en_EN.yml"
+  # Possible values : lang-fr_FR.yml and lang-en_US.yml
+  Lang: "lang-en_US.yml"
 Connection:
   # The url/ip to access to your database server
   Host: localhost
@@ -167,4 +167,3 @@ Chat:
   ExitSequence: "exit"
   # Define if the display message (Divers.ExitChatMode) must be displayed
   DisplayHelpExit: true
-  
