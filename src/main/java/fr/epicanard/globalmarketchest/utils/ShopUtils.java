@@ -174,9 +174,6 @@ public class ShopUtils {
    * @return
    */
   public boolean isSign(Material material) {
-    return SIGN_MATERIALS.stream().filter((name) -> {
-      final Material mat = Material.getMaterial(name);
-      return mat != null && mat.equals(material);
-    }).count() > 0;
+    return SIGN_MATERIALS.contains(material.name());
   }
 }
