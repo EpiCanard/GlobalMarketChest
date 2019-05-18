@@ -8,6 +8,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,6 +20,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.Sign;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
@@ -27,6 +30,9 @@ import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
+import fr.epicanard.globalmarketchest.utils.annotations.Version;
+import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 
 /**
  * Listener for every world interact like opennin a chest
@@ -35,25 +41,57 @@ public class WorldListener implements Listener {
   final List<BlockFace> faces = Arrays.asList(BlockFace.UP, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
 
   /**
+   * Get attached block to sign
+   * 
+   * @param block Sign block
+   * @return Attached block
+   */
+  @Version(name="getAttachedBlock", versions={"1.12"})
+  public Block gettAttachedBlock_1_12(Block block) {
+    final Sign sign = (Sign) block.getState().getData();
+    return block.getRelative(sign.getAttachedFace());
+  }
+
+  /**
+   * Get attached block to sign
+   * 
+   * @param block Sign block
+   * @return Attached block
+   */
+  @Version(name="getAttachedBlock")
+  public Block getAttachedBlock_latest(Block block) {
+    final BlockData data = (BlockData)VersionSupportUtils.getInstance().invokeMethod(block.getState(), "getBlockData", (Object[])null);
+
+    if (data instanceof Directional) {
+      return block.getRelative(((Directional)data).getFacing().getOppositeFace());
+    }
+    return block.getRelative(BlockFace.DOWN);
+  }
+
+  /**
    * Every break of sign by drop is detect to remove the shop and prevent ghost shop (without sign)
    * 
    * @param event Block physics event
    */
   @EventHandler
   public void onBlockPhysics(BlockPhysicsEvent event) {
-    Block block = event.getBlock();
-    if (block.getType() == Material.WALL_SIGN || block.getType() == Material.SIGN) {
-      Sign s = (Sign) block.getState().getData();
-      Block attachedBlock = block.getRelative(s.getAttachedFace());
-      if (attachedBlock.getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
-        ShopInfo shop = ShopUtils.getShop(block);
-        if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
-          LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event", 
-            shop.getGroup(), shop.getSignLocation().toString(), PlayerUtils.getPlayerName(shop.getOwner())));
+    final Block block = event.getBlock();
+
+    if (ShopUtils.isSign(block.getType())) {
+      try {
+        final Block attached = AnnotationCaller.call("getAttachedBlock", this, block);
+
+        if (attached.getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
+          final ShopInfo shop = ShopUtils.getShop(block);
+          if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
+            LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event", 
+              shop.getGroup(), shop.getSignLocation().toString(), PlayerUtils.getPlayerName(shop.getOwner())));
+          }
         }
+      } catch (MissingMethodException e) {
+        e.printStackTrace();
       }
     }
-
   }
 
   /**
@@ -64,10 +102,14 @@ public class WorldListener implements Listener {
    * @return Define if the block at the specific face is attached
    */
   private Boolean isAttachedTo(Block block, BlockFace face) {
-    Block faceBlock = block.getRelative(face);
-    if ((faceBlock.getType() == Material.WALL_SIGN || faceBlock.getType() == Material.SIGN) && faceBlock.hasMetadata(ShopUtils.META_KEY)) {
-      Sign s = (Sign) faceBlock.getState().getData();
-      return (faceBlock.getRelative(s.getAttachedFace()).getLocation().distance(block.getLocation()) == 0);
+    final Block faceBlock = block.getRelative(face);
+    if (ShopUtils.isSign(faceBlock.getType()) && faceBlock.hasMetadata(ShopUtils.META_KEY)) {
+      try {
+        final Block attached = AnnotationCaller.call("getAttachedBlock", this, faceBlock);
+        return (attached.getLocation().distance(block.getLocation()) == 0);
+      } catch (MissingMethodException e) {
+        e.printStackTrace();
+      }
     }
     return false;
   }
@@ -148,7 +190,7 @@ public class WorldListener implements Listener {
 
   /**
    * Event to open shop when clicking on shop sign or sign linked block
-
+   * 
    * @param event Player interact event
    */
   @EventHandler

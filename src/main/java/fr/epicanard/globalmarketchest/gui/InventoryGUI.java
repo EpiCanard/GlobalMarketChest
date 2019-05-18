@@ -17,8 +17,8 @@ import org.bukkit.potion.PotionEffectType;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.gui.shops.Warning;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.chat.ChatUtils;
 import lombok.Getter;
 
 /**
@@ -82,7 +82,9 @@ public class InventoryGUI {
     this.chatEditing = false;
     this.open();
     this.player.removePotionEffect(PotionEffectType.BLINDNESS);
-    this.chatConsumer.accept(value);
+    if (value != null) {
+      this.chatConsumer.accept(value);
+    }
     this.chatConsumer = null;
   }
 
@@ -97,9 +99,7 @@ public class InventoryGUI {
     this.close();
     this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1), true);
     this.chatConsumer = consumer;
-    this.player.sendMessage("");
-    PlayerUtils.sendMessage(this.player, LangUtils.get(path));
-    this.player.sendMessage("");
+    ChatUtils.newConversation(this.player, LangUtils.get(path)).begin();
   }
 
   /**

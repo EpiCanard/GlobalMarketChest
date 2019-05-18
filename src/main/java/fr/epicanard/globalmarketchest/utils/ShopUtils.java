@@ -1,7 +1,10 @@
 package fr.epicanard.globalmarketchest.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Material;
@@ -20,6 +23,40 @@ import lombok.experimental.UtilityClass;
 public class ShopUtils {
   public final String META_KEY = "GMC_SHOP";
   private List<Material> allowedBlock = new ArrayList<Material>();
+
+  private Set<String> SIGN_MATERIALS;
+
+  static {
+    switch (Utils.getVersion()) {
+      case "1.12" :
+        SIGN_MATERIALS = new HashSet<>(Arrays.asList(
+          "SIGN_POST",
+          "WALL_SIGN"
+        ));
+        break;
+      case "1.13" :
+        SIGN_MATERIALS = new HashSet<>(Arrays.asList(
+          "SIGN",
+          "WALL_SIGN"
+        ));
+        break;
+      default:
+        SIGN_MATERIALS = new HashSet<>(Arrays.asList(
+          "OAK_SIGN",
+          "OAK_WALL_SIGN",
+          "SPRUCE_SIGN",
+          "SPRUCE_WALL_SIGN",
+          "BIRCH_SIGN",
+          "BIRCH_WALL_SIGN",
+          "JUNGLE_SIGN",
+          "JUNGLE_WALL_SIGN",
+          "ACACIA_SIGN",
+          "ACACIA_WALL_SIGN",
+          "DARK_OAK_SIGN",
+          "DARK_OAK_WALL_SIGN"
+        ));
+    }
+  }
 
   public void init()  {
     List<String> blocks = GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("AllowedLinkBlock");
@@ -130,4 +167,13 @@ public class ShopUtils {
     return ShopUtils.allowedBlock;
   }
 
+  /**
+   * Define if the block is a sign
+   * 
+   * @param block The block
+   * @return
+   */
+  public boolean isSign(Material material) {
+    return SIGN_MATERIALS.contains(material.name());
+  }
 }

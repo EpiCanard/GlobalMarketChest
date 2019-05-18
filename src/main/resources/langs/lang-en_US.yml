@@ -37,6 +37,7 @@ Divers:
   PastDate: "%sago"
   UnknownPlayer: "Unknown player"
   SearchItemTextIcon: "&7Search: &3%s"
+  ExitChatMode: "&7 - (Write &9%s&7 to leave the chat mode)"
 States:
   InProgress: "In Progress"
   Expired: "Expired"
@@ -158,7 +159,7 @@ ErrorMessages:
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
   MissingItems: "Wrong number of items, some items are missing"
   FailCreateAuction: "Fail to create auction in database"
-  NotEnoughSpace: "Not enough space to add all items;in player inventory"
+  NotEnoughSpace: "Not enough space to add all items;&7in player inventory"
   NotEnoughMoney: "Not enough money to buy this auction"
   CantBuyAuction: "Fail to buy auction (expired or already sold)"
   CantRenewAuction: "Fail to renew auction"
@@ -174,6 +175,7 @@ ErrorMessages:
   CantRemoveBlock: "&cYou can't remove this block because a shop is attached to it"
   DamagedItem: "You can't sell a damaged item"
   BlacklistedItem: "You can't sell a blacklisted item"
+  CommandInChat: "&cYou are not allowed to execute commands in chat mode"
 InfoMessages:
   UndoAuction: "&2Auction successfully deleted"
   RenewAuction: "&2Auction successfully renewed"
@@ -205,8 +207,9 @@ Commands:
   HelpCommand:
     Usage: "&6Usage :"
     Help: "&c/globalmarketchest [help]&6 - Show help"
+    Version: "&c/globalmarketchest version&6 - Display the plugin version"
     Reload: "&c/globalmarketchest reload&6 - Reload the plugin"
     List: "&c/globalmarketchest list&6 - List all globalshop"
-    Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop à distance"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop"
     TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teleport the player a specific shop position"
     Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"

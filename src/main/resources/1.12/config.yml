@@ -1,6 +1,14 @@
+# ========================= File config.yml =========================
+#
+# Version : 1.12
+#
+# This file contains all config for GlobalMarketChest plugin
+#
+# ===================================================================
+
 General:
-  # Possible values : lang-fr_FR.yml and lang-en_EN.yml
-  Lang: "lang-en_EN.yml"
+  # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml
+  Lang: "lang-en_US.yml"
 Connection:
   # The url/ip to access to your database server
   Host: localhost
@@ -75,31 +83,30 @@ Price:
     - minecraft:iron_ingot
     - minecraft:coal
     - minecraft:redstone
-    - minecraft:lapis_lazuli
+    - minecraft:dye/4
 # Items that can't be sold
 ItemsBlacklist:
   - minecraft:barrier
   - minecraft:chain_command_block
   - minecraft:command_block
   - minecraft:command_block_minecart
-  - minecraft:debug_stick
   - minecraft:knowledge_book
   - minecraft:repeating_command_block
   - minecraft:structure_block
   - minecraft:structure_void
 Interfaces:
   # Warning interface messages are represented by flashing item alternating Background this item
-  Warn: minecraft:red_stained_glass_pane
+  Warn: minecraft:stained_glass_pane/14
   # All others buttons used inside interface are defined here
   Buttons:
-    Background: minecraft:black_stained_glass_pane
+    Background: minecraft:stained_glass_pane/15
     NewAuction: minecraft:nether_star
     CreateAuction: minecraft:nether_star
     BuyAuction: minecraft:nether_star
-    RenewAuction: minecraft:orange_wool
-    UndoAuction: minecraft:red_wool
-    RenewEveryAuction: minecraft:orange_wool
-    UndoEveryAuction: minecraft:red_wool
+    RenewAuction: minecraft:wool/1
+    UndoAuction: minecraft:wool/14
+    RenewEveryAuction: minecraft:wool/1
+    UndoEveryAuction: minecraft:wool/14
     ExitButton: minecraft:barrier
     Validate: minecraft:spectral_arrow
     Return: minecraft:tipped_arrow
@@ -107,38 +114,37 @@ Interfaces:
     Money: minecraft:gold_ingot
     GlobalView: minecraft:enchanted_book
     Search: minecraft:hopper
-    SearchItemDrop: minecraft:grass_block
+    SearchItemDrop: minecraft:grass
     SearchItemText: minecraft:paper
-    SearchByPlayer: minecraft:player_head
+    SearchByPlayer: minecraft:skull/3
     ViewByCategory: minecraft:compass
     ViewByPlayer: minecraft:chest
     ViewByLastCreated: minecraft:apple
-    AuctionSide: minecraft:blue_stained_glass_pane
+    AuctionSide: minecraft:stained_glass_pane/11
     AuctionMiddle: minecraft:stained_glass_pane
     GlobalShop: minecraft:ender_chest
-    AuctionShop: minecraft:shulker_box
+    AuctionShop: minecraft:purple_shulker_box
     AdminShop: minecraft:chest
     ShopIcon: minecraft:ender_chest
-    EditGroupName: minecraft:blue_stained_glass_pane
+    EditGroupName: minecraft:stained_glass_pane/11
     PreviousPage: minecraft:arrow
     NextPage: minecraft:arrow
     NumPage: minecraft:book
-    MaxInOne: minecraft:orange_stained_glass_pane
-    MaxRepeat: minecraft:orange_stained_glass_pane
+    MaxInOne: minecraft:stained_glass_pane/1
+    MaxRepeat: minecraft:stained_glass_pane/1
     InProgressAuction: minecraft:book
     ExpiredAuction: minecraft:book
     SoldAuction: minecraft:book
     BoughtAuction: minecraft:book
     CanceledAuction: minecraft:book
-    FreePrice: minecraft:lime_stained_glass_pane
-    CircleSetItem: "minecraft:lime_stained_glass_pane"
-    CircleUnsetItem: "minecraft:blue_stained_glass_pane"
-    YesButton: "minecraft:lime_wool"
-    NoButton: "minecraft:red_wool"
+    FreePrice: minecraft:stained_glass_pane/5
+    CircleSetItem: "minecraft:stained_glass_pane/5"
+    CircleUnsetItem: "minecraft:stained_glass_pane/11"
+    YesButton: "minecraft:wool/5"
+    NoButton: "minecraft:wool/14"
     Question: "minecraft:redstone_torch"
 Sign:
   Appearance:
-    # Config for GobalShop creation
     GlobalShop:
       # The text displayed on the sign when shop creation is successful
       DisplayName: "&a[GlobalShop]"
@@ -148,3 +154,14 @@ Sign:
       FirstLineToCreate: "globalshop"
     # The text displayed on the sign when shop creation failed
     NotWorkingShopDisplayName : "&c[DisableShop]"
+Chat:
+  # Define if a timeout must be used when the player is in chat mode (ex: when search auction by name)
+  UseTimeout: true
+  # Timeout in seconds used when the player is in chat mode (ex: when search auction by name)
+  Timeout: 10
+  # Define if the player can use a specific sequence to exit the chat mode
+  UseExitSequence: true
+  # Sequence to write to exit the chat mode
+  ExitSequence: "exit"
+  # Define if the display message (Divers.ExitChatMode) must be displayed
+  DisplayHelpExit: true

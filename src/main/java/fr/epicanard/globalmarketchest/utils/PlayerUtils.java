@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.SkullType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -17,7 +18,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
-import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
+import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -218,9 +219,10 @@ public class PlayerUtils {
    * @return Return itemstack of player head
    */
   public ItemStack getPlayerHead(OfflinePlayer player) {
-    final ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
+    final Material headMaterial = Material.getMaterial((Utils.getVersion() == "1.12") ? "SKULL_ITEM" : "PLAYER_HEAD");
+    final ItemStack playerHead = new ItemStack(headMaterial, 1, (short) SkullType.PLAYER.ordinal());
     final SkullMeta headMeta = (SkullMeta) playerHead.getItemMeta();
-    
+  
     headMeta.setOwningPlayer(player);
     headMeta.setDisplayName(player.getName());
     playerHead.setItemMeta(headMeta);

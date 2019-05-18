@@ -19,7 +19,7 @@ import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.Reflection.VersionSupportUtils;
+import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 
 public class CreateAuctionItem extends ShopInterface {
   private Boolean accepteDamagedItems;

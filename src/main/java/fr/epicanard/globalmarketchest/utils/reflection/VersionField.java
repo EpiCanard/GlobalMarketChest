@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.utils.Reflection;
+package fr.epicanard.globalmarketchest.utils.reflection;
 
 /**
  * VersionField

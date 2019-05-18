@@ -1,0 +1,215 @@
+InterfacesTitle:
+  EditAuction: "&2编辑拍卖"
+  BuyAuction: "&2购买拍卖"
+  CategoryView: "&2拍卖类别"
+  AuctionViewList: "&2拍卖列表"
+  ConfigShop : "&2商店设置"
+  # Auction Creation
+  CreateAuctionItem: "&2选择拍卖物品 "
+  CreateAuctionPrice: "&2设定拍卖价格"
+  # Shop Creation
+  ShopCreationSelectType: "&2设定拍卖品及其对应方块"
+  ShopCreationLink: "&2设定组名/对应商店"
+Divers:
+  State: "状态"
+  Quantity: "数量"
+  UnitPrice: "单价"
+  TotalPrice: "总价"
+  AuctionNumber: "拍卖编号"
+  Seller: "卖家"
+  Buyer: "买家"
+  Start: "开始!"
+  Location: "位置"
+  OtherLocation: "其他位置"
+  Group: "组"
+  Type: "种类"
+  Warning: "警告"
+  ExpireIn: "剩余时间"
+  Expired: "已过期"
+  Started: "已开始"
+  Ended: "已经结束"
+  Free: "免费"
+  WithStatus: "&f当前状态 : &2%s"
+  Days: "天"
+  Hours: "时"
+  Minutes: "分"
+  Seconds: "秒"
+  PastDate: "%s"
+  UnknownPlayer: "未知"
+  SearchItemTextIcon: "&7Search: &3%s"
+  ExitChatMode: "&7 - (Write &9%s&7 to leave the chat mode)"
+States:
+  InProgress: "进行中"
+  Expired: "已过期 "
+  Abandoned: "已取消/放弃"
+  Finished: "已完成"
+Shops:
+  ClickChangeGroup: "&c请单击以改变商店组名"
+  CurrentShop: "当前商店"
+Buttons:
+  Background:
+    Name: " "
+  Money:
+    Name: "&6当前金币"
+  PreviousButton:
+    Name: "返回"
+    Description: "&f返回至上个菜单"
+  ExitButton:
+    Name: "&4退出"
+    Description: "&f退出菜单"
+  Validate:
+    Name: "&2点击验证身份"
+    Description: "&f点击以进行下一步操作"
+  Return:
+    Name: "&4后退"
+    Description: "&f后退至上一步操作"
+  CreateShop:
+    Name: "&2创建商店"
+  NewAuction:
+    Name: "&2创建新的拍卖"
+    Description: "&7拍卖编号 (%d/%d);&7点击以出售你的商品"
+  CreateAuction:
+    Name: "&2创建拍卖"
+  BuyAuction:
+    Name: "&2购买该拍卖品"
+  RenewAuction:
+    Name: "&6延长该拍卖品出售时间"
+  UndoAuction:
+    Name: "&c删除该拍卖品"
+  RenewEveryAuction:
+    Name: "&6延长全部拍卖品出售时间"
+  UndoEveryAuction:
+    Name: "&c删除全部拍卖品"
+  GlobalView:
+    Name: "&f购买记录"
+    Description: "&5查看你上架中的商品"
+  Search:
+    Name: "&3点击以搜索需要的物品..."
+  DragItem:
+    Name: "&a将一个物品拖动至此"
+    Description: ""
+  CancelAuction:
+    Name: "&4取消本次购买"
+  ViewByCategory:
+    Name: "排序方法:类别"
+    Description: "设定是否可以通过类别查看物品"
+  ViewByPlayer:
+    Name: "排序方法:玩家"
+    Description: "设定是否可以通过玩家查看物品"
+  ViewByLastCreated:
+    Name: "按上次创建时间查看"
+    Description: "Can player see auctions by last created ?"
+  GlobalShop:
+    Name: "全球市场"
+  AuctionShop:
+    Name: "AuctionShop"
+  LocalShop:
+    Name: "LocalShop"
+  AdminShop:
+    Name: "管理员商店"
+  EditGroupName:
+    Name: "&f编辑组名"
+  PreviousPage:
+    Name: "上一页"
+  NextPage:
+    Name: "下一页"
+  NumPage:
+    Name: "页数"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2将物品脱至此处"
+    Description: "&2或者使用shift+点击"
+  MaxInOne:
+    Name: "&f最大数量"
+  MaxRepeat:
+    Name: "&f重置数量"
+  InProgressAuction:
+    Name: "&a进行中拍卖"
+  ExpiredAuction:
+    Name: "&c过期的拍卖"
+  SoldAuction:
+    Name: "&b历史记录"
+  BoughtAuction:
+    Name: "&9B购买记录"
+  CanceledAuction:
+    Name: "&6删除历史"
+  FreePrice:
+    Name: "&a免费"
+    Description: "&7将价格设为零"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
+  YesButton:
+    Name: "确定"
+  NoButton:
+    Name: "取消"
+  Question:
+    Name: " "
+  SearchItemDrop:
+    Name: "&fFind similar items"
+    Description: "&7Click with the wanted item;&7Or use SHIFT+Click"
+  SearchItemText:
+    Name: "&fFind an item with his name"
+  SearchByPlayer:
+    Name: "&fFind auctions of a player"
+ErrorMessages:
+  UnknownWorld: "未知商店"
+  ShopTypeNotSet: "未设置商店类型；&2请至少选择一种类型"
+  MissingItems: "物品数量错误"
+  FailCreateAuction: "在数据库中创建拍卖失败"
+  NotEnoughSpace: "你的背包满了，请清理背包后重试"
+  NotEnoughMoney: "你没有足够的钱购买"
+  CantBuyAuction: "未能购买拍卖品（过期或已售出)"
+  CantRenewAuction: "拍卖续约失败"
+  CantUndoAuction: "未能撤消拍卖"
+  CantRenewEveryAuction: "Fail to renew every auction"
+  CantUndoEveryAuction: "Fail to undo every auction"
+  PlayerDoesntExist: "这个玩家不存在"
+  MaxAuctionByPlayer: "无法创建更多拍卖；&7您已达到最大拍卖数量"
+  PermissionNotAllowed: "&c不允许执行此操作"
+  InvalidCommand: "&c此命令无效 : "
+  PlayerOnly: "&c这个指令只能玩家使用"
+  UnknownShop: "&c未知商店 : "
+  CantRemoveBlock: "&c您不能删除此块，因为它附加了一个商店"
+  DamagedItem: "你不能卖损坏的东西"
+  BlacklistedItem: "你不能卖黑名单的商品"
+  CommandInChat: "&cYou are not allowed to execute commands in chat mode"
+InfoMessages:
+  UndoAuction: "&2删除成功"
+  RenewAuction: "&2物品已经成功续期"
+  CreateAuction: "&2创建成功"
+  RenewEveryAuction: "&2所有物品已经成功续期"
+  UndoEveryAuction: "&2所有物品已经成功删除"
+  ShopDeleted: "商店已经移除..."
+  # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
+  # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
+  # If you don't have them a message will pop in console and no message will broadcast
+  AcquireAuction: "&c[&e&l养老商城&c]&3%s &6购买了 &2%d个 %s &6价格: &2%.2f&6 元 卖家: &3%s&6."
+  AcquireAuctionOwner: "&c[&e&l养老商城&c]&3%s &6成功购买你的物品 &2%d个 %s &6价格: &2%.2f&6 元."
+  PluginReloading: "插件重载中...."
+  PluginReloaded: "插件重载成功"
+  WriteGroupName: "写下你想要的组名"
+  WriteItemName: "Write the name of the item you are looking for"
+  WritePlayerName: "Write the name of the player you are looking for"
+  DeleteShopQuestion: "确定删除此商店?"
+Commands:
+  Buttons:
+    OpenText: "打开"
+    OpenHover: "点击打开此商店"
+    DetailText: "Detail"
+    DetailHover: "Click see detail"
+    TeleportText: "传送"
+    TeleportHover: "点击传送到此商店"
+  ListShop: "商店列表 : "
+  SeeHelp: "&6查看帮助 : &c/globalmarketchest help"
+  HelpCommand:
+    Usage: "&6语法 :"
+    Help: "&c/globalmarketchest [help]&6 - 查看帮助"
+    Version: "&c/globalmarketchest version&6 - Display the plugin version"
+    Reload: "&c/globalmarketchest reload&6 - 重载插件"
+    List: "&c/globalmarketchest list&6 - 查看所有商店"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - 传送到某个商店"
+    Open: "&c/globalmarketchest open <shop>&6 - 打开商店菜单"
