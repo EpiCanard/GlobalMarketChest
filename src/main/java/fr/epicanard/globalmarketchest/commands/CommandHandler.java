@@ -59,7 +59,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     listNode.addSubNode(detailNode);
 
     //List.TP
-    CommandNode tpNode = new CommandNode("tp", Permissions.CMD_LIST_DETAIL_TP, true, true)
+    CommandNode tpNode = new CommandNode("tp", Permissions.CMD_LIST_TP, true, true)
       .setCommand(new TPConsumer())
       .setTabConsumer(this::shopIdTabComplete);
     listNode.addSubNode(tpNode);

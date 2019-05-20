@@ -49,10 +49,9 @@ permissions:
   globalmarketchest.commands.list.*:
     description: Can list all shops with command
     children:
-      globalmarketchest.commands.detail.: true
-  globalmarketchest.commands.detail.*:
+      globalmarketchest.commands.list.detail: true
+      globalmarketchest.commands.list.tp: true
+  globalmarketchest.commands.list.detail:
     description: Can see all shop position for a group of shop
-    children:
-      globalmarketchest.commands.detail.tp: true
-  globalmarketchest.commands.detail.tp:
+  globalmarketchest.commands.list.tp:
     description: Can be teleport to a specific shop

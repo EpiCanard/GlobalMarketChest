@@ -21,12 +21,13 @@ public class HelpConsumer implements CommandConsumer {
     PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Version");
     if (Permissions.CMD_RELOAD.isSetOn(sender))
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Reload");
-    if (Permissions.CMD_LIST.isSetOn(sender))
+    if (Permissions.CMD_LIST.isSetOn(sender)) {
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.List");
-    if (Permissions.CMD_LIST_DETAIL.isSetOn(sender))
-      PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Detail");
-    if (Permissions.CMD_LIST_DETAIL_TP.isSetOn(sender, false))
-      PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.TP");
+      if (Permissions.CMD_LIST_DETAIL.isSetOn(sender))
+        PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Detail");
+      if (Permissions.CMD_LIST_TP.isSetOn(sender, false))
+        PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.TP");
+    }
     if (Permissions.CMD_OPEN.isSetOn(sender, false))
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Open");
     return true;

@@ -53,7 +53,7 @@ public class DetailConsumer implements CommandConsumer {
       message.addExtra("\n");
       TextComponent line = ChatUtils.newComponent(" - " + WorldUtils.getStringFromLocation(shop.getSignLocation()) + " ");
 
-      if (Permissions.CMD_LIST_DETAIL_TP.isSetOn(sender, false)) {
+      if (Permissions.CMD_LIST_TP.isSetOn(sender, false)) {
         TextComponent linkTP = ChatUtils.createLinkWithBracket(LangUtils.get("Commands.Buttons.TeleportText"),
           LangUtils.get("Commands.Buttons.TeleportHover"), ChatColor.DARK_AQUA,
           String.format("/globalmarketchest list tp %s %s", shop.getGroup(),
