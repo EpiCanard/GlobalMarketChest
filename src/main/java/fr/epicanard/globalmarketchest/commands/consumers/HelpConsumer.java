@@ -27,17 +27,26 @@ public class HelpConsumer implements CommandConsumer {
     PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Usage");
     PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Help");
     PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Version");
-    if (Permissions.CMD_RELOAD.isSetOn(sender))
+    if (Permissions.CMD_RELOAD.isSetOn(sender)) {
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Reload");
+    }
     if (Permissions.CMD_LIST.isSetOn(sender)) {
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.List");
-      if (Permissions.CMD_LIST_DETAIL.isSetOn(sender))
+      if (Permissions.CMD_LIST_DETAIL.isSetOn(sender)) {
         PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Detail");
-      if (Permissions.CMD_LIST_TP.isSetOn(sender, false))
+      }
+      if (Permissions.CMD_LIST_TP.isSetOn(sender, false)) {
         PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.TP");
+      }
     }
-    if (Permissions.CMD_OPEN.isSetOn(sender, false))
+    if (Permissions.CMD_ADMIN_OPEN.isSetOn(sender)) {
+      PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.AdminOpen");
+    } else if (Permissions.CMD_OPEN.isSetOn(sender, false)) {
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Open");
+    }
+    if (Permissions.CMD_ADMIN_CLOSE.isSetOn(sender)) {
+      PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Close");
+    }
     return true;
   }
 }
