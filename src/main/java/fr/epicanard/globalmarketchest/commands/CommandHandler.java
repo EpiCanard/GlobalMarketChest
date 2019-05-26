@@ -11,6 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import fr.epicanard.globalmarketchest.commands.consumers.CloseConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.DetailConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.HelpConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.ListConsumer;
@@ -47,6 +48,12 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
       new CommandNode("open", Permissions.CMD_OPEN, true, false)
       .setCommand(new OpenConsumer())
       .setTabConsumer(this::shopsPlayerTabComplete));
+
+    // Close - /globalmarketchest close <player>
+    this.command.addSubNode(
+      new CommandNode("close", Permissions.CMD_ADMIN_CLOSE, true, false)
+      .setCommand(new CloseConsumer())
+      .setTabConsumer(this::playersTabComplete));
 
     // List - /globalmarketchest list
     CommandNode listNode = new CommandNode("list", Permissions.CMD_LIST, false, false)

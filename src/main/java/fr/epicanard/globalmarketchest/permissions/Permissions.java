@@ -21,7 +21,8 @@ public enum Permissions {
   CMD_LIST("globalmarketchest.commands.list"),
   CMD_LIST_DETAIL("globalmarketchest.commands.list.detail"),
   CMD_LIST_TP("globalmarketchest.commands.list.tp"),
-  CMD_ADMIN_OPEN("globalmarketchest.admin.commands.open")
+  CMD_ADMIN_OPEN("globalmarketchest.admin.commands.open"),
+  CMD_ADMIN_CLOSE("globalmarketchest.admin.commands.close")
   ;
 
   private String perm;
