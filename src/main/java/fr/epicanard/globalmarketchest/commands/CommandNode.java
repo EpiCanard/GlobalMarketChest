@@ -3,7 +3,6 @@ package fr.epicanard.globalmarketchest.commands;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.bukkit.command.CommandSender;
@@ -29,7 +28,7 @@ public class CommandNode {
   @Setter
   private CommandConsumer command;
   @Setter
-  private Function<String[], List<String>> tabConsumer;
+  private TabCompleteConsumer tabConsumer;
 
   /**
    * Constructor Class CommandNode
@@ -128,22 +127,22 @@ public class CommandNode {
    * @param String Param for tab complete
    * @return List<String> List for completion
    */
-  public List<String> onTabComplete(CommandSender player, String[] args) {
-    List<String> empty = new ArrayList<>();
+  public List<String> onTabComplete(CommandSender sender, String[] args) {
+    final List<String> empty = new ArrayList<>();
     if (args.length > 1 && this.subNodes.size() > 0) {
       CommandNode node = this.getCommandNode(args[0].toLowerCase());
-      if (node != null && node.permission != null && node.permission.isSetOn(player) && node.canExecute(player)) {
-        return node.onTabComplete(player, Arrays.copyOfRange(args, 1, args.length));
+      if (node != null && node.permission != null && node.permission.isSetOn(sender) && node.canExecute(sender)) {
+        return node.onTabComplete(sender, Arrays.copyOfRange(args, 1, args.length));
       }
       return empty;
     } else if (this.subNodes.size() > 0) {
       return this.getSubNodes()
         .stream()
-        .filter(node -> node.permission != null && node.permission.isSetOn(player) && node.canExecute(player) && node.getNodeName().startsWith(args[0].toLowerCase()))
+        .filter(node -> node.permission != null && node.permission.isSetOn(sender) && node.canExecute(sender) && node.getNodeName().startsWith(args[0].toLowerCase()))
         .map(node -> node.getNodeName())
         .collect(Collectors.toList());
     } else if (this.tabConsumer != null) {
-      return this.tabConsumer.apply(args);
+      return this.tabConsumer.apply(sender, args);
     }
     return empty;
   }

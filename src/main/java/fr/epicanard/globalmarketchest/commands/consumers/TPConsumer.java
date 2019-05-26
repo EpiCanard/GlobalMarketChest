@@ -16,21 +16,29 @@ import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
 /**
- * Command TP.
+ * Teleport a player to a physical shop
  *
  * Command : /globalmarketchest tp <groupName> <coord>
  * Permission: globalmarketchest.commands.list.detail.tp
  */
 public class TPConsumer implements CommandConsumer {
 
+  /**
+   * Method called when consumer is executed
+   * 
+   * @param node Command node
+   * @param command Command executed
+   * @param sender Command's executor (player or console)
+   * @param args Arguments of command
+   */
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
-    if (!(sender instanceof Player) || args.length != 2) {
+    if (!(sender instanceof Player) || args.length < 2) {
       return node.invalidCommand(sender, command);
     }
 
     try {
       List<ShopInfo> shops = GlobalMarketChest.plugin.shopManager.getShops().stream()
-        .filter(e -> e.getGroup().equals(args[0]) && WorldUtils.compareLocations(e.getSignLocation(), WorldUtils.getLocationFromString(args[1], null))).collect(Collectors.toList());
+        .filter(shop -> shop.getGroup().equals(args[0]) && WorldUtils.compareLocations(shop.getSignLocation(), WorldUtils.getLocationFromString(args[1], null))).collect(Collectors.toList());
       if (shops.size() == 0) {
         PlayerUtils.sendMessage(sender, String.format("%s%s %s", LangUtils.get("ErrorMessages.UnknownShop"), args[0], args[1]));
         return false;
