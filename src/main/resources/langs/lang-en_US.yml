@@ -212,4 +212,4 @@ Commands:
     List: "&c/globalmarketchest list&6 - List all globalshop"
     Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop"
     TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teleport the player a specific shop position"
-    Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"
+    Open: "&c/globalmarketchest open <shop> [player]&6 - Open a globalshop"

@@ -24,6 +24,15 @@ import net.md_5.bungee.api.chat.TextComponent;
  * Permission: globalmarketchest.commands.list.detail
  */
 public class DetailConsumer implements CommandConsumer {
+
+  /**
+   * Method called when consumer is executed
+   * 
+   * @param node Command node
+   * @param command Command executed
+   * @param sender Command's executor (player or console)
+   * @param args Arguments of command
+   */
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
     if (args.length == 0) {
       return node.invalidCommand(sender, command);

@@ -15,6 +15,14 @@ import fr.epicanard.globalmarketchest.utils.PlayerUtils;
  */
 public class HelpConsumer implements CommandConsumer {
 
+  /**
+   * Method called when consumer is executed
+   * 
+   * @param node Command node
+   * @param command Command executed
+   * @param sender Command's executor (player or console)
+   * @param args Arguments of command
+   */
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
     PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Usage");
     PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Help");

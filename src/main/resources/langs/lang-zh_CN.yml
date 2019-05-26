@@ -212,4 +212,4 @@ Commands:
     List: "&c/globalmarketchest list&6 - 查看所有商店"
     Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop"
     TP: "&c/globalmarketchest list tp <shop> <position>&6 - 传送到某个商店"
-    Open: "&c/globalmarketchest open <shop>&6 - 打开商店菜单"
+    Open: "&c/globalmarketchest open <shop> [player]&6 - 打开商店菜单"

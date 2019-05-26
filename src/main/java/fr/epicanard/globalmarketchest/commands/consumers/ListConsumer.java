@@ -22,11 +22,20 @@ import net.md_5.bungee.api.chat.TextComponent;
  * Permission: globalmarketchest.commands.list
  */
 public class ListConsumer implements CommandConsumer {
+
+  /**
+   * Method called when consumer is executed
+   * 
+   * @param node Command node
+   * @param command Command executed
+   * @param sender Command's executor (player or console)
+   * @param args Arguments of command
+   */
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
-    TextComponent message = ChatUtils.newComponent(LangUtils.get("Commands.ListShop"));
+    final TextComponent message = ChatUtils.newComponent(LangUtils.get("Commands.ListShop"));
     message.setColor(ChatColor.GOLD);
-    List<ShopInfo> shops = GlobalMarketChest.plugin.shopManager.getShops();
-    List<String> groups = new ArrayList<>();
+    final List<ShopInfo> shops = GlobalMarketChest.plugin.shopManager.getShops();
+    final List<String> groups = new ArrayList<>();
 
     shops.forEach(e -> {
       if (!groups.contains(e.getGroup()))
