@@ -1,0 +1,215 @@
+InterfacesTitle:
+  EditAuction: "&2Auktion Bearbeiten"
+  BuyAuction: "&2Kaufen"
+  CategoryView: "&2Kategorie"
+  AuctionViewList: "&2Auktion Liste"
+  ConfigShop : "&2Shop Einstellungen"
+  # Auction Creation
+  CreateAuctionItem: "&2Item auswählen"
+  CreateAuctionPrice: "&2Preis wählen"
+  # Shop Creation
+  ShopCreationSelectType: "&2Wähle Shop Typ und Block"
+  ShopCreationLink: "&2Gruppen Name / verlinke Shop"
+Divers:
+  State: "Status"
+  Quantity: "Menge"
+  UnitPrice: "Einzelpreis"
+  TotalPrice: "Total"
+  AuctionNumber: "Auktion Nummer"
+  Seller: "Verkäufer"
+  Buyer: "Käufer"
+  Start: "Gestartet"
+  Location: "Koordinaten"
+  OtherLocation: "andere Koordinaten"
+  Group: "Gruppe"
+  Type: "Typ"
+  Warning: "Warnung"
+  ExpireIn: "Läuft ab in"
+  Expired: "Abgelaufen"
+  Started: "Gestartet"
+  Ended: "Beendet"
+  Free: "Gratis"
+  WithStatus: "&fMit Status: &2%s"
+  Days: "Tage"
+  Hours: "Stunden"
+  Minutes: "Minuten"
+  Seconds: "Sekunden"
+  PastDate: "%szuvor"
+  UnknownPlayer: "Unbekanner Spieler"
+  SearchItemTextIcon: "&7Suche: &3%s"
+  ExitChatMode: "&7 - (Schreibe &9%s&7 um den Chatmodus zu verlassen.)"
+States:
+  InProgress: "In Bearbeitung"
+  Expired: "Abgelaufen"
+  Abandoned: "Abgebrochen"
+  Finished: "Beendet"
+Shops:
+  ClickChangeGroup: "&cklicken um den Gruppennamen zu ändern"
+  CurrentShop: "Aktueller shop"
+Buttons:
+  Background:
+    Name: " "
+  Money:
+    Name: "&6Dein Geld"
+  PreviousButton:
+    Name: "Zurück"
+    Description: "&fZurück zum letzen Inventar"
+  ExitButton:
+    Name: "&4Verlassen"
+    Description: "&fSchliesse dieses Menu"
+  Validate:
+    Name: "&2Bestätigen"
+    Description: "&fWeiter zum nächsten Schritt"
+  Return:
+    Name: "&4Zurück"
+    Description: "&fZurück zum letzten Schritt"
+  CreateShop:
+    Name: "&2Erstelle Shop"
+  NewAuction:
+    Name: "&2Erstelle neue Auktion"
+    Description: "&7Auktion Nummer (%d/%d);&7Klick hier um deine Items zu verkaufen"
+  CreateAuction:
+    Name: "&2Erstelle Auktion"
+  BuyAuction:
+    Name: "&2Kaufen"
+  RenewAuction:
+    Name: "&6Auktion erneuern"
+  UndoAuction:
+    Name: "&cAuktion abbrechen"
+  RenewEveryAuction:
+    Name: "&6Alle Auktionen erneuern"
+  UndoEveryAuction:
+    Name: "&cAlle Auktionen abbrechen"
+  GlobalView:
+    Name: "&fÜbersicht"
+    Description: "&5Auktion Historie"
+  Search:
+    Name: "&3Auktion suchen"
+  DragItem:
+    Name: "&aZieh ein Item hierher"
+    Description: "&aoder benutze SHIFT-Klick"
+  CancelAuction:
+    Name: "&4Diese Auktion abbrechen"
+  ViewByCategory:
+    Name: "Sortiere nach Kategorie"
+    Description: "Kann der Spieler Auktionen nach Kategorien sehen?"
+  ViewByPlayer:
+    Name: "Sortiere nach Spieler"
+    Description: "Kann der Spieler auktionen nach anderen Spielern sehen?"
+  ViewByLastCreated:
+    Name: "Neuste Auktionen"
+    Description: "kann der Spieler die neusten Auktionen sehen?"
+  GlobalShop:
+    Name: "GlobalShop"
+  AuctionShop:
+    Name: "AuktionShop"
+  LocalShop:
+    Name: "LokalerShop"
+  AdminShop:
+    Name: "AdminShop"
+  EditGroupName:
+    Name: "&fBearbeite Gruppen Name"
+  PreviousPage:
+    Name: "vorherige Seite"
+  NextPage:
+    Name: "nächste Seite"
+  NumPage:
+    Name: "Seiten Nummer"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2Item hier ablegen"
+    Description: "&2oder nutze SHIFT-Klick"
+  MaxInOne:
+    Name: "&fMaximale Items in einer Auktion"
+  MaxRepeat:
+    Name: "&fWiederhole die Auktion so oft wie möglich"
+  InProgressAuction:
+    Name: "&aLaufende Auktionen"
+  ExpiredAuction:
+    Name: "&cAbgelaufene Auktionen"
+  SoldAuction:
+    Name: "&bVerkaufte Items"
+  BoughtAuction:
+    Name: "&9Gewonnene Auktionen"
+  CanceledAuction:
+    Name: "&6Abgebrochene Auktionen"
+  FreePrice:
+    Name: "&aGratis"
+    Description: "&7Setze den Preis auf Null"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
+  YesButton:
+    Name: "JA"
+  NoButton:
+    Name: "NEIN"
+  Question:
+    Name: " "
+  SearchItemDrop:
+    Name: "&fFinde gleiche Items"
+    Description: "&7Mit dem gewünschten Item Klicken;&7Oder nutze SHIFT+Klick"
+  SearchItemText:
+    Name: "&fFinde Items mit dem Namen"
+  SearchByPlayer:
+    Name: "&fFinde Auktionen von Spieler"
+ErrorMessages:
+  UnknownWorld: "Unbekannte Shop Welt"
+  ShopTypeNotSet: "Der Shop typ ist nicht gesetzt;&2Bitte wähle mindestens einen Typ"
+  MissingItems: "Falsche Anzahl an Gegenstände, einige Gegenstände fehlen"
+  FailCreateAuction: "Der Eintrag in die Datenbank ist fehlgeschlagen"
+  NotEnoughSpace: "Nicht genug Platz im Inventar;&7um alle Gegenstände aufzunehmen"
+  NotEnoughMoney: "Nicht genug Geld um das zu Kaufen"
+  CantBuyAuction: "Kauf fehlgeschlagen (abgelaufen oder bereits verkauft)"
+  CantRenewAuction: "Erneuern fehlgeschlagen"
+  CantUndoAuction: "Abbrechen fehlgeschlagen"
+  CantRenewEveryAuction: "Alles erneuern fehlgeschlagen"
+  CantUndoEveryAuction: "Alles abbrechen fehlgeschlagen"
+  PlayerDoesntExist: "Dieser Spieler existiert nicht!"
+  MaxAuctionByPlayer: "Keine weitere Auktion möglich;&7Du hast die Maximale Anzahl Auktionen erreicht"
+  PermissionNotAllowed: "&cDu bist nicht berechtigt dies zu tun!"
+  InvalidCommand: "&cBefehl nicht erkannt: "
+  PlayerOnly: "&cDieser Befehl kann nur als Spieler ausgeführt werden"
+  UnknownShop: "&cUnbekannter Shop: "
+  CantRemoveBlock: "&cDu kannst diesen Block nicht entfernen da ein Shop daran gebunden ist."
+  DamagedItem: "Du kannst keine beschädigte Gegenstände verkaufen!"
+  BlacklistedItem: "Du kannst keine verbotenen Gegenstände verkaufen!"
+  CommandInChat: "&cDu bist nicht berechtigt diesen Befehl im chat auszuführen."
+InfoMessages:
+  UndoAuction: "&2Auktion erfolgreich abgebrochen"
+  RenewAuction: "&2Auktion erfolgreich erneuert"
+  CreateAuction: "&2Auktion erfolgreich erstellt"
+  RenewEveryAuction: "&2Alle Auktionen erfolgreich erneuert"
+  UndoEveryAuction: "&2Alle Auktionen erfolgreich abgebrochen"
+  ShopDeleted: "Shop erfolgreich gelöscht"
+  # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
+  # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
+  # If you don't have them a message will pop in console and no message will broadcast
+  AcquireAuction: "&3%s &6kaufte &2%d %s &6für &2%.2f&6 € an &3%s&6."
+  AcquireAuctionOwner: "&3%s &6kaufte deine Auktion &2%d %s &6for &2%.2f&6 €."
+  PluginReloading: "Plugin lädt neu..."
+  PluginReloaded: "Plugin ist neu geladen."
+  WriteGroupName: "Schreibe den Gruppennamen den du möchtest"
+  WriteItemName: "Schreibe den Namen des gegenstand den du suchst"
+  WritePlayerName: "Schreibe den namen des Spieler den du suchst"
+  DeleteShopQuestion: "Bist du dir sicher das du diesen Shop löschen willst?"
+Commands:
+  Buttons:
+    OpenText: "Öffnen"
+    OpenHover: "Klicke um den Shop zu öffnen"
+    DetailText: "Details"
+    DetailHover: "klicke um die Details zu sehen"
+    TeleportText: "Teleport"
+    TeleportHover: "klicken um zum Shop zu teleportieren"
+  ListShop: "Shop Liste : "
+  SeeHelp: "&6Für Hilfe : &c/gmc help"
+  HelpCommand:
+    Usage: "&6Kommandos :"
+    Help: "&c/gmc [help]&6 - Zeigt die Hilfe"
+    Version: "&c/gmc version&6 - Zeigt die plugin Version"
+    Reload: "&c/gmc reload&6 - Plugin neu laden"
+    List: "&c/gmc list&6 - Liste aller Shops anzeigen"
+    Detail: "&c/gmc list detail <shop>&6 - Zeigt alle Lokalen Shops"
+    TP: "&c/gmc list tp <shop> <position>&6 - Teleportier den Spieler zum Shop"
+    Open: "&c/gmc open <shop>&6 - Öffnet einen Shop"
