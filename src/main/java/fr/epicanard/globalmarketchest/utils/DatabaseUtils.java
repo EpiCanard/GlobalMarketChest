@@ -13,6 +13,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
+import fr.epicanard.globalmarketchest.database.ThrowableFunction;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -169,6 +170,22 @@ public class DatabaseUtils {
       yaml.loadFromString(content);
       return yaml.getItemStack("item");
     } catch (InvalidConfigurationException e) {
+      return null;
+    }
+  }
+
+  /**
+   * Get a field inside a ResultSet or return null if not exist
+   * 
+   * @param <T> Return type of callback
+   * @param field Field name to get
+   * @param callback Callback that get the field
+   * @return
+   */
+  public <T> T getField(String field, ThrowableFunction<String, T, SQLException> callback) {
+    try {
+      return callback.apply(field);
+    } catch (SQLException e) {
       return null;
     }
   }

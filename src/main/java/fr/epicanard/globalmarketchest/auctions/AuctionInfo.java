@@ -2,11 +2,9 @@ package fr.epicanard.globalmarketchest.auctions;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -50,22 +48,22 @@ public class AuctionInfo {
   public AuctionInfo(ResultSet res) {
     if (res == null)
       throw new NullPointerException("Fail to get auction from database");
-    try {
-      this.id = res.getInt("id");
-      this.itemStack = res.getString("itemStack");
-      this.itemMeta = res.getString("itemMeta");
-      this.amount = res.getInt("amount");
-      this.price = res.getDouble("price");
-      this.ended = res.getBoolean("ended");
-      this.type = AuctionType.getAuctionType(res.getInt("type"));
-      this.playerStarter = res.getString("playerStarter");
-      this.playerEnder = res.getString("playerEnder");
-      this.start = res.getTimestamp("start");
-      this.end = res.getTimestamp("end");
-      this.group = res.getString("group");
-      this.state = StateAuction.getStateAuction(this);
-    } catch (SQLException e) {
-      GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
+    this.id = DatabaseUtils.getField("id", res::getInt);
+    this.itemStack =  DatabaseUtils.getField("itemStack", res::getString);
+    this.itemMeta =  DatabaseUtils.getField("itemMeta", res::getString);
+    this.amount = DatabaseUtils.getField("amount", res::getInt);
+    this.price = DatabaseUtils.getField("price", res::getDouble);
+    this.ended = DatabaseUtils.getField("ended", res::getBoolean);
+    this.type = AuctionType.getAuctionType(DatabaseUtils.getField("type", res::getInt));
+    this.playerStarter =  DatabaseUtils.getField("playerStarter", res::getString);
+    this.playerEnder =  DatabaseUtils.getField("playerEnder", res::getString);
+    this.start =  DatabaseUtils.getField("start", res::getTimestamp);
+    this.end =  DatabaseUtils.getField("end", res::getTimestamp);
+    this.group =  DatabaseUtils.getField("group", res::getString);
+    this.state = StateAuction.getStateAuction(this);
+
+    if (this.itemMeta == null && this.itemStack != null) {
+      this.itemMeta = DatabaseUtils.serialize(ItemStackUtils.getItemStack(this.itemStack));
     }
   }
 
