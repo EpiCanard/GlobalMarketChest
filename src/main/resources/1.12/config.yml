@@ -165,3 +165,14 @@ Chat:
   ExitSequence: "exit"
   # Define if the display message (Divers.ExitChatMode) must be displayed
   DisplayHelpExit: true
+Ranking:
+  # Define if the ranks system is enabled
+  EnableRanks: false
+  # List of ranks
+  Ranks:
+    # Name of rank
+    # A rank can be given to a player by giving the permission globalmarketchest.ranks.<rank_name>
+    # Example here: globalmarketchest.ranks.member
+    Member:
+      # Property that override default property for player with this rank
+      MaxAuctionByPlayer: 100

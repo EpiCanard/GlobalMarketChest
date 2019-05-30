@@ -127,7 +127,7 @@ public class AuctionGlobalView extends DefaultFooter {
       return;
     this.inv.getWarn().stopWarn();
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-    final Integer maxAuctionNumber = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.MaxAuctionByPlayer");
+    final Integer maxAuctionNumber = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
     final Integer playerAuctions = this.inv.getTransactionValue(TransactionKey.PLAYERAUCTIONS);
     List<Integer> auctions = Utils.mapList(this.current.auctions, auction -> auction.getId());
     if (this.current.state == StateAuction.EXPIRED)
