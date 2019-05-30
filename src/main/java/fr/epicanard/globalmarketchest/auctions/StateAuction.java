@@ -35,6 +35,8 @@ public enum StateAuction {
    * @return StateAuction
    */
   public static final StateAuction getStateAuction(AuctionInfo auction) {
+    if (auction.getEnded() == null)
+      return StateAuction.INPROGRESS;    
     if (auction.getEnded() == false && auction.getEnd().getTime() < DatabaseUtils.getTimestamp().getTime())
       return StateAuction.EXPIRED;
     if (auction.getEnded() == false)

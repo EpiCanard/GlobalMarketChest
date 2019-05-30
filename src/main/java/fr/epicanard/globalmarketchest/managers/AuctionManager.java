@@ -215,7 +215,6 @@ public class AuctionManager {
 
     builder.addCondition("group", group);
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
-    builder.addField("*");
     try {
       level.configBuilder(builder, category, item);
     } catch (EmptyCategoryException e) {

@@ -14,10 +14,18 @@ public enum AuctionType {
     this.type = type;
   }
 
-  public static final AuctionType getAuctionType(int value) {
-    for (AuctionType type : AuctionType.values()) {
-      if (type.getType() == value)
-        return type;
+  /**
+   * Get an Auction Type with is value
+   * 
+   * @param value Value of AuctionType
+   * @return Auction matching value
+   */
+  public static final AuctionType getAuctionType(Integer value) {
+    if (value != null) {
+      for (AuctionType type : AuctionType.values()) {
+        if (type.getType() == value)
+          return type;
+      }
     }
     return AuctionType.SELL;
   }

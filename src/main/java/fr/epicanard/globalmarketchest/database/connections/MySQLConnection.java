@@ -49,7 +49,7 @@ public class MySQLConnection extends DatabaseConnection {
         "  `playerStarter` TEXT NOT NULL," +
         "  `playerEnder` TEXT DEFAULT NULL," +
         "  `start` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
-        "  `end` TIMESTAMP NOT NULL," +
+        "  `end` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
         "  `group` VARCHAR(50) NOT NULL" +
         ");"
       );
