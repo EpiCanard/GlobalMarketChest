@@ -176,6 +176,7 @@ ErrorMessages:
   DamagedItem: "Du kannst keine beschädigte Gegenstände verkaufen!"
   BlacklistedItem: "Du kannst keine verbotenen Gegenstände verkaufen!"
   CommandInChat: "&cDu bist nicht berechtigt diesen Befehl im chat auszuführen."
+  MaxGlobalShop: "&cDu hast die maximale Anzahl an GlobalShop´s erreicht. Du kannst (%d GlobalShop) erstellen."
 InfoMessages:
   UndoAuction: "&2Auktion erfolgreich abgebrochen"
   RenewAuction: "&2Auktion erfolgreich erneuert"
@@ -213,3 +214,5 @@ Commands:
     Detail: "&c/gmc list detail <shop>&6 - Zeigt alle Lokalen Shops"
     TP: "&c/gmc list tp <shop> <position>&6 - Teleportier den Spieler zum Shop"
     Open: "&c/gmc open <shop>&6 - Öffnet einen Shop"
+    AdminOpen: "&c/gmc open <shop>&6 - Öffnet einen Shop"
+    Close: "&c/globalmarketchest close <player>&6 - Schließt den Shop eines Spielers."
