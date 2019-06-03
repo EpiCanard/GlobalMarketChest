@@ -177,6 +177,7 @@ ErrorMessages:
   DamagedItem: "Vous ne pouvez pas vendre un item endommagé"
   BlacklistedItem: "Vous ne pouvez pas vendre un item blacklisté"
   CommandInChat: "&cVous n'êtes pas autorisé à exécuter des commandes dans le mode tchat"
+  MaxGlobalShop: "&cVous avez atteint le nombre maximum de GlobalShop que vous pouvez créer (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Enchère supprimée avec succès"
   RenewAuction: "&2Enchère renouvelée avec succès"

@@ -38,7 +38,11 @@ Options:
   # Use the price of the last similar auction as price of new auction
   UseLastPrice: true
   # Define the maximum auctions by player
-  MaxAuctionByPlayer : 50
+  MaxAuctionByPlayer: 50
+  # Define you want to limit the max globalshop a player can create
+  LimitGlobalShopByPlayer: false
+  # Define the max globalshop a player can create. To works, player must have permission: globalmarketchest.globalshop.createshop
+  MaxGlobalShopByPlayer: 1
   # Broadcast a message inside the current world when a player buy an auction
   BroadcastInsideWorld: true
   # Notify the player everywhere on the server when a player buy one of his auctions
@@ -180,3 +184,5 @@ Ranking:
     Member:
       # Property that override default property for player with this rank
       MaxAuctionByPlayer: 100
+      # Property that override default property for player with this rank
+      MaxGlobalShopByPlayer: 1

@@ -30,6 +30,9 @@ public class RanksLoader {
       ranksKeys.forEach((rank) -> ranks.put(rank, RankProperties.of(ranksSection.getConfigurationSection(rank))));
     }
     this.defaultRankProperties = RankProperties.of(config.getConfigurationSection("Options"));
+    if (this.defaultRankProperties == null) {
+      this.defaultRankProperties.setLimitGlobalShopByPlayer(false);
+    }
     this.isEnabled = config.getBoolean("Ranking.EnableRanks", false);
   }
 

@@ -23,7 +23,8 @@ While there is no other storage system you will also need **MySQL**.
  - Advanced feature to put all similar items of your inventory  in the auction that you are creating (you can go higher than 64 items)
  - Advanced categories system by default inspired by creative tabs but can be totally customized
  - Detailed permissions system
- - Complete commands to list, teleport to and open shops (with autocompletion)
+ - Complete commands to list, teleport to, open and close shops (with autocompletion)
+ - Ranks system to configure some properties to specific players
  - High configurability
    - All items composing interfaces can be changed (item used, title and lore)
    - Language can easily be configured

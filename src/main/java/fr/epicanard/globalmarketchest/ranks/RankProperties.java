@@ -8,6 +8,10 @@ import lombok.Setter;
 public class RankProperties {
   @Getter @Setter
   private Integer maxAuctionByPlayer = 0;
+  @Getter @Setter
+  private Integer maxGlobalShopByPlayer = 0;
+  @Getter @Setter
+  private Boolean limitGlobalShopByPlayer;
 
   /**
    * Init a RankProperties from ConfigurationSection
@@ -18,6 +22,8 @@ public class RankProperties {
   static public RankProperties of(ConfigurationSection section) {
     final RankProperties ret = new RankProperties();
     ret.setMaxAuctionByPlayer(section.getInt("MaxAuctionByPlayer", 0));
+    ret.setLimitGlobalShopByPlayer(section.getBoolean("LimitGlobalShopByPlayer"));
+    ret.setMaxGlobalShopByPlayer(section.getInt("MaxGlobalShopByPlayer", 0));
     return ret;
   }
 
@@ -30,6 +36,8 @@ public class RankProperties {
   static public RankProperties of(RankProperties properties) {
     final RankProperties ret = new RankProperties();
     ret.setMaxAuctionByPlayer(properties.getMaxAuctionByPlayer());
+    ret.setLimitGlobalShopByPlayer(properties.getLimitGlobalShopByPlayer());
+    ret.setMaxGlobalShopByPlayer(properties.getMaxGlobalShopByPlayer());
     return ret;
   }
 
@@ -41,6 +49,12 @@ public class RankProperties {
   public void mergeRankProperties(RankProperties properties) {
     if (properties.getMaxAuctionByPlayer() > this.maxAuctionByPlayer) {
       this.maxAuctionByPlayer = properties.getMaxAuctionByPlayer();
+    }
+    if (properties.getLimitGlobalShopByPlayer() != null && !properties.getLimitGlobalShopByPlayer()) {
+      this.limitGlobalShopByPlayer = false;
+    }
+    if (properties.getMaxGlobalShopByPlayer() > this.maxGlobalShopByPlayer) {
+      this.maxGlobalShopByPlayer = properties.getMaxGlobalShopByPlayer();
     }
   }
 }
