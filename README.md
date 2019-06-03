@@ -15,6 +15,7 @@ While there is no other storage system you will also need **MySQL**.
  - Simple and instinctive shop creation process
  - A unique place to sell/buy items and improve interaction between players
  - Smart sorting system to see first cheapest auctions and than oldest
+ - Auction search (By similar items, item name or player name)
  - Paginator to see auctions 27 by 27
  - Easy process to create / buy auction
  - Easy price selector
@@ -66,6 +67,8 @@ Discord: [https://discord.gg/UuGAcCa](https://discord.gg/UuGAcCa)
 
 Source GitHub: [https://github.com/EpiCanard/GlobalMarketChest](https://github.com/EpiCanard/GlobalMarketChest)
 
+Spigot : [https://www.spigotmc.org/resources/globalmarketchest-gui-shop-plugin.64921/](https://www.spigotmc.org/resources/globalmarketchest-gui-shop-plugin.64921/)
+
 ![screenshots](https://user-images.githubusercontent.com/29657498/52745804-4ea31080-2fe0-11e9-8604-8e5081c75605.png)
 
 ![buy_auction](https://user-images.githubusercontent.com/29657498/52537867-c1578600-2d6b-11e9-8657-7f4efb43ac27.gif)
@@ -75,6 +78,8 @@ Source GitHub: [https://github.com/EpiCanard/GlobalMarketChest](https://github.c
 ![edit_auction_overview](https://user-images.githubusercontent.com/29657498/52537956-e993b480-2d6c-11e9-9c5c-1316c9908de7.gif)
 
 ![using](https://user-images.githubusercontent.com/29657498/52744655-970cff00-2fdd-11e9-9dbe-697f46eafd12.png)
+
+![search](https://user-images.githubusercontent.com/29657498/54498025-ef4b5f80-4901-11e9-8a8e-f29b76815d7e.gif)
 
 - Freebuild.fr - play.freebuild.fr [website](https://freebuild.fr)
 
