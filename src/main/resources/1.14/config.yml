@@ -57,6 +57,8 @@ Options:
 Logs:
   # If set to true the prefix [GlobalMarketChest] inside messages will be removed
   HidePrefix: false
+  # Define the prefix displayed inside messages
+  Prefix: "&a[GlobalMarketChest]"
 # Worlds on which you can create shop
 WorldAllowed:
   - world

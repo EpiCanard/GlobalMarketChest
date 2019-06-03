@@ -27,7 +27,9 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class PlayerUtils {
 
-  private static final String prefix = Utils.toColor("&a[GlobalMarketChest]&7 ");
+  private static final String prefix = Utils.toColor(
+    String.format("%s&7 ", GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Logs.Prefix", "&a[GlobalMarketChest]"))
+  );
   /**
    * Get a player from is UUID
    */
