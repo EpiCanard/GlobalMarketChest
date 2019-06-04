@@ -57,7 +57,7 @@ public class BuyAuction extends ShopInterface {
 
     try {
       UUID playerStarter = UUID.fromString(auction.getPlayerStarter());
-      if (!PlayerUtils.getOfflinePlayer(playerStarter).hasPlayedBefore()) {
+      if (PlayerUtils.getOfflinePlayer(playerStarter).getFirstPlayed() == 0) {
         LoggerUtils.warn(String.format("The player with id : %s doesn't exist but there is still active auctions on his name", auction.getPlayerStarter()));
         LoggerUtils.warn(String.format("Auction ID : %d", auction.getId()));
         throw new WarnException("PlayerDoesntExist");
