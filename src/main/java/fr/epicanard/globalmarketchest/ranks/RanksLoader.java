@@ -23,6 +23,7 @@ public class RanksLoader {
    * Load ranks from config
    */
   public void loadRanks() {
+    ranks.clear();
     final YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
     final ConfigurationSection ranksSection = config.getConfigurationSection("Ranking.Ranks");
     if (ranksSection != null) {
