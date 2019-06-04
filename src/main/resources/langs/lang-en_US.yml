@@ -176,6 +176,7 @@ ErrorMessages:
   DamagedItem: "You can't sell a damaged item"
   BlacklistedItem: "You can't sell a blacklisted item"
   CommandInChat: "&cYou are not allowed to execute commands in chat mode"
+  MaxGlobalShop: "&cYou have reached the maximum number of GlobalShop you can create (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Auction successfully deleted"
   RenewAuction: "&2Auction successfully renewed"

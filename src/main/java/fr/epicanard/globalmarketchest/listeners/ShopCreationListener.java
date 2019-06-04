@@ -10,9 +10,12 @@ import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
+import fr.epicanard.globalmarketchest.ranks.RankProperties;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
@@ -33,24 +36,46 @@ public class ShopCreationListener implements Listener {
       return;
     }
 
-    if (event.getLine(0).equals(ShopType.GLOBALSHOP.getFirstLineToCreate()))
-      this.openCreationShopInterface(player, event);
+    if (event.getLine(0).equals(ShopType.GLOBALSHOP.getFirstLineToCreate())) {
+      event.setLine(0, ShopType.GLOBALSHOP.getErrorDisplayName());
+      final RankProperties playerRankProperties = GlobalMarketChest.plugin.getRanksLoader().getPlayerProperties(player);
+      if (this.canCreateShop(player, playerRankProperties)) {
+        this.openCreationShopInterface(player, event);
+      } else {
+        PlayerUtils.sendMessage(player, String.format(LangUtils.get("ErrorMessages.MaxGlobalShop"),  playerRankProperties.getMaxGlobalShopByPlayer()));
+      }
+    }
   }
 
   /**
    * Open shop interface to create it
    *
    * @param player Player that create the shop
+   * @param event Sign event
    */
   private void openCreationShopInterface(Player player, SignChangeEvent event) {
-    event.setLine(0, ShopType.GLOBALSHOP.getErrorDisplayName());
-    ShopInfo shop = new ShopInfo(-1, player.getUniqueId().toString(), ShopType.GLOBALSHOP.setOn(0), event.getBlock().getLocation(), null, ShopUtils.generateName());
-    InventoryGUI inv = new InventoryGUI(player);
+    final ShopInfo shop = new ShopInfo(-1, player.getUniqueId().toString(), ShopType.GLOBALSHOP.setOn(0), event.getBlock().getLocation(), null, ShopUtils.generateName());
+    final InventoryGUI inv = new InventoryGUI(player);
 
     inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
     inv.getTransaction().put(TransactionKey.SIGNLOCATION, event.getBlock().getLocation());
     GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
     inv.open();
     inv.loadInterface("ShopCreationSelectType");
+  }
+
+  /**
+   * Define if the player can create GlobalShop
+   * 
+   * @param player Player that try to create a shop
+   * @return
+   */
+  private Boolean canCreateShop(Player player, RankProperties playerRankProperties) {
+    if (playerRankProperties.getLimitGlobalShopByPlayer()) {
+      final String playerUuid = player.getUniqueId().toString();
+      final Long numberOfShops = GlobalMarketChest.plugin.shopManager.getShops().stream().filter(shop -> shop.getOwner().equals(playerUuid)).count();
+      return numberOfShops < playerRankProperties.getMaxGlobalShopByPlayer();
+    }
+    return true;
   }
 }

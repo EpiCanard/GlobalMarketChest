@@ -30,6 +30,7 @@ import fr.epicanard.globalmarketchest.listeners.ShopCreationListener;
 import fr.epicanard.globalmarketchest.listeners.WorldListener;
 import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
+import fr.epicanard.globalmarketchest.ranks.RanksLoader;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
@@ -41,6 +42,8 @@ public class GlobalMarketChest extends JavaPlugin {
 
   @Getter
   private final ConfigLoader configLoader;
+  @Getter
+  private final RanksLoader ranksLoader;
   @Getter
   private DatabaseConnection sqlConnection;
   public static GlobalMarketChest plugin;
@@ -60,6 +63,7 @@ public class GlobalMarketChest extends JavaPlugin {
     this.shopManager = new ShopManager();
     this.auctionManager = new AuctionManager();
     this.interfaces = new HashMap<>();
+    this.ranksLoader = new RanksLoader();
   }
 
   @Override
@@ -90,6 +94,7 @@ public class GlobalMarketChest extends JavaPlugin {
       return;
     }
 
+    this.ranksLoader.loadRanks();
     this.shopManager.updateShops();
 
     getCommand("GlobalMarketChest").setExecutor(new CommandHandler());

@@ -35,6 +35,19 @@ public enum Permissions {
     this.perm = perm;
   }
 
+/**
+   * Define if the permission is set
+   *
+   * @param player Player on which check the permissions
+   * @param permission Permission to check
+   * @return Return a boolean to define if the permission is set
+   */
+  public static Boolean isSetOn(Player player, String permission) {
+    if (player != null && (player.hasPermission(permission) ||  GlobalMarketChest.plugin.economy.hasPermissions(player, permission)))
+      return true;
+    return false;
+  }
+
   /**
    * Define if the permission is set
    *

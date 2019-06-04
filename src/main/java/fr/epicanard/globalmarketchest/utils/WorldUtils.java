@@ -37,8 +37,8 @@ public class WorldUtils {
 
     for (int i = 0; i < Math.pow(diameter, 3); i++) {
       x = i % diameter - radius;
-      y = i / (int)Math.pow(diameter, 2) - radius;
-      z = (i % (int)Math.pow(diameter, 2)) / 3 - radius;
+      y = (int)Math.floor(i / Math.pow(diameter, 2)) - radius;
+      z = (i % (int)Math.pow(diameter, 2)) / diameter - radius;
 
       if (x == 0 && y == 0 && z == 0)
         continue;
@@ -76,10 +76,20 @@ public class WorldUtils {
    * @return Return the list of block that match
    */
   public List<Block> getNearAllowedBlocks(Location location) {
-    List<Block> listBlocks = new ArrayList<Block>();
-    List<Material> allowed = ShopUtils.getAllowedLinkBlock();
+    final List<Block> listBlocks = new ArrayList<Block>();
+    final List<Material> allowed = ShopUtils.getAllowedLinkBlock();
+    Integer radius = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.RadiusLinkBlock", 1);
+    if (radius < 1 || radius > 3) {
+      if (radius < 1) {
+        radius = 1;
+      }
+      if (radius > 3) {
+        radius = 3;
+      }
+      LoggerUtils.warn("RadiusLinkBlock must be between 1 and 3 included. Current: " + radius);
+    }
 
-    WorldUtils.getRadiusBlock(location, 1, block -> {
+    WorldUtils.getRadiusBlock(location, radius, block -> {
       if (allowed.contains(block.getType()))
         listBlocks.add(block);
     });
