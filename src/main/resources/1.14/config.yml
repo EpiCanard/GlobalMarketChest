@@ -54,6 +54,8 @@ Options:
   PurgeInterval: 30
   # Define if the player can create auctions with an item damaged
   AcceptDamagedItems: false
+  # Radius around the sign an 'AllowedLinkBlock' can be linked
+  RadiusLinkBlock: 1
 Logs:
   # If set to true the prefix [GlobalMarketChest] inside messages will be removed
   HidePrefix: false
