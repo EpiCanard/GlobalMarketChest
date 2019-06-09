@@ -80,13 +80,13 @@ public class WorldUtils {
     final List<Material> allowed = ShopUtils.getAllowedLinkBlock();
     Integer radius = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.RadiusLinkBlock", 1);
     if (radius < 1 || radius > 3) {
+      LoggerUtils.warn("RadiusLinkBlock must be between 1 and 3 included. Current: " + radius);
       if (radius < 1) {
         radius = 1;
       }
       if (radius > 3) {
         radius = 3;
       }
-      LoggerUtils.warn("RadiusLinkBlock must be between 1 and 3 included. Current: " + radius);
     }
 
     WorldUtils.getRadiusBlock(location, radius, block -> {

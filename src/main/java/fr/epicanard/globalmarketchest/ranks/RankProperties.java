@@ -1,5 +1,7 @@
 package fr.epicanard.globalmarketchest.ranks;
 
+import java.util.function.BiConsumer;
+
 import org.bukkit.configuration.ConfigurationSection;
 
 import lombok.Getter;
@@ -22,7 +24,9 @@ public class RankProperties {
   static public RankProperties of(ConfigurationSection section) {
     final RankProperties ret = new RankProperties();
     ret.setMaxAuctionByPlayer(section.getInt("MaxAuctionByPlayer", 0));
-    ret.setLimitGlobalShopByPlayer(section.getBoolean("LimitGlobalShopByPlayer"));
+    if (section.contains("LimitGlobalShopByPlayer")) {
+      ret.setLimitGlobalShopByPlayer(section.getBoolean("LimitGlobalShopByPlayer"));
+    }
     ret.setMaxGlobalShopByPlayer(section.getInt("MaxGlobalShopByPlayer", 0));
     return ret;
   }
@@ -57,4 +61,20 @@ public class RankProperties {
       this.maxGlobalShopByPlayer = properties.getMaxGlobalShopByPlayer();
     }
   }
+
+  /**
+   * Override default toString method
+   */
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("\n");
+    final BiConsumer<String, String> append = (key, value) -> {
+      sb.append(String.format("%s=%s\n", key, value));
+    };
+
+    append.accept("MaxAuctionByPlayer", this.maxAuctionByPlayer.toString());
+    append.accept("LimitGlobalShopByPlayer", (this.limitGlobalShopByPlayer != null) ? this.limitGlobalShopByPlayer.toString() : "null");
+    append.accept("MaxGlobalShopByPlayer", this.maxGlobalShopByPlayer.toString());
+
+    return sb.toString();
+  }  
 }
