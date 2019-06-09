@@ -1,5 +1,5 @@
 name: GlobalMarketChest
-version: 1.2.0
+version: ${project.version}
 author: EpiCanard
 api-version: 1.13
 depend: [Vault]
