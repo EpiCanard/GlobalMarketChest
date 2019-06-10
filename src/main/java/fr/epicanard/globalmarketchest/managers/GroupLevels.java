@@ -89,16 +89,19 @@ public enum GroupLevels {
     builder.addCondition("itemStack", Arrays.asList(items), (category.equals("!")) ? ConditionType.NOTIN : ConditionType.IN);
     switch (groupLevels) {
       case 3:
+        builder.addField("itemStack");
         builder.addField("COUNT(itemStack) AS count");
         builder.setExtension("GROUP BY itemStack");
         break;
       case 2:
+        builder.addField("itemMeta");
         builder.addField("COUNT(itemMeta) AS count");
         builder.setExtension("GROUP BY itemMeta");
         break;
       case 1:
         builder.setExtension("ORDER BY price ASC, start ASC");
-        break;
+      default:
+        builder.addField("*");
     }
   }
 
@@ -116,13 +119,15 @@ public enum GroupLevels {
     switch (groupLevels) {
       case 3:
         builder.addCondition("itemStack", ItemStackUtils.getMinecraftKey(match));
+        builder.addField("itemMeta");
         builder.addField("COUNT(itemMeta) AS count");
         builder.setExtension("GROUP BY itemMeta");
         break;
       case 2:
         builder.addCondition("itemMeta", DatabaseUtils.serialize(match));
         builder.setExtension("ORDER BY price ASC, start ASC");
-        break;
+      default:
+        builder.addField("*");
     }
   }
 
@@ -141,7 +146,8 @@ public enum GroupLevels {
       case 3:
         builder.addCondition("itemMeta", DatabaseUtils.serialize(match));
         builder.setExtension("ORDER BY price ASC, start ASC");
-        break;
+      default:
+        builder.addField("*");
     }
   }
 

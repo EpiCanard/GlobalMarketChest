@@ -1,5 +1,5 @@
 name: GlobalMarketChest
-version: 1.2.0
+version: ${project.version}
 author: EpiCanard
 api-version: 1.13
 depend: [Vault]
@@ -15,8 +15,9 @@ permissions:
     description: Can use all commands and shops
     children:
       globalmarketchest.commands.*: true
+      globalmarketchest.admin.*: true
       globalmarketchest.globalshop.*: true
-  # GLOBAL SHOP
+  # ==== GLOBAL SHOP ====
   globalmarketchest.globalshop.*:
     description: Can create or use a globalshop
     children:
@@ -32,7 +33,25 @@ permissions:
     description: Can create an auction
   globalmarketchest.globalshop.buyauction:
     description: Can create buy an auction
-  # COMMANDS
+  # ==== ADMIN ====
+  globalmarketchest.admin.*:
+    description: Can do every admin actions
+    children:
+      globalmarketchest.admin.deleteshop: true
+      globalmarketchest.admin.commands.*: true
+  globalmarketchest.admin.deleteshop:
+    description: Can delete every shop
+  # ==== ADMIN COMMANDS ====
+  globalmarketchest.admin.commands.*:
+    description: Can execute every admin commands
+    children:
+      globalmarketchest.admin.commands.open: true
+      globalmarketchest.admin.commands.close: true
+  globalmarketchest.admin.commands.open:
+    description: Can open a shop for another player
+  globalmarketchest.admin.commands.close:
+    description: Can close the shop of a player
+  # ==== COMMANDS ====
   globalmarketchest.commands:
     description: Base permission for command
     default: true
@@ -41,7 +60,7 @@ permissions:
     children:
       globalmarketchest.commands.reload: true
       globalmarketchest.commands.open: true
-      globalmarketchest.commands.list: true
+      globalmarketchest.commands.list.*: true
   globalmarketchest.commands.reload:
     description: Can reload the plugin
   globalmarketchest.commands.open:
@@ -49,10 +68,9 @@ permissions:
   globalmarketchest.commands.list.*:
     description: Can list all shops with command
     children:
-      globalmarketchest.commands.detail.: true
-  globalmarketchest.commands.detail.*:
+      globalmarketchest.commands.list.detail: true
+      globalmarketchest.commands.list.tp: true
+  globalmarketchest.commands.list.detail:
     description: Can see all shop position for a group of shop
-    children:
-      globalmarketchest.commands.detail.tp: true
-  globalmarketchest.commands.detail.tp:
+  globalmarketchest.commands.list.tp:
     description: Can be teleport to a specific shop

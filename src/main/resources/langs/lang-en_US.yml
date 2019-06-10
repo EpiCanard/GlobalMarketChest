@@ -176,6 +176,7 @@ ErrorMessages:
   DamagedItem: "You can't sell a damaged item"
   BlacklistedItem: "You can't sell a blacklisted item"
   CommandInChat: "&cYou are not allowed to execute commands in chat mode"
+  MaxGlobalShop: "&cYou have reached the maximum number of GlobalShop you can create (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Auction successfully deleted"
   RenewAuction: "&2Auction successfully renewed"
@@ -213,3 +214,5 @@ Commands:
     Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop"
     TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teleport the player a specific shop position"
     Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"
+    AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Open a globalshop"
+    Close: "&c/globalmarketchest close <player>&6 - Close the shop of a player"

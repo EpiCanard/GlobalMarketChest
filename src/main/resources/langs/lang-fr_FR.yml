@@ -177,6 +177,7 @@ ErrorMessages:
   DamagedItem: "Vous ne pouvez pas vendre un item endommagé"
   BlacklistedItem: "Vous ne pouvez pas vendre un item blacklisté"
   CommandInChat: "&cVous n'êtes pas autorisé à exécuter des commandes dans le mode tchat"
+  MaxGlobalShop: "&cVous avez atteint le nombre maximum de GlobalShop que vous pouvez créer (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Enchère supprimée avec succès"
   RenewAuction: "&2Enchère renouvelée avec succès"
@@ -214,3 +215,5 @@ Commands:
     Detail: "&c/globalmarketchest list detail <shop>&6 - Permet de lister tous les globalshop à distance"
     TP: "&c/globalmarketchest list tp <shop> <position>&6 - Permet de teleporter le joueur à la position du shop"
     Open: "&c/globalmarketchest open <shop>&6 - Permet d'ouvrir un globalshop à distance"
+    AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Permet d'ouvrir un globalshop à distance"
+    Close: "&c/globalmarketchest close <player>&6 - Permet de fermer le shop d'un joueur à distance"

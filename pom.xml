@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.epicanard</groupId>
   <artifactId>globalmarketchest</artifactId>
-  <version>1.2.0</version>
+  <version>1.3.0</version>
   <name>GlobalMarketChest</name>
   <description>Shop plugin to create economy between user</description>
   <properties>
@@ -11,7 +11,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <powermock.version>1.7.1</powermock.version>
-    <spigot.version>1.14.1-R0.1-SNAPSHOT</spigot.version>
+    <spigot.version>1.14.2-R0.1-SNAPSHOT</spigot.version>
   </properties>
   <build>
     <finalName>${project.name}-${project.version}</finalName>

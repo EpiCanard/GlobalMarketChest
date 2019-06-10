@@ -156,7 +156,7 @@ public class CreateAuctionItem extends ShopInterface {
       return;
 
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-    final Integer maxAuctions = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.MaxAuctionByPlayer");
+    final Integer maxAuctions = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
     final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
     final Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0,
         (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);

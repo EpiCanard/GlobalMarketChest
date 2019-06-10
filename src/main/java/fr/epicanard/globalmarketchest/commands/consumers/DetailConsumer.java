@@ -24,6 +24,15 @@ import net.md_5.bungee.api.chat.TextComponent;
  * Permission: globalmarketchest.commands.list.detail
  */
 public class DetailConsumer implements CommandConsumer {
+
+  /**
+   * Method called when consumer is executed
+   * 
+   * @param node Command node
+   * @param command Command executed
+   * @param sender Command's executor (player or console)
+   * @param args Arguments of command
+   */
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
     if (args.length == 0) {
       return node.invalidCommand(sender, command);
@@ -53,7 +62,7 @@ public class DetailConsumer implements CommandConsumer {
       message.addExtra("\n");
       TextComponent line = ChatUtils.newComponent(" - " + WorldUtils.getStringFromLocation(shop.getSignLocation()) + " ");
 
-      if (Permissions.CMD_LIST_DETAIL_TP.isSetOn(sender, false)) {
+      if (Permissions.CMD_LIST_TP.isSetOn(sender, false)) {
         TextComponent linkTP = ChatUtils.createLinkWithBracket(LangUtils.get("Commands.Buttons.TeleportText"),
           LangUtils.get("Commands.Buttons.TeleportHover"), ChatColor.DARK_AQUA,
           String.format("/globalmarketchest list tp %s %s", shop.getGroup(),

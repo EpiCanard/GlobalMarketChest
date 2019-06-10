@@ -15,6 +15,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
+import fr.epicanard.globalmarketchest.ranks.RankProperties;
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.shops.Warning;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
@@ -37,11 +39,14 @@ public class InventoryGUI {
   @Getter
   private Boolean chatEditing = false;
   private Consumer<String> chatConsumer;
+  @Getter
+  private RankProperties playerRankProperties;
 
   public InventoryGUI(Player player) {
     this.player = player;
     this.inv = Bukkit.createInventory(null, 54, Utils.toColor("&2GlobalMarketChest"));
     this.warn = new Warning(this.inv);
+    this.playerRankProperties = GlobalMarketChest.plugin.getRanksLoader().getPlayerProperties(player);
   }
 
   /**

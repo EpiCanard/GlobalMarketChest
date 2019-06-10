@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.commands.consumers;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.commands.CommandConsumer;
@@ -8,12 +9,12 @@ import fr.epicanard.globalmarketchest.commands.CommandNode;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
 /**
- * Command that show the version of the plugin.
- *
- * Command : /globalmarketchest version
- * Permission: globalmarketchest.commands
+ * Close the shop of a player from command line
+ * 
+ * Command : /globalmarketchest close <player>
+ * Permission: globalmarketchest.admin.commands.close
  */
-public class VersionConsumer implements CommandConsumer {
+public class CloseConsumer implements CommandConsumer {
 
   /**
    * Method called when consumer is executed
@@ -24,7 +25,18 @@ public class VersionConsumer implements CommandConsumer {
    * @param args Arguments of command
    */
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
-    PlayerUtils.sendMessage(sender, GlobalMarketChest.plugin.getDescription().getFullName());
+    if (args.length < 1) {
+      return node.invalidCommand(sender, command);
+    }
+
+    final Player player = GlobalMarketChest.plugin.getServer().getPlayer(args[0]);
+
+    if (player == null) {
+      PlayerUtils.sendMessageConfig(sender, "ErrorMessages.PlayerDoesntExist");
+      return false;
+    }
+
+    GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
     return true;
   }
 }

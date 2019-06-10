@@ -7,7 +7,7 @@
 # ===================================================================
 
 General:
-  # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml
+  # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml
   Lang: "lang-en_US.yml"
 Connection:
   # The url/ip to access to your database server
@@ -20,6 +20,8 @@ Connection:
   User: my_user
   # The password of the user set above
   Password: my_password
+  # Define if the connection must be secure or not with ssl
+  # UseSSL: false
   # The prefix you want to user of tables to avoid conflicts with other tables
   TablePrefix: GMC_
   # The simultaneous connection always active to reduce time of interface execution
@@ -38,7 +40,11 @@ Options:
   # Use the price of the last similar auction as price of new auction
   UseLastPrice: true
   # Define the maximum auctions by player
-  MaxAuctionByPlayer : 50
+  MaxAuctionByPlayer: 50
+  # Define you want to limit the max globalshop a player can create
+  LimitGlobalShopByPlayer: false
+  # Define the max globalshop a player can create. To works, player must have permission: globalmarketchest.globalshop.createshop
+  MaxGlobalShopByPlayer: 1
   # Broadcast a message inside the current world when a player buy an auction
   BroadcastInsideWorld: true
   # Notify the player everywhere on the server when a player buy one of his auctions
@@ -50,9 +56,13 @@ Options:
   PurgeInterval: 30
   # Define if the player can create auctions with an item damaged
   AcceptDamagedItems: false
+  # Radius around the sign an 'AllowedLinkBlock' can be linked
+  RadiusLinkBlock: 1
 Logs:
   # If set to true the prefix [GlobalMarketChest] inside messages will be removed
   HidePrefix: false
+  # Define the prefix displayed inside messages
+  Prefix: "&a[GlobalMarketChest]"
 # Worlds on which you can create shop
 WorldAllowed:
   - world
@@ -169,3 +179,16 @@ Chat:
   ExitSequence: "exit"
   # Define if the display message (Divers.ExitChatMode) must be displayed
   DisplayHelpExit: true
+Ranking:
+  # Define if the ranks system is enabled
+  EnableRanks: false
+  # List of ranks
+  Ranks:
+    # Name of rank
+    # A rank can be given to a player by giving the permission globalmarketchest.ranks.<rank_name>
+    # Example here: globalmarketchest.ranks.member
+    Member:
+      # Property that override default property for player with this rank
+      MaxAuctionByPlayer: 100
+      # Property that override default property for player with this rank
+      MaxGlobalShopByPlayer: 1
