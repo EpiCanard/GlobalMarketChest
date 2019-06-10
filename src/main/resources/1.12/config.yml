@@ -20,6 +20,8 @@ Connection:
   User: my_user
   # The password of the user set above
   Password: my_password
+  # Define if the connection must be secure or not with ssl
+  # UseSSL: false
   # The prefix you want to user of tables to avoid conflicts with other tables
   TablePrefix: GMC_
   # The simultaneous connection always active to reduce time of interface execution
