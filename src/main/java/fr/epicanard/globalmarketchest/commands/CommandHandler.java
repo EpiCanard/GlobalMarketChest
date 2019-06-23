@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.Command;
@@ -21,6 +22,7 @@ import fr.epicanard.globalmarketchest.commands.consumers.TPConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.VersionConsumer;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
@@ -121,14 +123,22 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
    * @return List of shops matching
    */
   private List<String> shopIdTabComplete(CommandSender sender, String[] args) {
-    if (args.length == 1) {
-      return this.shopsTabComplete(sender, args);
-    }
-    if (args.length == 2) {
-      return GlobalMarketChest.plugin.shopManager.getShops().stream()
-      .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]))
-      .map(shop -> WorldUtils.getStringFromLocation(shop.getSignLocation(), ",", true))
-      .collect(Collectors.toList());
+    if (args.length == 1 || args.length == 2) {
+      final Stream<ShopInfo> shopsStream = GlobalMarketChest.plugin.shopManager.getShops().stream()
+      .filter(shop -> shop.getExists());
+
+      if (args.length == 1) {
+        return shopsStream
+          .filter(shop ->  shop.getGroup().startsWith(args[0]))
+          .map(shop -> shop.getGroup())
+          .collect(Collectors.toList());
+      }
+      if (args.length == 2) {
+        return shopsStream
+          .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]))
+          .map(shop -> WorldUtils.getStringFromLocation(shop.getSignLocation(), ",", true))
+          .collect(Collectors.toList());
+      }
     }
     return new ArrayList<>();
   }
