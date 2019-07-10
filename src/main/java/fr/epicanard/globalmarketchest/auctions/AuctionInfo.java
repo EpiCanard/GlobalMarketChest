@@ -49,17 +49,17 @@ public class AuctionInfo {
     if (res == null)
       throw new NullPointerException("Fail to get auction from database");
     this.id = DatabaseUtils.getField("id", res::getInt);
-    this.itemStack =  DatabaseUtils.getField("itemStack", res::getString);
-    this.itemMeta =  DatabaseUtils.getField("itemMeta", res::getString);
+    this.itemStack = DatabaseUtils.getField("itemStack", res::getString);
+    this.itemMeta = DatabaseUtils.getField("itemMeta", res::getString);
     this.amount = DatabaseUtils.getField("amount", res::getInt);
     this.price = DatabaseUtils.getField("price", res::getDouble);
     this.ended = DatabaseUtils.getField("ended", res::getBoolean);
     this.type = AuctionType.getAuctionType(DatabaseUtils.getField("type", res::getInt));
-    this.playerStarter =  DatabaseUtils.getField("playerStarter", res::getString);
-    this.playerEnder =  DatabaseUtils.getField("playerEnder", res::getString);
-    this.start =  DatabaseUtils.getField("start", res::getTimestamp);
-    this.end =  DatabaseUtils.getField("end", res::getTimestamp);
-    this.group =  DatabaseUtils.getField("group", res::getString);
+    this.playerStarter = DatabaseUtils.getField("playerStarter", res::getString);
+    this.playerEnder = DatabaseUtils.getField("playerEnder", res::getString);
+    this.start = DatabaseUtils.getField("start", res::getTimestamp);
+    this.end = DatabaseUtils.getField("end", res::getTimestamp);
+    this.group = DatabaseUtils.getField("group", res::getString);
     this.state = StateAuction.getStateAuction(this);
 
     if (this.itemMeta == null && this.itemStack != null) {

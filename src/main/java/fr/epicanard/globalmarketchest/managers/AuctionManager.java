@@ -209,14 +209,13 @@ public class AuctionManager {
      * @param limit Limit of auctions to get from database
      * @param consumer Callback called when the sql request is executed
      */
-  public void getAuctions(GroupLevels level, String group, String category, ItemStack item, Pair<Integer, Integer> limit, Consumer<List<Pair<ItemStack, AuctionInfo>>> consumer) {
+  public void getAuctions(GroupLevels level, String group, String category, AuctionInfo auction, Pair<Integer, Integer> limit, Consumer<List<Pair<ItemStack, AuctionInfo>>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
-
 
     builder.addCondition("group", group);
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
     try {
-      level.configBuilder(builder, category, item);
+      level.configBuilder(builder, category, auction);
     } catch (EmptyCategoryException e) {
       LoggerUtils.warn(e.getMessage());
       consumer.accept(new ArrayList<>());
@@ -429,7 +428,7 @@ public class AuctionManager {
       try {
         if (res != null && res.next())
           end.set(false);
-      } catch(SQLException e) {
+      } catch (SQLException e) {
         e.printStackTrace();
       }
     });
