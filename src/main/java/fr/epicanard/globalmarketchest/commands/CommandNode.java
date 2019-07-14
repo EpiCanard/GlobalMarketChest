@@ -186,7 +186,7 @@ public class CommandNode {
     if (this.hasParams || args.length == 0) {
       if (this.command != null)
         return this.command.accept(this, cmd, sender, args);
-      return true;
+      return this.invalidCommand(sender, cmd);
     }
     if (this.getSubNodesName().contains(args[0].toLowerCase())) {
       return this.getCommandNode(args[0].toLowerCase()).execute(cmd, sender, Arrays.copyOfRange(args, 1, args.length));

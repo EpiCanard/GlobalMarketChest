@@ -17,7 +17,7 @@ public class HelpConsumer implements CommandConsumer {
 
   /**
    * Method called when consumer is executed
-   * 
+   *
    * @param node Command node
    * @param command Command executed
    * @param sender Command's executor (player or console)
@@ -46,6 +46,9 @@ public class HelpConsumer implements CommandConsumer {
     }
     if (Permissions.CMD_ADMIN_CLOSE.isSetOn(sender)) {
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Close");
+    }
+    if (Permissions.CMD_ADMIN_FIX.isSetOn(sender)) {
+      PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.FixAuctions");
     }
     return true;
   }

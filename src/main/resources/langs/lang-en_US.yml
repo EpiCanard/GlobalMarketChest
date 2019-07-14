@@ -195,6 +195,10 @@ InfoMessages:
   WriteItemName: "Write the name of the item you are looking for"
   WritePlayerName: "Write the name of the player you are looking for"
   DeleteShopQuestion: "Are you sure you want to delete this shop ?"
+  ConvertingShopAuctions: "Converting auctions of shop : &6%s&7"
+  ShopAuctionsConverted: "Shop &6%s&7 : &3%d&9/%d&7 auctions converted"
+  ShopTemporarilyLocked: "This shop is temporarily locked"
+  ConversionMode: "Conversion mode : &6%s&7"
 Commands:
   Buttons:
     OpenText: "Open"
@@ -216,3 +220,4 @@ Commands:
     Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"
     AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Open a globalshop"
     Close: "&c/globalmarketchest close <player>&6 - Close the shop of a player"
+    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - Convert old minecraft itemMeta to new minecraft version"

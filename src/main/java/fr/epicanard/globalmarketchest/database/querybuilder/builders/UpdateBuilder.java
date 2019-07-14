@@ -26,6 +26,13 @@ public class UpdateBuilder extends ConditionBase {
   }
 
   /**
+   * Reset values
+   */
+  public void resetValues() {
+    this.values.clear();
+  }
+
+  /**
    * Build the query
    *
    * @return query string built

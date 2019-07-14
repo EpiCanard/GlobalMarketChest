@@ -195,6 +195,25 @@ public class AuctionManager {
 
   /**
    * =====================
+   *     UPDATE AUCTIONS
+   * =====================
+   */
+
+  public void updateGroupOfAuctionsMetadata(List<AuctionInfo> auctions) {
+    UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+
+    auctions.forEach(auction -> {
+      builder.resetConditions();
+      builder.resetValues();
+      builder.addCondition("id", auction.getId());
+      builder.addValue("itemMeta", auction.getItemMeta());
+
+      QueryExecutor.of().execute(builder);
+    });
+  }
+
+  /**
+   * =====================
    *     LIST AUCTIONS
    * =====================
    */
@@ -285,7 +304,7 @@ public class AuctionManager {
 
   /**
    * Get all auctions matching minecraft key 'search'
-   * 
+   *
    * @param group group of auction
    * @param search minecraft key searched
    * @param limit limit to use in request
@@ -354,6 +373,29 @@ public class AuctionManager {
           consumer.accept(res.getDouble("price"));
         }
       } catch(SQLException e) {}
+    });
+  }
+
+  /**
+   * Get all auctions inside database
+   *
+   * @param all Define if it get only active auctions (not ended) or all auctions
+   * @param consumer Callback to call if price is found
+   */
+  public void getAllAuctions(Boolean all, Consumer<List<AuctionInfo>> consumer) {
+    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+
+    if (!all) {
+      builder.addCondition("ended", false);
+    }
+    builder.setExtension("ORDER BY start DESC");
+    QueryExecutor.of().execute(builder, res -> {
+      List<AuctionInfo> auctions = new ArrayList<>();
+      try {
+        while (res.next())
+          auctions.add(new AuctionInfo(res));
+        consumer.accept(auctions);
+      } catch (SQLException e) {}
     });
   }
 

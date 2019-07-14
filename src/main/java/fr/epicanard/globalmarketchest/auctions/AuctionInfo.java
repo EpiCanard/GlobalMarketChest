@@ -22,7 +22,7 @@ public class AuctionInfo {
   private Integer id;
   @Getter
   private String itemStack;
-  @Getter
+  @Getter @Setter
   private String itemMeta;
   @Getter @Setter
   private Integer amount;

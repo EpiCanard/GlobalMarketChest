@@ -14,6 +14,7 @@ import org.bukkit.command.TabCompleter;
 
 import fr.epicanard.globalmarketchest.commands.consumers.CloseConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.DetailConsumer;
+import fr.epicanard.globalmarketchest.commands.consumers.FixAuctionsConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.HelpConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.ListConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.OpenConsumer;
@@ -73,6 +74,21 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
       .setCommand(new TPConsumer())
       .setTabConsumer(this::shopIdTabComplete);
     listNode.addSubNode(tpNode);
+
+    // Fix - /globalmarketchest fix
+    CommandNode fixNode = new CommandNode("fix", Permissions.CMD_ADMIN_FIX, false, false);
+    this.command.addSubNode(fixNode);
+
+    // Fix Auctions - /globalmarketchest fix auctions [type]
+    CommandNode fixAuctionsNode = new CommandNode("auctions", Permissions.CMD_ADMIN_FIX, true, false)
+        .setCommand(new FixAuctionsConsumer())
+        .setTabConsumer((player, args) -> {
+          if (args.length == 1)
+            return FixAuctionsConsumer.getFixAuctionsType().stream().filter((type) -> type.startsWith(args[0])).collect(Collectors.toList());
+          return new ArrayList<>();
+        });
+    fixNode.addSubNode(fixAuctionsNode);
+
   }
 
   /**
@@ -97,7 +113,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
   /**
    * Return a list of shops matching with start of the first element of args param
-   * 
+   *
    * @param sender Commands's executor (player or console)
    * @param args Command arguments
    * @return List of shops matching
@@ -117,7 +133,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
    *    Return a list of shops matching with start of the first element of args param
    * If the lenght of args is equal to 2
    *    Return a list of shop's position with start of the second element of args param
-   * 
+   *
    * @param sender Commands's executor (player or console)
    * @param args Command arguments
    * @return List of shops matching
@@ -145,7 +161,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
   /**
    * Return a list of players matching with start of the first element of args param
-   * 
+   *
    * @param sender Commands's executor (player or console)
    * @param args Command arguments
    * @return List of shops matching
@@ -165,7 +181,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
    *    Return a list of shops matching with start of the first element of args param
    * If the lenght of args is equal to 2
    *    Return a list of players matching with start of the first element of args param
-   * 
+   *
    * @param sender Commands's executor (player or console)
    * @param args Command arguments
    * @return List of shops matching
