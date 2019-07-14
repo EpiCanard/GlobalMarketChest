@@ -31,6 +31,13 @@ public class ShopInfo {
   private Location otherLocation;
   @Getter @Setter  @NonNull
   private String group;
+
+  @Getter @Setter
+  private Boolean exists = true;
+  @Getter
+  private String signLocationString;
+  @Getter
+  private String otherLocationString;
   
   public ShopInfo(ResultSet res) throws NullPointerException {
     if (res == null)
@@ -38,8 +45,10 @@ public class ShopInfo {
     try {
       this.id = res.getInt("id");
       this.owner = res.getString("owner");
-      this.signLocation = WorldUtils.getLocationFromString(res.getString("signLocation"), null);
-      this.otherLocation = WorldUtils.getLocationFromString(res.getString("otherLocation"), null);
+      this.signLocationString = res.getString("signLocation");
+      this.otherLocationString = res.getString("otherLocation");
+      this.signLocation = WorldUtils.getLocationFromString(this.signLocationString, null);
+      this.otherLocation = WorldUtils.getLocationFromString(this.otherLocationString, null);
       this.type = res.getInt("type");
       this.group = res.getString("group");
     } catch (SQLException e) {
@@ -53,6 +62,8 @@ public class ShopInfo {
     this.type = type;
     this.signLocation = sign;
     this.otherLocation = other;
+    this.signLocationString = WorldUtils.getStringFromLocation(sign);
+    this.otherLocationString = WorldUtils.getStringFromLocation(other);
     this.group = group;
   }
 

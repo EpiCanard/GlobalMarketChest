@@ -64,7 +64,7 @@ public class PlayerUtils {
 
   /**
    * Return the prefix to use in front of messages
-   * 
+   *
    * @return
    */
   public String getPrefix() {
@@ -76,7 +76,7 @@ public class PlayerUtils {
 
   /**
    * Send a message in chat to a player
-   * 
+   *
    * @param pl Target player of the message
    * @param message Message to send
    */
@@ -86,7 +86,7 @@ public class PlayerUtils {
 
   /**
    * Send a message in chat to a player from a config language variable
-   * 
+   *
    * @param pl Target player of the message
    * @param path Language variable path
    */
@@ -96,7 +96,7 @@ public class PlayerUtils {
 
   /**
    * Send a message to a command sender (can be player and console)
-   * 
+   *
    * @param pl Target command sender of the message
    * @param message Message to send
    */
@@ -106,7 +106,7 @@ public class PlayerUtils {
 
   /**
    * Send a message in chat to a command sender from a config language variable
-   * 
+   *
    * @param pl Target command sender of the message
    * @param path Language variable path
    */
@@ -115,8 +115,21 @@ public class PlayerUtils {
   }
 
   /**
+   * Send a message in chat to a player and to console
+   *
+   * @param pl Target command sender of the message
+   * @param message Message to send
+   */
+  public void sendMessageAndConsole(CommandSender pl, String message) {
+    if (pl instanceof Player) {
+      PlayerUtils.sendMessage(pl, message);
+    }
+    PlayerUtils.sendMessage(GlobalMarketChest.plugin.getServer().getConsoleSender(), message);
+  }
+
+  /**
    * Define if there is enough place to add the item inside player inventory
-   * 
+   *
    * @param i Inventory of the player
    * @param item Itemstack that must be put in
    * @return
@@ -134,7 +147,7 @@ public class PlayerUtils {
 
   /**
    * Split an itemStack with too big amount in a group of smaller itemstack
-   * 
+   *
    * @param items Final list on which add item splitted
    * @param item Item to split
    * @param size Max size allowed for the list
@@ -169,7 +182,7 @@ public class PlayerUtils {
 
   /**
    * Define if there is enough place to add a group of items
-   * 
+   *
    * @param i Inventory of the player
    * @param itemsAdd Items to add inside inventory
    * @param auctionsToAdd Define de number of items that can be put inside inventory
@@ -190,7 +203,7 @@ public class PlayerUtils {
   /**
    * Define if there is enough place to add the item inside player inventory
    * It send un warning to player if there is not enough place
-   * 
+   *
    * @param i Inventory of the player
    * @param item Itemstack that must be put in
    * @throws WarnException
@@ -202,7 +215,7 @@ public class PlayerUtils {
 
   /**
    * Check all items in inventory and if one have GMC nbt tag it remove it
-   * 
+   *
    * @param playerInventory inventory of the player
    */
   public void removeDuplicateItems(Inventory playerInventory) {
@@ -216,7 +229,7 @@ public class PlayerUtils {
 
   /**
    * Get the head of a player
-   * 
+   *
    * @param player Offline player
    * @return Return itemstack of player head
    */
@@ -224,7 +237,7 @@ public class PlayerUtils {
     final Material headMaterial = Material.getMaterial((Utils.getVersion() == "1.12") ? "SKULL_ITEM" : "PLAYER_HEAD");
     final ItemStack playerHead = new ItemStack(headMaterial, 1, (short) SkullType.PLAYER.ordinal());
     final SkullMeta headMeta = (SkullMeta) playerHead.getItemMeta();
-  
+
     headMeta.setOwningPlayer(player);
     headMeta.setDisplayName(player.getName());
     playerHead.setItemMeta(headMeta);

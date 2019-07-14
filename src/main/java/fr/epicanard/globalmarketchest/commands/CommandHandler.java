@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.Command;
@@ -13,6 +14,7 @@ import org.bukkit.command.TabCompleter;
 
 import fr.epicanard.globalmarketchest.commands.consumers.CloseConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.DetailConsumer;
+import fr.epicanard.globalmarketchest.commands.consumers.FixAuctionsConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.HelpConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.ListConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.OpenConsumer;
@@ -21,6 +23,7 @@ import fr.epicanard.globalmarketchest.commands.consumers.TPConsumer;
 import fr.epicanard.globalmarketchest.commands.consumers.VersionConsumer;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
@@ -71,6 +74,21 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
       .setCommand(new TPConsumer())
       .setTabConsumer(this::shopIdTabComplete);
     listNode.addSubNode(tpNode);
+
+    // Fix - /globalmarketchest fix
+    CommandNode fixNode = new CommandNode("fix", Permissions.CMD_ADMIN_FIX, false, false);
+    this.command.addSubNode(fixNode);
+
+    // Fix Auctions - /globalmarketchest fix auctions [type]
+    CommandNode fixAuctionsNode = new CommandNode("auctions", Permissions.CMD_ADMIN_FIX, true, false)
+        .setCommand(new FixAuctionsConsumer())
+        .setTabConsumer((player, args) -> {
+          if (args.length == 1)
+            return FixAuctionsConsumer.getFixAuctionsType().stream().filter((type) -> type.startsWith(args[0])).collect(Collectors.toList());
+          return new ArrayList<>();
+        });
+    fixNode.addSubNode(fixAuctionsNode);
+
   }
 
   /**
@@ -95,7 +113,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
   /**
    * Return a list of shops matching with start of the first element of args param
-   * 
+   *
    * @param sender Commands's executor (player or console)
    * @param args Command arguments
    * @return List of shops matching
@@ -115,27 +133,35 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
    *    Return a list of shops matching with start of the first element of args param
    * If the lenght of args is equal to 2
    *    Return a list of shop's position with start of the second element of args param
-   * 
+   *
    * @param sender Commands's executor (player or console)
    * @param args Command arguments
    * @return List of shops matching
    */
   private List<String> shopIdTabComplete(CommandSender sender, String[] args) {
-    if (args.length == 1) {
-      return this.shopsTabComplete(sender, args);
-    }
-    if (args.length == 2) {
-      return GlobalMarketChest.plugin.shopManager.getShops().stream()
-      .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]))
-      .map(shop -> WorldUtils.getStringFromLocation(shop.getSignLocation(), ",", true))
-      .collect(Collectors.toList());
+    if (args.length == 1 || args.length == 2) {
+      final Stream<ShopInfo> shopsStream = GlobalMarketChest.plugin.shopManager.getShops().stream()
+      .filter(shop -> shop.getExists());
+
+      if (args.length == 1) {
+        return shopsStream
+          .filter(shop ->  shop.getGroup().startsWith(args[0]))
+          .map(shop -> shop.getGroup())
+          .collect(Collectors.toList());
+      }
+      if (args.length == 2) {
+        return shopsStream
+          .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]))
+          .map(shop -> WorldUtils.getStringFromLocation(shop.getSignLocation(), ",", true))
+          .collect(Collectors.toList());
+      }
     }
     return new ArrayList<>();
   }
 
   /**
    * Return a list of players matching with start of the first element of args param
-   * 
+   *
    * @param sender Commands's executor (player or console)
    * @param args Command arguments
    * @return List of shops matching
@@ -155,7 +181,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
    *    Return a list of shops matching with start of the first element of args param
    * If the lenght of args is equal to 2
    *    Return a list of players matching with start of the first element of args param
-   * 
+   *
    * @param sender Commands's executor (player or console)
    * @param args Command arguments
    * @return List of shops matching

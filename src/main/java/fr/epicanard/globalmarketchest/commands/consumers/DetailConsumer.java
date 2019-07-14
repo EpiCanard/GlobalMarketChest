@@ -60,13 +60,13 @@ public class DetailConsumer implements CommandConsumer {
 
     for (ShopInfo shop : shops) {
       message.addExtra("\n");
-      TextComponent line = ChatUtils.newComponent(" - " + WorldUtils.getStringFromLocation(shop.getSignLocation()) + " ");
+      TextComponent line = ChatUtils.newComponent(" - " + shop.getSignLocationString() + " ");
 
-      if (Permissions.CMD_LIST_TP.isSetOn(sender, false)) {
+      if (Permissions.CMD_LIST_TP.isSetOn(sender, false) && shop.getExists()) {
         TextComponent linkTP = ChatUtils.createLinkWithBracket(LangUtils.get("Commands.Buttons.TeleportText"),
           LangUtils.get("Commands.Buttons.TeleportHover"), ChatColor.DARK_AQUA,
           String.format("/globalmarketchest list tp %s %s", shop.getGroup(),
-          WorldUtils.getStringFromLocation(shop.getSignLocation(), ",", true)));
+          shop.getSignLocationString()));
         line.addExtra(linkTP);
       }
       message.addExtra(line);

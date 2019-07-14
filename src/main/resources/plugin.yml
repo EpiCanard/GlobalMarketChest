@@ -2,6 +2,7 @@ name: GlobalMarketChest
 version: ${project.version}
 author: EpiCanard
 api-version: 1.13
+softdepend: [Multiverse-Core]
 depend: [Vault]
 description: Shop plugin to create economy between user
 main: fr.epicanard.globalmarketchest.GlobalMarketChest
@@ -47,10 +48,13 @@ permissions:
     children:
       globalmarketchest.admin.commands.open: true
       globalmarketchest.admin.commands.close: true
+      globalmarketchest.admin.commands.fix: true
   globalmarketchest.admin.commands.open:
     description: Can open a shop for another player
   globalmarketchest.admin.commands.close:
     description: Can close the shop of a player
+  globalmarketchest.admin.commands.fix:
+    description: Can use fix command
   # ==== COMMANDS ====
   globalmarketchest.commands:
     description: Base permission for command

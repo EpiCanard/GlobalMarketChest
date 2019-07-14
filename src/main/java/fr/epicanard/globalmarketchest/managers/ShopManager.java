@@ -4,14 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 import org.bukkit.Location;
-import org.bukkit.metadata.FixedMetadataValue;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuilder;
@@ -20,7 +17,6 @@ import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuild
 import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
-import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import lombok.Getter;
 
@@ -35,7 +31,7 @@ public class ShopManager {
    * Remove every metadata from shop and clear the shops list
    */
   public void resetShopList() {
-    this.shops.forEach(shop -> shop.removeMetadata());
+    this.shops.stream().filter(shop -> shop.getExists()).forEach(shop -> shop.removeMetadata());
     this.shops.clear();
   }
 
@@ -51,12 +47,11 @@ public class ShopManager {
         while (res.next()) {
           ShopInfo shop = new ShopInfo(res);
           if (shop.getSignLocation() != null && shop.getSignLocation().getWorld() != null) {
-            shop.getSignLocation().getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, shop));
-            Optional.ofNullable(shop.getOtherLocation()).ifPresent(loc -> {
-              loc.getBlock().setMetadata(ShopUtils.META_KEY, new FixedMetadataValue(GlobalMarketChest.plugin, shop));
-            });
-            this.shops.add(shop);
+            shop.addMetadata();
+          } else {
+            shop.setExists(false);
           }
+          this.shops.add(shop);
         }
       } catch(SQLException e) {e.printStackTrace();}
     });

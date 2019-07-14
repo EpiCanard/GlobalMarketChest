@@ -42,7 +42,7 @@ public class WorldListener implements Listener {
 
   /**
    * Get attached block to sign
-   * 
+   *
    * @param block Sign block
    * @return Attached block
    */
@@ -54,7 +54,7 @@ public class WorldListener implements Listener {
 
   /**
    * Get attached block to sign
-   * 
+   *
    * @param block Sign block
    * @return Attached block
    */
@@ -70,7 +70,7 @@ public class WorldListener implements Listener {
 
   /**
    * Every break of sign by drop is detect to remove the shop and prevent ghost shop (without sign)
-   * 
+   *
    * @param event Block physics event
    */
   @EventHandler
@@ -84,7 +84,7 @@ public class WorldListener implements Listener {
         if (attached.getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
           final ShopInfo shop = ShopUtils.getShop(block);
           if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
-            LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event", 
+            LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event",
               shop.getGroup(), shop.getSignLocation().toString(), PlayerUtils.getPlayerName(shop.getOwner())));
           }
         }
@@ -96,7 +96,7 @@ public class WorldListener implements Listener {
 
   /**
    * Define if the block at the specific face is a shop sign and if it is attached to the block in parameter
-   * 
+   *
    * @param block Block that must be break
    * @param face The face to check if there is a sign attached
    * @return Define if the block at the specific face is attached
@@ -117,8 +117,8 @@ public class WorldListener implements Listener {
   /**
    * Event called when a player break a block.
    * - If the block is a shop and the player have permissions it delete the shop
-   * - If a sign shop to the block, it is not removed and message is displayed 
-   * 
+   * - If a sign shop to the block, it is not removed and message is displayed
+   *
    * @param event Block break event
    */
   @EventHandler
@@ -190,7 +190,7 @@ public class WorldListener implements Listener {
 
   /**
    * Event to open shop when clicking on shop sign or sign linked block
-   * 
+   *
    * @param event Player interact event
    */
   @EventHandler
@@ -207,9 +207,13 @@ public class WorldListener implements Listener {
       if (!Permissions.GS_OPENSHOP.isSetOnWithMessage(player)) {
         return;
       }
-      InventoryGUI inv = openShop(player, shop);
-      if (inv != null)
-        inv.loadInterface("CategoryView");
+      if (!ShopUtils.isLockedShop(shop.getGroup())) {
+        InventoryGUI inv = openShop(player, shop);
+        if (inv != null)
+          inv.loadInterface("CategoryView");
+      } else {
+        PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopTemporarilyLocked");
+      }
     }
   }
 }

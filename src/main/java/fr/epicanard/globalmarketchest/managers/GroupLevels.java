@@ -2,9 +2,8 @@ package fr.epicanard.globalmarketchest.managers;
 
 import java.util.Arrays;
 
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
 import fr.epicanard.globalmarketchest.exceptions.EmptyCategoryException;
@@ -55,7 +54,7 @@ public enum GroupLevels {
    * @param category The auctions category
    * @param match ItemStack to match for research
    */
-  public void configBuilder(SelectBuilder builder, String category, ItemStack match) throws EmptyCategoryException {
+  public void configBuilder(SelectBuilder builder, String category, AuctionInfo match) throws EmptyCategoryException {
     Integer groupLevels = GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category);
 
     switch (this) {
@@ -79,10 +78,10 @@ public enum GroupLevels {
    * @param builder SelectBuilder to configure (add field, condition, etc ...)
    * @param groupLevels GroupLevels of the category
    * @param category The auctions category
-   * @param match ItemStack to match for research
+   * @param match Auction to match for research
    * @throws EmptyCategoryException
    */
-  private void level1(SelectBuilder builder, Integer groupLevels, ItemStack match, String category) throws EmptyCategoryException {
+  private void level1(SelectBuilder builder, Integer groupLevels, AuctionInfo match, String category) throws EmptyCategoryException {
     String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
     if (items.length == 0)
       throw new EmptyCategoryException(category);
@@ -113,18 +112,18 @@ public enum GroupLevels {
    * @param builder SelectBuilder to configure (add field, condition, etc ...)
    * @param groupLevels GroupLevels of the category
    * @param category The auctions category
-   * @param match ItemStack to match for research
+   * @param match Auction to match for research
    */
-  private void level2(SelectBuilder builder, Integer groupLevels, ItemStack match, String category) {
+  private void level2(SelectBuilder builder, Integer groupLevels, AuctionInfo match, String category) {
     switch (groupLevels) {
       case 3:
-        builder.addCondition("itemStack", ItemStackUtils.getMinecraftKey(match));
+        builder.addCondition("itemStack", ItemStackUtils.getMinecraftKey(DatabaseUtils.deserialize(match.getItemMeta())));
         builder.addField("itemMeta");
         builder.addField("COUNT(itemMeta) AS count");
         builder.setExtension("GROUP BY itemMeta");
         break;
       case 2:
-        builder.addCondition("itemMeta", DatabaseUtils.serialize(match));
+        builder.addCondition("itemMeta", match.getItemMeta());
         builder.setExtension("ORDER BY price ASC, start ASC");
       default:
         builder.addField("*");
@@ -139,12 +138,12 @@ public enum GroupLevels {
    * @param builder SelectBuilder to configure (add field, condition, etc ...)
    * @param groupLevels GroupLevels of the category
    * @param category The auctions category
-   * @param match ItemStack to match for research
+   * @param match Auction to match for research
    */
-  private void level3(SelectBuilder builder, Integer groupLevels, ItemStack match, String category) {
+  private void level3(SelectBuilder builder, Integer groupLevels, AuctionInfo match, String category) {
     switch (groupLevels) {
       case 3:
-        builder.addCondition("itemMeta", DatabaseUtils.serialize(match));
+        builder.addCondition("itemMeta", match.getItemMeta());
         builder.setExtension("ORDER BY price ASC, start ASC");
       default:
         builder.addField("*");

@@ -26,6 +26,13 @@ public abstract class ConditionBase extends BaseBuilder {
   }
 
   /**
+   * Reset conditions
+   */
+  public void resetConditions() {
+    this.conditions.clear();
+  }
+
+  /**
    * Default parameters for build clause
    */
   protected StringBuilder buildWhereClause(StringBuilder builder) {

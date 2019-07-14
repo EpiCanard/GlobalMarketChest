@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
 import lombok.experimental.UtilityClass;
@@ -23,6 +25,7 @@ import lombok.experimental.UtilityClass;
 public class ShopUtils {
   public final String META_KEY = "GMC_SHOP";
   private List<Material> allowedBlock = new ArrayList<Material>();
+  private List<String> lockedShop = new ArrayList<String>();
 
   private Set<String> SIGN_MATERIALS;
 
@@ -67,6 +70,7 @@ public class ShopUtils {
       if (item != null)
         ShopUtils.allowedBlock.add(item.getType());
     });
+    ShopUtils.lockedShop.clear();
   }
 
   /**
@@ -169,11 +173,49 @@ public class ShopUtils {
 
   /**
    * Define if the block is a sign
-   * 
+   *
    * @param block The block
    * @return
    */
   public boolean isSign(Material material) {
     return SIGN_MATERIALS.contains(material.name());
   }
+
+  /**
+   * Define if a shop is locked
+   *
+   * @param shopGroup String shop group name
+   * @return
+   */
+  public boolean isLockedShop(String shopGroup) {
+    return lockedShop.contains(shopGroup);
+  }
+
+  /**
+   * Lock a shop group
+   *
+   * @param shopGroup String shop group name
+   */
+  public void lockShop(String shopGroup) {
+    lockedShop.add(shopGroup);
+    GlobalMarketChest.plugin.inventories.getInventories().forEach((key, value) -> {
+        ShopInfo shop = value.getTransactionValue(TransactionKey.SHOPINFO);
+        if (shop != null && shop.getGroup().equals(shopGroup)) {
+          Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> {
+            GlobalMarketChest.plugin.inventories.removeInventory(key);
+          });
+          PlayerUtils.sendMessageConfig(Bukkit.getServer().getPlayer(key), "InfoMessages.ShopTemporarilyLocked");
+        }
+    });
+  }
+
+  /**
+   * Unlock a shop group
+   *
+   * @param shopGroup String shop group name
+   */
+  public void unlockShop(String shopGroup) {
+    lockedShop.removeIf(shop -> shop == shopGroup);
+  }
+
 }

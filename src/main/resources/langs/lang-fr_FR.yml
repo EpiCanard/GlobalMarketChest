@@ -196,6 +196,10 @@ InfoMessages:
   WriteItemName: "Tapez le nom de l'item que vous recherchez"
   WritePlayerName: "Tapez le nom du joueur que vous cherchez"
   DeleteShopQuestion: "Êtes-vous sûr de vouloir supprimer ce shop ?"
+  ConvertingShopAuctions: "Conversion des enchères du shop : &6%s&7"
+  ShopAuctionsConverted: "Shop &6%s&7 : &3%d&9/%d&7 enchères converties"
+  ShopTemporarilyLocked: "Ce shop est temporairement verouillé"
+  ConversionMode: "Mode de conversion : &6%s&7"
 Commands:
   Buttons:
     OpenText: "Ouvrir"
@@ -217,3 +221,4 @@ Commands:
     Open: "&c/globalmarketchest open <shop>&6 - Permet d'ouvrir un globalshop à distance"
     AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Permet d'ouvrir un globalshop à distance"
     Close: "&c/globalmarketchest close <player>&6 - Permet de fermer le shop d'un joueur à distance"
+    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - Converti les itemMeta d'une ancienne version de minecraft vers la nouvelle version"

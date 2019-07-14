@@ -38,7 +38,7 @@ public class TPConsumer implements CommandConsumer {
 
     try {
       List<ShopInfo> shops = GlobalMarketChest.plugin.shopManager.getShops().stream()
-        .filter(shop -> shop.getGroup().equals(args[0]) && WorldUtils.compareLocations(shop.getSignLocation(), WorldUtils.getLocationFromString(args[1], null))).collect(Collectors.toList());
+        .filter(shop -> shop.getGroup().equals(args[0]) && shop.getExists() && WorldUtils.compareLocations(shop.getSignLocation(), WorldUtils.getLocationFromString(args[1], null))).collect(Collectors.toList());
       if (shops.size() == 0) {
         PlayerUtils.sendMessage(sender, String.format("%s%s %s", LangUtils.get("ErrorMessages.UnknownShop"), args[0], args[1]));
         return false;

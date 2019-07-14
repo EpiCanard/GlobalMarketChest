@@ -49,7 +49,7 @@ public class MySQLConnection extends DatabaseConnection {
         "  `playerStarter` TEXT NOT NULL," +
         "  `playerEnder` TEXT DEFAULT NULL," +
         "  `start` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
-        "  `end` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
+        "  `end` TIMESTAMP DEFAULT 0 NOT NULL," +
         "  `group` VARCHAR(50) NOT NULL" +
         ");"
       );
@@ -64,7 +64,9 @@ public class MySQLConnection extends DatabaseConnection {
         ");"
       );
       state.close();
-    } catch(SQLException e) {}
+    } catch(SQLException e) {
+      e.printStackTrace();
+    }
     finally {
       this.getBackConnection(co);
     }

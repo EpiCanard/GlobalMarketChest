@@ -1,0 +1,223 @@
+InterfacesTitle:
+  EditAuction: "&2Açık artırmayı düzenle"
+  BuyAuction: "&2Açık artırma satın al"
+  CategoryView: "&2Kategori görünümü"
+  AuctionViewList: "&2Açık artırma listesi"
+  ConfigShop : "&2Mağaza konfigürasyonu"
+  # Auction Creation
+  CreateAuctionItem: "&2Açık artırma öğesini seçin"
+  CreateAuctionPrice: "&2Açık artırma fiyatını Seç"
+  # Shop Creation
+  ShopCreationSelectType: "&2Mağaza tipi ve bağlantı bloğu seçin"
+  ShopCreationLink: "&2Grup adı/bağlantı dükkanını ayarla"
+Divers:
+  State: "Durum"
+  Quantity: "Tutar"
+  UnitPrice: "Her biri fiyat"
+  TotalPrice: "Toplam fiyat"
+  AuctionNumber: "Açık Artırma Numarası"
+  Seller: "Satıcı"
+  Buyer: "Buyer"
+  Start: "Başladı"
+  Location: "Konum"
+  OtherLocation: "Diğer konum"
+  Group: "Grup"
+  Type: "Tip"
+  Warning: "Uyarı"
+  ExpireIn: "Geçerlilik süresi"
+  Expired: "Süresi dolmuş"
+  Started: "Başladı"
+  Ended: "Sona erdi"
+  Free: "Bedava"
+  WithStatus: "&fDurumu : &2%s"
+  Days: "Gün"
+  Hours: "Saat"
+  Minutes: "Dakika"
+  Seconds: "Saniye"
+  PastDate: "%sago"
+  UnknownPlayer: "Bilinmeyen oyuncu"
+  SearchItemTextIcon: "&7Arama: &3%s"
+  ExitChatMode: "&7 - (Write &9%s&7 to leave the chat mode)"
+States:
+  InProgress: "Devam ediyor"
+  Expired: "Süresi dolmuş"
+  Abandoned: "Terk edilmiş"
+  Finished: "Bitmiş"
+Shops:
+  ClickChangeGroup: "&cMağaza grubu adını değiştirmek için tıklayın"
+  CurrentShop: "Mevcut dükkan"
+Buttons:
+  Background:
+    Name: " "
+  Money:
+    Name: "&6Paranız"
+  PreviousButton:
+    Name: "Geri"
+    Description: "&fÖnceki envantere geri dön"
+  ExitButton:
+    Name: "&4Çıkış"
+    Description: "&fBu envanteri kapat"
+  Validate:
+    Name: "&2Doğrula"
+    Description: "&fSonraki adıma geçin"
+  Return:
+    Name: "&4Geri"
+    Description: "&fÖnceki adıma dön"
+  CreateShop:
+    Name: "&2Mağaza oluştur"
+  NewAuction:
+    Name: "&2Yeni açık artırma oluştur"
+    Description: "&7Açık artırma numarası (%d/%d);&7Öğelerinizi satmak için buraya tıklayın"
+  CreateAuction:
+    Name: "&2Açık artırma oluştur"
+  BuyAuction:
+    Name: "&2Bu açık artırmayı satın al"
+  RenewAuction:
+    Name: "&6Bu açık artırmayı yenile"
+  UndoAuction:
+    Name: "&cBu açık artırmayı geri al"
+  RenewEveryAuction:
+    Name: "&6Her açık artırmayı yenile"
+  UndoEveryAuction:
+    Name: "&cHer açık artırmayı geri al"
+  GlobalView:
+    Name: "&fGenel bakış"
+    Description: "&5Açık artırma geçmişi"
+  Search:
+    Name: "&3Açık artırma arama"
+  DragItem:
+    Name: "&aBir öğeyi buraya sürükleyin"
+    Description: "&aveya SHIFT-Click kullanabilirsiniz"
+  CancelAuction:
+    Name: "&4Bu açık artırmayı iptal et"
+  ViewByCategory:
+    Name: "Kategoriye göre görüntüle"
+    Description: "Oyuncu açık artırmaları kategoriye göre görebilir mi?"
+  ViewByPlayer:
+    Name: "Oyuncuya göre görüntüle"
+    Description: "Oyuncu açık artırmaları oyuncu tarafından görebilir mi?"
+  ViewByLastCreated:
+    Name: "Son oluşturulana göre görüntüle"
+    Description: "Oyuncu, en son oluşturulan açık artırmaları görebilir mi?"
+  GlobalShop:
+    Name: "GlobalShop"
+  AuctionShop:
+    Name: "AuctionShop"
+  LocalShop:
+    Name: "LocalShop"
+  AdminShop:
+    Name: "AdminShop"
+  EditGroupName:
+    Name: "&fGrup adını Düzenle"
+  PreviousPage:
+    Name: "Önçeki sayfa"
+  NextPage:
+    Name: "Sonraki sayfa"
+  NumPage:
+    Name: "Sayfa numarası"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2Bir öğeyi buraya bırakın"
+    Description: "&2veya SHIFT-Click kullanabilirsiniz."
+  MaxInOne:
+    Name: "&fTek bir açık artırmada maksimum ürün"
+  MaxRepeat:
+    Name: "&fAçık artırmayı mümkün olduğunca tekrarlayın"
+  InProgressAuction:
+    Name: "&aDevam eden açık artırmalar"
+  ExpiredAuction:
+    Name: "&cSüresi dolmuş açık artırmalar"
+  SoldAuction:
+    Name: "&bSatılan açık artırmalar"
+  BoughtAuction:
+    Name: "&9Satın alınan açık artırmalar"
+  CanceledAuction:
+    Name: "&6İptal edilen açık artırmalar"
+  FreePrice:
+    Name: "&aBedava"
+    Description: "&7Fiyatı sıfıra ayarla"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
+  YesButton:
+    Name: "Evet"
+  NoButton:
+    Name: "Hayır"
+  Question:
+    Name: " "
+  SearchItemDrop:
+    Name: "&fBenzer öğeleri bul"
+    Description: "&7İstenen öğe ile tıklayın;&7yada SHIFT+Click yapabilirsiniz."
+  SearchItemText:
+    Name: "&fİsim ile öğe bul"
+  SearchByPlayer:
+    Name: "&fBir oyuncunun açık artırmalarını bul"
+ErrorMessages:
+  UnknownWorld: "Dükkan için bilinmeyen dünya"
+  ShopTypeNotSet: "Mağaza türü ayarlanmadı;&2 Lütfen en az bir tür seçin"
+  MissingItems: "Yanlış öğe sayısı, bazı öğeler eksik"
+  FailCreateAuction: "Veritabanında açık artırma oluşturulamadı"
+  NotEnoughSpace: "Tüm öğeleri eklemek için alan yok;&7oyuncu envanteri"
+  NotEnoughMoney: "Bu açık artırmayı satın almak için yeterli para yok"
+  CantBuyAuction: "Açık artırma satın alınamaması (süresi dolmuş veya satılmış)"
+  CantRenewAuction: "Açık artırma yenilenemedi"
+  CantUndoAuction: "Açık artırmayı geri alınamadı"
+  CantRenewEveryAuction: "Her açık artırmayı yenilenemedi"
+  CantUndoEveryAuction: "Her açık artırmayı geri alınamadı"
+  PlayerDoesntExist: "Bu oyuncu mevcut değil"
+  MaxAuctionByPlayer: "Daha fazla açık artırma oluşturamazsınız;&7Maksimum açık artırma numarasına ulaştınız"
+  PermissionNotAllowed: "&cBu işlemi yapmanıza izin verilmiyor"
+  InvalidCommand: "&cBu komut geçerli değil : "
+  PlayerOnly: "&cBu komut sadece bir oyuncu tarafından çalıştırılabilir"
+  UnknownShop: "&cBilinmeyen mağaza: "
+  CantRemoveBlock: "&cbir dükkan ona bağlı olduğu için bu bloğu kaldıramazsınız"
+  DamagedItem: "Hasar görmüş bir ürünü satamazsın"
+  BlacklistedItem: "Kara listeye alınmış bir ürünü satamazsın"
+  CommandInChat: "&cSohbet modunda komut çalıştırmanıza izin verilmiyor"
+  MaxGlobalShop: "&cOluşturabileceğiniz maksimum Global Mağaza sayısına ulaştınız (%d GlobalShop)"
+InfoMessages:
+  UndoAuction: "&2Açık artırma başarıyla silindi"
+  RenewAuction: "&2Açık artırma başarıyla yenilendi"
+  CreateAuction: "&2Açık artırma başarıyla oluşturuldu"
+  RenewEveryAuction: "&2Her açık artırma başarıyla yenilendi"
+  UndoEveryAuction: "&2Her açık artırma başarıyla silindi"
+  ShopDeleted: "Mağaza başarıyla silindi"
+  # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
+  # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
+  # If you don't have them a message will pop in console and no message will broadcast
+  AcquireAuction: "&3%s &6bought &2%d %s &6for &2%.2f&6 $ to &3%s&6."
+  AcquireAuctionOwner: "&3%s &6bought your auction &2%d %s &6for &2%.2f&6 $."
+  PluginReloading: "Plugin is reloading..."
+  PluginReloaded: "Plugin is reloaded."
+  WriteGroupName: "İstediğiniz grup adını yazın"
+  WriteItemName: "Aradığınız öğenin adını yazın"
+  WritePlayerName: "Aradığınız oyuncunun adını yazın"
+  DeleteShopQuestion: "Bu mağazayı silmek istediğinden emin misin?"
+  ConvertingShopAuctions: "Converting auctions of shop : &6%s&7"
+  ShopAuctionsConverted: "Shop &6%s&7 : &3%d&9/%d&7 auctions converted"
+  ShopTemporarilyLocked: "This shop is temporarily locked"
+  ConversionMode: "Conversion mode : &6%s&7"
+Commands:
+  Buttons:
+    OpenText: "Open"
+    OpenHover: "Click to open the shop"
+    DetailText: "Detail"
+    DetailHover: "Click see detail"
+    TeleportText: "Teleport"
+    TeleportHover: "Click to teleport to the shop"
+  ListShop: "List of shops : "
+  SeeHelp: "&6See help : &c/globalmarketchest help"
+  HelpCommand:
+    Usage: "&6Usage :"
+    Help: "&c/globalmarketchest [help]&6 - Show help"
+    Version: "&c/globalmarketchest version&6 - Display the plugin version"
+    Reload: "&c/globalmarketchest reload&6 - Reload the plugin"
+    List: "&c/globalmarketchest list&6 - List all globalshop"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - List all physical globalshop"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teleport the player a specific shop position"
+    Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"
+    AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Open a globalshop"
+    Close: "&c/globalmarketchest close <player>&6 - Close the shop of a player"
+    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - Convert old minecraft itemMeta to new minecraft version"

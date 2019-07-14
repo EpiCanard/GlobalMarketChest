@@ -20,19 +20,21 @@ public class AuctionViewList extends AuctionViewBase {
   private GroupLevels level;
   private String category;
   private ItemStack item;
+  private AuctionInfo auctionRef;
 
   public AuctionViewList(InventoryGUI inv) {
     super(inv);
 
     this.item = this.inv.getTransactionValue(TransactionKey.AUCTIONITEM);
     this.category = this.inv.getTransactionValue(TransactionKey.CATEGORY);
-    this.level = Optional.ofNullable((GroupLevels)this.inv.getTransactionValue(TransactionKey.GROUPLEVEL))
+    this.auctionRef = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    this.level = Optional.ofNullable((GroupLevels) this.inv.getTransactionValue(TransactionKey.GROUPLEVEL))
       .orElse(GroupLevels.LEVEL1);
 
     this.paginator.setLoadConsumer(pag -> {
       final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
 
-      GlobalMarketChest.plugin.auctionManager.getAuctions(this.level, shop.getGroup(), this.category, item, this.paginator.getLimit(),
+      GlobalMarketChest.plugin.auctionManager.getAuctions(this.level, shop.getGroup(), this.category, this.auctionRef, this.paginator.getLimit(),
           auctions -> {
             if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
               this.auctions = Utils.mapList(auctions, auction -> auction.getRight());
@@ -61,7 +63,7 @@ public class AuctionViewList extends AuctionViewBase {
    * This method is called when player click on item inside paginator
    * If it is the last level it called the super selectAuction method
    * Else it load a new interface to the next level
-   * 
+   *
    * @param pos Position clicked inside paginator
    */
   @Override
@@ -74,6 +76,7 @@ public class AuctionViewList extends AuctionViewBase {
     if (this.level.getNextLevel(category) == null) {
       super.selectAuction(pos);
     } else {
+      this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, auction);
       this.inv.getTransaction().put(TransactionKey.GROUPLEVEL, this.level.getNextLevel(category));
       this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, DatabaseUtils.deserialize(auction.getItemMeta()));
       this.inv.loadInterface("AuctionViewList");
@@ -83,6 +86,7 @@ public class AuctionViewList extends AuctionViewBase {
   @Override
   public void destroy() {
     super.destroy();
+    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
     this.inv.getTransaction().remove(TransactionKey.AUCTIONITEM);
     this.inv.getTransaction().remove(TransactionKey.GROUPLEVEL);
   }

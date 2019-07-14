@@ -15,13 +15,14 @@ import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.utils.ShopUtils;
 
 /**
  * Open a shop from command line
- * 
+ *
  * Command : /globalmarketchest open <shop>
  * Permission: globalmarketchest.commands.open
- * 
+ *
  * Command : /globalmarketchest open <shop> [player]
  * Permission: globalmarketchest.admin.commands.open
  */
@@ -29,22 +30,26 @@ public class OpenConsumer implements CommandConsumer {
 
   /**
    * Open a globalshop for a player
-   * 
+   *
    * @param player Player on which open the shop
    * @param shop Name of the shop to open
    */
-  private void openShop(Player player, ShopInfo shop) {
+   private void openShop(Player player, ShopInfo shop) {
     GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
-    final InventoryGUI inv = new InventoryGUI(player);
-    GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
-    inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
-    inv.open();
-    inv.loadInterface("CategoryView");
+    if (!ShopUtils.isLockedShop(shop.getGroup())) {
+      final InventoryGUI inv = new InventoryGUI(player);
+      GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
+      inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
+      inv.open();
+      inv.loadInterface("CategoryView");
+    } else {
+      PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopTemporarilyLocked");
+    }
   }
- 
+
   /**
    * Method called when consumer is executed
-   * 
+   *
    * @param node Command node
    * @param command Command executed
    * @param sender Command's executor (player or console)
