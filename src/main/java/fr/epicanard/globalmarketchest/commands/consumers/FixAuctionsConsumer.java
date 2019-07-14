@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
@@ -92,7 +93,12 @@ public class FixAuctionsConsumer implements CommandConsumer {
     ShopUtils.lockShop(group);
 
     final List<AuctionInfo> toUpdate = auctions.stream().map(auction -> {
-      final String itemMeta = DatabaseUtils.serialize(DatabaseUtils.deserialize(auction.getItemMeta()));
+      final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
+      if (item == null)
+        return null;
+
+      final String itemMeta = DatabaseUtils.serialize(item);
+
       if (itemMeta.equals(auction.getItemMeta()))
         return null;
       auction.setItemMeta(itemMeta);
