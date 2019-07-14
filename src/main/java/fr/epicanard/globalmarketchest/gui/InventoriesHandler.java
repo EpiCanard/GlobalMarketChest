@@ -5,11 +5,13 @@ import java.util.Map;
 import java.util.UUID;
 
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import lombok.Getter;
 
 /**
  * Store each opened shop interface by player (uuid)
  */
 public class InventoriesHandler {
+  @Getter
   private Map<UUID, InventoryGUI> inventories;
 
   public InventoriesHandler() {
