@@ -33,7 +33,7 @@ Options:
   EnableMaxInOne: true
   # Define if the button MaxRepeat in CreateAuction view must be here
   EnableMaxRepeat: true
-  # Define if a player can find similar auctions with drag and drop on category view 
+  # Define if a player can find similar auctions with drag and drop on category view
   EnableSimilarAuctions: true
   # Default price for new auctions
   DefaultPrice: 100
@@ -63,11 +63,15 @@ Logs:
   HidePrefix: false
   # Define the prefix displayed inside messages
   Prefix: "&a[GlobalMarketChest]"
-# Worlds on which you can create shop
-WorldAllowed:
-  - world
-  - world_the_end
-  - world_nether
+# Define on which worlds you can or can't create a shop
+ShopWorlds:
+  # Define which type of filter is used
+  # Possible value : whitelist or blacklist (default blacklist if not specified)
+  Type: 'blacklist'
+  # List of world allowed (whitelist) or forbidden (blacklist)
+  Worlds:
+  # - world
+  # - world_the_end
 # Block that you can link with shop's sign
 AllowedLinkBlock:
   - minecraft:ender_chest
@@ -83,7 +87,7 @@ Price:
     - 1
     - 0.1
     - 0.01
-  # Items used for price ranges, if there is less items than price ranges the last item 
+  # Items used for price ranges, if there is less items than price ranges the last item
   Items:
     - minecraft:emerald_block
     - minecraft:emerald

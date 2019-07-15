@@ -181,7 +181,10 @@ public class WorldUtils {
   public Boolean isAllowedWorld(String worldName) throws WorldDoesntExist {
     if (Bukkit.getWorld(worldName) == null)
       throw new WorldDoesntExist(worldName);
-    return GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("WorldAllowed").contains(worldName);
+    final Boolean containsWorld = GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("ShopWorlds.Worlds").contains(worldName);
+    final Boolean whitelist = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("ShopWorlds.Type", "blacklist").equals("whitelist");
+
+    return (whitelist) ? containsWorld : !containsWorld;
   }
 
   /**
