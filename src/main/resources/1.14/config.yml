@@ -7,7 +7,7 @@
 # ===================================================================
 
 General:
-  # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml
+  # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml, lang-pl_PL.yml, lang-tr_TR.yml
   Lang: "lang-en_US.yml"
 Connection:
   # The url/ip to access to your database server
