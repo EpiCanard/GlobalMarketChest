@@ -195,10 +195,10 @@ InfoMessages:
   WriteItemName: "Aradığınız öğenin adını yazın"
   WritePlayerName: "Aradığınız oyuncunun adını yazın"
   DeleteShopQuestion: "Bu mağazayı silmek istediğinden emin misin?"
-  ConvertingShopAuctions: "Converting auctions of shop : &6%s&7"
-  ShopAuctionsConverted: "Shop &6%s&7 : &3%d&9/%d&7 auctions converted"
-  ShopTemporarilyLocked: "This shop is temporarily locked"
-  ConversionMode: "Conversion mode : &6%s&7"
+  ConvertingShopAuctions: "Market açık arttırmalarını dönüştürme : &6%s&7"
+  ShopAuctionsConverted: "Market &6%s&7 : &3%d&9/%d&7 açık arttırma dönüştürme yapıldı"
+  ShopTemporarilyLocked: "Bu mağaza geçici olarak kilitlendi"
+  ConversionMode: "Dönüşüm modu : &6%s&7"
 Commands:
   Buttons:
     OpenText: "Open"
@@ -220,4 +220,4 @@ Commands:
     Open: "&c/globalmarketchest open <shop>&6 - Open a globalshop"
     AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Open a globalshop"
     Close: "&c/globalmarketchest close <player>&6 - Close the shop of a player"
-    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - Convert old minecraft itemMeta to new minecraft version"
+    FixAuctions: "&c/globalmarketchest açık arttrıma düzelt [active | all]&6 - Eski minecraft itemMeta'yı yeni minecraft sürümüne dönüştür"

@@ -195,10 +195,10 @@ InfoMessages:
   WriteItemName: "Wpisz nazwę itemu, którego szukasz"
   WritePlayerName: "Wpisz nazwę gracza, którego szukasz"
   DeleteShopQuestion: "Jesteś pewien, że chcesz usunąć ten sklep?"
-  ConvertingShopAuctions: "Converting auctions of shop : &6%s&7"
-  ShopAuctionsConverted: "Shop &6%s&7 : &3%d&9/%d&7 auctions converted"
-  ShopTemporarilyLocked: "This shop is temporarily locked"
-  ConversionMode: "Conversion mode : &6%s&7"
+  ConvertingShopAuctions: "Przetwarzanie aukcji sklepu : &6%s&7"
+  ShopAuctionsConverted: "Sklep &6%s&7 : &3%d&9/%d&7 aukcje przetworzone"
+  ShopTemporarilyLocked: "Ten sklep jest czasowo niedostępny"
+  ConversionMode: "Tryb konwersji : &6%s&7"
 Commands:
   Buttons:
     OpenText: "Otwórz"
@@ -220,4 +220,4 @@ Commands:
     Open: "&c/globalmarketchest open <shop>&6 - Otwórz GlobalShop"
     AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Otwórz GlobalShop"
     Close: "&c/globalmarketchest close <player>&6 - Zamknij sklep gracza"
-    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - Convert old minecraft itemMeta to new minecraft version"
+    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - Przetwarza stare itemMeta do nowszej wersji"

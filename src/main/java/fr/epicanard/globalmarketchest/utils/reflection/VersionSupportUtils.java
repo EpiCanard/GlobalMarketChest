@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
+import net.minecraft.server.v1_14_R1.MinecraftKey;
 
 public class VersionSupportUtils {
 
@@ -183,7 +184,12 @@ public class VersionSupportUtils {
         minecraftKey = registry.getClass().getMethod("getKey", Object.class).invoke(registry, invokeMethod(nmsItemStack, "getItem"));
       }
 
-      return invokeMethod(minecraftKey, "b").toString() + ":" + invokeMethod(minecraftKey, "getKey").toString();
+      Object namespace = invokeMethod(minecraftKey, "b");
+      if (namespace == null) {
+        namespace = invokeMethod(minecraftKey, "getNamespace");
+      }
+
+      return namespace.toString() + ":" + invokeMethod(minecraftKey, "getKey").toString();
 
     } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
       e.printStackTrace();
@@ -275,7 +281,7 @@ public class VersionSupportUtils {
 
   /**
    * Define if the GMC NBT TAG is set on this item
-   * 
+   *
    * @param itemStack Item to analyze
    * @return Return if the item as gmc nbt tag
    */
@@ -296,7 +302,7 @@ public class VersionSupportUtils {
 
   /**
    * Set the custom GMC NBT TAG on item in parameter
-   * 
+   *
    * @param itemStack Item on which add NBT TAG
    * @return ItemStack modified
    */
