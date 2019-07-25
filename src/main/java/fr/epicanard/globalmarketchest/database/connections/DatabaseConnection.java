@@ -11,6 +11,7 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
 public abstract class DatabaseConnection {
+  public final Boolean needConnection;
   protected Properties properties = new Properties();
   protected String host;
   protected String port;
@@ -21,8 +22,12 @@ public abstract class DatabaseConnection {
   public static String tableAuctions = "GMC_auctions";
   public static String tableShops = "GMC_shops";
 
+  DatabaseConnection(final Boolean needConnection) {
+    this.needConnection = needConnection;
+  }
+
   public static void configureTables() throws ConfigException {
-    String prefix = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Connection.TablePrefix");
+    String prefix = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Storage.TablePrefix");
     if (prefix == null)
       return;
     if (!prefix.matches("[a-zA-Z_]*"))

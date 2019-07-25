@@ -16,6 +16,7 @@ import fr.epicanard.globalmarketchest.commands.CommandHandler;
 import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
 import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
 import fr.epicanard.globalmarketchest.database.connections.MySQLConnection;
+import fr.epicanard.globalmarketchest.database.connections.SQLiteConnection;
 import fr.epicanard.globalmarketchest.economy.VaultEconomy;
 import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
@@ -117,6 +118,9 @@ public class GlobalMarketChest extends JavaPlugin {
     HandlerList.unregisterAll(this);
   }
 
+  /**
+   * Disable the plugin
+   */
   public void disable() {
     this.setEnabled(false);
     this.getLogger().log(Level.WARNING, "Plugin GlobalMarketChest disabled");
@@ -153,8 +157,10 @@ public class GlobalMarketChest extends JavaPlugin {
    */
   private void initDatabase() throws Exception {
     try {
-      this.sqlConnection = new MySQLConnection();
-      this.sqlConnection.configFromConfigFile();
+      this.sqlConnection = this.getDatabaseConnectionProvider();
+      if (this.sqlConnection.needConnection) {
+        this.sqlConnection.configFromConfigFile();
+      }
       this.sqlConnection.fillPool();
       DatabaseConnection.configureTables();
       this.sqlConnection.recreateTables();
@@ -164,14 +170,30 @@ public class GlobalMarketChest extends JavaPlugin {
     }
   }
 
+  /**
+   * Init Database connection provider depending of config 'Storage.Type'
+   *
+   * @return Return the correct Database connection provider
+   * @throws ConfigException
+   */
+  private DatabaseConnection getDatabaseConnectionProvider() throws ConfigException {
+    final String connectionType = this.configLoader.getConfig().getString("Storage.Type");
+    switch (connectionType) {
+      case "sqlite":
+        return new SQLiteConnection();
+      case "mysql":
+        return new MySQLConnection();
+      default:
+        throw new ConfigException("Wrong value of 'Storage.Type'. \nWanted: sqlite or mysql.\nBut get: " + connectionType);
+    }
+  }
+
+  /**
+   * Register a listener
+   *
+   * @param listener Listener to register
+   */
   private void register(Listener listener) {
     getServer().getPluginManager().registerEvents(listener, this);
   }
-
-  public Boolean hasPermission(Player player, String perm) {
-    if (player == null || perm == null)
-      return false;
-    return true;
-  }
-
 }

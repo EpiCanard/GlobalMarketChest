@@ -1,17 +1,22 @@
 package fr.epicanard.globalmarketchest.database.connections;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
-public class MySQLConnection extends SQLConnection {
+public class SQLiteConnection extends SQLConnection {
+  private Connection connection;
 
-  public MySQLConnection() throws ConfigException {
-    super(true);
+
+  private static final String sqliteFileName = "globalmarketchest.sqlite";
+
+  public SQLiteConnection() throws ConfigException {
+    super(false);
   }
 
   /**
@@ -22,8 +27,9 @@ public class MySQLConnection extends SQLConnection {
   @Override
   protected Connection connect() throws ConfigException {
     try {
-      Class.forName("com.mysql.jdbc.Driver");
-      return DriverManager.getConnection("jdbc:mysql://" + this.buildUrl(), new Properties(this.properties));
+      File databaseFilePath = new File(GlobalMarketChest.plugin.getDataFolder(), SQLiteConnection.sqliteFileName);
+      Class.forName("org.sqlite.JDBC");
+      return DriverManager.getConnection("jdbc:sqlite:" + databaseFilePath);
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     } catch (SQLException e) {
@@ -32,7 +38,7 @@ public class MySQLConnection extends SQLConnection {
     return null;
   }
 
-  /**
+    /**
    * Recreate tables if doesn't exist
    */
   @Override
@@ -43,7 +49,7 @@ public class MySQLConnection extends SQLConnection {
       Statement state = co.createStatement();
       state.execute(
         "CREATE TABLE IF NOT EXISTS `" + DatabaseConnection.tableAuctions + "` (" +
-        "  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
+        "  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         "  `itemStack` VARCHAR(50) NOT NULL," +
         "  `itemMeta` TEXT," +
         "  `amount` INT UNSIGNED NOT NULL," +
@@ -59,7 +65,7 @@ public class MySQLConnection extends SQLConnection {
       );
       state.execute(
         "CREATE TABLE IF NOT EXISTS `" + DatabaseConnection.tableShops + "` (" +
-        "  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
+        "  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         "  `owner` TEXT NOT NULL," +
         "  `signLocation` TEXT NOT NULL," +
         "  `otherLocation` TEXT NOT NULL," +
@@ -71,8 +77,52 @@ public class MySQLConnection extends SQLConnection {
     } catch(SQLException e) {
       e.printStackTrace();
     }
-    finally {
-      this.getBackConnection(co);
-    }
+  }
+
+
+
+  /**
+   * Disconnection connection
+   */
+  @Override
+  protected void disconnect(Connection connection) {
+    if (connection == null)
+      return;
+    try {
+      if (!connection.isClosed())
+        connection.close();
+    } catch (SQLException e) {}
+  }
+
+  /**
+   * Get a connection from the pool or create it is no connected
+   *
+   * @return Connection
+   */
+  @Override
+  public Connection getConnection() {
+    return this.connection;
+  }
+
+  /**
+   * Get Back the connection to the poll
+   */
+  @Override
+  public void getBackConnection(Connection connection) {}
+
+  /**
+   * Fill pool with connection from the size specified in config file
+   */
+  @Override
+  public void fillPool() throws ConfigException {
+    this.connection = this.connect();
+  }
+
+  /**
+   * Clean pool and close every connections
+   */
+  @Override
+  public void cleanPool() {
+    this.disconnect(this.connection);
   }
 }
