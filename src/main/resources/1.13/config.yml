@@ -9,23 +9,28 @@
 General:
   # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml, lang-pl_PL.yml, lang-tr_TR.yml
   Lang: "lang-en_US.yml"
-Connection:
-  # The url/ip to access to your database server
-  Host: localhost
-  # Port used by your database server
-  Port: 3306
-  # The database name that you have already created
-  Database: my_database
-  # The user you want to use to login
-  User: my_user
-  # The password of the user set above
-  Password: my_password
-  # Define if the connection must be secure or not with ssl
-  # UseSSL: false
+Storage:
+  # Storage type. Possible values: sqlite, mysql
+  # If Storage type is equals to mysql you will need to fill informations inside Connection part
+  Type: sqlite
   # The prefix you want to user of tables to avoid conflicts with other tables
   TablePrefix: GMC_
-  # The simultaneous connection always active to reduce time of interface execution
-  SimultaneousConnection: 4
+  # Connection informations
+  Connection:
+    # The url/ip to access to your database server
+    Host: localhost
+    # Port used by your database server
+    Port: 3306
+    # The database name that you have already created
+    Database: my_database
+    # The user you want to use to login
+    User: my_user
+    # The password of the user set above
+    Password: my_password
+    # Define if the connection must be secure or not with ssl
+    # UseSSL: false
+    # The simultaneous connection always active to reduce time of interface execution
+    SimultaneousConnection: 4
 Options:
   # To see auctions that don't have category
   UncategorizedItems: false
