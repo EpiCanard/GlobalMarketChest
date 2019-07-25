@@ -96,6 +96,23 @@ public class VersionSupportUtils {
     return null;
   }
 
+  /**
+   * Define if the current object has the specified method
+   *
+   * @param object the object on which call the method
+   * @param method the method name to calle
+   * @param args all the arguments that must be send to the method
+   * @return return a boolean
+   */
+  public Boolean hasMethod(Object object, String method, Object ...args) {
+    try {
+      object.getClass().getMethod(method, fromObjectToClass(args));
+      return true;
+    } catch(NoSuchMethodException e) {
+      return false;
+    }
+  }
+
   private Object newInstance(String path, Object ...args) {
     try {
       return getClassFromPath(Path.MINECRAFT, path).getConstructor(fromObjectToClass(args)).newInstance(args);
@@ -184,8 +201,10 @@ public class VersionSupportUtils {
         minecraftKey = registry.getClass().getMethod("getKey", Object.class).invoke(registry, invokeMethod(nmsItemStack, "getItem"));
       }
 
-      Object namespace = invokeMethod(minecraftKey, "b");
-      if (namespace == null) {
+      Object namespace;
+      if (hasMethod(minecraftKey, "b")) {
+        namespace = invokeMethod(minecraftKey, "b");
+      } else {
         namespace = invokeMethod(minecraftKey, "getNamespace");
       }
 
