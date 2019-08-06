@@ -49,7 +49,7 @@ public class MySQLConnection extends DatabaseConnection {
         "  `playerStarter` TEXT NOT NULL," +
         "  `playerEnder` TEXT DEFAULT NULL," +
         "  `start` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
-        "  `end` TIMESTAMP DEFAULT 0 NOT NULL," +
+        "  `end` TIMESTAMP DEFAULT '2000-01-01 00:00:01' NOT NULL," +
         "  `group` VARCHAR(50) NOT NULL" +
         ");"
       );
@@ -99,7 +99,7 @@ public class MySQLConnection extends DatabaseConnection {
 
   /**
    * Create connection to database
-   * 
+   *
    * @return Connection
    */
   @Override
@@ -130,7 +130,7 @@ public class MySQLConnection extends DatabaseConnection {
 
   /**
    * Get a connection from the pool or create it is no connected
-   * 
+   *
    * @return Connection
    */
   @Override
