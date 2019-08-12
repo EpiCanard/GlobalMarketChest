@@ -7,7 +7,7 @@
 # ===================================================================
 
 General:
-  # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml, lang-pl_PL.yml, lang-tr_TR.yml
+  # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml, lang-pl_PL.yml, lang-tr_TR.yml, lang-ru_RU.yml
   Lang: "lang-en_US.yml"
 Storage:
   # Storage type. Possible values: sqlite, mysql

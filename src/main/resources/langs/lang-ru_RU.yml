@@ -1,0 +1,221 @@
+InterfacesTitle:
+  EditAuction: "&2Редактировать аукцион"
+  BuyAuction: "&2Купить с аукциона"
+  CategoryView: "&2Список категорий"
+  AuctionViewList: "&2Список аукционов"
+  ConfigShop : "&2Конфигурация магазина"
+  # Создание аукциона
+  CreateAuctionItem: "&2Выбор предмета аукциона"
+  CreateAuctionPrice: "&2Выбор стоимости аукциона"
+  # Создание магазина
+  ShopCreationSelectType: "&2Выбор типа магазина / ссылки блока"
+  ShopCreationLink: "&2Установка имени группы / ссылки магазина"
+Divers:
+  State: "Статус"
+  Quantity: "Кол-во"
+  UnitPrice: "СтоимостьКаждого"
+  TotalPrice: "СтоимостьВсех"
+  AuctionNumber: "Номер аукциона"
+  Seller: "Продавец"
+  Buyer: "Покупатель"
+  Start: "Начатый"
+  Location: "Местность"
+  OtherLocation: "Другая местность"
+  Group: "Группа"
+  Type: "Тип"
+  Warning: "Внимание"
+  ExpireIn: "Истекает через "
+  Expired: "Просрочен"
+  Started: "Стартовал"
+  Ended: "Окончен"
+  Free: "Даром"
+  WithStatus: "&fСо статусом : &2%s"
+  Days: "дня(ей)"
+  Hours: "час(ов)"
+  Minutes: "минут(ы)"
+  Seconds: "секунд(ы)"
+  PastDate: "%sназад"
+  UnknownPlayer: "Неизвестный игрок"
+  SearchItemTextIcon: "&7Поиск: &3%s"
+  ExitChatMode: "&7 - (Напишите &9%s&7 чтобы покинуть режим чата)"
+States:
+  InProgress: "В процессе"
+  Expired: "Просрочен"
+  Abandoned: "Отказаный"
+  Finished: "Завершен"
+Shops:
+  ClickChangeGroup: "&cКликните для изменения группы имени магазина"
+  CurrentShop: "Текущий магазин"
+Buttons:
+  Background:
+    Name: " "
+  Money:
+    Name: "&6Ваши деньги"
+  PreviousButton:
+    Name: "Вернуться"
+    Description: "&fВернуться к предыдущему инвентарю"
+  ExitButton:
+    Name: "&4Закрыть инвентарь"
+  Validate:
+    Name: "&2Подтверждение"
+    Description: "&fПерейти к следующему шагу"
+  Return:
+    Name: "&4Вернуться"
+    Description: "&fВернуться к предыдущему шагу"
+  CreateShop:
+    Name: "&2Создать магазин"
+  NewAuction:
+    Name: "&2Создать новый аукцион"
+    Description: "&7Имя аукциона (%d/%d);&7Кликните сюда, чтобы выбрать предмет"
+  CreateAuction:
+    Name: "&2Создать аукцион"
+  BuyAuction:
+    Name: "&2Купить этот аукцион"
+  RenewAuction:
+    Name: "&6Продлить этот аукцион"
+  UndoAuction:
+    Name: "&cОтменить этот аукцион"
+  RenewEveryAuction:
+    Name: "&6Возобновить каждый аукцион"
+  UndoEveryAuction:
+    Name: "&cОтменить все аукционы"
+  GlobalView:
+    Name: "&fОбщее"
+    Description: "&5История аукционов"
+  Search:
+    Name: "&3Поиск аукционов"
+  DragItem:
+    Name: "&aПеретащите мышью предмет &4сюда"
+    Description: "&aили используйте &4SHIFT+клик"
+  CancelAuction:
+    Name: "&4Отменить этот аукцион"
+  ViewByCategory:
+    Name: "Просмотр по категориям"
+    Description: "Может ли игрок просматривать аукционы по категориям ?"
+  ViewByPlayer:
+    Name: "Просмотр по игрокам"
+    Description: "Может ли игрок просматривать аукционы по игрокам ?"
+  ViewByLastCreated:
+    Name: "Просмотр по последним созданным"
+    Description: "Может ли игрок просматривать аукционы по последним созданным ?"
+  GlobalShop:
+    Name: "GlobalShop"
+  AuctionShop:
+    Name: "AuctionShop"
+  LocalShop:
+    Name: "LocalShop"
+  AdminShop:
+    Name: "AdminShop"
+  EditGroupName:
+    Name: "&fРедактировать Имя Группы"
+  PreviousPage:
+    Name: "Пред. страница"
+  NextPage:
+    Name: "След. страница"
+  NumPage:
+    Name: "Номер Страницы"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2Перетащите мышью предмет &4сюда"
+    Description: "&2или используйте &4SHIFT+клик"
+  MaxInOne:
+    Name: "&fМакс. кол-во предметов на одном аукционе"
+  MaxRepeat:
+    Name: "&fПовторять аукцион как можно больше"
+  InProgressAuction:
+    Name: "&aВ процессе аукционов"
+  ExpiredAuction:
+    Name: "&cИстекшие аукционы"
+  SoldAuction:
+    Name: "&bРаспроданные аукционы"
+  BoughtAuction:
+    Name: "&9Купленные аукционы"
+  CanceledAuction:
+    Name: "&6Отмененные аукционы"
+  FreePrice:
+    Name: "&aДаром"
+    Description: "&7Установить стоимость на 0"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
+  YesButton:
+    Name: "<ДА>"
+  NoButton:
+    Name: "<<НЕТ>>"
+  Question:
+    Name: " "
+  SearchItemDrop:
+    Name: "&fНайти похожие предметы"
+    Description: "&7Кликните на нужный предмет в своем инвентаре;&7или используйте &4SHIFT+Клик"
+  SearchItemText:
+    Name: "&fНайти предмет с его именем"
+  SearchByPlayer:
+    Name: "&fНайти аукционы игрока"
+ErrorMessages:
+  UnknownWorld: "Неизвестный мир для магазина"
+  ShopTypeNotSet: "Тип магазина не задан;&2Пожалуйста выберите хотя бы один тип"
+  MissingItems: "Неправильное кол-во предметов, некоторые предметы отсутсвуют"
+  FailCreateAuction: "Не удалось создать аукцион в БазеДанных"
+  NotEnoughSpace: "Недосточно места для добавления всех предметов;&7в инвентарь игрока"
+  NotEnoughMoney: "Нехватает денежных средств для покупки этого аукиона"
+  CantBuyAuction: "Не удалось купить аукцион (истекло или продано)"
+  CantRenewAuction: "Не удалось продлить аукцион"
+  CantUndoAuction: "Не удалось отменить аукцион"
+  CantRenewEveryAuction: "Не удалось обновить каждый аукцион"
+  CantUndoEveryAuction: "Не удалось отменить каждый аукцион"
+  PlayerDoesntExist: "Данного игрока не существует"
+  MaxAuctionByPlayer: "Не удалось создать аукцион ещё;&7Вы достигли максимального кол-ва аукционов"
+  PermissionNotAllowed: "&cУ вас нет прав на выполнение этого действия"
+  InvalidCommand: "&cЭта команда недопустима : "
+  PlayerOnly: "&cЭта команда может быть выполнена только игроком"
+  UnknownShop: "&cНеизвестный магазин : "
+  CantRemoveBlock: "&cВы не можете убрать этот блок, потому что к нему прикреплен магазин"
+  DamagedItem: "Вы не можете продать поврежденный товар"
+  BlacklistedItem: "Вы не можете продавать предметы которые находятся в ЧС"
+  CommandInChat: "&cВы не можете выполнять команды в &4режиме чата"
+  MaxGlobalShop: "&cВы достигли макс. кол-ва GlobalShop, которое вы могли создать (%d GlobalShop)"
+InfoMessages:
+  UndoAuction: "&2Аукцион успешно удален"
+  RenewAuction: "&2Аукцион успешно продлен"
+  CreateAuction: "&2Аукцион успешно создан"
+  RenewEveryAuction: "&2Каждый аукцион успешно возобновлен"
+  UndoEveryAuction: "&2Каждый аукцион успешно удален"
+  ShopDeleted: "Магазин успешно удален"
+  # ВНИМАНИЕ : не изменяйте % и буква(ы), которые следуют за текстом ( такие как: %s, %d и %.2f)
+  # Иначе сообщения будут выведены в игре неккоректно!
+  AcquireAuction: "&3%s &6купил &2%d %s &6за &2%.2f&6 $ у &3%s&6."
+  AcquireAuctionOwner: "&3%s &6купил у вас аукцион &2%d %s &6за &2%.2f&6 $."
+  PluginReloading: "Плагин перезагружается..."
+  PluginReloaded: "Плагин успешно перезагружен."
+  WriteGroupName: "Напишите имя группы, которое вы хотите"
+  WriteItemName: "Напишите имя предмета, который вы ищете"
+  WritePlayerName: "Напишите имя игрока, которого вы ищете"
+  DeleteShopQuestion: "Вы уверены, что хотите удалить этот магазин ?"
+  ConvertingShopAuctions: "Конвертация аукционов в магазин : &6%s&7"
+  ShopAuctionsConverted: "Магазин &6%s&7 : &3%d&9/%d&7 аукционов конвертировано"
+  ShopTemporarilyLocked: "Этот магазин временно заблокирован"
+  ConversionMode: "Режим конвертирования : &6%s&7"
+Commands:
+  Buttons:
+    OpenText: "Открыть"
+    OpenHover: "Кликните, для открытия магазина"
+    DetailText: "Подробности"
+    DetailHover: "Кликните для просмотра подробностей"
+    TeleportText: "Перемещение"
+    TeleportHover: "Кликните, чтобы переместиться в магазин"
+  ListShop: "Список магазинов : "
+  SeeHelp: "&6См. помощь : &c/globalmarketchest help"
+  HelpCommand:
+    Usage: "&6Использование :"
+    Help: "&c/globalmarketchest [help]&6 - Показать эту страницу"
+    Version: "&c/globalmarketchest version&6 - Показать версию плагина"
+    Reload: "&c/globalmarketchest reload&6 - Перезагрузить плагин"
+    List: "&c/globalmarketchest list&6 - Список всех globalshop"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - Список всех физических globalshop"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Перемещение игрока на определенную позицию магазина"
+    Open: "&c/globalmarketchest open <shop>&6 - Открыть globalshop"
+    AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Открыть globalshop игрока"
+    Close: "&c/globalmarketchest close <player>&6 - Закрыть магазин игрока"
+    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - Конвертировать itemMeta старой версии Maincraft в новую"
