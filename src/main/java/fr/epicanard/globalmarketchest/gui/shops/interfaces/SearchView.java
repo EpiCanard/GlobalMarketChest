@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
+import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -59,13 +60,14 @@ public class SearchView extends DefaultFooter {
     this.inv.getTransaction().put(TransactionKey.GROUPLEVEL, lastLevel);
     this.inv.getTransaction().put(TransactionKey.CATEGORY, category);
     this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, item);
+    this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, new AuctionInfo(item));
 
     this.inv.loadInterface("AuctionViewList");
   }
 
   /**
    * Get the last level possible with numberLevels specified
-   * 
+   *
    * @param level GroupLevels to compare
    * @param numberLevels Number of levels for category
    * @return Return the last group level of category
@@ -74,7 +76,7 @@ public class SearchView extends DefaultFooter {
     final GroupLevels nextLevel = level.getNextLevel(numberLevels);
     return (nextLevel == null) ? level : this.getLastLevel(nextLevel, numberLevels);
   }
-  
+
   private void searchItem(String itemName) {
     this.inv.getTransaction().put(TransactionKey.ITEMSEARCH, itemName);
     this.inv.loadInterface("AuctionViewItem");

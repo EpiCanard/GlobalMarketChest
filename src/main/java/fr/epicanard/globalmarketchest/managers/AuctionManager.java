@@ -41,8 +41,8 @@ public class AuctionManager {
   /**
    * Create an auction inside database
    *
-   * @param auction
-   * @param repeat
+   * @param auction Auction to create in database
+   * @param repeat Number of time the auction must repeated
    *
    * @return Return if execution succeed
    */
@@ -79,7 +79,7 @@ public class AuctionManager {
   public Boolean buyAuction(int id, Player buyer) {
     QueryExecutor executor = QueryExecutor.of();
 
-    if (this.canEditAuction(executor, id) == false)
+    if (!this.canEditAuction(executor, id))
       return false;
 
     UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
@@ -92,7 +92,7 @@ public class AuctionManager {
     return executor.execute(builder);
   }
 
-  /**
+  /*
    * ==============
    *     RENEW
    * ==============
@@ -101,8 +101,8 @@ public class AuctionManager {
   /**
    * Renew a group of player auctions expired or in progress
    *
-   * @param player
-   * @param group
+   * @param player Player target by renew of auctions
+   * @param group Shop group name target
    */
   public Boolean renewGroupOfPlayerAuctions(Player player, String group, StateAuction state, List<Integer> auctions) {
     UpdateBuilder builder = this.updateToNow(null);
@@ -126,14 +126,14 @@ public class AuctionManager {
     UpdateBuilder builder = this.updateToNow(null);
     QueryExecutor executor = QueryExecutor.of();
 
-    if (this.canEditAuction(executor, id) == false)
+    if (!this.canEditAuction(executor, id))
       return false;
     builder.addCondition("id", id);
     builder.addCondition("ended", false);
     return executor.execute(builder);
   }
 
-  /**
+  /*
    * ==============
    *      UNDO
    * ==============
@@ -142,8 +142,8 @@ public class AuctionManager {
   /**
    * Undo a group of auctions
    *
-   * @param player
-   * @param group
+   * @param player Player target by remove of auctions
+   * @param group Shop group name target
    */
   public Boolean undoGroupOfPlayerAuctions(Player player, String group, List<Integer> auctions) {
     UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
@@ -162,12 +162,13 @@ public class AuctionManager {
    * Undo auction
    *
    * @param id Id of the auction to undo
+   * @param playerUuid Uuid of player
    */
   public Boolean undoAuction(int id, String playerUuid) {
     UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
     QueryExecutor executor = QueryExecutor.of();
 
-    if (this.canEditAuction(executor, id) == false)
+    if (!this.canEditAuction(executor, id))
       return false;
 
     builder.addCondition("id", id);
@@ -212,7 +213,7 @@ public class AuctionManager {
     });
   }
 
-  /**
+  /*
    * =====================
    *     LIST AUCTIONS
    * =====================
@@ -224,7 +225,7 @@ public class AuctionManager {
      * @param level GroupLevel to analyse
      * @param group Group of auction
      * @param category Category of items to search
-     * @param item Item to search
+     * @param auction Auction to search
      * @param limit Limit of auctions to get from database
      * @param consumer Callback called when the sql request is executed
      */
@@ -399,7 +400,7 @@ public class AuctionManager {
     });
   }
 
-  /**
+  /*
    * ================================
    *             TOOLS
    * ================================
@@ -408,7 +409,7 @@ public class AuctionManager {
   /**
    * Create a querybuilder, update timestamp to now and change state to INPROGRESS
    *
-   * @param builder
+   * @param builder Base builder
    * @return Return same builder
    */
   private UpdateBuilder updateToNow(UpdateBuilder builder) {

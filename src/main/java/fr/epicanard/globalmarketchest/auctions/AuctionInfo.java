@@ -76,6 +76,10 @@ public class AuctionInfo {
     this.group = group;
   }
 
+  public AuctionInfo(ItemStack item) {
+    this.setItemStack(item);
+  }
+
   public Double getTotalPrice() {
     return BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
   }
