@@ -5,11 +5,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -76,7 +79,7 @@ public class ShopUtils {
   /**
    * Generate a custom random name
    *
-   * @return
+   * @return Generated shop name
    */
   public String generateName() {
     return "Shop_" + RandomStringUtils.randomAlphabetic(5);
@@ -85,7 +88,7 @@ public class ShopUtils {
   /**
    * Generate a name for localshop
    *
-   * @return
+   * @return Local shop name
    */
   public String generateLocalName(int id) {
     return "LocalShop" + id;
@@ -108,8 +111,8 @@ public class ShopUtils {
   /**
    * Generate a String key/value
    *
-   * @param key
-   * @param value
+   * @param key Key
+   * @param value Value
    */
   public String generateKeyValue(String key, String value) {
     return "&2" + key + " : &9" + value;
@@ -174,8 +177,8 @@ public class ShopUtils {
   /**
    * Define if the block is a sign
    *
-   * @param block The block
-   * @return
+   * @param material Block material
+   * @return If it is a sign
    */
   public boolean isSign(Material material) {
     return SIGN_MATERIALS.contains(material.name());
@@ -185,7 +188,7 @@ public class ShopUtils {
    * Define if a shop is locked
    *
    * @param shopGroup String shop group name
-   * @return
+   * @return if current shop is locked
    */
   public boolean isLockedShop(String shopGroup) {
     return lockedShop.contains(shopGroup);
@@ -218,4 +221,29 @@ public class ShopUtils {
     lockedShop.removeIf(shop -> shop == shopGroup);
   }
 
+
+  /**
+   * Open a globalshop for a player
+   *
+   * @param player Player on which open the shop
+   * @param shop Name of the shop to open
+   * @param success Success callback
+   */
+  public void openShop(Player player, ShopInfo shop, Consumer<InventoryGUI> success) {
+    if (ShopUtils.isLockedShop(shop.getGroup())) {
+      PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopTemporarilyLocked");
+      return ;
+    }
+
+    if (GlobalMarketChest.plugin.inventories.hasInventory(player.getUniqueId())) {
+      if (GlobalMarketChest.plugin.inventories.getInventory(player.getUniqueId()).getChatEditing())
+        return;
+      GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
+    }
+    final InventoryGUI inv = new InventoryGUI(player);
+    GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
+    inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
+    inv.open();
+    success.accept(inv);
+  }
 }

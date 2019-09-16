@@ -135,7 +135,7 @@ public class WorldListener implements Listener {
         return;
       }
 
-      Boolean asLinkedShop = attached.stream().anyMatch(face -> {
+      final Boolean asLinkedShop = attached.stream().anyMatch(face -> {
         ShopInfo s = ShopUtils.getShop(block.getRelative(face));
         return (s != null && s.getId() != shop.getId());
       });
@@ -152,12 +152,11 @@ public class WorldListener implements Listener {
             }
           }
         };
-        InventoryGUI inv = openShop(player, shop);
-        if (inv == null)
-          return;
-        inv.getTransaction().put(TransactionKey.QUESTION, Pair.of(LangUtils.get("InfoMessages.DeleteShopQuestion"), deleteConsumer));
-        inv.loadInterface("ConfirmView");
-        event.setCancelled(true);
+        ShopUtils.openShop(player, shop, inv -> {
+          inv.getTransaction().put(TransactionKey.QUESTION, Pair.of(LangUtils.get("InfoMessages.DeleteShopQuestion"), deleteConsumer));
+          inv.loadInterface("ConfirmView");
+          event.setCancelled(true);
+        });
         return;
       }
 
@@ -166,26 +165,6 @@ public class WorldListener implements Listener {
       PlayerUtils.sendMessageConfig(player, "ErrorMessages.CantRemoveBlock");
       event.setCancelled(true);
     }
-  }
-
-  /**
-   * Open a shop interface for player
-   *
-   * @param player Player on which open the open the shop
-   * @param shop Informations about the shop opened
-   * @return
-   */
-  private InventoryGUI openShop(Player player, ShopInfo shop) {
-    if (GlobalMarketChest.plugin.inventories.hasInventory(player.getUniqueId())) {
-      if (GlobalMarketChest.plugin.inventories.getInventory(player.getUniqueId()).getChatEditing())
-        return null;
-      GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
-    }
-    InventoryGUI inv = new InventoryGUI(player);
-    GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
-    inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
-    inv.open();
-    return inv;
   }
 
   /**
@@ -204,15 +183,8 @@ public class WorldListener implements Listener {
       if (shop == null)
         return;
       event.setCancelled(true);
-      if (!Permissions.GS_OPENSHOP.isSetOnWithMessage(player)) {
-        return;
-      }
-      if (!ShopUtils.isLockedShop(shop.getGroup())) {
-        InventoryGUI inv = openShop(player, shop);
-        if (inv != null)
-          inv.loadInterface("CategoryView");
-      } else {
-        PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopTemporarilyLocked");
+      if (Permissions.GS_OPENSHOP.isSetOnWithMessage(player)) {
+        ShopUtils.openShop(player, shop, inv -> inv.loadInterface("CategoryView"));
       }
     }
   }
