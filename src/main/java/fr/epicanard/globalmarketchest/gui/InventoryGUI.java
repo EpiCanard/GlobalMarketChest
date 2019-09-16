@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.conversations.Conversation;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.potion.PotionEffect;
@@ -38,6 +39,7 @@ public class InventoryGUI {
   private Warning warn;
   @Getter
   private Boolean chatEditing = false;
+  private Conversation currentConv;
   private Consumer<String> chatConsumer;
   @Getter
   private RankProperties playerRankProperties;
@@ -61,8 +63,6 @@ public class InventoryGUI {
 
   /**
    * Open current inventory for the specified player
-   *
-   * @param player
    */
   public void open() {
     player.openInventory(this.inv);
@@ -70,8 +70,6 @@ public class InventoryGUI {
 
   /**
    * Close current inventory for the specified player
-   *
-   * @param player
    */
   public void close() {
     this.player.closeInventory();
@@ -104,7 +102,8 @@ public class InventoryGUI {
     this.close();
     this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1), true);
     this.chatConsumer = consumer;
-    ChatUtils.newConversation(this.player, LangUtils.get(path)).begin();
+    this.currentConv = ChatUtils.newConversation(this.player, LangUtils.get(path));
+    this.currentConv.begin();
   }
 
   /**
@@ -119,7 +118,7 @@ public class InventoryGUI {
       this.shopStack.pop().destroy();
       peek = this.shopStack.peek();
     } while (peek != null && peek.isTemp());
-    Optional.ofNullable(peek).ifPresent(e -> e.load());
+    Optional.ofNullable(peek).ifPresent(ShopInterface::load);
   }
 
   /**
@@ -130,13 +129,11 @@ public class InventoryGUI {
       return;
     this.shopStack.peek().unload();
     this.shopStack.pop().destroy();
-    Optional.ofNullable(this.shopStack.peek()).ifPresent(e -> e.load());
+    Optional.ofNullable(this.shopStack.peek()).ifPresent(ShopInterface::load);
   }
 
   /**
    * Unload all interface
-   *
-   * @param key
    */
   public void unloadAllInterface() {
     if (this.shopStack.isEmpty())
@@ -149,7 +146,7 @@ public class InventoryGUI {
   /**
    * Load interface with a specific name
    *
-   * @param name
+   * @param name Interface name
    */
   public void loadInterface(String name) {
     try {
@@ -190,7 +187,9 @@ public class InventoryGUI {
   public void destroy() {
     this.unloadAllInterface();
     this.close();
-    if (this.chatEditing)
+    if (this.chatEditing) {
       this.player.removePotionEffect(PotionEffectType.BLINDNESS);
+      this.currentConv.abandon();
+    }
   }
 }

@@ -27,7 +27,7 @@ public class ChatUtils {
    *
    * @param text Text to set inside TextComponent
    * @param hover Hover text for the link
-   * @param coloe Color of the text
+   * @param color Color of the text
    * @param command Command to execute when a player click on the link
    * @return TextComponent generated
    */
@@ -46,7 +46,7 @@ public class ChatUtils {
    *
    * @param text Text to set inside TextComponent
    * @param hover Hover text for the link
-   * @param coloe Color of the text
+   * @param color Color of the text
    * @param command Command to execute when a player click on the link
    * @return TextComponent generated
    */
