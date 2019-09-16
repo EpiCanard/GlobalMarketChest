@@ -29,25 +29,6 @@ import fr.epicanard.globalmarketchest.utils.ShopUtils;
 public class OpenConsumer implements CommandConsumer {
 
   /**
-   * Open a globalshop for a player
-   *
-   * @param player Player on which open the shop
-   * @param shop Name of the shop to open
-   */
-   private void openShop(Player player, ShopInfo shop) {
-    GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
-    if (!ShopUtils.isLockedShop(shop.getGroup())) {
-      final InventoryGUI inv = new InventoryGUI(player);
-      GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
-      inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
-      inv.open();
-      inv.loadInterface("CategoryView");
-    } else {
-      PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopTemporarilyLocked");
-    }
-  }
-
-  /**
    * Method called when consumer is executed
    *
    * @param node Command node
@@ -85,7 +66,7 @@ public class OpenConsumer implements CommandConsumer {
       return false;
     }
 
-    this.openShop(player, match.get(0));
+    ShopUtils.openShop(player, match.get(0), inv -> inv.loadInterface("CategoryView"));
     return true;
   }
 }
