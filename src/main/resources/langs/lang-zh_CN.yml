@@ -124,6 +124,10 @@ Buttons:
     Name: "&f最大数量"
   MaxRepeat:
     Name: "&f重置数量"
+  RepeatIncrease:
+    Name: "&2+"
+  RepeatDecrease:
+    Name: "&4-"
   InProgressAuction:
     Name: "&a进行中拍卖"
   ExpiredAuction:

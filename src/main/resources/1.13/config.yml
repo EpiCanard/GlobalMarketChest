@@ -152,6 +152,8 @@ Interfaces:
     NumPage: minecraft:book
     MaxInOne: minecraft:orange_stained_glass_pane
     MaxRepeat: minecraft:orange_stained_glass_pane
+    RepeatIncrease: minecraft:purple_stained_glass_pane
+    RepeatDecrease: minecraft:light_blue_stained_glass_pane
     InProgressAuction: minecraft:book
     ExpiredAuction: minecraft:book
     SoldAuction: minecraft:book

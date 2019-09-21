@@ -123,6 +123,10 @@ Buttons:
     Name: "&fМакс. кол-во предметов на одном аукционе"
   MaxRepeat:
     Name: "&fПовторять аукцион как можно больше"
+  RepeatIncrease:
+    Name: "&2+"
+  RepeatDecrease:
+    Name: "&4-"
   InProgressAuction:
     Name: "&aВ процессе аукционов"
   ExpiredAuction:

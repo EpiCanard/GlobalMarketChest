@@ -125,6 +125,10 @@ Buttons:
   MaxRepeat:
     Name: "&fRépéter cette enchère"
     Description: "&7autant de fois que possible"
+  RepeatIncrease:
+    Name: "&2+"
+  RepeatDecrease:
+    Name: "&4-"
   InProgressAuction:
     Name: "&aEnchères en cours"
   ExpiredAuction:

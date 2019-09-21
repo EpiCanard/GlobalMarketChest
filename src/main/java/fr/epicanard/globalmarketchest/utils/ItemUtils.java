@@ -8,6 +8,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
+
 /**
  * Utility Class about Item
  */
@@ -20,7 +22,7 @@ public class ItemUtils {
    * 
    * /!\ Don't use on selling items
    * 
-   * @param ItemStack
+   * @param item ItemStack
    * @return ItemStack
    */
   public ItemStack addGlow(ItemStack item) {
@@ -39,7 +41,7 @@ public class ItemUtils {
    * 
    * /!\ Don't use on selling items
    * 
-   * @param ItemStack
+   * @param item ItemStack
    * @return ItemStack
    */
   public ItemStack removeGlow(ItemStack item) {
@@ -78,5 +80,16 @@ public class ItemUtils {
       item.setItemMeta(met);
     }
     return item;
+  }
+
+  /**
+   * Update the lore of an item inside an inventory
+   *
+   * @param inv Inventory that contains the item
+   * @param pos Position of item
+   * @param lore Lore to set to the item
+   */
+  public void updateLore(Inventory inv, int pos, List<String> lore) {
+    inv.setItem(pos, ItemStackUtils.setItemStackLore(inv.getItem(pos), lore));
   }
 }
