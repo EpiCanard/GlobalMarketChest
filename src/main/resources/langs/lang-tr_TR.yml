@@ -124,6 +124,10 @@ Buttons:
     Name: "&fTek bir açık artırmada maksimum ürün"
   MaxRepeat:
     Name: "&fAçık artırmayı mümkün olduğunca tekrarlayın"
+  RepeatIncrease:
+    Name: "&2+"
+  RepeatDecrease:
+    Name: "&4-"
   InProgressAuction:
     Name: "&aDevam eden açık artırmalar"
   ExpiredAuction:

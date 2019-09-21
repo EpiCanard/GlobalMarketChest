@@ -151,6 +151,8 @@ Interfaces:
     NumPage: minecraft:book
     MaxInOne: minecraft:stained_glass_pane/1
     MaxRepeat: minecraft:stained_glass_pane/1
+    RepeatIncrease: minecraft:stained_glass_pane/10
+    RepeatDecrease: minecraft:stained_glass_pane/3
     InProgressAuction: minecraft:book
     ExpiredAuction: minecraft:book
     SoldAuction: minecraft:book

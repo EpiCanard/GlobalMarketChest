@@ -132,6 +132,8 @@ Interfaces:
         SetItem: CreateAuction
     Items:
       22: AuctionMiddle
+      25: RepeatIncrease
+      34: RepeatDecrease
 
   # Auction view to select item price
   CreateAuctionPrice:

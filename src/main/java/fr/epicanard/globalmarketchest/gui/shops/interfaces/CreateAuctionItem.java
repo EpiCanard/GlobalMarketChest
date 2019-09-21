@@ -1,9 +1,10 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import fr.epicanard.globalmarketchest.utils.ItemUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -22,15 +23,18 @@ import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 
 public class CreateAuctionItem extends ShopInterface {
-  private Boolean accepteDamagedItems;
+  private Integer maxAuctions = 0;
+  private Boolean acceptDamagedItems;
 
   public CreateAuctionItem(InventoryGUI inv) {
     super(inv);
     this.isTemp = true;
     this.actions.put(22, i -> this.unsetItem());
+    this.actions.put(25, i -> this.defineAuctionNumber(true));
+    this.actions.put(34, i -> this.defineAuctionNumber(false));
     this.actions.put(0, new PreviousInterface());
 
-    this.accepteDamagedItems = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AcceptDamagedItems", true);
+    this.acceptDamagedItems = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AcceptDamagedItems", true);
 
     final Boolean max = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxRepeat", true);
     final Boolean one = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxInOne", true);
@@ -51,12 +55,24 @@ public class CreateAuctionItem extends ShopInterface {
     super.load();
 
     final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    this.defineMaxAuctions();
     if (item != null) {
       this.inv.getInv().setItem(22, item);
       this.updateItem();
     } else {
       this.unsetItem();
     }
+  }
+
+  /**
+   * Define the maximum number of auctions a player can create
+   */
+  private void defineMaxAuctions() {
+    final Integer maxAuctionsByPlayer = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+
+    GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), inv.getPlayer(),
+            num -> this.maxAuctions = maxAuctionsByPlayer - num);
   }
 
   /**
@@ -92,6 +108,8 @@ public class CreateAuctionItem extends ShopInterface {
       if (k == 22 || k == 53)
         v.unset();
     });
+    ItemUtils.updateLore(this.inv.getInv(), 25, null);
+    ItemUtils.updateLore(this.inv.getInv(), 34, null);
   }
 
   /**
@@ -103,7 +121,7 @@ public class CreateAuctionItem extends ShopInterface {
     final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     if (item != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.UseLastPrice", true)) {
       final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-      GlobalMarketChest.plugin.auctionManager.getLastPrice(auction, price -> auction.setPrice(price));
+      GlobalMarketChest.plugin.auctionManager.getLastPrice(auction, auction::setPrice);
     }
     return (item != null);
   }
@@ -120,6 +138,10 @@ public class CreateAuctionItem extends ShopInterface {
 
     lore.add("&7" + LangUtils.get("Divers.Quantity") + " : &6" + auction.getAmount());
     lore.add("&7" + LangUtils.get("Divers.AuctionNumber") + " : &6" + this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER));
+
+    ItemUtils.updateLore(this.inv.getInv(), 25, lore);
+    ItemUtils.updateLore(this.inv.getInv(), 34, lore);
+
     lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
     this.inv.getInv().setItem(22, VersionSupportUtils.getInstance().setNbtTag(ItemStackUtils.setItemStackLore(item.clone(), lore)));
   }
@@ -136,11 +158,12 @@ public class CreateAuctionItem extends ShopInterface {
       return;
     this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, 1);
     final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
-    final Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0,
-        (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
+    final Integer max = PlayerUtils.countMatchingItem(items, item);
+
     item.setAmount(ItemStackUtils.getMaxStack(item, max));
     auction.setItemStack(item);
     auction.setAmount(max);
+
     this.updateItem();
   }
 
@@ -150,25 +173,50 @@ public class CreateAuctionItem extends ShopInterface {
    */
   private void defineMaxRepeat() {
     this.inv.getWarn().stopWarn();
+
     final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
     if (item == null || auction == null)
       return;
 
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-    final Integer maxAuctions = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
-    final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
-    final Integer max = Arrays.asList(items).stream().filter(it -> it != null && it.isSimilar(item)).reduce(0,
-        (res, val) -> res + val.getAmount(), (s1, s2) -> s1 + s2);
     auction.setAmount(this.inv.getTransactionValue(TransactionKey.AUCTIONAMOUNT));
     item.setAmount(auction.getAmount());
     auction.setItemStack(item);
-    final Integer auctionNumber = max / auction.getAmount();
 
-    GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), inv.getPlayer(), num -> {
-      this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, (num + auctionNumber > maxAuctions) ? maxAuctions - num : auctionNumber);
-      this.updateItem();
-    });
+    final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
+    final Integer maxAuctionNumber = PlayerUtils.countMatchingItem(items, item) / auction.getAmount();
+    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, (maxAuctionNumber > this.maxAuctions) ? this.maxAuctions : maxAuctionNumber);
+
+    this.updateItem();
+  }
+
+  /**
+   * Increase or decrease the number of auction
+   *
+   * @param add Define if increase or decrease
+   */
+  private void defineAuctionNumber(Boolean add) {
+    this.inv.getWarn().stopWarn();
+
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    if (item == null || auction == null)
+      return;
+
+    final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
+    final Integer maxAuctionNumber = PlayerUtils.countMatchingItem(items, item) / auction.getAmount();
+    Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
+
+    if (add && auctionNumber + 1 <= maxAuctionNumber && auctionNumber + 1 <= this.maxAuctions) {
+      auctionNumber += 1;
+    }
+
+    if (!add && auctionNumber - 1 > 0) {
+      auctionNumber = (auctionNumber <= maxAuctionNumber) ? auctionNumber - 1 : maxAuctionNumber;
+    }
+
+    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, auctionNumber);
+    this.updateItem();
   }
 
   /**
@@ -190,7 +238,7 @@ public class CreateAuctionItem extends ShopInterface {
       this.inv.getWarn().stopWarn();
       if (ItemStackUtils.isBlacklisted(item))
         this.inv.getWarn().warn("BlacklistedItem", 40);
-      else if (!this.accepteDamagedItems && ItemStackUtils.isDamaged(item))
+      else if (!this.acceptDamagedItems && ItemStackUtils.isDamaged(item))
         this.inv.getWarn().warn("DamagedItem", 40);
       else
         this.setItem(item);

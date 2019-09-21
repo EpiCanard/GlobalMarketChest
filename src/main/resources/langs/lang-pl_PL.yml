@@ -124,6 +124,10 @@ Buttons:
     Name: "&fMaksymalna liczba w jednej aukcji"
   MaxRepeat:
     Name: "&fPowtórz aukcję tyle razy, ile to możliwe"
+  RepeatIncrease:
+    Name: "&2+"
+  RepeatDecrease:
+    Name: "&4-"
   InProgressAuction:
     Name: "&aAukcje w trakcie realizacji"
   ExpiredAuction:

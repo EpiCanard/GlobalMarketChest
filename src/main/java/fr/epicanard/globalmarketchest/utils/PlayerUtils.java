@@ -244,4 +244,16 @@ public class PlayerUtils {
 
     return playerHead;
   }
+
+  /**
+   * Return the number of items inside an item list that matching a specific item
+   *
+   * @param inventoryItems Items List
+   * @param item Searched item
+   * @return Number of Searched item inside items list
+   */
+  public Integer countMatchingItem(ItemStack[] inventoryItems, ItemStack item) {
+    return Arrays.stream(inventoryItems).filter(it -> it != null && it.isSimilar(item)).reduce(0,
+            (res, val) -> res + val.getAmount(), Integer::sum);
+  }
 }
