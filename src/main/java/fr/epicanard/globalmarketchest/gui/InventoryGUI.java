@@ -84,6 +84,7 @@ public class InventoryGUI {
   public void setChatReturn(String value) {
     this.chatEditing = false;
     this.open();
+    this.getInterface().updateInterfaceTitle();
     this.player.removePotionEffect(PotionEffectType.BLINDNESS);
     if (value != null) {
       this.chatConsumer.accept(value);
