@@ -148,7 +148,7 @@ Interfaces:
     ViewByPlayer: minecraft:chest
     ViewByLastCreated: minecraft:apple
     AuctionSide: minecraft:blue_stained_glass_pane
-    AuctionMiddle: minecraft:stained_glass_pane
+    AuctionMiddle: minecraft:white_stained_glass_pane
     GlobalShop: minecraft:ender_chest
     AuctionShop: minecraft:shulker_box
     AdminShop: minecraft:chest
