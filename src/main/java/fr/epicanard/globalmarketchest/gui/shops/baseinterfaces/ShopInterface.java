@@ -137,4 +137,11 @@ public abstract class ShopInterface {
    */
   public void onDrop(InventoryClickEvent event, InventoryGUI inv) {}
 
+  /**
+   * Update the interface title
+   */
+  public void updateInterfaceTitle() {
+    this.updateInventoryName(this.getClass().getSimpleName());
+  }
+
 }
