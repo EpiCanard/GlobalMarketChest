@@ -38,6 +38,8 @@ Options:
   EnableMaxInOne: true
   # Define if the button MaxRepeat in CreateAuction view must be here
   EnableMaxRepeat: true
+  # Define if the buttons to repeat the auction one by one in CreateAuction view must be here (RepeatIncresae and RepeatDecrease)
+  EnableRepeatOneByOne: true
   # Define if a player can find similar auctions with drag and drop on category view
   EnableSimilarAuctions: true
   # Default price for new auctions

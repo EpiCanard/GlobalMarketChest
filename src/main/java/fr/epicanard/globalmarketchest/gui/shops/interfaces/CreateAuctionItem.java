@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import fr.epicanard.globalmarketchest.utils.ItemUtils;
@@ -25,19 +26,19 @@ import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 public class CreateAuctionItem extends ShopInterface {
   private Integer maxAuctions = 0;
   private Boolean acceptDamagedItems;
+  private final Boolean oneByOne;
 
   public CreateAuctionItem(InventoryGUI inv) {
     super(inv);
     this.isTemp = true;
     this.actions.put(22, i -> this.unsetItem());
-    this.actions.put(25, i -> this.defineAuctionNumber(true));
-    this.actions.put(34, i -> this.defineAuctionNumber(false));
     this.actions.put(0, new PreviousInterface());
 
     this.acceptDamagedItems = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AcceptDamagedItems", true);
 
     final Boolean max = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxRepeat", true);
     final Boolean one = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxInOne", true);
+    this.oneByOne = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableRepeatOneByOne", true);
 
     if (one) {
       this.actions.put(48, i -> this.defineMaxInOne());
@@ -47,6 +48,13 @@ public class CreateAuctionItem extends ShopInterface {
       this.actions.put(50, i -> this.defineMaxRepeat());
       this.togglers.get(50).set();
     }
+    if (this.oneByOne) {
+      this.actions.put(25, i -> this.defineAuctionNumber(true));
+      this.togglers.get(25).set();
+      this.actions.put(34, i -> this.defineAuctionNumber(false));
+      this.togglers.get(34).set();
+    }
+
     this.actions.put(53, new NextInterface("CreateAuctionPrice", this::checkItem));
   }
 
@@ -96,6 +104,16 @@ public class CreateAuctionItem extends ShopInterface {
   }
 
   /**
+   * Update lore of repeat one by one items
+   *
+   * @param lore Lore to set on items
+   */
+  private void updateRepeatLore(List<String> lore) {
+    ItemUtils.updateLore(this.inv.getInv(), 25, lore);
+    ItemUtils.updateLore(this.inv.getInv(), 34, lore);
+  }
+
+  /**
    * Remove the item from drop zone
    */
   private void unsetItem() {
@@ -108,8 +126,9 @@ public class CreateAuctionItem extends ShopInterface {
       if (k == 22 || k == 53)
         v.unset();
     });
-    ItemUtils.updateLore(this.inv.getInv(), 25, null);
-    ItemUtils.updateLore(this.inv.getInv(), 34, null);
+    if (this.oneByOne) {
+      this.updateRepeatLore(Collections.emptyList());
+    }
   }
 
   /**
@@ -139,8 +158,9 @@ public class CreateAuctionItem extends ShopInterface {
     lore.add("&7" + LangUtils.get("Divers.Quantity") + " : &6" + auction.getAmount());
     lore.add("&7" + LangUtils.get("Divers.AuctionNumber") + " : &6" + this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER));
 
-    ItemUtils.updateLore(this.inv.getInv(), 25, lore);
-    ItemUtils.updateLore(this.inv.getInv(), 34, lore);
+    if (this.oneByOne) {
+      this.updateRepeatLore(lore);
+    }
 
     lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
     this.inv.getInv().setItem(22, VersionSupportUtils.getInstance().setNbtTag(ItemStackUtils.setItemStackLore(item.clone(), lore)));
