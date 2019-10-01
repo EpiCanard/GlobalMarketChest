@@ -3,7 +3,12 @@ InterfacesTitle:
   BuyAuction: "&2购买拍卖"
   CategoryView: "&2拍卖类别"
   AuctionViewList: "&2拍卖列表"
+  AuctionViewByPlayer: "&2拍卖列表"
+  AuctionViewItem: "&2拍卖列表"
   ConfigShop : "&2商店设置"
+  AuctionGlobalView: "&2查看你上架中的商品"
+  SearchView: "&2Search auctions"
+  ConfirmView: "&2Confirmation"
   # Auction Creation
   CreateAuctionItem: "&2选择拍卖物品 "
   CreateAuctionPrice: "&2设定拍卖价格"

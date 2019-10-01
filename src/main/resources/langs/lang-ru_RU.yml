@@ -3,7 +3,12 @@ InterfacesTitle:
   BuyAuction: "&2Купить с аукциона"
   CategoryView: "&2Список категорий"
   AuctionViewList: "&2Список аукционов"
+  AuctionViewByPlayer: "&2Список аукционов"
+  AuctionViewItem: "&2Список аукционов"
   ConfigShop : "&2Конфигурация магазина"
+  AuctionGlobalView: "&2История аукционов"
+  SearchView: "&2Search auctions"
+  ConfirmView: "&2Confirmation"
   # Создание аукциона
   CreateAuctionItem: "&2Выбор предмета аукциона"
   CreateAuctionPrice: "&2Выбор стоимости аукциона"

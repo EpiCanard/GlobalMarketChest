@@ -3,7 +3,12 @@ InterfacesTitle:
   BuyAuction: "&2Achat de l'enchère"
   CategoryView: "&2Vue par catégorie"
   AuctionViewList: "&2Liste des enchères"
+  AuctionViewByPlayer: "&2Liste des enchères"
+  AuctionViewItem: "&2Liste des enchères"
   ConfigShop : "&2Configuration du shop"
+  AuctionGlobalView: "&2Historique des enchères"
+  SearchView: "&2Recherche d'enchères"
+  ConfirmView: "&2Confirmation"
   # Auction Creation
   CreateAuctionItem: "&2Sélection de l'item pour l'enchère"
   CreateAuctionPrice: "&2Sélection du prix de l'enchère"

@@ -3,7 +3,12 @@ InterfacesTitle:
   BuyAuction: "&2Açık artırma satın al"
   CategoryView: "&2Kategori görünümü"
   AuctionViewList: "&2Açık artırma listesi"
+  AuctionViewByPlayer: "&2Açık artırma listesi"
+  AuctionViewItem: "&2Açık artırma listesi"
   ConfigShop : "&2Mağaza konfigürasyonu"
+  AuctionGlobalView: "&2Açık artırma geçmişi"
+  SearchView: "&2Search auctions"
+  ConfirmView: "&2Confirmation"
   # Auction Creation
   CreateAuctionItem: "&2Açık artırma öğesini seçin"
   CreateAuctionPrice: "&2Açık artırma fiyatını Seç"
