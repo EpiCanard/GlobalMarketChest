@@ -3,7 +3,12 @@ InterfacesTitle:
   BuyAuction: "&2Kup aukcje"
   CategoryView: "&2Sortowanie według kategorii"
   AuctionViewList: "&2Lista aukcji"
+  AuctionViewByPlayer: "&2Lista aukcji"
+  AuctionViewItem: "&2Lista aukcji"
   ConfigShop : "&2Konfiguracja sklepu"
+  AuctionGlobalView: "&2Historia aukcji"
+  SearchView: "&2Search auctions"
+  ConfirmView: "&2Confirmation"
   # Auction Creation
   CreateAuctionItem: "&2Wybierz item do aukcji"
   CreateAuctionPrice: "&2Wybierz cenę aukcji"
