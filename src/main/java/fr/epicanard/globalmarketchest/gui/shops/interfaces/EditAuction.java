@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.UndoAuction;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -15,7 +16,7 @@ import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
-public class EditAuction extends ShopInterface {
+public class EditAuction extends UndoAuction {
 
   public EditAuction(InventoryGUI inv) {
     super(inv);
@@ -41,34 +42,11 @@ public class EditAuction extends ShopInterface {
   private void renewAuction(InventoryGUI i) {
     final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
 
-    if (GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId()) == true) {
+    if (GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId())) {
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewAuction");
       ReturnBack.execute(null, this.inv);
     } else
       i.getWarn().warn("CantRenewAuction", 49);
-  }
-
-  /**
-   * Undo the selected auction
-   *
-   * @param i
-   */
-  private void undoAuction(InventoryGUI i) {
-    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
-
-    final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
-    item.setAmount(auction.getAmount());
-    try {
-      PlayerUtils.hasEnoughPlaceWarn(i.getPlayer().getInventory(), item);
-      if (GlobalMarketChest.plugin.auctionManager.undoAuction(auction.getId(), auction.getPlayerStarter()) == true) {
-        i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
-        PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoAuction");
-        ReturnBack.execute(null, i);
-      } else
-        throw new WarnException("CantUndoAuction");
-    } catch (WarnException e) {
-      i.getWarn().warn(e.getMessage(), 49);
-    }
   }
 
   @Override

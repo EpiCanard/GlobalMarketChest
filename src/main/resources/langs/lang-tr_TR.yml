@@ -72,6 +72,8 @@ Buttons:
     Name: "&2Açık artırma oluştur"
   BuyAuction:
     Name: "&2Bu açık artırmayı satın al"
+  AdminRemoveAuction:
+    Name: "&cRemove this auction"
   RenewAuction:
     Name: "&6Bu açık artırmayı yenile"
   UndoAuction:
