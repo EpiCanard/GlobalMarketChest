@@ -3,7 +3,11 @@ package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 import java.util.Arrays;
 import java.util.MissingFormatArgumentException;
 import java.util.UUID;
+import java.util.function.Consumer;
 
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.UndoAuction;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,7 +19,6 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
-import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
@@ -24,7 +27,7 @@ import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
-public class BuyAuction extends ShopInterface {
+public class BuyAuction extends UndoAuction {
 
   public BuyAuction(InventoryGUI inv) {
     super(inv);
@@ -35,6 +38,11 @@ public class BuyAuction extends ShopInterface {
     this.setIcon(item);
     this.actions.put(0, new PreviousInterface());
     this.actions.put(31, this::buyAuction);
+
+    if (Permissions.ADMIN_REMOVEAUCTION.isSetOn(inv.getPlayer())) {
+      this.togglers.get(28).set();
+      this.actions.put(28, this::adminRemoveAuction);
+    }
   }
 
   @Override
@@ -135,6 +143,29 @@ public class BuyAuction extends ShopInterface {
       if (messageOwner != null)
         PlayerUtils.sendMessage(starter, messageOwner);
     }
+  }
+
+  /**
+   * Action consumer to remove the auction for an admin
+   *
+   * @param i Inventory clicked
+   */
+  private void adminRemoveAuction(InventoryGUI i) {
+    final Consumer<Boolean> removeAuction = this::removeAuction;
+    inv.getTransaction().put(TransactionKey.QUESTION, Pair.of("Are you sure to delete this auction ?", removeAuction));
+    inv.loadInterface("ConfirmView");
+  }
+
+  /**
+   * Callback that remove auction if necessary and reload the interface
+   *
+   * @param remove Boolean that define if auction must be removed
+   */
+  private void removeAuction(Boolean remove) {
+    if (remove) {
+      this.undoAuction(this.inv, GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AdminRemoveAuctionGetItems", true));
+    }
+    inv.unloadLastInterface();
   }
 
   @Override

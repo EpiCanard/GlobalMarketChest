@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.listeners;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
@@ -23,6 +24,7 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
@@ -141,19 +143,22 @@ public class WorldListener implements Listener {
       });
 
       if (!asLinkedShop) {
-        Consumer<Boolean> deleteConsumer = (b) -> {
-          if (b) {
-            if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
-              PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopDeleted");
-              String owner = shop.getOwner();
-              LoggerUtils.info(String.format("%s : [%s:%s<%s>]", LangUtils.get("InfoMessages.ShopDeleted"),
-                shop.getSignLocation().toString(), PlayerUtils.getPlayerName(owner), owner));
-              block.breakNaturally();
+        Function<InventoryGUI, Consumer<Boolean>> deleteConsumer = (inv) -> {
+          return (b) -> {
+            if (b) {
+              if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
+                PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopDeleted");
+                String owner = shop.getOwner();
+                LoggerUtils.info(String.format("%s : [%s:%s<%s>]", LangUtils.get("InfoMessages.ShopDeleted"),
+                  shop.getSignLocation().toString(), PlayerUtils.getPlayerName(owner), owner));
+                block.breakNaturally();
+              }
             }
-          }
+            new LeaveShop().accept(inv);
+          };
         };
         ShopUtils.openShop(player, shop, inv -> {
-          inv.getTransaction().put(TransactionKey.QUESTION, Pair.of(LangUtils.get("InfoMessages.DeleteShopQuestion"), deleteConsumer));
+          inv.getTransaction().put(TransactionKey.QUESTION, Pair.of(LangUtils.get("InfoMessages.DeleteShopQuestion"), deleteConsumer.apply(inv)));
           inv.loadInterface("ConfirmView");
           event.setCancelled(true);
         });

@@ -89,6 +89,9 @@ Interfaces:
       - Pos: 31
         Type: "circle"
         Set: false
+      - Pos: 28
+        Set: false
+        SetItem: "AdminRemoveAuction"
     Items:
       31: BuyAuction
 

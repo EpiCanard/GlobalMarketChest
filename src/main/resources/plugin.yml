@@ -38,9 +38,16 @@ permissions:
   globalmarketchest.admin.*:
     description: Can do every admin actions
     children:
-      globalmarketchest.admin.deleteshop: true
       globalmarketchest.admin.commands.*: true
-  globalmarketchest.admin.deleteshop:
+      globalmarketchest.admin.shops.*: true
+  globalmarketchest.admin.shops.*:
+    description: Can do every admin actions inside shops
+    children:
+      globalmarketchest.admin.shops.removeauction: true
+      globalmarketchest.admin.shops.deleteshop: true
+  globalmarketchest.admin.shops.removeauction:
+    description: Can delete every auction inside shop
+  globalmarketchest.admin.shops.deleteshop:
     description: Can delete every shop
   # ==== ADMIN COMMANDS ====
   globalmarketchest.admin.commands.*:

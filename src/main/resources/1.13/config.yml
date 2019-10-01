@@ -65,6 +65,8 @@ Options:
   AcceptDamagedItems: false
   # Radius around the sign an 'AllowedLinkBlock' can be linked
   RadiusLinkBlock: 1
+  # When an admin removes an auction of other players, define if the admin get the items or if they are destroyed
+  AdminRemoveAuctionGetItems: true
 Logs:
   # If set to true the prefix [GlobalMarketChest] inside messages will be removed
   HidePrefix: false
@@ -125,6 +127,7 @@ Interfaces:
     NewAuction: minecraft:nether_star
     CreateAuction: minecraft:nether_star
     BuyAuction: minecraft:nether_star
+    AdminRemoveAuction: minecraft:red_wool
     RenewAuction: minecraft:orange_wool
     UndoAuction: minecraft:red_wool
     RenewEveryAuction: minecraft:orange_wool

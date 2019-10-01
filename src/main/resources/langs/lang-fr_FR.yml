@@ -72,6 +72,8 @@ Buttons:
     Name: "&2Créer l'enchère"
   BuyAuction:
     Name: "&2Acheter l'enchère"
+  AdminRemoveAuction:
+    Name: "&cSupprimer cette enchère"
   RenewAuction:
     Name: "&6Renouveler l'enchère"
   UndoAuction:

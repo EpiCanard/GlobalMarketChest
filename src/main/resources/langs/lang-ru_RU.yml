@@ -71,6 +71,8 @@ Buttons:
     Name: "&2Создать аукцион"
   BuyAuction:
     Name: "&2Купить этот аукцион"
+  AdminRemoveAuction:
+    Name: "&cRemove this auction"
   RenewAuction:
     Name: "&6Продлить этот аукцион"
   UndoAuction:

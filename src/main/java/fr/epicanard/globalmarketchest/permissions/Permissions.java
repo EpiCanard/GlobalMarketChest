@@ -10,7 +10,8 @@ import fr.epicanard.globalmarketchest.utils.PlayerUtils;
  * Class that handle permissions of plugin
  */
 public enum Permissions {
-  ADMIN_DELETESHOP("globalmarketchest.admin.deleteshop"),
+  ADMIN_DELETESHOP("globalmarketchest.admin.shops.deleteshop"),
+  ADMIN_REMOVEAUCTION("globalmarketchest.admin.shops.removeauction"),
   GS_CREATESHOP("globalmarketchest.globalshop.createshop"),
   GS_OPENSHOP("globalmarketchest.globalshop.openshop"),
   GS_CREATEAUCTION("globalmarketchest.globalshop.createauction"),
