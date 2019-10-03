@@ -192,19 +192,9 @@ public class CreateAuctionItem extends ShopInterface {
    * The auction number is limited by config
    */
   private void defineMaxRepeat() {
-    this.inv.getWarn().stopWarn();
-
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-    if (item == null || auction == null)
+    final Integer maxAuctionNumber = this.resetAndGetMaxAuctionNumber();
+    if (maxAuctionNumber == null)
       return;
-
-    auction.setAmount(this.inv.getTransactionValue(TransactionKey.AUCTIONAMOUNT));
-    item.setAmount(auction.getAmount());
-    auction.setItemStack(item);
-
-    final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
-    final Integer maxAuctionNumber = PlayerUtils.countMatchingItem(items, item) / auction.getAmount();
     this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, (maxAuctionNumber > this.maxAuctions) ? this.maxAuctions : maxAuctionNumber);
 
     this.updateItem();
@@ -216,15 +206,9 @@ public class CreateAuctionItem extends ShopInterface {
    * @param add Define if increase or decrease
    */
   private void defineAuctionNumber(Boolean add) {
-    this.inv.getWarn().stopWarn();
-
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-    if (item == null || auction == null)
+    final Integer maxAuctionNumber = this.resetAndGetMaxAuctionNumber();
+    if (maxAuctionNumber == null)
       return;
-
-    final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
-    final Integer maxAuctionNumber = PlayerUtils.countMatchingItem(items, item) / auction.getAmount();
     Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
 
     if (add && auctionNumber + 1 <= maxAuctionNumber && auctionNumber + 1 <= this.maxAuctions) {
@@ -237,6 +221,27 @@ public class CreateAuctionItem extends ShopInterface {
 
     this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, auctionNumber);
     this.updateItem();
+  }
+
+  /**
+   * Reset auction quantity and get max auction number possible with original quantity
+   *
+   * @return Max auction number possible
+   */
+  private Integer resetAndGetMaxAuctionNumber() {
+    this.inv.getWarn().stopWarn();
+
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    if (item == null || auction == null)
+      return null;
+
+    auction.setAmount(this.inv.getTransactionValue(TransactionKey.AUCTIONAMOUNT));
+    item.setAmount(auction.getAmount());
+    auction.setItemStack(item);
+
+    final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
+    return PlayerUtils.countMatchingItem(items, item) / auction.getAmount();
   }
 
   /**
