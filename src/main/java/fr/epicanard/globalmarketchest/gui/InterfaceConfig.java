@@ -13,28 +13,40 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 import java.util.logging.Level;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
 public class InterfaceConfig {
+  private ItemStack background;
   private ItemStack[] itemStacks = new ItemStack[54];
   private PaginatorConfig paginator;
   private List<TogglerConfig> togglers = new ArrayList<>();
 
-  InterfaceConfig(ConfigurationSection config, String interfaceName) {
-    this.loadPaginator(config, interfaceName, Collections.emptyList());
-    this.loadTogglers(config, interfaceName, Collections.emptyList());
-    this.loadInterface(config, interfaceName, Collections.emptyList());
-  }
-
   InterfaceConfig(ConfigurationSection config, String interfaceName, List<InterfaceConfig> baseInterfaces) {
+    this.loadBackground(config, interfaceName, baseInterfaces);
     this.loadPaginator(config, interfaceName, baseInterfaces);
     this.loadTogglers(config, interfaceName, baseInterfaces);
     this.loadInterface(config, interfaceName, baseInterfaces);
   }
 
+  /**
+   * Load background from config
+   *
+   * @param config         Base config section of interface
+   * @param name           Name of interface
+   * @param baseInterfaces List of base InterfaceConfig
+   */
+  private void loadBackground(ConfigurationSection config, String name, List<InterfaceConfig> baseInterfaces) {
+    String background = config.getString(name + ".Background");
+
+    if (background == null) {
+      this.background = baseInterfaces.stream().map(InterfaceConfig::getBackground).filter(Objects::nonNull)
+          .findFirst().orElse(InterfacesLoader.getInstance().getBackground("Default"));
+      return;
+    }
+
+    this.background = InterfacesLoader.getInstance().getBackground(background);
+  }
 
   /**
    * Load paginator from config
@@ -136,5 +148,15 @@ public class InterfaceConfig {
       }
     });
     return items;
+  }
+
+  /**
+   * Fill all empty space with background
+   */
+  public void fillBackground() {
+    for (int i = 0; i < 54; i++) {
+      if (this.itemStacks[i] == null)
+        this.itemStacks[i] = this.background;
+    }
   }
 }

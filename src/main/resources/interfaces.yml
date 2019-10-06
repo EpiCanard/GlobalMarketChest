@@ -19,6 +19,8 @@ BaseInterfaces:
         SetItem: NewAuction
     Items:
       45: Money
+  WithGlobalView:
+    Items:
       46: GlobalView
   DefaultShopInterface:
     Paginator:
@@ -39,6 +41,8 @@ BaseInterfaces:
       15: SoldAuction
       16: BoughtAuction
       17: CanceledAuction
+  AdminInterface:
+    Background: Admin
 
 # Real interface implemented
 Interfaces:
@@ -52,6 +56,7 @@ Interfaces:
     Base:
       - Exit
       - DefaultFooter
+      - WithGlobalView
     Items:
       0: Search
 
@@ -60,6 +65,7 @@ Interfaces:
       - Return
       - Exit
       - DefaultFooter
+      - WithGlobalView
     Items:
       19: SearchItemDrop
       22: SearchItemText
@@ -69,17 +75,20 @@ Interfaces:
     Base:
       - DefaultShopInterface
       - DefaultFooter
+      - WithGlobalView
 
   AuctionViewItem:
     Base:
       - DefaultShopInterface
       - DefaultFooter
+      - WithGlobalView
 
   # View to see every auctions of one item
   AuctionViewList:
     Base:
       - DefaultShopInterface
       - DefaultFooter
+      - WithGlobalView
 
   BuyAuction:
     Base:
