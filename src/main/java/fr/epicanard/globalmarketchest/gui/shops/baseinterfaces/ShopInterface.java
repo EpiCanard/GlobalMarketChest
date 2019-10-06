@@ -53,8 +53,6 @@ public abstract class ShopInterface {
 
   /**
    * Load specific interface with is className
-   *
-   * @param gui
    */
   public void load() {
     String className = this.getClass().getSimpleName();
@@ -78,7 +76,7 @@ public abstract class ShopInterface {
   /**
    * Update the inventory name with current interface name
    *
-   * @param interfaceName
+   * @param interfaceName Name of interface to set
    */
   private void updateInventoryName(String interfaceName) {
     String title = LangUtils.getOrElse("InterfacesTitle." + interfaceName, "&2GlobalMarketChest");
