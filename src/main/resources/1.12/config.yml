@@ -120,9 +120,12 @@ ItemsBlacklist:
 Interfaces:
   # Warning interface messages are represented by flashing item alternating Background this item
   Warn: minecraft:stained_glass_pane/14
+  # Backgrounds for interfaces
+  Backgrounds:
+    Default: minecraft:stained_glass_pane/15
+    Admin: minecraft:stained_glass_pane/14
   # All others buttons used inside interface are defined here
   Buttons:
-    Background: minecraft:stained_glass_pane/15
     NewAuction: minecraft:nether_star
     CreateAuction: minecraft:nether_star
     BuyAuction: minecraft:nether_star
