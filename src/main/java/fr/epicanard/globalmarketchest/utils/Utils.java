@@ -100,14 +100,14 @@ public class Utils {
     String item;
     ItemStack itemStack = Utils.getBackground();
 
-    if (buttonName != null) {
-      item = loader.getConfig().getString("Interfaces.Buttons." + buttonName);
-      itemStack = ItemStackUtils.getItemStack(item);
-      ConfigurationSection sec = loader.getLanguages().getConfigurationSection("Buttons." + buttonName);
-      if (sec != null) {
-        Map<String, Object> tmp = sec.getValues(false);
-        ItemStackUtils.setItemStackMeta(itemStack, (String) tmp.get("Name"), Utils.toList((String)tmp.get("Description")));
-      }
+    if (buttonName == null)
+      return null;
+    item = loader.getConfig().getString("Interfaces.Buttons." + buttonName);
+    itemStack = ItemStackUtils.getItemStack(item);
+    ConfigurationSection sec = loader.getLanguages().getConfigurationSection("Buttons." + buttonName);
+    if (sec != null) {
+      Map<String, Object> tmp = sec.getValues(false);
+      ItemStackUtils.setItemStackMeta(itemStack, (String) tmp.get("Name"), Utils.toList((String)tmp.get("Description")));
     }
     return itemStack;
   }

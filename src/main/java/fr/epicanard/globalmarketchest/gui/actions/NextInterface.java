@@ -27,8 +27,10 @@ public class NextInterface implements Consumer<InventoryGUI> {
   @Override
   public void accept(InventoryGUI t) {
     try {
-      if (this.callable == null || this.callable.call() == true)
+      if (this.callable == null || this.callable.call())
         t.loadInterface(name);
-    } catch(Exception e) {}
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
   }
 }

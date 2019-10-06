@@ -140,10 +140,10 @@ public class Paginator {
    * When reload interface call this method to reload all the paginator with the same result before leaving
    */
   public void reloadInterface() {
-    this.updateCounter();
     this.addItem(this.config.getPreviousPos(), this.previous);
     this.addItem(this.config.getNextPos(), this.next);
     this.addItem(this.config.getNumPagePos(), this.numPage);
+    this.updateCounter();
     this.reload();
   }
 

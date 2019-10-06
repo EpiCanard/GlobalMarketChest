@@ -52,7 +52,6 @@ public class GlobalMarketChest extends JavaPlugin {
   public final VaultEconomy economy;
   public final ShopManager shopManager;
   public final AuctionManager auctionManager;
-  public final Map<String, ItemStack[]> interfaces;
   @Getter
   private CategoryHandler catHandler;
 
@@ -63,7 +62,6 @@ public class GlobalMarketChest extends JavaPlugin {
     this.economy = new VaultEconomy();
     this.shopManager = new ShopManager();
     this.auctionManager = new AuctionManager();
-    this.interfaces = new HashMap<>();
     this.ranksLoader = new RanksLoader();
   }
 
@@ -84,8 +82,7 @@ public class GlobalMarketChest extends JavaPlugin {
     Utils.init();
 
     YamlConfiguration defConfig = this.configLoader.loadResource("interfaces.yml");
-    this.interfaces.clear();
-    this.interfaces.putAll(InterfacesLoader.getInstance().loadInterfaces(defConfig));
+    InterfacesLoader.getInstance().loadInterfaces(defConfig);
 
     try {
       this.initEconomy();
@@ -113,8 +110,6 @@ public class GlobalMarketChest extends JavaPlugin {
       this.sqlConnection.cleanPool();
     if (this.inventories != null)
       this.inventories.removeAllInventories();
-    if (this.interfaces != null)
-      this.interfaces.clear();
     HandlerList.unregisterAll(this);
   }
 

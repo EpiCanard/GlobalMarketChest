@@ -1,13 +1,8 @@
 package fr.epicanard.globalmarketchest.gui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,12 +22,8 @@ import fr.epicanard.globalmarketchest.utils.Utils;
  */
 public class InterfacesLoader {
   private static InterfacesLoader INSTANCE;
-  private Map<String, ItemStack[]> interfaces = new HashMap<>();
-  private Map<String, PaginatorConfig> paginators = new HashMap<>();
-  private Map<String, ItemStack[]> baseInterfaces = new HashMap<>();
-  private Map<String, PaginatorConfig> basePaginators = new HashMap<>();
-  private Map<String, List<TogglerConfig>> togglers = new HashMap<>();
-  private Map<String, List<TogglerConfig>> baseTogglers = new HashMap<>();
+  private Map<String, InterfaceConfig> baseInterfaceConfigs = new HashMap<>();
+  private Map<String, InterfaceConfig> interfaceConfigs = new HashMap<>();
 
   private InterfacesLoader() {
   }
@@ -43,24 +34,28 @@ public class InterfacesLoader {
     return INSTANCE;
   }
 
+  private Optional<InterfaceConfig> getInterfaceConfig(String interfaceName) {
+    return Optional.ofNullable(this.interfaceConfigs.get(interfaceName));
+  }
+
   /**
    * Get list of ItemStack for one interface
    *
-   * @param interfaceName
-   * @return
+   * @param interfaceName Name of interface
+   * @return List of ItemStack
    */
-  public ItemStack[] getInterface(String interfaceName) {
-    return (this.interfaces != null) ? this.interfaces.get(interfaceName) : null;
+  public ItemStack[] getInterface(final String interfaceName) {
+    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getItemStacks).orElse(null);
   }
 
   /**
    * Get PaginatorConfig and create duplicate
-   * @param interfaceName
+   *
+   * @param interfaceName Name of interface
    * @return PaginatorConfig
    */
-  public PaginatorConfig getPaginatorConfig(String interfaceName) {
-    PaginatorConfig conf = this.paginators.get(interfaceName);
-    return (conf != null) ? conf.duplicate() : null;
+  public PaginatorConfig getPaginatorConfig(final String interfaceName) {
+    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getPaginator).map(PaginatorConfig::duplicate).orElse(null);
   }
 
   /**
@@ -69,74 +64,8 @@ public class InterfacesLoader {
    * @param interfaceName Name of the interface
    * @return Togglers of interface sent in param
    */
-  public List<TogglerConfig> getTogglers(String interfaceName) {
-    return this.togglers.get(interfaceName);
-  }
-
-  /**
-   * Load Circle Togle from config if exist and add it inside circleToggler map
-   * @param config
-   * @param name
-   */
-  private void loadTogglers(ConfigurationSection config, String name, Map<String, List<TogglerConfig>> map) {
-    List<Map<?, ?>> togglers = config.getMapList(name + ".Togglers");
-
-    if (togglers.isEmpty())
-      return;
-    List<TogglerConfig> togglerList = Utils.getOrElse(map.get(name), new ArrayList<>());
-    for (Map<?, ?> toggler : togglers) {
-      TogglerConfig conf = new TogglerConfig(toggler);
-      togglerList.removeIf(e -> e.getPosition() == conf.getPosition());
-      togglerList.add(conf);
-    }
-    if (!togglerList.isEmpty())
-      map.put(name, togglerList); 
-  }
-
-  /**
-   * Load Paginator from config if exist and add it inside paginators map
-   * @param config
-   * @param name
-   */
-  private void loadPaginator(ConfigurationSection config, String name, Map<String, PaginatorConfig> map) {
-    ConfigurationSection sec = config.getConfigurationSection(name + ".Paginator");
-
-    if (sec == null)
-      return;
-    try {
-      map.put(name, new PaginatorConfig(
-        sec.getInt("Height"),
-        sec.getInt("Width"),
-        sec.getInt("StartPos"),
-        sec.getInt("PreviousPos", -1),
-        sec.getInt("NextPos", -1),
-        sec.getInt("NumPagePos", -1)
-        ));
-    } catch (InvalidPaginatorParameter e) {
-      GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
-    }
-  }
-
-  /**
-   * Load Interface from config if add it inside interfaces map
-   * @param config
-   * @param name
-   */
-  private void loadInterface(ConfigurationSection config, String name, Map<String, ItemStack[]> map) {
-    ConfigurationSection itemsConfig = config.getConfigurationSection(name + ".Items");
-    if (itemsConfig == null)
-      return;
-    Map<Integer, String> items = this.parseItems(itemsConfig.getValues(false));
-
-    if (map.get(name) == null) {
-      ItemStack[] itemsStack = new ItemStack[54];
-      for (int i = 0; i < 54; i++)
-        itemsStack[i] = Utils.getButton(items.get(i));
-        map.put(name, itemsStack);
-      } else {
-      for (Integer key : items.keySet())
-        map.get(name)[key] = Utils.getButton(items.get(key));
-    }
+  public List<TogglerConfig> getTogglers(final String interfaceName) {
+    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getTogglers).orElse(null);
   }
 
   /**
@@ -146,67 +75,31 @@ public class InterfacesLoader {
    *
    * @param interfaceConfig YamlConfiguration
    * @param loadBase if set to true get base interfaces and it in final interface
-   * @return
    */
   private void loadInterfaces(ConfigurationSection interfaceConfig, Boolean loadBase) {
     Set<String> interfacesName = interfaceConfig.getKeys(false);
 
     for (String name : interfacesName) {
       if (loadBase) {
-        for (String base : interfaceConfig.getStringList(name + ".Base")) {
-          Optional.ofNullable(this.baseInterfaces.get(base)).ifPresent(i -> {
-            if (this.interfaces.get(name) == null)
-              this.interfaces.put(name, Arrays.copyOf(i, i.length));
-            else
-              ItemStackUtils.mergeArray(this.interfaces.get(name), i);
-          });
-          Optional.ofNullable(this.basePaginators.get(base)).ifPresent(p -> this.paginators.put(name, p.duplicate()));
-          Optional.ofNullable(this.baseTogglers.get(base)).ifPresent(c -> this.togglers.put(name, new ArrayList<TogglerConfig>(c)));
-        }
+        final List<InterfaceConfig> baseConfigs = interfaceConfig.getStringList(name + ".Base").stream()
+            .map(this.baseInterfaceConfigs::get).filter(Objects::nonNull).collect(Collectors.toList());
+        this.interfaceConfigs.put(name, new InterfaceConfig(interfaceConfig, name, baseConfigs));
+      } else {
+        this.baseInterfaceConfigs.put(name, new InterfaceConfig(interfaceConfig, name));
       }
-      this.loadInterface(interfaceConfig, name, (loadBase) ? this.interfaces : this.baseInterfaces);
-      this.loadPaginator(interfaceConfig, name, (loadBase) ? this.paginators : this.basePaginators);
-      this.loadTogglers(interfaceConfig, name, (loadBase) ? this.togglers : this.baseTogglers);
     }
   }
 
   /**
    * Load all interfaces in a map of string and itemstacks
    *
-   * @param interfaceConfig YamlConfiguration
-   * @return
+   * @param interfaceConfig YamlConfiguration that contains all interfaces
    */
-  public Map<String, ItemStack[]> loadInterfaces(YamlConfiguration interfaceConfig) {
-    this.interfaces.clear();
-    this.paginators.clear();
-    this.baseInterfaces.clear();
-    this.basePaginators.clear();
+  public void loadInterfaces(YamlConfiguration interfaceConfig) {
+    this.interfaceConfigs.clear();
+    this.baseInterfaceConfigs.clear();
 
     this.loadInterfaces(interfaceConfig.getConfigurationSection("BaseInterfaces"), false);
     this.loadInterfaces(interfaceConfig.getConfigurationSection("Interfaces"), true);
-    return this.interfaces;
   }
-
-  /**
-   * Parse items defined for the interface (ex: "2-5" to [2, 3, 4, 5] of the
-   * current item) Generate map, to each position number assign an item
-   *
-   * @param its
-   * @return
-   */
-  private Map<Integer, String> parseItems(Map<String, Object> its) {
-    Map<Integer, String> items = new HashMap<Integer, String>();
-
-    its.forEach((key, value) -> {
-      try {
-        items.put(Integer.parseInt(key), (String) value);
-      } catch (NumberFormatException e) {
-        String[] nums = key.split("-");
-        for (Integer i = Integer.parseInt(nums[0]); i <= Integer.parseInt(nums[1]); i++)
-          items.put(i, (String) value);
-      }
-    });
-    return items;
-  }
-
 }
