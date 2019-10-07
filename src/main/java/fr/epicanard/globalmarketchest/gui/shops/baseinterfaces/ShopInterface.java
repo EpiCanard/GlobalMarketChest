@@ -1,9 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 
 import org.bukkit.entity.Player;
@@ -16,9 +13,7 @@ import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
-import fr.epicanard.globalmarketchest.gui.paginator.PaginatorConfig;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
-import fr.epicanard.globalmarketchest.gui.shops.toggler.TogglerConfig;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
@@ -39,15 +34,13 @@ public abstract class ShopInterface {
     this.inv = inv;
     this.icon = Utils.getBackground();
     String className = this.getClass().getSimpleName();
-    PaginatorConfig conf = InterfacesLoader.getInstance().getPaginatorConfig(className);
-    if (conf != null)
-      this.paginator = new Paginator(this.inv.getInv(), conf);
-    List<TogglerConfig> togglersConfig = InterfacesLoader.getInstance().getTogglers(className);
-    if (togglersConfig != null) {
-      togglersConfig.forEach(togglerConfig -> {
-        this.togglers.put(togglerConfig.getPosition(), togglerConfig.instanceToggler(inv.getInv()));
+    InterfacesLoader.getInstance().getPaginatorConfig(className)
+        .ifPresent(conf -> this.paginator = new Paginator(this.inv.getInv(), conf));
+    InterfacesLoader.getInstance().getTogglers(className).ifPresent(togglersConfig -> {
+      togglersConfig.forEach(config -> {
+        this.togglers.put(config.getPosition(), config.instanceToggler(inv.getInv()));
       });
-    }
+    });
     this.actions.put(8, new LeaveShop());
   }
 
@@ -56,17 +49,16 @@ public abstract class ShopInterface {
    */
   public void load() {
     String className = this.getClass().getSimpleName();
-    ItemStack[] items = InterfacesLoader.getInstance().getInterface(className).clone();
-    if (items == null)
-      return;
-
-    this.togglers.forEach((k, v) -> {
-      v.getItems().forEach((pos, item) -> {
-        items[pos] = item;
+    InterfacesLoader.getInstance().getInterface(className).map(ItemStack[]::clone).ifPresent(items -> {
+      this.togglers.forEach((k, v) -> {
+        v.getItems().forEach((pos, item) -> {
+          items[pos] = item;
+        });
       });
+      for (int i = 0; i < 54; i++)
+        this.inv.getInv().setItem(i, items[i]);
     });
-    for (int i = 0; i < 54; i++)
-      this.inv.getInv().setItem(i, items[i]);
+
     if (this.paginator != null)
       this.paginator.reloadInterface();
     this.updateInventoryName(className);

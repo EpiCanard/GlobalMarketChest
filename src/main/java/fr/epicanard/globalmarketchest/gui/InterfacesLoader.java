@@ -48,8 +48,8 @@ public class InterfacesLoader {
    * @param interfaceName Name of interface
    * @return List of ItemStack
    */
-  public ItemStack[] getInterface(final String interfaceName) {
-    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getItemStacks).orElse(null);
+  public Optional<ItemStack[]> getInterface(final String interfaceName) {
+    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getItemStacks);
   }
 
   /**
@@ -58,8 +58,8 @@ public class InterfacesLoader {
    * @param interfaceName Name of interface
    * @return PaginatorConfig
    */
-  public PaginatorConfig getPaginatorConfig(final String interfaceName) {
-    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getPaginator).map(PaginatorConfig::duplicate).orElse(null);
+  public Optional<PaginatorConfig> getPaginatorConfig(final String interfaceName) {
+    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getPaginator).map(PaginatorConfig::duplicate);
   }
 
   /**
@@ -68,8 +68,8 @@ public class InterfacesLoader {
    * @param interfaceName Name of the interface
    * @return Togglers of interface sent in param
    */
-  public List<TogglerConfig> getTogglers(final String interfaceName) {
-    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getTogglers).orElse(null);
+  public Optional<List<TogglerConfig>> getTogglers(final String interfaceName) {
+    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getTogglers);
   }
 
   /**

@@ -120,8 +120,8 @@ public class CreateAuctionItem extends ShopInterface {
     this.inv.getWarn().stopWarn();
     this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
     this.inv.getTransaction().remove(TransactionKey.AUCTIONAMOUNT);
-    final ItemStack[] items = InterfacesLoader.getInstance().getInterface("CreateAuctionItem");
-    this.inv.getInv().setItem(22, items[22]);
+    InterfacesLoader.getInstance().getInterface("CreateAuctionItem")
+        .ifPresent(items -> this.inv.getInv().setItem(22, items[22]));
     this.togglers.forEach((k, v) -> {
       if (k == 22 || k == 53)
         v.unset();
