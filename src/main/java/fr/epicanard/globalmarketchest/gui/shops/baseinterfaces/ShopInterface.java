@@ -24,6 +24,8 @@ import lombok.experimental.Accessors;
 public abstract class ShopInterface {
   @Accessors(fluent=true) @Getter
   protected Boolean isTemp = false;
+  @Getter
+  protected ItemStack background;
   protected Paginator paginator = null;
   protected Map<Integer, Toggler> togglers = new HashMap<>();
   protected InventoryGUI inv;
@@ -32,7 +34,6 @@ public abstract class ShopInterface {
 
   public ShopInterface(InventoryGUI inv) {
     this.inv = inv;
-    this.icon = Utils.getBackground();
     String className = this.getClass().getSimpleName();
     InterfacesLoader.getInstance().getPaginatorConfig(className)
         .ifPresent(conf -> this.paginator = new Paginator(this.inv.getInv(), conf));
@@ -41,6 +42,8 @@ public abstract class ShopInterface {
         this.togglers.put(config.getPosition(), config.instanceToggler(inv.getInv()));
       });
     });
+    this.background = InterfacesLoader.getInstance().getBackground(className);
+    this.icon = this.background;
     this.actions.put(8, new LeaveShop());
   }
 

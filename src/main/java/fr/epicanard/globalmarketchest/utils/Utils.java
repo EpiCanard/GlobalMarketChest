@@ -24,8 +24,6 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class Utils {
-  @Getter
-  private ItemStack background = null;
 
   /**
    * Version of minecraft server
@@ -42,11 +40,6 @@ public class Utils {
 
   static {
     version = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 4);
-  }
-
-  public void init() {
-    Utils.background = ItemStackUtils.getItemStackFromConfig("Interfaces.Buttons.Background");
-    Utils.background = ItemStackUtils.setItemStackMeta(background, null, null);
   }
 
   /**
@@ -96,15 +89,14 @@ public class Utils {
    * @return item created
    */
   public ItemStack getButton(String buttonName) {
-    ConfigLoader loader = GlobalMarketChest.plugin.getConfigLoader();
-    String item;
-    ItemStack itemStack = Utils.getBackground();
-
     if (buttonName == null)
       return null;
-    item = loader.getConfig().getString("Interfaces.Buttons." + buttonName);
-    itemStack = ItemStackUtils.getItemStack(item);
-    ConfigurationSection sec = loader.getLanguages().getConfigurationSection("Buttons." + buttonName);
+
+    final ConfigLoader loader = GlobalMarketChest.plugin.getConfigLoader();
+    final String item = loader.getConfig().getString("Interfaces.Buttons." + buttonName);
+    final ItemStack itemStack = ItemStackUtils.getItemStack(item);
+    final ConfigurationSection sec = loader.getLanguages().getConfigurationSection("Buttons." + buttonName);
+
     if (sec != null) {
       Map<String, Object> tmp = sec.getValues(false);
       ItemStackUtils.setItemStackMeta(itemStack, (String) tmp.get("Name"), Utils.toList((String)tmp.get("Description")));

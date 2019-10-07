@@ -151,12 +151,19 @@ public class InterfaceConfig {
   }
 
   /**
-   * Fill all empty space with background
+   * Finalize initialization
+   * - Fill all empty space with background
+   * - Verify Unset items of togglers
    */
-  public void fillBackground() {
+  void finalizeInit() {
     for (int i = 0; i < 54; i++) {
       if (this.itemStacks[i] == null)
         this.itemStacks[i] = this.background;
     }
+
+    this.togglers.forEach(toggler -> {
+      if (toggler.getUnsetItem() == null)
+        toggler.setUnsetItem(this.background);
+    });
   }
 }

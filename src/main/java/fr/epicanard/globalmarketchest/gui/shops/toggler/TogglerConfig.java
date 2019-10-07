@@ -2,6 +2,7 @@ package fr.epicanard.globalmarketchest.gui.shops.toggler;
 
 import java.util.Map;
 
+import lombok.Setter;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,7 +18,7 @@ public class TogglerConfig {
   private Integer position;
   @Getter
   private ItemStack setItem;
-  @Getter
+  @Getter @Setter
   private ItemStack unsetItem;
 
   public TogglerConfig(Map<?, ?> config) {
@@ -25,8 +26,8 @@ public class TogglerConfig {
     this.set = Utils.getOrElse((Boolean)config.get("Set"), true);
     this.type = Utils.getOrElse((String)config.get("Type"), "single");
     this.setItem = Utils.getButton(Utils.getOrElse((String)config.get("SetItem"), "CircleSetItem"));
-    String tmp = Utils.getOrElse((String)config.get("UnsetItem"), this.type.equals("circle") ? "CircleUnsetItem" : null);
-    this.unsetItem = (tmp == null) ? Utils.getBackground() : Utils.getButton(tmp);
+    this.unsetItem = Utils.getButton(Utils.getOrElse((String)config.get("UnsetItem"),
+        this.type.equals("circle") ? "CircleUnsetItem" : null));
   }
 
   /**

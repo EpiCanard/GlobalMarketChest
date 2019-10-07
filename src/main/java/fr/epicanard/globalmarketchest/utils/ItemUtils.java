@@ -62,9 +62,10 @@ public class ItemUtils {
    * @param toGlow If true add the glow else remove the glow effect
    */
   public void setGlow(Inventory inv, int pos, Boolean toGlow) {
-    ItemStack item = inv.getItem(pos);
-    item = (toGlow) ? ItemUtils.addGlow(item) : ItemUtils.removeGlow(item);
-    inv.setItem(pos, item);
+    Optional.ofNullable(inv.getItem(pos)).ifPresent(item -> {
+      item = (toGlow) ? ItemUtils.addGlow(item) : ItemUtils.removeGlow(item);
+      inv.setItem(pos, item);
+    });
   }
 
   /**

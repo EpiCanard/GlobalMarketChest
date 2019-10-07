@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
-public class CircleToggler extends Toggler{
+public class CircleToggler extends Toggler {
   public CircleToggler(Inventory inv, TogglerConfig config) {
     super(inv, config);
     ItemStackUtils.setItemStackMeta(this.setItem, null, null);

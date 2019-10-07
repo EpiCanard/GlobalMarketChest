@@ -79,7 +79,6 @@ public class GlobalMarketChest extends JavaPlugin {
 
     this.catHandler = new CategoryHandler(GlobalMarketChest.plugin.getConfigLoader().getCategories());
     ShopUtils.init();
-    Utils.init();
 
     YamlConfiguration defConfig = this.configLoader.loadResource("interfaces.yml");
     InterfacesLoader.getInstance().loadInterfaces(defConfig);

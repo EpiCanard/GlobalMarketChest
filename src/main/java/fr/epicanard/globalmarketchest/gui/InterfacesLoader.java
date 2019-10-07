@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.gui;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -117,19 +118,23 @@ public class InterfacesLoader {
     this.loadBackgrounds();
     this.loadInterfaces(interfaceConfig.getConfigurationSection("BaseInterfaces"), false);
     this.loadInterfaces(interfaceConfig.getConfigurationSection("Interfaces"), true);
-    this.interfaceConfigs.values().forEach(InterfaceConfig::fillBackground);
+    this.interfaceConfigs.values().forEach(InterfaceConfig::finalizeInit);
   }
 
   /**
    * Load backgrounds from config
    */
   private void loadBackgrounds() {
-    ConfigurationSection section = GlobalMarketChest.plugin.getConfigLoader().getConfig().getConfigurationSection("Interfaces.Backgrounds");
+    Optional<ConfigurationSection> section = Optional.ofNullable(GlobalMarketChest.plugin.getConfigLoader().getConfig()
+        .getConfigurationSection("Interfaces.Backgrounds"));
 
-    section.getValues(false).forEach((key, value) -> {
+    section.ifPresent(sec -> sec.getValues(false).forEach((key, value) -> {
       final ItemStack itemStack = ItemStackUtils.getItemStack((String)value);
       this.backgrounds.put(key, ItemStackUtils.setItemStackMeta(itemStack, null, null));
-    });
+    }));
 
+    if (this.backgrounds.size() == 0) {
+      LoggerUtils.warn("No background item defined. (Did you reset your config file ?)");
+    }
   }
 }

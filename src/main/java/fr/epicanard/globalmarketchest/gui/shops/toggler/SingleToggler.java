@@ -6,7 +6,7 @@ import java.util.Map;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-public class SingleToggler extends Toggler{
+public class SingleToggler extends Toggler {
   public SingleToggler(Inventory inv, TogglerConfig config) {
     super(inv, config);
   }
