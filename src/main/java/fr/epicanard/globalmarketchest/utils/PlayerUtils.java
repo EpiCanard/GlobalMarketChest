@@ -234,7 +234,7 @@ public class PlayerUtils {
    * @return Return itemstack of player head
    */
   public ItemStack getPlayerHead(OfflinePlayer player) {
-    final Material headMaterial = Material.getMaterial((Utils.getVersion() == "1.12") ? "SKULL_ITEM" : "PLAYER_HEAD");
+    final Material headMaterial = Material.getMaterial((Utils.getVersion().equals("1.12")) ? "SKULL_ITEM" : "PLAYER_HEAD");
     final ItemStack playerHead = new ItemStack(headMaterial, 1, (short) SkullType.PLAYER.ordinal());
     final SkullMeta headMeta = (SkullMeta) playerHead.getItemMeta();
 
