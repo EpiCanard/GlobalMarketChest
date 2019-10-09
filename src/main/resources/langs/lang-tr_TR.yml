@@ -79,6 +79,8 @@ Buttons:
     Name: "&2Bu açık artırmayı satın al"
   AdminRemoveAuction:
     Name: "&cRemove this auction"
+  AdminSeePlayerAuctions:
+    Name: "&cSee auctions of a player"
   RenewAuction:
     Name: "&6Bu açık artırmayı yenile"
   UndoAuction:

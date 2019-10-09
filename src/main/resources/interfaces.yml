@@ -213,8 +213,15 @@ Interfaces:
         SetItem: UndoEveryAuction
       - Pos: 11
         SetItem: RenewEveryAuction
-    Items:
-      46: Background
+      - Pos: 6
+        SetItem: AdminSeePlayerAuctions
+
+  AdminAuctionGlobalView:
+    Base:
+      - AdminInterface
+      - DefaultShopInterface
+      - DefaultFooter
+      - GlobalViewButtons
 
   # =============
   #    DIVERS

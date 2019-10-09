@@ -79,6 +79,8 @@ Buttons:
     Name: "&2购买该拍卖品"
   AdminRemoveAuction:
     Name: "&cRemove this auction"
+  AdminSeePlayerAuctions:
+    Name: "&cSee auctions of a player"
   RenewAuction:
     Name: "&6延长该拍卖品出售时间"
   UndoAuction:

@@ -78,6 +78,8 @@ Buttons:
     Name: "&2Купить этот аукцион"
   AdminRemoveAuction:
     Name: "&cRemove this auction"
+  AdminSeePlayerAuctions:
+    Name: "&cSee auctions of a player"
   RenewAuction:
     Name: "&6Продлить этот аукцион"
   UndoAuction:
