@@ -79,6 +79,8 @@ Buttons:
     Name: "&2Kaufen"
   AdminRemoveAuction:
     Name: "&cRemove this auction"
+  AdminSeePlayerAuctions:
+    Name: "&cSee auctions of a player"
   RenewAuction:
     Name: "&6Auktion erneuern"
   UndoAuction:

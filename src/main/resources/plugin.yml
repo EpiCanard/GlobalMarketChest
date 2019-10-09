@@ -43,8 +43,11 @@ permissions:
   globalmarketchest.admin.shops.*:
     description: Can do every admin actions inside shops
     children:
+      globalmarketchest.admin.shops.seeauctions: true
       globalmarketchest.admin.shops.removeauction: true
       globalmarketchest.admin.shops.deleteshop: true
+  globalmarketchest.admin.shops.seeauctions:
+    description: Can see auctions of auther players every auction inside shop
   globalmarketchest.admin.shops.removeauction:
     description: Can delete every auction inside shop
   globalmarketchest.admin.shops.deleteshop:

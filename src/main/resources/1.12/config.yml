@@ -123,13 +123,14 @@ Interfaces:
   # Backgrounds for interfaces
   Backgrounds:
     Default: minecraft:stained_glass_pane/15
-    Admin: minecraft:stained_glass_pane/14
+    Admin: minecraft:stained_glass_pane/3
   # All others buttons used inside interface are defined here
   Buttons:
     NewAuction: minecraft:nether_star
     CreateAuction: minecraft:nether_star
     BuyAuction: minecraft:nether_star
     AdminRemoveAuction: minecraft:wool/14
+    AdminSeePlayerAuctions: minecraft:skull/3
     RenewAuction: minecraft:wool/1
     UndoAuction: minecraft:wool/14
     RenewEveryAuction: minecraft:wool/1

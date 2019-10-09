@@ -6,74 +6,42 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
-import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.auctions.StateAuction;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
-import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
-import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
-import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.DefaultFooter;
+import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.BaseAuctionGlobalView;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.ItemUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.*;
+import org.bukkit.OfflinePlayer;
 
-public class AuctionGlobalView extends DefaultFooter {
-  class ViewGlobal {
-    public StateAuction state = StateAuction.INPROGRESS;
-    public AuctionLoreConfig config = AuctionLoreConfig.OWN;
-    public Integer pos = 13;
-    public List<AuctionInfo> auctions;
-
-    public void set(StateAuction st, AuctionLoreConfig conf, Integer p) {
-      this.state = st;
-      this.config = conf;
-      this.pos = p;
-    }
-  }
-  private ViewGlobal current = new ViewGlobal();
-
+public class AuctionGlobalView extends BaseAuctionGlobalView {
   public AuctionGlobalView(InventoryGUI inv) {
     super(inv);
-    this.paginator.setLoadConsumer(this::loadAuctions);
     this.paginator.setClickConsumer(this::editAuction);
 
-    this.actions.put(0, new PreviousInterface());
     this.actions.put(10, this::undoEveryAuction);
     this.actions.put(11, this::renewEveryAuction);
-    this.actions.put(13, i -> this.setPair(StateAuction.INPROGRESS, AuctionLoreConfig.OWN, 13));
-    this.actions.put(14, i -> this.setPair(StateAuction.EXPIRED, AuctionLoreConfig.OWN, 14));
-    this.actions.put(15, i -> this.setPair(StateAuction.FINISHED, AuctionLoreConfig.SOLD, 15));
-    this.actions.put(16, i -> this.setPair(StateAuction.FINISHED, AuctionLoreConfig.BOUGHT, 16));
-    this.actions.put(17, i -> this.setPair(StateAuction.ABANDONED, AuctionLoreConfig.OWNENDED, 17));
-    this.actions.remove(46);
+
+    if (Permissions.ADMIN_SEEAUCTIONS.isSetOn(inv.getPlayer())) {
+      this.togglers.get(6).set();
+      this.actions.put(6, new ChatInput("InfoMessages.WritePlayerName", this::openPlayerGlobalView));
+    }
   }
 
   @Override
   public void load() {
+    this.playerView = this.inv.getPlayer();
     super.load();
-    ItemUtils.setGlow(this.inv.getInv(), this.current.pos, true);
-    this.loadTogglers();
-  }
-
-  private void setPair(StateAuction state, AuctionLoreConfig config, Integer pos) {
-    ItemUtils.setGlow(this.inv.getInv(), this.current.pos, false);
-    this.current.set(state, config, pos);
-    ItemUtils.setGlow(this.inv.getInv(), this.current.pos, true);
-    this.inv.getWarn().stopWarn();
-    this.loadTogglers();
-    this.paginator.resetPage();
-    this.paginator.reload();
   }
 
   /**
    * Load and unload togglers
    */
-  private void loadTogglers() {
+  @Override
+  protected void loadTogglers() {
     if (this.current.state == StateAuction.INPROGRESS || this.current.state == StateAuction.EXPIRED)
       this.togglers.forEach((key, toggler) -> {
         if (key != 10 && key != 11)
@@ -99,22 +67,6 @@ public class AuctionGlobalView extends DefaultFooter {
       this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, auction);
       this.inv.loadInterface("EditAuction");
     }
-  }
-
-  private void loadAuctions(Paginator pag) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
-
-    GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), this.current.state,
-      this.current.config == AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
-      this.current.config != AuctionLoreConfig.BOUGHT ? null : this.inv.getPlayer(),
-      pag.getLimit(),
-      auctions -> {
-        if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
-          this.current.auctions = auctions;
-        pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-          ItemStackUtils.addItemStackLore(itemstack, auction.getLore(this.current.config));
-        }));
-      });
   }
 
   /**
@@ -177,8 +129,14 @@ public class AuctionGlobalView extends DefaultFooter {
     this.updateAuctionNumber();
   }
 
+  private void openPlayerGlobalView(String playerName) {
+    final OfflinePlayer offlinePlayer = GlobalMarketChest.plugin.getServer().getOfflinePlayer(playerName);
+    this.inv.getTransaction().put(TransactionKey.PLAYER, offlinePlayer);
+    this.inv.loadInterface("AdminAuctionGlobalView");
+  }
+
   @Override
   public void destroy() {
-    this.inv.getWarn().stopWarn();
+    this.inv.getTransaction().remove(TransactionKey.PLAYER);
   }
 }

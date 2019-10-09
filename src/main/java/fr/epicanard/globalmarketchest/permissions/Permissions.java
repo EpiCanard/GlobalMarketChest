@@ -12,6 +12,7 @@ import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 public enum Permissions {
   ADMIN_DELETESHOP("globalmarketchest.admin.shops.deleteshop"),
   ADMIN_REMOVEAUCTION("globalmarketchest.admin.shops.removeauction"),
+  ADMIN_SEEAUCTIONS("globalmarketchest.admin.shops.seeauctions"),
   GS_CREATESHOP("globalmarketchest.globalshop.createshop"),
   GS_OPENSHOP("globalmarketchest.globalshop.openshop"),
   GS_CREATEAUCTION("globalmarketchest.globalshop.createauction"),

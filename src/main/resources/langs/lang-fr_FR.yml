@@ -79,6 +79,8 @@ Buttons:
     Name: "&2Acheter l'enchère"
   AdminRemoveAuction:
     Name: "&cSupprimer cette enchère"
+  AdminSeePlayerAuctions:
+    Name: "&cVoir les enchères d'un joueur"
   RenewAuction:
     Name: "&6Renouveler l'enchère"
   UndoAuction:
