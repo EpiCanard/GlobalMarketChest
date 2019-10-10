@@ -214,6 +214,7 @@ Interfaces:
       - Pos: 11
         SetItem: RenewEveryAuction
       - Pos: 6
+        Set: false
         SetItem: AdminSeePlayerAuctions
 
   AdminAuctionGlobalView:
