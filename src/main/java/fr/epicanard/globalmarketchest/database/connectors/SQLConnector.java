@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.database.connections;
+package fr.epicanard.globalmarketchest.database.connectors;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,11 +12,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
-public abstract class SQLConnection extends DatabaseConnection {
+public abstract class SQLConnector extends DatabaseConnector {
   private final LinkedBlockingQueue<Connection> pool;
   private Integer simultaneousConnections = 1;
 
-  public SQLConnection(final Boolean needConnection) throws ConfigException {
+  public SQLConnector(final Boolean needConnection) throws ConfigException {
     super(needConnection);
 
     this.pool = new LinkedBlockingQueue<>();

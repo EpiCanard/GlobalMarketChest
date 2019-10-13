@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.database.connections;
+package fr.epicanard.globalmarketchest.database.connectors;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,9 +8,9 @@ import java.util.Properties;
 
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
-public class MySQLConnection extends SQLConnection {
+public class MySQLConnector extends SQLConnector {
 
-  public MySQLConnection() throws ConfigException {
+  public MySQLConnector() throws ConfigException {
     super(true);
   }
 
@@ -42,7 +42,7 @@ public class MySQLConnection extends SQLConnection {
     try {
       Statement state = co.createStatement();
       state.execute(
-        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnection.tableAuctions + "` (" +
+        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnector.tableAuctions + "` (" +
         "  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
         "  `itemStack` VARCHAR(50) NOT NULL," +
         "  `itemMeta` TEXT," +
@@ -58,7 +58,7 @@ public class MySQLConnection extends SQLConnection {
         ");"
       );
       state.execute(
-        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnection.tableShops + "` (" +
+        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnector.tableShops + "` (" +
         "  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
         "  `owner` TEXT NOT NULL," +
         "  `signLocation` TEXT NOT NULL," +

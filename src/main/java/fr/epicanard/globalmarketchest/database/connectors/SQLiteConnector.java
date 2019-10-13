@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.database.connections;
+package fr.epicanard.globalmarketchest.database.connectors;
 
 import java.io.File;
 import java.sql.Connection;
@@ -9,13 +9,13 @@ import java.sql.Statement;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
-public class SQLiteConnection extends SQLConnection {
+public class SQLiteConnector extends SQLConnector {
   private Connection connection;
 
 
   private static final String sqliteFileName = "globalmarketchest.sqlite";
 
-  public SQLiteConnection() throws ConfigException {
+  public SQLiteConnector() throws ConfigException {
     super(false);
   }
 
@@ -27,7 +27,7 @@ public class SQLiteConnection extends SQLConnection {
   @Override
   protected Connection connect() throws ConfigException {
     try {
-      File databaseFilePath = new File(GlobalMarketChest.plugin.getDataFolder(), SQLiteConnection.sqliteFileName);
+      File databaseFilePath = new File(GlobalMarketChest.plugin.getDataFolder(), SQLiteConnector.sqliteFileName);
       Class.forName("org.sqlite.JDBC");
       return DriverManager.getConnection("jdbc:sqlite:" + databaseFilePath);
     } catch (ClassNotFoundException e) {
@@ -48,7 +48,7 @@ public class SQLiteConnection extends SQLConnection {
     try {
       Statement state = co.createStatement();
       state.execute(
-        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnection.tableAuctions + "` (" +
+        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnector.tableAuctions + "` (" +
         "  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         "  `itemStack` VARCHAR(50) NOT NULL," +
         "  `itemMeta` TEXT," +
@@ -64,7 +64,7 @@ public class SQLiteConnection extends SQLConnection {
         ");"
       );
       state.execute(
-        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnection.tableShops + "` (" +
+        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnector.tableShops + "` (" +
         "  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
         "  `owner` TEXT NOT NULL," +
         "  `signLocation` TEXT NOT NULL," +

@@ -1,22 +1,18 @@
 package fr.epicanard.globalmarketchest;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.commands.CommandHandler;
 import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
-import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
-import fr.epicanard.globalmarketchest.database.connections.MySQLConnection;
-import fr.epicanard.globalmarketchest.database.connections.SQLiteConnection;
+import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
+import fr.epicanard.globalmarketchest.database.connectors.MySQLConnector;
+import fr.epicanard.globalmarketchest.database.connectors.SQLiteConnector;
 import fr.epicanard.globalmarketchest.economy.VaultEconomy;
 import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
@@ -35,7 +31,6 @@ import fr.epicanard.globalmarketchest.ranks.RanksLoader;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.Getter;
 
 
@@ -46,7 +41,7 @@ public class GlobalMarketChest extends JavaPlugin {
   @Getter
   private final RanksLoader ranksLoader;
   @Getter
-  private DatabaseConnection sqlConnection;
+  private DatabaseConnector sqlConnection;
   public static GlobalMarketChest plugin;
   public final InventoriesHandler inventories;
   public final VaultEconomy economy;
@@ -156,7 +151,7 @@ public class GlobalMarketChest extends JavaPlugin {
         this.sqlConnection.configFromConfigFile();
       }
       this.sqlConnection.fillPool();
-      DatabaseConnection.configureTables();
+      DatabaseConnector.configureTables();
       this.sqlConnection.recreateTables();
     } catch (ConfigException e) {
       this.getLogger().log(Level.WARNING, "[SQLConnection] " + e.getMessage());
@@ -170,13 +165,13 @@ public class GlobalMarketChest extends JavaPlugin {
    * @return Return the correct Database connection provider
    * @throws ConfigException
    */
-  private DatabaseConnection getDatabaseConnectionProvider() throws ConfigException {
+  private DatabaseConnector getDatabaseConnectionProvider() throws ConfigException {
     final String connectionType = this.configLoader.getConfig().getString("Storage.Type");
     switch (connectionType) {
       case "sqlite":
-        return new SQLiteConnection();
+        return new SQLiteConnector();
       case "mysql":
-        return new MySQLConnection();
+        return new MySQLConnector();
       default:
         throw new ConfigException("Wrong value of 'Storage.Type'. \nWanted: sqlite or mysql.\nBut get: " + connectionType);
     }
