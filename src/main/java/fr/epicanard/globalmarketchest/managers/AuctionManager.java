@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.StateAuction;
-import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
+import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
 import fr.epicanard.globalmarketchest.database.querybuilder.ColumnType;
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
@@ -47,7 +47,7 @@ public class AuctionManager {
    * @return Return if execution succeed
    */
   public Boolean createAuction(AuctionInfo auction, Integer repeat) {
-    InsertBuilder builder = new InsertBuilder(DatabaseConnection.tableAuctions);
+    InsertBuilder builder = new InsertBuilder(DatabaseConnector.tableAuctions);
     Timestamp ts = DatabaseUtils.getTimestamp();
     int days = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.NumberDaysExpiration", 7);
     String[] stringTs = {
@@ -82,7 +82,7 @@ public class AuctionManager {
     if (!this.canEditAuction(executor, id))
       return false;
 
-    UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+    UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
 
     builder.addValue("playerEnder", PlayerUtils.getUUIDToString(buyer));
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
@@ -146,7 +146,7 @@ public class AuctionManager {
    * @param group Shop group name target
    */
   public Boolean undoGroupOfPlayerAuctions(Player player, String group, List<Integer> auctions) {
-    UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+    UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
     String playeruuid = PlayerUtils.getUUIDToString(player);
 
     builder.addCondition("id", auctions, ConditionType.IN);
@@ -165,7 +165,7 @@ public class AuctionManager {
    * @param playerUuid Uuid of player
    */
   public Boolean undoAuction(int id, String playerUuid) {
-    UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+    UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
     QueryExecutor executor = QueryExecutor.of();
 
     if (!this.canEditAuction(executor, id))
@@ -185,7 +185,7 @@ public class AuctionManager {
    * @param useConfig Define if remove all or with the date in config file
    */
   public void purgeAuctions() {
-    DeleteBuilder builder = new DeleteBuilder(DatabaseConnection.tableAuctions);
+    DeleteBuilder builder = new DeleteBuilder(DatabaseConnector.tableAuctions);
     Integer purge = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.PurgeInterval");
     if (purge < 0)
       return;
@@ -201,7 +201,7 @@ public class AuctionManager {
    */
 
   public void updateGroupOfAuctionsMetadata(List<AuctionInfo> auctions) {
-    UpdateBuilder builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+    UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
 
     auctions.forEach(auction -> {
       builder.resetConditions();
@@ -230,7 +230,7 @@ public class AuctionManager {
      * @param consumer Callback called when the sql request is executed
      */
   public void getAuctions(GroupLevels level, String group, String category, AuctionInfo auction, Pair<Integer, Integer> limit, Consumer<List<Pair<ItemStack, AuctionInfo>>> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", group);
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
@@ -277,7 +277,7 @@ public class AuctionManager {
    * @param consumer callable, send database return to this callabke
    */
   public void getAuctions(String group, StateAuction state, OfflinePlayer starter, OfflinePlayer ender, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", group);
     this.defineStateCondition(builder, state);
@@ -312,7 +312,7 @@ public class AuctionManager {
    * @param consumer callable, send database return to this callabke
    */
   public void getAuctionsByItemName(String group, String search, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", group);
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
@@ -339,7 +339,7 @@ public class AuctionManager {
    * @param consumer callable, send database return to this callabke
    */
   public void getAuctionNumber(String group, Player starter, Consumer<Integer> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addField("COUNT(id) AS count");
     this.defineStateCondition(builder, StateAuction.INPROGRESS);
@@ -361,7 +361,7 @@ public class AuctionManager {
    * @param consumer Callback to call if price is found
    */
   public void getLastPrice(AuctionInfo auction, Consumer<Double> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", auction.getGroup());
     builder.addCondition("itemStack", auction.getItemStack());
@@ -384,7 +384,7 @@ public class AuctionManager {
    * @param consumer Callback to call if price is found
    */
   public void getAllAuctions(Boolean all, Consumer<List<AuctionInfo>> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableAuctions);
+    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     if (!all) {
       builder.addCondition("ended", false);
@@ -415,7 +415,7 @@ public class AuctionManager {
   private UpdateBuilder updateToNow(UpdateBuilder builder) {
     Timestamp ts = DatabaseUtils.getTimestamp();
     if (builder == null)
-      builder = new UpdateBuilder(DatabaseConnection.tableAuctions);
+      builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
     int days = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.NumberDaysExpiration", 7);
 
     builder.addValue("start", ts.toString());
@@ -460,7 +460,7 @@ public class AuctionManager {
    * @return if auction is ended
    */
   private Boolean canEditAuction(QueryExecutor executor, int id) {
-    SelectBuilder select = new SelectBuilder(DatabaseConnection.tableAuctions);
+    SelectBuilder select = new SelectBuilder(DatabaseConnector.tableAuctions);
     AtomicBoolean end = new AtomicBoolean(true);
 
     select.addField("id");

@@ -1,4 +1,4 @@
-package fr.epicanard.globalmarketchest.database.connections;
+package fr.epicanard.globalmarketchest.database.connectors;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
-public abstract class DatabaseConnection {
+public abstract class DatabaseConnector {
   public final Boolean needConnection;
   protected Properties properties = new Properties();
   protected String host;
@@ -22,7 +22,7 @@ public abstract class DatabaseConnection {
   public static String tableAuctions = "GMC_auctions";
   public static String tableShops = "GMC_shops";
 
-  DatabaseConnection(final Boolean needConnection) {
+  DatabaseConnector(final Boolean needConnection) {
     this.needConnection = needConnection;
   }
 
@@ -33,8 +33,8 @@ public abstract class DatabaseConnection {
     if (!prefix.matches("[a-zA-Z_]*"))
       throw new ConfigException("tablePrefix not containing only letters or/and _");
 
-    DatabaseConnection.tableAuctions = prefix + "auctions";
-    DatabaseConnection.tableShops = prefix + "shops";
+    DatabaseConnector.tableAuctions = prefix + "auctions";
+    DatabaseConnector.tableShops = prefix + "shops";
   }
 
   protected String buildUrl() {

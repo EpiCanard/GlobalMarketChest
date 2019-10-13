@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 
 import org.bukkit.Location;
 
-import fr.epicanard.globalmarketchest.database.connections.DatabaseConnection;
+import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuilder;
@@ -41,7 +41,7 @@ public class ShopManager {
   public void updateShops() {
     this.resetShopList();
 
-    SelectBuilder builder = new SelectBuilder(DatabaseConnection.tableShops);
+    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableShops);
     QueryExecutor.of().execute(builder, res -> {
       try {
         while (res.next()) {
@@ -85,7 +85,7 @@ public class ShopManager {
     if (!this.shops.stream().allMatch(shop -> !WorldUtils.compareLocations(shop.getSignLocation(), sign)))
       throw new ShopAlreadyExistException(sign);
 
-    InsertBuilder builder = new InsertBuilder(DatabaseConnection.tableShops);
+    InsertBuilder builder = new InsertBuilder(DatabaseConnector.tableShops);
 
     builder.addValue("owner", owner);
     builder.addValue("signLocation", WorldUtils.getStringFromLocation(sign));
@@ -126,7 +126,7 @@ public class ShopManager {
     this.shops.removeIf(s -> s.getId() == shop.getId());
     shop.removeMetadata();
 
-    DeleteBuilder builder = new DeleteBuilder(DatabaseConnection.tableShops);
+    DeleteBuilder builder = new DeleteBuilder(DatabaseConnector.tableShops);
 
     builder.addCondition("id", shop.getId());
     return QueryExecutor.of().execute(builder);
