@@ -159,6 +159,7 @@ public class WorldListener implements Listener {
         };
         ShopUtils.openShop(player, shop, inv -> {
           inv.getTransaction().put(TransactionKey.QUESTION, Pair.of(LangUtils.get("InfoMessages.DeleteShopQuestion"), deleteConsumer.apply(inv)));
+          inv.getTransaction().put(TransactionKey.HAS_RETURN, false);
           inv.loadInterface("ConfirmView");
           event.setCancelled(true);
         });

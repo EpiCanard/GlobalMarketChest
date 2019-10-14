@@ -233,6 +233,9 @@ Interfaces:
     Base:
       - Exit
     Togglers:
+      - Pos: 0
+        Set: false
+        SetItem: Return
       - Pos: 29
         Type: "circle"
         Set: true
