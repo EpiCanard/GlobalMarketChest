@@ -19,7 +19,7 @@ public abstract class ShopCreationInterface extends ShopInterface {
    * Update the lore of the current shop
    */
   protected void updateName() {
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     ItemStack item = this.inv.getInv().getItem(49);
 
     if (shop == null)

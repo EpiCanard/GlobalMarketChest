@@ -20,8 +20,8 @@ public class AuctionViewItem extends AuctionViewBase {
     super(inv);
 
     this.paginator.setLoadConsumer(pag -> {
-      final String search = this.inv.getTransactionValue(TransactionKey.ITEMSEARCH);
-      final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+      final String search = this.inv.getTransactionValue(TransactionKey.ITEM_SEARCH);
+      final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
       GlobalMarketChest.plugin.auctionManager.getAuctionsByItemName(shop.getGroup(), search, this.paginator.getLimit(),
           auctions -> {
@@ -36,7 +36,7 @@ public class AuctionViewItem extends AuctionViewBase {
 
   @Override
   public void load() {
-    final String search = this.inv.getTransactionValue(TransactionKey.ITEMSEARCH);
+    final String search = this.inv.getTransactionValue(TransactionKey.ITEM_SEARCH);
 
     final ItemStack  icon = Utils.getButton("SearchItemText");
     ItemStackUtils.addItemStackLore(icon, Arrays.asList(String.format(LangUtils.get("Divers.SearchItemTextIcon"), search)));
@@ -48,6 +48,6 @@ public class AuctionViewItem extends AuctionViewBase {
   @Override
   public void destroy() {
     super.destroy();
-    this.inv.getTransaction().remove(TransactionKey.ITEMSEARCH);
+    this.inv.getTransaction().remove(TransactionKey.ITEM_SEARCH);
   }
 }

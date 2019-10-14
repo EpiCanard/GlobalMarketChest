@@ -202,7 +202,7 @@ public class ShopUtils {
   public void lockShop(String shopGroup) {
     lockedShop.add(shopGroup);
     GlobalMarketChest.plugin.inventories.getInventories().forEach((key, value) -> {
-        ShopInfo shop = value.getTransactionValue(TransactionKey.SHOPINFO);
+        ShopInfo shop = value.getTransactionValue(TransactionKey.SHOP_INFO);
         if (shop != null && shop.getGroup().equals(shopGroup)) {
           Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> {
             GlobalMarketChest.plugin.inventories.removeInventory(key);
@@ -242,7 +242,7 @@ public class ShopUtils {
     }
     final InventoryGUI inv = new InventoryGUI(player);
     GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
-    inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
+    inv.getTransaction().put(TransactionKey.SHOP_INFO, shop);
     inv.open();
     success.accept(inv);
   }

@@ -57,8 +57,8 @@ public class ShopCreationListener implements Listener {
     final ShopInfo shop = new ShopInfo(-1, player.getUniqueId().toString(), ShopType.GLOBALSHOP.setOn(0), event.getBlock().getLocation(), null, ShopUtils.generateName());
     final InventoryGUI inv = new InventoryGUI(player);
 
-    inv.getTransaction().put(TransactionKey.SHOPINFO, shop);
-    inv.getTransaction().put(TransactionKey.SIGNLOCATION, event.getBlock().getLocation());
+    inv.getTransaction().put(TransactionKey.SHOP_INFO, shop);
+    inv.getTransaction().put(TransactionKey.SIGN_LOCATION, event.getBlock().getLocation());
     GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
     inv.open();
     inv.loadInterface("ShopCreationSelectType");

@@ -36,7 +36,7 @@ public class AdminAuctionGlobalView extends BaseAuctionGlobalView {
       return;
     final AuctionInfo auction = this.current.auctions.get(pos);
     if (auction != null) {
-      this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, auction);
+      this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, auction);
       this.inv.loadInterface("BuyAuction");
     }
   }
