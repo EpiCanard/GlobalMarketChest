@@ -37,8 +37,8 @@ public class CategoryView extends DefaultFooter {
 
     this.actions.put(h.getPosition(category), in -> {
       this.inv.getTransaction().put(TransactionKey.CATEGORY, category);
-      this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, GlobalMarketChest.plugin.getCatHandler().getDisplayItem(category));
-      this.inv.getTransaction().put(TransactionKey.GROUPLEVEL, GroupLevels.LEVEL1);
+      this.inv.getTransaction().put(TransactionKey.AUCTION_ITEM, GlobalMarketChest.plugin.getCatHandler().getDisplayItem(category));
+      this.inv.getTransaction().put(TransactionKey.GROUP_LEVEL, GroupLevels.LEVEL1);
       callable.accept(in);
     });
 

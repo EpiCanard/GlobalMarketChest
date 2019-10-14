@@ -33,7 +33,7 @@ public class BuyAuction extends UndoAuction {
     super(inv);
 
     this.isTemp = true;
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
     this.setIcon(item);
     this.actions.put(0, new PreviousInterface());
@@ -48,7 +48,7 @@ public class BuyAuction extends UndoAuction {
   @Override
   public void load() {
     super.load();
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(AuctionLoreConfig.TOSELL)));
   }
 
@@ -58,7 +58,7 @@ public class BuyAuction extends UndoAuction {
    * @param i
    */
   private void buyAuction(InventoryGUI i) {
-    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTION_INFO);
     final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
 
     item.setAmount(auction.getAmount());
@@ -129,7 +129,7 @@ public class BuyAuction extends UndoAuction {
    * @param item ItemStack bought
    */
   private void broadcastMessage(AuctionInfo auction, Player buyer, ItemStack item) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
     final Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
 
@@ -172,6 +172,6 @@ public class BuyAuction extends UndoAuction {
   @Override
   public void destroy() {
     super.destroy();
-    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_INFO);
   }
 }

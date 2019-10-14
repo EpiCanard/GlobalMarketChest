@@ -46,11 +46,11 @@ public class ShopCreationLink extends ShopCreationInterface {
    * @param gui InventoryGUI used shop creation
    */
   private void createShop(InventoryGUI gui) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     try {
       GlobalMarketChest.plugin.shopManager.createShop(shop);
 
-      Utils.editSign(this.inv.getTransactionValue(TransactionKey.SIGNLOCATION), new String[] {
+      Utils.editSign(this.inv.getTransactionValue(TransactionKey.SIGN_LOCATION), new String[] {
         ShopType.GLOBALSHOP.getDisplayName()
       });
 
@@ -102,7 +102,7 @@ public class ShopCreationLink extends ShopCreationInterface {
    * @param name Name of the group
    */
   public void changeName(String name) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
     if (shop != null)
       shop.setGroup(name);

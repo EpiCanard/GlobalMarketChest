@@ -69,7 +69,7 @@ public abstract class BaseAuctionGlobalView extends DefaultFooter {
   protected abstract void loadTogglers();
 
   private void loadAuctions(Paginator pag) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
     GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), this.current.state,
         this.current.config == AuctionLoreConfig.BOUGHT ? null : this.playerView,

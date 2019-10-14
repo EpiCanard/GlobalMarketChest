@@ -1,17 +1,14 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.UndoAuction;
-import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
-import fr.epicanard.globalmarketchest.exceptions.WarnException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
-import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
@@ -30,7 +27,7 @@ public class EditAuction extends UndoAuction {
   @Override
   public void load() {
     super.load();
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(AuctionLoreConfig.OWN)));
   }
 
@@ -40,7 +37,7 @@ public class EditAuction extends UndoAuction {
    * @param i
    */
   private void renewAuction(InventoryGUI i) {
-    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTION_INFO);
 
     if (GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId())) {
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewAuction");
@@ -52,6 +49,6 @@ public class EditAuction extends UndoAuction {
   @Override
   public void destroy() {
     super.destroy();
-    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_INFO);
   }
 }
