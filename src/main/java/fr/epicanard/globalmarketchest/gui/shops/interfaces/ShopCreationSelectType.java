@@ -57,7 +57,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param type  Type to toggle
    */
   private void toggleShop(int pos, ShopType type) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     shop.toggleType(type);
 
     this.setGlow(pos, shop.getType(), type);
@@ -71,7 +71,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param pag Paginator used
    */
   private void loadNearBlock(Paginator pag) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
     final List<Block> blocks = Utils.filter(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()), block -> ShopUtils.getShop(block) == null);
     final List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> {
@@ -89,7 +89,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param pos Position inside the inventory
    */
   private void setOtherLocation(int pos) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     final List<Block> blocks = this.paginator.getSubList(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()));
 
     try {
@@ -106,7 +106,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @return if there is an error return false else true
    */
   private Boolean checkCreation() {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
     if (shop != null && shop.getType() > 0) {
       this.inv.getWarn().stopWarn();
@@ -123,7 +123,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
   public void load() {
     super.load();
 
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     this.setGlow(13, shop.getType(), ShopType.GLOBALSHOP);
     // this.setGlow(11, shop.getType(), ShopType.GLOBALSHOP);
     // this.setGlow(13, shop.getType(), ShopType.AUCTIONSHOP);

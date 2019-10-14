@@ -62,7 +62,7 @@ public class CreateAuctionItem extends ShopInterface {
   public void load() {
     super.load();
 
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
     this.defineMaxAuctions();
     if (item != null) {
       this.inv.getInv().setItem(22, item);
@@ -77,7 +77,7 @@ public class CreateAuctionItem extends ShopInterface {
    */
   private void defineMaxAuctions() {
     final Integer maxAuctionsByPlayer = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
     GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), inv.getPlayer(),
             num -> this.maxAuctions = maxAuctionsByPlayer - num);
@@ -89,13 +89,13 @@ public class CreateAuctionItem extends ShopInterface {
    * @param item ItemStack to set in drop zone
    */
   private void setItem(ItemStack item) {
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
 
     auction.setAmount(item.getAmount());
     auction.setItemStack(item);
-    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, 1);
-    this.inv.getTransaction().put(TransactionKey.TEMPITEM, item.clone());
-    this.inv.getTransaction().put(TransactionKey.AUCTIONAMOUNT, item.getAmount());
+    this.inv.getTransaction().put(TransactionKey.AUCTION_NUMBER, 1);
+    this.inv.getTransaction().put(TransactionKey.TEMP_ITEM, item.clone());
+    this.inv.getTransaction().put(TransactionKey.AUCTION_AMOUNT, item.getAmount());
     this.updateItem();
     this.togglers.forEach((k, v) -> {
       if (k == 22 || k == 53)
@@ -118,8 +118,8 @@ public class CreateAuctionItem extends ShopInterface {
    */
   private void unsetItem() {
     this.inv.getWarn().stopWarn();
-    this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
-    this.inv.getTransaction().remove(TransactionKey.AUCTIONAMOUNT);
+    this.inv.getTransaction().remove(TransactionKey.TEMP_ITEM);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_AMOUNT);
     InterfacesLoader.getInstance().getInterface("CreateAuctionItem")
         .ifPresent(items -> this.inv.getInv().setItem(22, items[22]));
     this.togglers.forEach((k, v) -> {
@@ -132,14 +132,14 @@ public class CreateAuctionItem extends ShopInterface {
   }
 
   /**
-   * Check if TEMPITEM is set (item dropped in interface)
+   * Check if TEMP_ITEM is set (item dropped in interface)
    *
-   * @return false if TEMPITEM is not set else true
+   * @return false if TEMP_ITEM is not set else true
    */
   private Boolean checkItem() {
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
     if (item != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.UseLastPrice", true)) {
-      final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+      final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
       GlobalMarketChest.plugin.auctionManager.getLastPrice(auction, auction::setPrice);
     }
     return (item != null);
@@ -151,12 +151,12 @@ public class CreateAuctionItem extends ShopInterface {
    * @return the lore completed
    */
   private void updateItem() {
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     final List<String> lore = new ArrayList<>();
 
     lore.add("&7" + LangUtils.get("Divers.Quantity") + " : &6" + auction.getAmount());
-    lore.add("&7" + LangUtils.get("Divers.AuctionNumber") + " : &6" + this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER));
+    lore.add("&7" + LangUtils.get("Divers.AuctionNumber") + " : &6" + this.inv.getTransactionValue(TransactionKey.AUCTION_NUMBER));
 
     if (this.oneByOne) {
       this.updateRepeatLore(lore);
@@ -171,12 +171,12 @@ public class CreateAuctionItem extends ShopInterface {
    */
   private void defineMaxInOne() {
     this.inv.getWarn().stopWarn();
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
 
     if (item == null || auction == null)
       return;
-    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, 1);
+    this.inv.getTransaction().put(TransactionKey.AUCTION_NUMBER, 1);
     final ItemStack[] items = this.inv.getPlayer().getInventory().getContents();
     final Integer max = PlayerUtils.countMatchingItem(items, item);
 
@@ -195,7 +195,7 @@ public class CreateAuctionItem extends ShopInterface {
     final Integer maxAuctionNumber = this.resetAndGetMaxAuctionNumber();
     if (maxAuctionNumber == null)
       return;
-    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, (maxAuctionNumber > this.maxAuctions) ? this.maxAuctions : maxAuctionNumber);
+    this.inv.getTransaction().put(TransactionKey.AUCTION_NUMBER, (maxAuctionNumber > this.maxAuctions) ? this.maxAuctions : maxAuctionNumber);
 
     this.updateItem();
   }
@@ -209,7 +209,7 @@ public class CreateAuctionItem extends ShopInterface {
     final Integer maxAuctionNumber = this.resetAndGetMaxAuctionNumber();
     if (maxAuctionNumber == null)
       return;
-    Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
+    Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTION_NUMBER);
 
     if (add && auctionNumber + 1 <= maxAuctionNumber && auctionNumber + 1 <= this.maxAuctions) {
       auctionNumber += 1;
@@ -219,7 +219,7 @@ public class CreateAuctionItem extends ShopInterface {
       auctionNumber = (auctionNumber <= maxAuctionNumber) ? auctionNumber - 1 : maxAuctionNumber;
     }
 
-    this.inv.getTransaction().put(TransactionKey.AUCTIONNUMBER, auctionNumber);
+    this.inv.getTransaction().put(TransactionKey.AUCTION_NUMBER, auctionNumber);
     this.updateItem();
   }
 
@@ -231,12 +231,12 @@ public class CreateAuctionItem extends ShopInterface {
   private Integer resetAndGetMaxAuctionNumber() {
     this.inv.getWarn().stopWarn();
 
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     if (item == null || auction == null)
       return null;
 
-    auction.setAmount(this.inv.getTransactionValue(TransactionKey.AUCTIONAMOUNT));
+    auction.setAmount(this.inv.getTransactionValue(TransactionKey.AUCTION_AMOUNT));
     item.setAmount(auction.getAmount());
     auction.setItemStack(item);
 
@@ -274,9 +274,9 @@ public class CreateAuctionItem extends ShopInterface {
   public void destroy() {
     super.destroy();
     this.unsetItem();
-    this.inv.getTransaction().remove(TransactionKey.TEMPITEM);
-    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
-    this.inv.getTransaction().remove(TransactionKey.AUCTIONNUMBER);
-    this.inv.getTransaction().remove(TransactionKey.AUCTIONAMOUNT);
+    this.inv.getTransaction().remove(TransactionKey.TEMP_ITEM);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_INFO);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_NUMBER);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_AMOUNT);
   }
 }

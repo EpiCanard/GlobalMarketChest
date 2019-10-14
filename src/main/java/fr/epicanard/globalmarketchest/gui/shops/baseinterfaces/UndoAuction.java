@@ -24,7 +24,7 @@ public abstract class UndoAuction extends ShopInterface {
    * @param getItems Define if the player get back items or not
    */
   protected void undoAuction(InventoryGUI i, Boolean getItems) {
-    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTION_INFO);
 
     final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
     item.setAmount(auction.getAmount());

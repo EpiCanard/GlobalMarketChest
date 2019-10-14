@@ -41,10 +41,10 @@ public class DefaultFooter extends ShopInterface {
     final ItemStack item = this.inv.getInv().getItem(53);
     final String lore = LangUtils.get("Buttons.NewAuction.Description");
     final Integer maxAuctionNumber = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
     GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), this.inv.getPlayer(), auctionNumber ->  {
-      this.inv.getTransaction().put(TransactionKey.PLAYERAUCTIONS, auctionNumber);
+      this.inv.getTransaction().put(TransactionKey.PLAYER_AUCTIONS, auctionNumber);
       ItemStackUtils.setItemStackLore(item,
         Utils.toList(String.format(lore, auctionNumber, maxAuctionNumber)
       ));

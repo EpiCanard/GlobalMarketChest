@@ -7,7 +7,6 @@ import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
-import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.DefaultFooter;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 
@@ -43,7 +42,7 @@ public class AuctionViewBase extends DefaultFooter {
     if (!isOwner && !Permissions.GS_BUYAUCTION.isSetOnWithMessage(this.inv.getPlayer()))
       return;
 
-    this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, auction);
+    this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, auction);
     if (isOwner)
       this.inv.loadInterface("EditAuction");
     else

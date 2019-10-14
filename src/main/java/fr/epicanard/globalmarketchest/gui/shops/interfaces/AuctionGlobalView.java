@@ -64,7 +64,7 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
       return;
     final AuctionInfo auction = this.current.auctions.get(pos);
     if (auction != null) {
-      this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, auction);
+      this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, auction);
       this.inv.loadInterface("EditAuction");
     }
   }
@@ -78,9 +78,9 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
     if ((this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS) || this.current.auctions.size() == 0)
       return;
     this.inv.getWarn().stopWarn();
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     final Integer maxAuctionNumber = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
-    final Integer playerAuctions = this.inv.getTransactionValue(TransactionKey.PLAYERAUCTIONS);
+    final Integer playerAuctions = this.inv.getTransactionValue(TransactionKey.PLAYER_AUCTIONS);
     List<Integer> auctions = Utils.mapList(this.current.auctions, auction -> auction.getId());
     if (this.current.state == StateAuction.EXPIRED)
       auctions = new ArrayList<>(auctions.subList(0, Utils.getIndex(maxAuctionNumber - playerAuctions, auctions.size(), true)));
@@ -104,7 +104,7 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
     if ((this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS) || this.current.auctions.size() == 0)
       return;
     this.inv.getWarn().stopWarn();
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     final AtomicInteger pos = new AtomicInteger(0);
 
     try {

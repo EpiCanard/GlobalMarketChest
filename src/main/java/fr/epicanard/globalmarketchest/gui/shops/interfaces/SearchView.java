@@ -57,10 +57,10 @@ public class SearchView extends DefaultFooter {
     final Integer numberLevels = GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category);
     final GroupLevels lastLevel = this.getLastLevel(GroupLevels.LEVEL1, numberLevels);
 
-    this.inv.getTransaction().put(TransactionKey.GROUPLEVEL, lastLevel);
+    this.inv.getTransaction().put(TransactionKey.GROUP_LEVEL, lastLevel);
     this.inv.getTransaction().put(TransactionKey.CATEGORY, category);
-    this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, item);
-    this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, new AuctionInfo(item));
+    this.inv.getTransaction().put(TransactionKey.AUCTION_ITEM, item);
+    this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, new AuctionInfo(item));
 
     this.inv.loadInterface("AuctionViewList");
   }
@@ -78,7 +78,7 @@ public class SearchView extends DefaultFooter {
   }
 
   private void searchItem(String itemName) {
-    this.inv.getTransaction().put(TransactionKey.ITEMSEARCH, itemName);
+    this.inv.getTransaction().put(TransactionKey.ITEM_SEARCH, itemName);
     this.inv.loadInterface("AuctionViewItem");
   }
 

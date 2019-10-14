@@ -25,14 +25,14 @@ public class AuctionViewList extends AuctionViewBase {
   public AuctionViewList(InventoryGUI inv) {
     super(inv);
 
-    this.item = this.inv.getTransactionValue(TransactionKey.AUCTIONITEM);
+    this.item = this.inv.getTransactionValue(TransactionKey.AUCTION_ITEM);
     this.category = this.inv.getTransactionValue(TransactionKey.CATEGORY);
-    this.auctionRef = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-    this.level = Optional.ofNullable((GroupLevels) this.inv.getTransactionValue(TransactionKey.GROUPLEVEL))
+    this.auctionRef = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
+    this.level = Optional.ofNullable((GroupLevels) this.inv.getTransactionValue(TransactionKey.GROUP_LEVEL))
       .orElse(GroupLevels.LEVEL1);
 
     this.paginator.setLoadConsumer(pag -> {
-      final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOPINFO);
+      final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
       GlobalMarketChest.plugin.auctionManager.getAuctions(this.level, shop.getGroup(), this.category, this.auctionRef, this.paginator.getLimit(),
           auctions -> {
@@ -76,9 +76,9 @@ public class AuctionViewList extends AuctionViewBase {
     if (this.level.getNextLevel(category) == null) {
       super.selectAuction(pos);
     } else {
-      this.inv.getTransaction().put(TransactionKey.AUCTIONINFO, auction);
-      this.inv.getTransaction().put(TransactionKey.GROUPLEVEL, this.level.getNextLevel(category));
-      this.inv.getTransaction().put(TransactionKey.AUCTIONITEM, DatabaseUtils.deserialize(auction.getItemMeta()));
+      this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, auction);
+      this.inv.getTransaction().put(TransactionKey.GROUP_LEVEL, this.level.getNextLevel(category));
+      this.inv.getTransaction().put(TransactionKey.AUCTION_ITEM, DatabaseUtils.deserialize(auction.getItemMeta()));
       this.inv.loadInterface("AuctionViewList");
     }
   }
@@ -86,8 +86,8 @@ public class AuctionViewList extends AuctionViewBase {
   @Override
   public void destroy() {
     super.destroy();
-    this.inv.getTransaction().remove(TransactionKey.AUCTIONINFO);
-    this.inv.getTransaction().remove(TransactionKey.AUCTIONITEM);
-    this.inv.getTransaction().remove(TransactionKey.GROUPLEVEL);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_INFO);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_ITEM);
+    this.inv.getTransaction().remove(TransactionKey.GROUP_LEVEL);
   }
 }

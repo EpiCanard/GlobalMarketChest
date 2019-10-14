@@ -50,7 +50,7 @@ public class CreateAuctionPrice extends ShopInterface {
   @Override
   public void load() {
     super.load();
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
 
     final List<String> lore = this.getLore();
 
@@ -71,7 +71,7 @@ public class CreateAuctionPrice extends ShopInterface {
    * @param set Define if price must be set or added
    */
   private void setPrice(double price, Boolean set) {
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
 
     if (!set) {
       final BigDecimal dec = BigDecimal.valueOf(auction.getPrice()).add(BigDecimal.valueOf(price));
@@ -86,7 +86,7 @@ public class CreateAuctionPrice extends ShopInterface {
    * Update lore of buttons with auction price
    */
   private void updatePrice() {
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
     final List<String> lore = this.getLore();
     final Inventory inventory = this.inv.getInv();
 
@@ -103,8 +103,8 @@ public class CreateAuctionPrice extends ShopInterface {
    * @return the lore completed
    */
   private List<String> getLore() {
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-    final Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
+    final Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTION_NUMBER);
 
     final List<String> lore = auction.getLore(AuctionLoreConfig.SELECTPRICE);
     if (auctionNumber > 1)
@@ -118,9 +118,9 @@ public class CreateAuctionPrice extends ShopInterface {
    * @param i InventoryGui used
    */
   private void createAuction(InventoryGUI i) {
-    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTIONINFO);
-    final Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTIONNUMBER);
-    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMPITEM);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
+    final Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTION_NUMBER);
+    final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
     final PlayerInventory playerInv = i.getPlayer().getInventory();
 
     if (!playerInv.containsAtLeast(item, auction.getAmount() * auctionNumber)) {
