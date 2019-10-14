@@ -2,6 +2,7 @@ package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import java.util.function.Consumer;
 
+import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,7 +20,12 @@ public class ConfirmView extends ShopInterface {
     this.question = inv.getTransactionValue(TransactionKey.QUESTION);
     this.actions.put(29, i -> this.leave(i, true));
     this.actions.put(33, i -> this.leave(i, false));
-    this.actions.put(8, i -> this.leave(i, false));
+
+    final Boolean hasReturn = inv.getTransactionValue(TransactionKey.HAS_RETURN);
+    if (hasReturn == null || hasReturn) {
+      this.togglers.get(0).set();
+      this.actions.put(0, new PreviousInterface());
+    }
   }
 
   /**
