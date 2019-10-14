@@ -13,6 +13,7 @@ public enum TransactionKey {
   GROUPLEVEL,
   QUESTION,
   PLAYER,
-  ITEMSEARCH
+  ITEMSEARCH,
+  HAS_RETURN
   ;
 }

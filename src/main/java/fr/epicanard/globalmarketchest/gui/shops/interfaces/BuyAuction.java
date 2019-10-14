@@ -164,8 +164,9 @@ public class BuyAuction extends UndoAuction {
   private void removeAuction(Boolean remove) {
     if (remove) {
       this.undoAuction(this.inv, GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AdminRemoveAuctionGetItems", true));
+    } else {
+      inv.unloadLastInterface();
     }
-    inv.unloadLastInterface();
   }
 
   @Override
