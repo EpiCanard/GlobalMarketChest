@@ -21,7 +21,7 @@ public class NewAuction implements Consumer<InventoryGUI> {
 
     GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), inv.getPlayer(), auctionNumber -> {
       if (auctionNumber >= maxAuctions) {
-        inv.getWarn().warn("MaxAuctionByPlayer", 49);
+        inv.getWarn().warn("MaxAuctionByPlayer", 52);
       } else {
         AuctionInfo info = new AuctionInfo(AuctionType.SELL, inv.getPlayer(), shop.getGroup());
         inv.getTransaction().put(TransactionKey.AUCTION_INFO, info);
