@@ -86,7 +86,7 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
       auctions = new ArrayList<>(auctions.subList(0, Utils.getIndex(maxAuctionNumber - playerAuctions, auctions.size(), true)));
 
     if (auctions.size() > 0 &&
-      GlobalMarketChest.plugin.auctionManager.renewGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), this.current.state, auctions) == true)
+      GlobalMarketChest.plugin.auctionManager.renewGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), this.current.state, auctions))
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewEveryAuction");
     else
       i.getWarn().warn("CantRenewEveryAuction", 4);
