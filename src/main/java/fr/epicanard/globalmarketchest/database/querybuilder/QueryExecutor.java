@@ -38,7 +38,7 @@ public class QueryExecutor {
           prepared.setBoolean(inc.get(), (Boolean)value);
           break;
         case "Timestamp":
-          prepared.setTimestamp(inc.get(), (Timestamp)value);
+          prepared.setString(inc.get(), value.toString());
           break;
         case "Integer":
           prepared.setInt(inc.get(), (Integer)value);
