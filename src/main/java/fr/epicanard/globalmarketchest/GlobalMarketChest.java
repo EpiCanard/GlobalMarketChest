@@ -2,6 +2,9 @@ package fr.epicanard.globalmarketchest;
 
 import java.util.logging.Level;
 
+import fr.epicanard.globalmarketchest.database.PatchHandler;
+import fr.epicanard.globalmarketchest.exceptions.FailedInitException;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
@@ -81,7 +84,12 @@ public class GlobalMarketChest extends JavaPlugin {
     try {
       this.initEconomy();
       this.initDatabase();
+    } catch (FailedInitException e) {
+      LoggerUtils.warn(e.getMessage());
+      this.disable();
+      return;
     } catch (Exception e) {
+      e.printStackTrace();
       this.disable();
       return;
     }
@@ -110,7 +118,7 @@ public class GlobalMarketChest extends JavaPlugin {
   /**
    * Disable the plugin
    */
-  public void disable() {
+  private void disable() {
     this.setEnabled(false);
     this.getLogger().log(Level.WARNING, "Plugin GlobalMarketChest disabled");
   }
@@ -129,22 +137,24 @@ public class GlobalMarketChest extends JavaPlugin {
 
   /**
    * Init the economy plugin
-   * @throws Exception
+   *
+   * @throws FailedInitException Throw exception when fail to init
    */
-  private void initEconomy() throws Exception {
+  private void initEconomy() throws FailedInitException {
     try {
       this.economy.initEconomy();
     } catch (RequiredPluginException e) {
       this.getLogger().log(Level.WARNING, e.getMessage());
-      throw new Exception();
+      throw new FailedInitException("Economy");
     }
   }
 
   /**
-   * Init Database create databaseconnection and configure it
-   * @throws Exception
+   * Init database create database connection and configure it
+   *
+   * @throws FailedInitException Throw exception when fail to init
    */
-  private void initDatabase() throws Exception {
+  private void initDatabase() throws FailedInitException {
     try {
       this.sqlConnector = this.getDatabaseConnectionProvider();
       if (this.sqlConnector.needConnection) {
@@ -152,10 +162,10 @@ public class GlobalMarketChest extends JavaPlugin {
       }
       this.sqlConnector.fillPool();
       DatabaseConnector.configureTables();
-      this.sqlConnection.recreateTables();
+      new PatchHandler(this.sqlConnector).applyPatches();
     } catch (ConfigException e) {
       this.getLogger().log(Level.WARNING, "[SQLConnection] " + e.getMessage());
-      throw new Exception();
+      throw new FailedInitException("Database");
     }
   }
 
@@ -163,7 +173,7 @@ public class GlobalMarketChest extends JavaPlugin {
    * Init Database connection provider depending of config 'Storage.Type'
    *
    * @return Return the correct Database connection provider
-   * @throws ConfigException
+   * @throws ConfigException Throw ConfigException when connectType doesn't exist
    */
   private DatabaseConnector getDatabaseConnectionProvider() throws ConfigException {
     final String connectionType = this.configLoader.getConfig().getString("Storage.Type");

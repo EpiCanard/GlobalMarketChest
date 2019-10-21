@@ -3,8 +3,10 @@ package fr.epicanard.globalmarketchest.database.connectors;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.Properties;
 
+import lombok.Getter;
 import org.apache.commons.lang3.tuple.Pair;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -19,20 +21,21 @@ public abstract class DatabaseConnector {
   protected String user;
   protected String password;
 
+  protected static String prefix = "GMC_";
   public static String tableAuctions = "GMC_auctions";
   public static String tableShops = "GMC_shops";
+  public static String tablePatches = "GMC_patches";
 
   DatabaseConnector(final Boolean needConnection) {
     this.needConnection = needConnection;
   }
 
   public static void configureTables() throws ConfigException {
-    String prefix = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Storage.TablePrefix");
-    if (prefix == null)
-      return;
+    final String prefix = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Storage.TablePrefix", "GMC_");
     if (!prefix.matches("[a-zA-Z_]*"))
       throw new ConfigException("tablePrefix not containing only letters or/and _");
 
+    DatabaseConnector.prefix = prefix;
     DatabaseConnector.tableAuctions = prefix + "auctions";
     DatabaseConnector.tableShops = prefix + "shops";
   }
@@ -44,8 +47,6 @@ public abstract class DatabaseConnector {
   protected abstract Connection connect() throws ConfigException;
 
   protected abstract void disconnect(Connection connection);
-
-  public abstract void recreateTables();
 
   public abstract Connection getConnection();
 
@@ -60,4 +61,8 @@ public abstract class DatabaseConnector {
   public abstract void configFromConfigFile() throws ConfigException;
 
   public abstract String buildLimit(Pair<Integer, Integer> limit);
+
+  public abstract String getDatabaseType();
+
+  public abstract List<String> listTables();
 }

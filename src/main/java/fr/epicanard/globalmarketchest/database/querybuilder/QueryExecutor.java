@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -68,8 +67,8 @@ public class QueryExecutor {
   /**
    * Prepare and execute the query
    *
-   * @param builder
-   * @param consumer
+   * @param builder BaseBuilder that contains the query
+   * @param consumer Callback called with the query response
    */
   public Boolean execute(BaseBuilder builder, Consumer<ResultSet> consumer) {
     Connection co = GlobalMarketChest.plugin.getSqlConnector().getConnection();
@@ -90,13 +89,44 @@ public class QueryExecutor {
       if (consumer != null)
         Optional.ofNullable(res.get()).ifPresent(consumer);
 
-    } catch (SQLException e) {
-      e.printStackTrace();
     } catch (TypeNotSupported e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
+    } catch (Exception e) {
+      e.printStackTrace();
     } finally {
-      GlobalMarketChest.plugin.getSqlConnection().closeRessources(res.get(), prepared);
-      GlobalMarketChest.plugin.getSqlConnection().getBackConnection(co);
+      GlobalMarketChest.plugin.getSqlConnector().closeRessources(res.get(), prepared);
+      GlobalMarketChest.plugin.getSqlConnector().getBackConnection(co);
+    }
+    return ret;
+  }
+
+  /**
+   * Prepare and execute the query
+   *
+   * @param queries List of String queries to execute inside batch
+   */
+  public Boolean executeBatches(List<String> queries) {
+    Connection co = GlobalMarketChest.plugin.getSqlConnector().getConnection();
+    boolean ret = false;
+    AtomicReference<ResultSet> res = new AtomicReference<>();
+    Statement prepared;
+
+    try {
+      prepared = co.createStatement();
+      Statement finalPrepared = prepared;
+      queries.forEach(query -> {
+        try {
+          finalPrepared.addBatch(query);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      });
+      prepared.executeBatch();
+      ret = true;
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      GlobalMarketChest.plugin.getSqlConnector().getBackConnection(co);
     }
     return ret;
   }
@@ -105,7 +135,7 @@ public class QueryExecutor {
     return this.execute(builder, null);
   }
 
-  public static QueryExecutor of(){
+  public static QueryExecutor of() {
     return new QueryExecutor();
   }
 }
