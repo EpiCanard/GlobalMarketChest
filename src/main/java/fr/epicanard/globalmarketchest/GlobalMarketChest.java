@@ -41,7 +41,7 @@ public class GlobalMarketChest extends JavaPlugin {
   @Getter
   private final RanksLoader ranksLoader;
   @Getter
-  private DatabaseConnector sqlConnection;
+  private DatabaseConnector sqlConnector;
   public static GlobalMarketChest plugin;
   public final InventoriesHandler inventories;
   public final VaultEconomy economy;
@@ -100,8 +100,8 @@ public class GlobalMarketChest extends JavaPlugin {
 
   @Override
   public void onDisable() {
-    if (this.sqlConnection != null)
-      this.sqlConnection.cleanPool();
+    if (this.sqlConnector != null)
+      this.sqlConnector.cleanPool();
     if (this.inventories != null)
       this.inventories.removeAllInventories();
     HandlerList.unregisterAll(this);
@@ -146,11 +146,11 @@ public class GlobalMarketChest extends JavaPlugin {
    */
   private void initDatabase() throws Exception {
     try {
-      this.sqlConnection = this.getDatabaseConnectionProvider();
-      if (this.sqlConnection.needConnection) {
-        this.sqlConnection.configFromConfigFile();
+      this.sqlConnector = this.getDatabaseConnectionProvider();
+      if (this.sqlConnector.needConnection) {
+        this.sqlConnector.configFromConfigFile();
       }
-      this.sqlConnection.fillPool();
+      this.sqlConnector.fillPool();
       DatabaseConnector.configureTables();
       this.sqlConnection.recreateTables();
     } catch (ConfigException e) {
