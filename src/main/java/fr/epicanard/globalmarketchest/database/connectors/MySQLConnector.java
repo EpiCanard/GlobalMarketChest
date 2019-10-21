@@ -4,11 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
+import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.SimpleQueryBuilder;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
+import lombok.Getter;
 
 public class MySQLConnector extends SQLConnector {
+  @Getter
+  private final String databaseType = "mysql";
 
   public MySQLConnector() throws ConfigException {
     super(true);
@@ -33,46 +40,27 @@ public class MySQLConnector extends SQLConnector {
   }
 
   /**
-   * Recreate tables if doesn't exist
+   * List tables used by the plugin
+   *
+   * @return List of tables
    */
   @Override
-  public void recreateTables() {
-    Connection co = this.getConnection();
+  public List<String> listTables() {
+    final List<String> tables = new ArrayList<>();
 
-    try {
-      Statement state = co.createStatement();
-      state.execute(
-        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnector.tableAuctions + "` (" +
-        "  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
-        "  `itemStack` VARCHAR(50) NOT NULL," +
-        "  `itemMeta` TEXT," +
-        "  `amount` INT UNSIGNED NOT NULL," +
-        "  `price` DOUBLE NOT NULL," +
-        "  `ended` BOOLEAN NOT NULL DEFAULT FALSE," +
-        "  `type` TINYINT(1) NOT NULL," +
-        "  `playerStarter` TEXT NOT NULL," +
-        "  `playerEnder` TEXT DEFAULT NULL," +
-        "  `start` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
-        "  `end` TIMESTAMP DEFAULT '2000-01-01 00:00:01' NOT NULL," +
-        "  `group` VARCHAR(50) NOT NULL" +
-        ");"
-      );
-      state.execute(
-        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnector.tableShops + "` (" +
-        "  `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT," +
-        "  `owner` TEXT NOT NULL," +
-        "  `signLocation` TEXT NOT NULL," +
-        "  `otherLocation` TEXT NOT NULL," +
-        "  `type` TINYINT(1) NOT NULL," +
-        "  `group` VARCHAR(50) NOT NULL" +
-        ");"
-      );
-      state.close();
-    } catch(SQLException e) {
-      e.printStackTrace();
-    }
-    finally {
-      this.getBackConnection(co);
-    }
+    QueryExecutor.of().execute(new SimpleQueryBuilder(
+        "SHOW TABLES LIKE '" + DatabaseConnector.prefix + "%';",
+        true
+    ), res -> {
+      try {
+        while (res.next()) {
+          tables.add(res.getString(1));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    });
+
+    return tables;
   }
 }

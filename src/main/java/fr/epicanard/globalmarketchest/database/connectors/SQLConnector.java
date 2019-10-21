@@ -21,7 +21,7 @@ public abstract class SQLConnector extends DatabaseConnector {
 
     this.pool = new LinkedBlockingQueue<>();
     this.simultaneousConnections = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Storage.Connection.SimultaneousConnection");
-    if (this.simultaneousConnections == null)
+    if (this.simultaneousConnections <= 0)
       this.simultaneousConnections = 1;
   }
 

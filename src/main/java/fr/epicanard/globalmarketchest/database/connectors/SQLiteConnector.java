@@ -5,13 +5,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.SimpleQueryBuilder;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
+import lombok.Getter;
 
 public class SQLiteConnector extends SQLConnector {
+  @Getter
+  private final String databaseType = "sqlite";
   private Connection connection;
-
 
   private static final String sqliteFileName = "globalmarketchest.sqlite";
 
@@ -37,49 +45,6 @@ public class SQLiteConnector extends SQLConnector {
     }
     return null;
   }
-
-    /**
-   * Recreate tables if doesn't exist
-   */
-  @Override
-  public void recreateTables() {
-    Connection co = this.getConnection();
-
-    try {
-      Statement state = co.createStatement();
-      state.execute(
-        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnector.tableAuctions + "` (" +
-        "  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-        "  `itemStack` VARCHAR(50) NOT NULL," +
-        "  `itemMeta` TEXT," +
-        "  `amount` INT UNSIGNED NOT NULL," +
-        "  `price` DOUBLE NOT NULL," +
-        "  `ended` BOOLEAN NOT NULL DEFAULT FALSE," +
-        "  `type` TINYINT(1) NOT NULL," +
-        "  `playerStarter` TEXT NOT NULL," +
-        "  `playerEnder` TEXT DEFAULT NULL," +
-        "  `start` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
-        "  `end` TIMESTAMP DEFAULT '2000-01-01 00:00:01' NOT NULL," +
-        "  `group` VARCHAR(50) NOT NULL" +
-        ");"
-      );
-      state.execute(
-        "CREATE TABLE IF NOT EXISTS `" + DatabaseConnector.tableShops + "` (" +
-        "  `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-        "  `owner` TEXT NOT NULL," +
-        "  `signLocation` TEXT NOT NULL," +
-        "  `otherLocation` TEXT NOT NULL," +
-        "  `type` TINYINT(1) NOT NULL," +
-        "  `group` VARCHAR(50) NOT NULL" +
-        ");"
-      );
-      state.close();
-    } catch(SQLException e) {
-      e.printStackTrace();
-    }
-  }
-
-
 
   /**
    * Disconnection connection
@@ -124,5 +89,30 @@ public class SQLiteConnector extends SQLConnector {
   @Override
   public void cleanPool() {
     this.disconnect(this.connection);
+  }
+
+  /**
+   * List tables used by the plugin
+   *
+   * @return List of tables
+   */
+  @Override
+  public List<String> listTables() {
+    final List<String> tables = new ArrayList<>();
+
+    QueryExecutor.of().execute(new SimpleQueryBuilder(
+        "SELECT * FROM sqlite_master WHERE type='table' AND name LIKE '" + DatabaseConnector.prefix + "%';",
+        true
+    ), res -> {
+      try {
+        while (res.next()) {
+          tables.add(res.getString("name"));
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    });
+
+    return tables;
   }
 }
