@@ -72,7 +72,7 @@ public class QueryExecutor {
    * @param consumer
    */
   public Boolean execute(BaseBuilder builder, Consumer<ResultSet> consumer) {
-    Connection co = GlobalMarketChest.plugin.getSqlConnection().getConnection();
+    Connection co = GlobalMarketChest.plugin.getSqlConnector().getConnection();
     Boolean ret = false;
     AtomicReference<ResultSet> res = new AtomicReference<>();
     PreparedStatement prepared = null;

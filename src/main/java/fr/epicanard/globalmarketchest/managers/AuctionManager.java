@@ -243,7 +243,7 @@ public class AuctionManager {
     }
 
     if (limit != null)
-      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
+      builder.addExtension(GlobalMarketChest.plugin.getSqlConnector().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
       List<Pair<ItemStack, AuctionInfo>> lst = new ArrayList<>();
       try {
@@ -292,7 +292,7 @@ public class AuctionManager {
       builder.setExtension("ORDER BY end DESC");
 
     if (limit != null)
-      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
+      builder.addExtension(GlobalMarketChest.plugin.getSqlConnector().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
       List<AuctionInfo> auctions = new ArrayList<>();
       try {
@@ -320,7 +320,7 @@ public class AuctionManager {
     builder.addCondition("itemStack", "%:%" + search + "%", ConditionType.LIKE);
 
     if (limit != null)
-      builder.addExtension(GlobalMarketChest.plugin.getSqlConnection().buildLimit(limit));
+      builder.addExtension(GlobalMarketChest.plugin.getSqlConnector().buildLimit(limit));
     QueryExecutor.of().execute(builder, res -> {
       List<AuctionInfo> auctions = new ArrayList<>();
       try {
