@@ -20,10 +20,10 @@ public enum AuctionType {
    * @param value Value of AuctionType
    * @return Auction matching value
    */
-  public static final AuctionType getAuctionType(Integer value) {
+  public static AuctionType getAuctionType(Integer value) {
     if (value != null) {
       for (AuctionType type : AuctionType.values()) {
-        if (type.getType() == value)
+        if (type.getType().equals(value))
           return type;
       }
     }

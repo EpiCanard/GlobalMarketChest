@@ -4,7 +4,7 @@ import org.bukkit.OfflinePlayer;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
-import fr.epicanard.globalmarketchest.auctions.StateAuction;
+import fr.epicanard.globalmarketchest.auctions.StatusAuction;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.AuctionViewBase;
@@ -21,7 +21,7 @@ public class AuctionViewByPlayer extends AuctionViewBase {
       final OfflinePlayer player = this.inv.getTransactionValue(TransactionKey.PLAYER);
       final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
-      GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), StateAuction.INPROGRESS, player, null, this.paginator.getLimit(),
+      GlobalMarketChest.plugin.auctionManager.getAuctions(shop.getGroup(), StatusAuction.IN_PROGRESS, player, null, this.paginator.getLimit(),
           auctions -> {
             if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
               this.auctions = auctions;

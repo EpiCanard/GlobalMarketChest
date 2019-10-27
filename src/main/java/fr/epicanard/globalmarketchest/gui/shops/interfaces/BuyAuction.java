@@ -93,8 +93,8 @@ public class BuyAuction extends UndoAuction {
    * The message is different if the destination player is the owner or not
    *
    * @param isOwner Define the player is owner of the auctions
-   * @param buyer Player that buy the auction
-   * @param item ItemStack bought
+   * @param buyer   Player that buy the auction
+   * @param item    ItemStack bought
    */
   private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
     final String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
@@ -102,18 +102,18 @@ public class BuyAuction extends UndoAuction {
     try {
       if (isOwner) {
         return String.format(LangUtils.get(langVariable),
-          buyer.getName(),
-          auction.getAmount(),
-          ItemStackUtils.getItemStackDisplayName(item),
-          auction.getTotalPrice()
+            buyer.getName(),
+            auction.getAmount(),
+            ItemStackUtils.getItemStackDisplayName(item),
+            auction.getTotalPrice()
         );
       }
       return String.format(LangUtils.get(langVariable),
-        buyer.getName(),
-        auction.getAmount(),
-        ItemStackUtils.getItemStackDisplayName(item),
-        auction.getTotalPrice(),
-        PlayerUtils.getPlayerName(auction.getPlayerStarter())
+          buyer.getName(),
+          auction.getAmount(),
+          ItemStackUtils.getItemStackDisplayName(item),
+          auction.getTotalPrice(),
+          PlayerUtils.getPlayerName(auction.getPlayerStarter())
       );
     } catch (MissingFormatArgumentException e) {
       LoggerUtils.warn(String.format("Missing or malformed language variable '%s'. Please add it in language file.", langVariable));
@@ -125,8 +125,8 @@ public class BuyAuction extends UndoAuction {
    * Broadcast a message inside server to inform about a purchase
    *
    * @param auction Information of auction
-   * @param buyer Player that buy the auction
-   * @param item ItemStack bought
+   * @param buyer   Player that buy the auction
+   * @param item    ItemStack bought
    */
   private void broadcastMessage(AuctionInfo auction, Player buyer, ItemStack item) {
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
@@ -163,7 +163,7 @@ public class BuyAuction extends UndoAuction {
    */
   private void removeAuction(Boolean remove) {
     if (remove) {
-      this.undoAuction(this.inv, GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AdminRemoveAuctionGetItems", true));
+      this.undoAuction(this.inv, GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AdminRemoveAuctionGetItems", true), true);
     } else {
       inv.unloadLastInterface();
     }

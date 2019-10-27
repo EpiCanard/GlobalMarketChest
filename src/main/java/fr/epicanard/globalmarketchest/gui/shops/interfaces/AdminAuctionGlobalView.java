@@ -1,7 +1,7 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
-import fr.epicanard.globalmarketchest.auctions.StateAuction;
+import fr.epicanard.globalmarketchest.auctions.StatusAuction;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.BaseAuctionGlobalView;
@@ -30,7 +30,7 @@ public class AdminAuctionGlobalView extends BaseAuctionGlobalView {
   protected void loadTogglers() {}
 
   private void buyAuction(Integer pos) {
-    if (this.current.state != StateAuction.INPROGRESS)
+    if (this.current.state != StatusAuction.IN_PROGRESS)
       return;
     if (pos >= this.current.auctions.size())
       return;

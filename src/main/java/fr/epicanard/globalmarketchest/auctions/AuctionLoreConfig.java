@@ -3,13 +3,13 @@ package fr.epicanard.globalmarketchest.auctions;
 import lombok.Getter;
 
 public enum AuctionLoreConfig {
-  ALL(true, true, true, true, true, true, true, true, true, true),
-  TOSELL(false, true, true, true, true, false, true, false, true, true),
-  OWN(true, true, true, true, false, false, true, false, true, true),
-  SOLD(true, true, true, true, false, true, true, true, false, true),
-  BOUGHT(true, true, true, true, true, false, true, true, false, true),
-  OWNENDED(true, true, true, true, false, false, true, true, false, true),
-  SELECTPRICE(false, true, true, true, false, false, false, false, false, false)
+  ALL(true, true, true, true, true, true, true, true, true, false, true),
+  TOSELL(false, true, true, true, true, false, true, false, true, false, true),
+  OWN(true, true, true, true, false, false, true, false, true, false, true),
+  SOLD(true, true, true, true, false, true, true, true, false, false, true),
+  BOUGHT(true, true, true, true, true, false, true, true, false, false, true),
+  OWNENDED(true, true, true, true, false, false, true, true, false, true, true),
+  SELECTPRICE(false, true, true, true, false, false, false, false, false, false, false)
   ;
 
   @Getter
@@ -31,6 +31,8 @@ public enum AuctionLoreConfig {
   @Getter
   private Boolean expire;
   @Getter
+  private Boolean canceled;
+  @Getter
   private Boolean frame;
 
 
@@ -44,6 +46,7 @@ public enum AuctionLoreConfig {
     Boolean started,
     Boolean ended,
     Boolean expire,
+    Boolean canceled,
     Boolean frame
   ) {
     this.state = state;
@@ -55,6 +58,7 @@ public enum AuctionLoreConfig {
     this.started = started;
     this.ended = ended;
     this.expire = expire;
+    this.canceled = canceled;
     this.frame = frame;
   }
 }

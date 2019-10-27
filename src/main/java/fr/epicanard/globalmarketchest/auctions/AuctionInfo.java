@@ -29,9 +29,7 @@ public class AuctionInfo {
   @Getter @Setter
   private Double price;
   @Getter
-  private StateAuction state;
-  @Getter
-  private Boolean ended;
+  private StatusAuction status;
   @Getter
   private AuctionType type;
   @Getter
@@ -53,14 +51,13 @@ public class AuctionInfo {
     this.itemMeta = DatabaseUtils.getField("itemMeta", res::getString);
     this.amount = DatabaseUtils.getField("amount", res::getInt);
     this.price = DatabaseUtils.getField("price", res::getDouble);
-    this.ended = DatabaseUtils.getField("ended", res::getBoolean);
     this.type = AuctionType.getAuctionType(DatabaseUtils.getField("type", res::getInt));
     this.playerStarter = DatabaseUtils.getField("playerStarter", res::getString);
     this.playerEnder = DatabaseUtils.getField("playerEnder", res::getString);
     this.start = DatabaseUtils.getField("start", res::getTimestamp);
     this.end = DatabaseUtils.getField("end", res::getTimestamp);
+    this.status = this.defineStatus(DatabaseUtils.getField("status", res::getInt), this.end);
     this.group = DatabaseUtils.getField("group", res::getString);
-    this.state = StateAuction.getStateAuction(this);
 
     if (this.itemMeta == null && this.itemStack != null) {
       this.itemMeta = DatabaseUtils.serialize(ItemStackUtils.getItemStack(this.itemStack));
@@ -68,11 +65,10 @@ public class AuctionInfo {
   }
 
   public AuctionInfo(AuctionType type, Player owner, String group) {
-    this.state = StateAuction.INPROGRESS;
+    this.status = StatusAuction.IN_PROGRESS;
     this.type = AuctionType.getAuctionType(type.getType());
     this.price = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDouble("Options.DefaultPrice", 0.0);
     this.playerStarter = owner.getUniqueId().toString();
-    this.ended = false;
     this.group = group;
   }
 
@@ -80,10 +76,20 @@ public class AuctionInfo {
     this.setItemStack(item);
   }
 
+  /**
+   * Get total price of auction
+   *
+   * @return Total price
+   */
   public Double getTotalPrice() {
     return BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
   }
 
+  /**
+   * Set itemstack inside auction
+   *
+   * @param item Item to set inside auction
+   */
   public void setItemStack(ItemStack item) {
     ItemStack it = item.clone();
     it.setAmount(1);
@@ -91,14 +97,13 @@ public class AuctionInfo {
     this.itemMeta = DatabaseUtils.serialize(it);
   }
 
-  private String checkPrice(double price) {
-    if (price == 0.0)
-      return "&2" + LangUtils.get("Divers.Free");
-    return Double.toString(price);
-  }
-
+  /**
+   * Get the final array of itemstack the auction contains
+   *
+   * @return List of itemstack
+   */
   public ItemStack[] getRealItemStack() {
-    List<ItemStack> items = new ArrayList<>();
+    final List<ItemStack> items = new ArrayList<>();
 
     ItemStack item = DatabaseUtils.deserialize(this.itemMeta);
     int amount = this.amount;
@@ -112,14 +117,11 @@ public class AuctionInfo {
     return items.toArray(new ItemStack[0]);
   }
 
-  private void addLore(List<String> lore, String key, String color, String value) {
-    lore.add(String.format("&7%s : %s%s", LangUtils.get("Divers." + key), color, value));
-  }
 
   /**
    * Build and return lore for current auction
    *
-   * @param status
+   * @param config Config used to define which infos must be displayed
    * @return the lore
    */
   public List<String> getLore(AuctionLoreConfig config) {
@@ -129,7 +131,7 @@ public class AuctionInfo {
     if (config.getFrame())
       lore.add("&6--------------");
     if (config.getState())
-      this.addLore(lore, "State", "&2", this.state.getLang());
+      this.addLore(lore, "State", "&2", this.status.getLang());
     if (config.getQuantity())
       this.addLore(lore, "Quantity", "&6", this.amount.toString());
     if (config.getUnitPrice())
@@ -151,9 +153,51 @@ public class AuctionInfo {
       this.addLore(lore, path, "&6",
         DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
     }
+    if (config.getCanceled() && !this.playerStarter.equals(this.playerEnder))
+      this.addLore(lore, "CanceledBy", "&c", PlayerUtils.getPlayerName(this.playerEnder));
     if (config.getFrame())
       lore.add("&6--------------");
     lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(this.itemStack));
     return lore;
+  }
+
+  /**
+   * Add a formatted lore inside a list of lore
+   *
+   * @param lore List of lore
+   * @param key Key to add
+   * @param color Color to use for value
+   * @param value Value to use
+   */
+  private void addLore(List<String> lore, String key, String color, String value) {
+    lore.add(String.format("&7%s : %s%s", LangUtils.get("Divers." + key), color, value));
+  }
+
+  /**
+   * Get string price of auctions, if free display "Free"
+   *
+   * @param price Price in double value
+   * @return String price
+   */
+  private String checkPrice(double price) {
+    if (price == 0.0)
+      return "&2" + LangUtils.get("Divers.Free");
+    return Double.toString(price);
+  }
+
+  /**
+   * Define real status depending of registered status and expiration date
+   *
+   * @param status Status registered
+   * @param endTime Expiration date of auction
+   * @return The correct status
+   */
+  private StatusAuction defineStatus(Integer status, Timestamp endTime) {
+    final StatusAuction statusAuction = StatusAuction.getStatusAuction(status);
+    if (statusAuction.equals(StatusAuction.IN_PROGRESS) && endTime != null
+        && endTime.getTime() < DatabaseUtils.getTimestamp().getTime()) {
+      return StatusAuction.EXPIRED;
+    }
+    return statusAuction;
   }
 }

@@ -33,6 +33,7 @@ Divers:
   Expired: "Expiré"
   Started: "Débuté"
   Ended: "Terminé"
+  CanceledBy: "Annulé par"
   Free: "Gratuit"
   WithStatus: "&fAvec le statut : &2%s"
   Days: "jours"
@@ -178,6 +179,7 @@ ErrorMessages:
   CantBuyAuction: "Impossible d'acheter l'enchère (expirée ou déjà vendue)"
   CantRenewAuction: "Impossible de renouveler l'enchère"
   CantUndoAuction: "Impossible d'annuler l'enchère"
+  CantRemoveAuction: "Impossible de supprimer l'enchère"
   CantRenewEveryAuction: "Impossible de renouveler toutes ;&7les enchères"
   CantUndoEveryAuction: "Impossible d'annuler toutes les enchères"
   PlayerDoesntExist: "Ce joueur n'existe pas"
@@ -193,6 +195,7 @@ ErrorMessages:
   MaxGlobalShop: "&cVous avez atteint le nombre maximum de GlobalShop que vous pouvez créer (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Enchère supprimée avec succès"
+  RemoveAuction: "&2Enchère supprimée avec succès"
   RenewAuction: "&2Enchère renouvelée avec succès"
   CreateAuction: "&2Enchère créée avec succès"
   RenewEveryAuction: "&2Toutes les enchères ont été renouvelées avec succès"
