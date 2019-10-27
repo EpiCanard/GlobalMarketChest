@@ -88,7 +88,7 @@ public class InterfaceConfig {
   private void loadTogglers(ConfigurationSection config, String name, List<InterfaceConfig> baseInterfaces) {
     this.togglers = baseInterfaces.stream().map(InterfaceConfig::getTogglers)
         .reduce(new ArrayList<>(), (acc, value) -> {
-          acc.addAll(value);
+          value.forEach(toggler -> acc.add(new TogglerConfig(toggler)));
           return acc;
         });
 
