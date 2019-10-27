@@ -30,6 +30,14 @@ public class TogglerConfig {
         this.type.equals("circle") ? "CircleUnsetItem" : null));
   }
 
+  public TogglerConfig(TogglerConfig config) {
+    this.position = config.position;
+    this.set = config.set;
+    this.type = config.type;
+    this.setItem = config.setItem;
+    this.unsetItem = config.unsetItem;
+  }
+
   /**
    * Instanciate a new Toggler depending of it's type
    *
