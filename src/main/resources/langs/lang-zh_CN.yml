@@ -33,6 +33,7 @@ Divers:
   Expired: "已过期"
   Started: "已开始"
   Ended: "已经结束"
+  CanceledBy: "Canceled by"
   Free: "免费"
   WithStatus: "&f当前状态 : &2%s"
   Days: "天"
@@ -178,6 +179,7 @@ ErrorMessages:
   CantRenewAuction: "拍卖续约失败"
   CantUndoAuction: "未能撤消拍卖"
   CantRenewEveryAuction: "延长时间错误"
+  CantRemoveAuction: "Fail to remove auction"
   CantUndoEveryAuction: "拍卖失败"
   PlayerDoesntExist: "这个玩家不存在"
   MaxAuctionByPlayer: "无法创建更多拍卖；&7您已达到最大拍卖数量"
@@ -192,6 +194,7 @@ ErrorMessages:
   MaxGlobalShop: "&c你已经达到创建商店的最大值了 (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2删除成功"
+  RemoveAuction: "&2Auction successfully removed"
   RenewAuction: "&2物品已经成功续期"
   CreateAuction: "&2创建成功"
   RenewEveryAuction: "&2所有物品已经成功续期"

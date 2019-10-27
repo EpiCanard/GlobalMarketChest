@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `{table_auctions}_new`
     `group`         VARCHAR(50)                       NOT NULL
 );
 
-INSERT INTO {table_auctions} _new(`id`, `itemStack`, `itemMeta`, `amount`, `price`, `status`, `type`, `playerStarter`, `playerEnder`, `start`, `end`, `group`)
+INSERT INTO {table_auctions}_new(`id`, `itemStack`, `itemMeta`, `amount`, `price`, `status`, `type`, `playerStarter`, `playerEnder`, `start`, `end`, `group`)
 SELECT `id`, `itemStack`, `itemMeta`, `amount`, `price`, `status`, `type`, `playerStarter`, `playerEnder`, `start`, `end`, `group` FROM {table_auctions};
 
 DROP TABLE `{table_auctions}`;

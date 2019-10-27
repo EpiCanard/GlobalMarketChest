@@ -33,6 +33,7 @@ Divers:
   Expired: "Wygasło"
   Started: "Rozpoczęte"
   Ended: "Zakończone"
+  CanceledBy: "Canceled by"
   Free: "Darmowe"
   WithStatus: "&fStatus : &2%s"
   Days: "dni"
@@ -177,6 +178,7 @@ ErrorMessages:
   CantBuyAuction: "Nie udało się kupić aukcji (przedawniona bądź sprzedana)"
   CantRenewAuction: "Nie udało się ponowić aukcji"
   CantUndoAuction: "Nie udało się Wycofać aukcji"
+  CantRemoveAuction: "Fail to remove auction"
   CantRenewEveryAuction: "Nie udało się ponowić wszystkich aukcji"
   CantUndoEveryAuction: "Nie udało się wycofać wszystkich aukcji"
   PlayerDoesntExist: "Taki gracz nie istnieje"
@@ -192,6 +194,7 @@ ErrorMessages:
   MaxGlobalShop: "&cPrzekroczyłeś maksymalną liczbbę GlobalShop'ów (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Aukcja pomyślnie wycofana"
+  RemoveAuction: "&2Auction successfully removed"
   RenewAuction: "&2Aukcja pomyślnie ponowiona"
   CreateAuction: "&2Aukcja pomyślnie utworzona"
   RenewEveryAuction: "&2Wszystkie aukcje pomyślnie ponowione"

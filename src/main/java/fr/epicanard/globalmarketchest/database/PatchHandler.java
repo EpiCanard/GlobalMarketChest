@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.database;
 
+import com.google.common.collect.ImmutableList;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
@@ -15,6 +16,10 @@ import java.util.stream.Collectors;
 
 public class PatchHandler {
   private DatabaseConnector connector;
+  private final List<String> requiredTables = ImmutableList.of(
+      DatabaseConnector.tableAuctions,
+      DatabaseConnector.tableShops
+  );
 
   public PatchHandler(DatabaseConnector connector) {
     this.connector = connector;
@@ -24,11 +29,12 @@ public class PatchHandler {
    * Apply missing patches to database
    */
   public void applyPatches() {
+    final List<String> tables = this.connector.listTables();
     final List<Pair<String, String>> availablePatches = this.getAvailablePatches();
 
     LoggerUtils.info("Searching for database patches...");
-    if (this.tablesExists()) {
-      this.applyPatches(availablePatches);
+    if (tables.containsAll(this.requiredTables)) {
+      this.applyMissingPatches(availablePatches, tables);
     } else {
       this.applyFull(availablePatches.stream().map(Pair::getLeft).collect(Collectors.toList()));
     }
@@ -50,8 +56,8 @@ public class PatchHandler {
    *
    * @param availablePatches All available patches
    */
-  private void applyPatches(List<Pair<String, String>> availablePatches) {
-    final List<String> applied = this.getAppliedPatches();
+  private void applyMissingPatches(List<Pair<String, String>> availablePatches, List<String> tables) {
+    final List<String> applied = this.getAppliedPatches(tables);
 
     final List<Pair<String, String>> toApply = availablePatches.stream()
         .filter(patch -> !applied.contains(patch.getLeft()))
@@ -124,7 +130,11 @@ public class PatchHandler {
    *
    * @return List of patches
    */
-  private List<String> getAppliedPatches() {
+  private List<String> getAppliedPatches(List<String> existingTables) {
+    if (!existingTables.contains(DatabaseConnector.tablePatches)) {
+      return Collections.emptyList();
+    }
+
     final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tablePatches);
     List<String> patches = new ArrayList<>();
 
@@ -136,18 +146,6 @@ public class PatchHandler {
       } catch (SQLException e) {}
     });
     return patches;
-  }
-
-  /**
-   * Define if auctions and shops tables exists
-   *
-   * @return If tables exists
-   */
-  private Boolean tablesExists() {
-    return this.connector.listTables().containsAll(Arrays.asList(
-        DatabaseConnector.tableAuctions,
-        DatabaseConnector.tableShops
-    ));
   }
 
   /**

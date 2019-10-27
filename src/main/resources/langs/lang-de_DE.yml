@@ -33,6 +33,7 @@ Divers:
   Expired: "Abgelaufen"
   Started: "Gestartet"
   Ended: "Beendet"
+  CanceledBy: "Canceled by"
   Free: "Gratis"
   WithStatus: "&fMit Status: &2%s"
   Days: "Tage"
@@ -177,6 +178,7 @@ ErrorMessages:
   CantBuyAuction: "Kauf fehlgeschlagen (abgelaufen oder bereits verkauft)"
   CantRenewAuction: "Erneuern fehlgeschlagen"
   CantUndoAuction: "Abbrechen fehlgeschlagen"
+  CantRemoveAuction: "Fail to remove auction"
   CantRenewEveryAuction: "Alles erneuern fehlgeschlagen"
   CantUndoEveryAuction: "Alles abbrechen fehlgeschlagen"
   PlayerDoesntExist: "Dieser Spieler existiert nicht!"
@@ -192,6 +194,7 @@ ErrorMessages:
   MaxGlobalShop: "&cDu hast die maximale Anzahl an GlobalShop´s erreicht. Du kannst (%d GlobalShop) erstellen."
 InfoMessages:
   UndoAuction: "&2Auktion erfolgreich abgebrochen"
+  RemoveAuction: "&2Auction successfully removed"
   RenewAuction: "&2Auktion erfolgreich erneuert"
   CreateAuction: "&2Auktion erfolgreich erstellt"
   RenewEveryAuction: "&2Alle Auktionen erfolgreich erneuert"

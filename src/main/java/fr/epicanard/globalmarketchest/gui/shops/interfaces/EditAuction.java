@@ -1,6 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import fr.epicanard.globalmarketchest.auctions.StateAuction;
+import fr.epicanard.globalmarketchest.auctions.StatusAuction;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.UndoAuction;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
@@ -42,7 +42,7 @@ public class EditAuction extends UndoAuction {
     final Integer maxAuctionNumber = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
     final Integer playerAuctions = this.inv.getTransactionValue(TransactionKey.PLAYER_AUCTIONS);
 
-    if ((auction.getState() == StateAuction.INPROGRESS || playerAuctions + 1 <= maxAuctionNumber)
+    if ((auction.getStatus() == StatusAuction.IN_PROGRESS || playerAuctions + 1 <= maxAuctionNumber)
         && GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId())) {
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewAuction");
       ReturnBack.execute(null, this.inv);

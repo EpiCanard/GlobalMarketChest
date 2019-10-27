@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
-import fr.epicanard.globalmarketchest.auctions.StateAuction;
+import fr.epicanard.globalmarketchest.auctions.StatusAuction;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
@@ -42,7 +42,7 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
    */
   @Override
   protected void loadTogglers() {
-    if (this.current.state == StateAuction.INPROGRESS || this.current.state == StateAuction.EXPIRED)
+    if (this.current.state == StatusAuction.IN_PROGRESS || this.current.state == StatusAuction.EXPIRED)
       this.togglers.forEach((key, toggler) -> {
         if (key != 10 && key != 11)
           return;
@@ -58,7 +58,7 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
   }
 
   private void editAuction(Integer pos) {
-    if (this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS)
+    if (this.current.state != StatusAuction.EXPIRED && this.current.state != StatusAuction.IN_PROGRESS)
       return;
     if (pos >= this.current.auctions.size())
       return;
@@ -75,14 +75,14 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
    * @param i
    */
   private void renewEveryAuction(InventoryGUI i) {
-    if ((this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS) || this.current.auctions.size() == 0)
+    if ((this.current.state != StatusAuction.EXPIRED && this.current.state != StatusAuction.IN_PROGRESS) || this.current.auctions.size() == 0)
       return;
     this.inv.getWarn().stopWarn();
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     final Integer maxAuctionNumber = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
     final Integer playerAuctions = this.inv.getTransactionValue(TransactionKey.PLAYER_AUCTIONS);
     List<Integer> auctions = Utils.mapList(this.current.auctions, auction -> auction.getId());
-    if (this.current.state == StateAuction.EXPIRED)
+    if (this.current.state == StatusAuction.EXPIRED)
       auctions = new ArrayList<>(auctions.subList(0, Utils.getIndex(maxAuctionNumber - playerAuctions, auctions.size(), true)));
 
     if (auctions.size() > 0 &&
@@ -101,7 +101,7 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
    * @param i
    */
   private void undoEveryAuction(InventoryGUI i) {
-    if ((this.current.state != StateAuction.EXPIRED && this.current.state != StateAuction.INPROGRESS) || this.current.auctions.size() == 0)
+    if ((this.current.state != StatusAuction.EXPIRED && this.current.state != StatusAuction.IN_PROGRESS) || this.current.auctions.size() == 0)
       return;
     this.inv.getWarn().stopWarn();
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);

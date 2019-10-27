@@ -15,9 +15,8 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
-import fr.epicanard.globalmarketchest.auctions.StateAuction;
+import fr.epicanard.globalmarketchest.auctions.StatusAuction;
 import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
-import fr.epicanard.globalmarketchest.database.querybuilder.ColumnType;
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.ConditionBase;
@@ -60,7 +59,7 @@ public class AuctionManager {
       builder.addValue("itemMeta", auction.getItemMeta());
       builder.addValue("amount", auction.getAmount());
       builder.addValue("price", auction.getPrice());
-      builder.addValue("ended", auction.getEnded());
+      builder.addValue("status", StatusAuction.IN_PROGRESS.getValue());
       builder.addValue("type", auction.getType().getType());
       builder.addValue("playerStarter", auction.getPlayerStarter());
       builder.addValue("start", stringTs[0]);
@@ -86,7 +85,7 @@ public class AuctionManager {
 
     builder.addValue("playerEnder", PlayerUtils.getUUIDToString(buyer));
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
-    builder.addValue("ended", true);
+    builder.addValue("status", StatusAuction.FINISHED.getValue());
     builder.addCondition("id", id);
 
     return executor.execute(builder);
@@ -104,10 +103,10 @@ public class AuctionManager {
    * @param player Player target by renew of auctions
    * @param group Shop group name target
    */
-  public Boolean renewGroupOfPlayerAuctions(Player player, String group, StateAuction state, List<Integer> auctions) {
+  public Boolean renewGroupOfPlayerAuctions(Player player, String group, StatusAuction state, List<Integer> auctions) {
     UpdateBuilder builder = this.updateToNow(null);
 
-    if (state == StateAuction.FINISHED || state == StateAuction.ABANDONED)
+    if (state == StatusAuction.FINISHED || state == StatusAuction.ABANDONED)
       return false;
     String playeruuid = PlayerUtils.getUUIDToString(player);
     this.defineStateCondition(builder, state);
@@ -129,7 +128,7 @@ public class AuctionManager {
     if (!this.canEditAuction(executor, id))
       return false;
     builder.addCondition("id", id);
-    builder.addCondition("ended", false);
+    builder.addCondition("status", StatusAuction.IN_PROGRESS.getValue());
     return executor.execute(builder);
   }
 
@@ -152,7 +151,7 @@ public class AuctionManager {
     builder.addCondition("id", auctions, ConditionType.IN);
     builder.addCondition("playerStarter", playeruuid);
     builder.addCondition("group", group);
-    builder.addValue("ended", true);
+    builder.addValue("status", StatusAuction.ABANDONED.getValue());
     builder.addValue("playerEnder", playeruuid);
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
     return QueryExecutor.of().execute(builder);
@@ -172,7 +171,7 @@ public class AuctionManager {
       return false;
 
     builder.addCondition("id", id);
-    builder.addValue("ended", true);
+    builder.addValue("status", StatusAuction.ABANDONED.getValue());
     builder.addValue("playerEnder", playerUuid);
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
     return executor.execute(builder);
@@ -233,7 +232,7 @@ public class AuctionManager {
     SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", group);
-    this.defineStateCondition(builder, StateAuction.INPROGRESS);
+    this.defineStateCondition(builder, StatusAuction.IN_PROGRESS);
     try {
       level.configBuilder(builder, category, auction);
     } catch (EmptyCategoryException e) {
@@ -276,7 +275,7 @@ public class AuctionManager {
    * @param limit limit to use in request
    * @param consumer callable, send database return to this callabke
    */
-  public void getAuctions(String group, StateAuction state, OfflinePlayer starter, OfflinePlayer ender, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
+  public void getAuctions(String group, StatusAuction state, OfflinePlayer starter, OfflinePlayer ender, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", group);
@@ -286,7 +285,7 @@ public class AuctionManager {
     if (ender != null)
       builder.addCondition("playerEnder", PlayerUtils.getUUIDToString(ender));
 
-    if (state == StateAuction.INPROGRESS || state == StateAuction.EXPIRED)
+    if (state == StatusAuction.IN_PROGRESS || state == StatusAuction.EXPIRED)
       builder.setExtension("ORDER BY start DESC");
     else
       builder.setExtension("ORDER BY end DESC");
@@ -315,7 +314,7 @@ public class AuctionManager {
     SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", group);
-    this.defineStateCondition(builder, StateAuction.INPROGRESS);
+    this.defineStateCondition(builder, StatusAuction.IN_PROGRESS);
     builder.setExtension("ORDER BY start DESC");
     builder.addCondition("itemStack", "%:%" + search + "%", ConditionType.LIKE);
 
@@ -342,7 +341,7 @@ public class AuctionManager {
     SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addField("COUNT(id) AS count");
-    this.defineStateCondition(builder, StateAuction.INPROGRESS);
+    this.defineStateCondition(builder, StatusAuction.IN_PROGRESS);
     builder.addCondition("group", group);
     builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(starter));
 
@@ -387,7 +386,7 @@ public class AuctionManager {
     SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     if (!all) {
-      builder.addCondition("ended", false);
+      builder.addCondition("status", StatusAuction.IN_PROGRESS.getValue());
     }
     builder.setExtension("ORDER BY start DESC");
     QueryExecutor.of().execute(builder, res -> {
@@ -420,7 +419,7 @@ public class AuctionManager {
 
     builder.addValue("start", ts.toString());
     builder.addValue("end", DatabaseUtils.addDays(ts, days).toString());
-    builder.addValue("ended", false);
+    builder.addValue("status", StatusAuction.IN_PROGRESS.getValue());
 
     return builder;
   }
@@ -431,24 +430,16 @@ public class AuctionManager {
    * @param builder builder on which set condition
    * @param state StateAuction to convert into condition
    */
-  private void defineStateCondition(ConditionBase builder, StateAuction state) {
+  private void defineStateCondition(ConditionBase builder, StatusAuction state) {
     switch (state) {
       case EXPIRED:
         builder.addCondition("end", DatabaseUtils.getTimestamp(), ConditionType.INFERIOR);
-        builder.addCondition("ended", false);
+        builder.addCondition("status", StatusAuction.IN_PROGRESS.getValue());
         break;
-      case INPROGRESS:
-        builder.addCondition("end", DatabaseUtils.getTimestamp(), ConditionType.SUPERIOR);
-        builder.addCondition("ended", false);
-        break;
-      case ABANDONED:
-        builder.addCondition("ended", true);
-        builder.addCondition("playerEnder", new ColumnType("playerStarter"));
-        break;
-      case FINISHED:
-        builder.addCondition("ended", true);
-        builder.addCondition("playerEnder", new ColumnType("playerStarter"), ConditionType.NOTEQUAL);
-        break;
+      case IN_PROGRESS:
+        builder.addCondition("end", DatabaseUtils.getTimestamp(), ConditionType.SUPERIOR_EQUAL);
+      default:
+        builder.addCondition("status", state.getValue());
     }
   }
 
@@ -465,7 +456,7 @@ public class AuctionManager {
 
     select.addField("id");
     select.addCondition("id", id);
-    select.addCondition("ended", true, ConditionType.EQUAL);
+    select.addCondition("status", StatusAuction.IN_PROGRESS.getValue(), ConditionType.NOTEQUAL);
 
     executor.execute(select, res -> {
       try {

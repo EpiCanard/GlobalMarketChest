@@ -23,21 +23,24 @@ public abstract class UndoAuction extends ShopInterface {
    * @param i Inventory
    * @param getItems Define if the player get back items or not
    */
-  protected void undoAuction(InventoryGUI i, Boolean getItems) {
+  protected void undoAuction(InventoryGUI i, Boolean getItems, Boolean remove) {
     final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTION_INFO);
 
     final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
     item.setAmount(auction.getAmount());
     try {
-      if (getItems)
-      PlayerUtils.hasEnoughPlaceWarn(i.getPlayer().getInventory(), item);
-      if (GlobalMarketChest.plugin.auctionManager.undoAuction(auction.getId(), auction.getPlayerStarter())) {
-        if (getItems)
-        i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
-        PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoAuction");
+      if (getItems) {
+        PlayerUtils.hasEnoughPlaceWarn(i.getPlayer().getInventory(), item);
+      }
+      if (GlobalMarketChest.plugin.auctionManager.undoAuction(auction.getId(), PlayerUtils.getUUIDToString(this.inv.getPlayer()))) {
+        if (getItems) {
+          i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
+        }
+        PlayerUtils.sendMessageConfig(i.getPlayer(), (remove) ? "InfoMessages.RemoveAuction" : "InfoMessages.UndoAuction");
         ReturnBack.execute(null, i);
-      } else
-      throw new WarnException("CantUndoAuction");
+      } else {
+        throw new WarnException((remove) ? "CantRemoveAuction" : "CantUndoAuction");
+      }
     } catch (WarnException e) {
       i.getWarn().warn(e.getMessage(), 49);
     }
@@ -49,6 +52,6 @@ public abstract class UndoAuction extends ShopInterface {
    * @param i Inventory
    */
   protected void undoAuction(InventoryGUI i) {
-    this.undoAuction(i, true);
+    this.undoAuction(i, true, false);
   }
 }

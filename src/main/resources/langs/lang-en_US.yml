@@ -33,6 +33,7 @@ Divers:
   Expired: "Expired"
   Started: "Started"
   Ended: "Ended"
+  CanceledBy: "Canceled by"
   Free: "Free"
   WithStatus: "&fWith status : &2%s"
   Days: "days"
@@ -177,6 +178,7 @@ ErrorMessages:
   CantBuyAuction: "Fail to buy auction (expired or already sold)"
   CantRenewAuction: "Fail to renew auction"
   CantUndoAuction: "Fail to undo auction"
+  CantRemoveAuction: "Fail to remove auction"
   CantRenewEveryAuction: "Fail to renew every auction"
   CantUndoEveryAuction: "Fail to undo every auction"
   PlayerDoesntExist: "This player doesn't exist"
@@ -192,6 +194,7 @@ ErrorMessages:
   MaxGlobalShop: "&cYou have reached the maximum number of GlobalShop you can create (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Auction successfully deleted"
+  RemoveAuction: "&2Auction successfully removed"
   RenewAuction: "&2Auction successfully renewed"
   CreateAuction: "&2Auction successfully created"
   RenewEveryAuction: "&2Every auction successfully renewed"
