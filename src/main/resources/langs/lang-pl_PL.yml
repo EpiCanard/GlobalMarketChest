@@ -7,8 +7,8 @@ InterfacesTitle:
   AuctionViewItem: "&2Lista aukcji"
   ConfigShop : "&2Konfiguracja sklepu"
   AuctionGlobalView: "&2Historia aukcji"
-  SearchView: "&2Search auctions"
-  ConfirmView: "&2Confirmation"
+  SearchView: "&2Szukaj aukcji"
+  ConfirmView: "&2Potwierdzenie"
   # Auction Creation
   CreateAuctionItem: "&2Wybierz item do aukcji"
   CreateAuctionPrice: "&2Wybierz cenę aukcji"
@@ -33,7 +33,7 @@ Divers:
   Expired: "Wygasło"
   Started: "Rozpoczęte"
   Ended: "Zakończone"
-  CanceledBy: "Canceled by"
+  CanceledBy: "Wycofane przez"
   Free: "Darmowe"
   WithStatus: "&fStatus : &2%s"
   Days: "dni"
@@ -79,9 +79,9 @@ Buttons:
   BuyAuction:
     Name: "&2Kup aukcję"
   AdminRemoveAuction:
-    Name: "&cRemove this auction"
+    Name: "&cUsuń tę aukcję"
   AdminSeePlayerAuctions:
-    Name: "&cSee auctions of a player"
+    Name: "&cZobacz aukcje gracza"
   RenewAuction:
     Name: "&6Ponów tę aukcję"
   UndoAuction:
@@ -178,7 +178,7 @@ ErrorMessages:
   CantBuyAuction: "Nie udało się kupić aukcji (przedawniona bądź sprzedana)"
   CantRenewAuction: "Nie udało się ponowić aukcji"
   CantUndoAuction: "Nie udało się Wycofać aukcji"
-  CantRemoveAuction: "Fail to remove auction"
+  CantRemoveAuction: "Nie udało się usunąć aukcji"
   CantRenewEveryAuction: "Nie udało się ponowić wszystkich aukcji"
   CantUndoEveryAuction: "Nie udało się wycofać wszystkich aukcji"
   PlayerDoesntExist: "Taki gracz nie istnieje"
@@ -194,7 +194,7 @@ ErrorMessages:
   MaxGlobalShop: "&cPrzekroczyłeś maksymalną liczbbę GlobalShop'ów (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Aukcja pomyślnie wycofana"
-  RemoveAuction: "&2Auction successfully removed"
+  RemoveAuction: "&2Aukcja usunięta"
   RenewAuction: "&2Aukcja pomyślnie ponowiona"
   CreateAuction: "&2Aukcja pomyślnie utworzona"
   RenewEveryAuction: "&2Wszystkie aukcje pomyślnie ponowione"

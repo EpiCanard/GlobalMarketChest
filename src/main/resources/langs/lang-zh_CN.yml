@@ -7,8 +7,8 @@ InterfacesTitle:
   AuctionViewItem: "&2拍卖列表"
   ConfigShop : "&2商店设置"
   AuctionGlobalView: "&2查看你上架中的商品"
-  SearchView: "&2Search auctions"
-  ConfirmView: "&2Confirmation"
+  SearchView: "&2搜索拍卖"
+  ConfirmView: "&2确认"
   # Auction Creation
   CreateAuctionItem: "&2选择拍卖物品 "
   CreateAuctionPrice: "&2设定拍卖价格"
@@ -33,7 +33,7 @@ Divers:
   Expired: "已过期"
   Started: "已开始"
   Ended: "已经结束"
-  CanceledBy: "Canceled by"
+  CanceledBy: "取消"
   Free: "免费"
   WithStatus: "&f当前状态 : &2%s"
   Days: "天"
@@ -79,9 +79,9 @@ Buttons:
   BuyAuction:
     Name: "&2购买该拍卖品"
   AdminRemoveAuction:
-    Name: "&cRemove this auction"
+    Name: "&c删除此拍卖"
   AdminSeePlayerAuctions:
-    Name: "&cSee auctions of a player"
+    Name: "&c查看玩家的拍卖"
   RenewAuction:
     Name: "&6延长该拍卖品出售时间"
   UndoAuction:
@@ -179,7 +179,7 @@ ErrorMessages:
   CantRenewAuction: "拍卖续约失败"
   CantUndoAuction: "未能撤消拍卖"
   CantRenewEveryAuction: "延长时间错误"
-  CantRemoveAuction: "Fail to remove auction"
+  CantRemoveAuction: "未能成功删除该拍卖"
   CantUndoEveryAuction: "拍卖失败"
   PlayerDoesntExist: "这个玩家不存在"
   MaxAuctionByPlayer: "无法创建更多拍卖；&7您已达到最大拍卖数量"
@@ -194,7 +194,7 @@ ErrorMessages:
   MaxGlobalShop: "&c你已经达到创建商店的最大值了 (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2删除成功"
-  RemoveAuction: "&2Auction successfully removed"
+  RemoveAuction: "&2成功删除该拍卖"
   RenewAuction: "&2物品已经成功续期"
   CreateAuction: "&2创建成功"
   RenewEveryAuction: "&2所有物品已经成功续期"

@@ -7,8 +7,8 @@ InterfacesTitle:
   AuctionViewItem: "&2Auktion Liste"
   ConfigShop : "&2Shop Einstellungen"
   AuctionGlobalView: "&2Auktion Historie"
-  SearchView: "&2Search auctions"
-  ConfirmView: "&2Confirmation"
+  SearchView: "&2Auktionen suchen"
+  ConfirmView: "&2Bestätigen"
   # Auction Creation
   CreateAuctionItem: "&2Item auswählen"
   CreateAuctionPrice: "&2Preis wählen"
@@ -33,7 +33,7 @@ Divers:
   Expired: "Abgelaufen"
   Started: "Gestartet"
   Ended: "Beendet"
-  CanceledBy: "Canceled by"
+  CanceledBy: "Abgebrochen von"
   Free: "Gratis"
   WithStatus: "&fMit Status: &2%s"
   Days: "Tage"
@@ -79,9 +79,9 @@ Buttons:
   BuyAuction:
     Name: "&2Kaufen"
   AdminRemoveAuction:
-    Name: "&cRemove this auction"
+    Name: "&cAuktion entfernen"
   AdminSeePlayerAuctions:
-    Name: "&cSee auctions of a player"
+    Name: "&cZeige Auktionen eines Spieler an"
   RenewAuction:
     Name: "&6Auktion erneuern"
   UndoAuction:
@@ -178,7 +178,7 @@ ErrorMessages:
   CantBuyAuction: "Kauf fehlgeschlagen (abgelaufen oder bereits verkauft)"
   CantRenewAuction: "Erneuern fehlgeschlagen"
   CantUndoAuction: "Abbrechen fehlgeschlagen"
-  CantRemoveAuction: "Fail to remove auction"
+  CantRemoveAuction: "Entfernen der Auktion fehlgeschlagen"
   CantRenewEveryAuction: "Alles erneuern fehlgeschlagen"
   CantUndoEveryAuction: "Alles abbrechen fehlgeschlagen"
   PlayerDoesntExist: "Dieser Spieler existiert nicht!"
@@ -194,7 +194,7 @@ ErrorMessages:
   MaxGlobalShop: "&cDu hast die maximale Anzahl an GlobalShop´s erreicht. Du kannst (%d GlobalShop) erstellen."
 InfoMessages:
   UndoAuction: "&2Auktion erfolgreich abgebrochen"
-  RemoveAuction: "&2Auction successfully removed"
+  RemoveAuction: "&2Auktion erfolgreich entfernt"
   RenewAuction: "&2Auktion erfolgreich erneuert"
   CreateAuction: "&2Auktion erfolgreich erstellt"
   RenewEveryAuction: "&2Alle Auktionen erfolgreich erneuert"

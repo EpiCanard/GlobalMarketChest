@@ -7,8 +7,8 @@ InterfacesTitle:
   AuctionViewItem: "&2Список аукционов"
   ConfigShop : "&2Конфигурация магазина"
   AuctionGlobalView: "&2История аукционов"
-  SearchView: "&2Search auctions"
-  ConfirmView: "&2Confirmation"
+  SearchView: "&2Поиск аукционов"
+  ConfirmView: "&2Подтверждение"
   # Создание аукциона
   CreateAuctionItem: "&2Выбор предмета аукциона"
   CreateAuctionPrice: "&2Выбор стоимости аукциона"
@@ -33,7 +33,7 @@ Divers:
   Expired: "Просрочен"
   Started: "Стартовал"
   Ended: "Окончен"
-  CanceledBy: "Canceled by"
+  CanceledBy: "Отменено"
   Free: "Даром"
   WithStatus: "&fСо статусом : &2%s"
   Days: "дня(ей)"
@@ -78,9 +78,9 @@ Buttons:
   BuyAuction:
     Name: "&2Купить этот аукцион"
   AdminRemoveAuction:
-    Name: "&cRemove this auction"
+    Name: "&cУдалить аукцион"
   AdminSeePlayerAuctions:
-    Name: "&cSee auctions of a player"
+    Name: "&cПосмотреть аукционы игрока"
   RenewAuction:
     Name: "&6Продлить этот аукцион"
   UndoAuction:
@@ -176,7 +176,7 @@ ErrorMessages:
   NotEnoughMoney: "Нехватает денежных средств для покупки этого аукиона"
   CantBuyAuction: "Не удалось купить аукцион (истекло или продано)"
   CantRenewAuction: "Не удалось продлить аукцион"
-  CantRemoveAuction: "Fail to remove auction"
+  CantRemoveAuction: "Не удалось удалить аукцион"
   CantUndoAuction: "Не удалось отменить аукцион"
   CantRenewEveryAuction: "Не удалось обновить каждый аукцион"
   CantUndoEveryAuction: "Не удалось отменить каждый аукцион"
@@ -193,7 +193,7 @@ ErrorMessages:
   MaxGlobalShop: "&cВы достигли макс. кол-ва GlobalShop, которое вы могли создать (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Аукцион успешно удален"
-  RemoveAuction: "&2Auction successfully removed"
+  RemoveAuction: "&2Аукцион успешно удален"
   RenewAuction: "&2Аукцион успешно продлен"
   CreateAuction: "&2Аукцион успешно создан"
   RenewEveryAuction: "&2Каждый аукцион успешно возобновлен"
