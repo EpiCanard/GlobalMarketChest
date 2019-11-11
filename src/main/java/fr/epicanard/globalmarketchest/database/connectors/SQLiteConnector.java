@@ -4,12 +4,9 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SimpleQueryBuilder;

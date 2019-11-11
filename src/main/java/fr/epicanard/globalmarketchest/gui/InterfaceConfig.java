@@ -42,10 +42,9 @@ public class InterfaceConfig {
     if (background == null) {
       this.background = baseInterfaces.stream().map(InterfaceConfig::getBackground).filter(Objects::nonNull)
           .findFirst().orElse(InterfacesLoader.getInstance().getBackground("Default"));
-      return;
+    } else {
+      this.background = InterfacesLoader.getInstance().getBackground(background);
     }
-
-    this.background = InterfacesLoader.getInstance().getBackground(background);
   }
 
   /**
