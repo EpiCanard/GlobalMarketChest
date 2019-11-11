@@ -66,9 +66,9 @@ public class PatchHandler {
       LoggerUtils.info("Not patches found to apply");
       return;
     }
+
     LoggerUtils.info(String.format("Found %d patches to apply : %s", toApply.size(),
         toApply.stream().map(Pair::getLeft).collect(Collectors.joining(", "))));
-
 
     toApply.stream().allMatch(patch -> {
       LoggerUtils.info(String.format("Applying patch : %s - %s", patch.getLeft(), patch.getRight()));
