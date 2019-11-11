@@ -7,8 +7,8 @@ InterfacesTitle:
   AuctionViewItem: "&2Açık artırma listesi"
   ConfigShop : "&2Mağaza konfigürasyonu"
   AuctionGlobalView: "&2Açık artırma geçmişi"
-  SearchView: "&2Search auctions"
-  ConfirmView: "&2Confirmation"
+  SearchView: "&2Müzayede arama"
+  ConfirmView: "&2Onay"
   # Auction Creation
   CreateAuctionItem: "&2Açık artırma öğesini seçin"
   CreateAuctionPrice: "&2Açık artırma fiyatını Seç"
@@ -33,7 +33,7 @@ Divers:
   Expired: "Süresi dolmuş"
   Started: "Başladı"
   Ended: "Sona erdi"
-  CanceledBy: "Canceled by"
+  CanceledBy: "Tarafıfından total edildi"
   Free: "Bedava"
   WithStatus: "&fDurumu : &2%s"
   Days: "Gün"
@@ -79,9 +79,9 @@ Buttons:
   BuyAuction:
     Name: "&2Bu açık artırmayı satın al"
   AdminRemoveAuction:
-    Name: "&cRemove this auction"
+    Name: "&cBu açık artırmayı sil"
   AdminSeePlayerAuctions:
-    Name: "&cSee auctions of a player"
+    Name: "&cBir oyuncunun tekliflerini görüntüle"
   RenewAuction:
     Name: "&6Bu açık artırmayı yenile"
   UndoAuction:
@@ -178,7 +178,7 @@ ErrorMessages:
   CantBuyAuction: "Açık artırma satın alınamaması (süresi dolmuş veya satılmış)"
   CantRenewAuction: "Açık artırma yenilenemedi"
   CantUndoAuction: "Açık artırmayı geri alınamadı"
-  CantRemoveAuction: "Fail to remove auction"
+  CantRemoveAuction: "Teklifi silemiyor"
   CantRenewEveryAuction: "Her açık artırmayı yenilenemedi"
   CantUndoEveryAuction: "Her açık artırmayı geri alınamadı"
   PlayerDoesntExist: "Bu oyuncu mevcut değil"
@@ -194,7 +194,7 @@ ErrorMessages:
   MaxGlobalShop: "&cOluşturabileceğiniz maksimum Global Mağaza sayısına ulaştınız (%d GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Açık artırma başarıyla silindi"
-  RemoveAuction: "&2Auction successfully removed"
+  RemoveAuction: "&2Açık artırma başarıyla silindi"
   RenewAuction: "&2Açık artırma başarıyla yenilendi"
   CreateAuction: "&2Açık artırma başarıyla oluşturuldu"
   RenewEveryAuction: "&2Her açık artırma başarıyla yenilendi"
