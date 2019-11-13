@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `{table_shops}`
     `group`         VARCHAR(50)     NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS `{table_version}`
+CREATE TABLE IF NOT EXISTS `{table_patches}`
 (
     `id`    INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `patch` VARCHAR(30)     NOT NULL

@@ -38,6 +38,7 @@ public abstract class DatabaseConnector {
     DatabaseConnector.prefix = prefix;
     DatabaseConnector.tableAuctions = prefix + "auctions";
     DatabaseConnector.tableShops = prefix + "shops";
+    DatabaseConnector.tablePatches = prefix + "patches";
   }
 
   protected String buildUrl() {
