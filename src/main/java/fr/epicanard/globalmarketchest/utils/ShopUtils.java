@@ -240,6 +240,7 @@ public class ShopUtils {
         return;
       GlobalMarketChest.plugin.inventories.removeInventory(player.getUniqueId());
     }
+    player.closeInventory();
     final InventoryGUI inv = new InventoryGUI(player);
     GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
     inv.getTransaction().put(TransactionKey.SHOP_INFO, shop);
