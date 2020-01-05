@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
-import net.minecraft.server.v1_14_R1.MinecraftKey;
 
 public class VersionSupportUtils {
 

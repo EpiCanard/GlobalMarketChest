@@ -45,9 +45,7 @@ public enum Permissions {
    * @return Return a boolean to define if the permission is set
    */
   public static Boolean isSetOn(Player player, String permission) {
-    if (player != null && (player.hasPermission(permission) || GlobalMarketChest.plugin.economy.hasPermissions(player, permission)))
-      return true;
-    return false;
+    return player != null && (player.hasPermission(permission) || GlobalMarketChest.plugin.economy.hasPermissions(player, permission));
   }
 
   /**
@@ -57,9 +55,7 @@ public enum Permissions {
    * @return Return a boolean to define if the permission is set
    */
   public Boolean isSetOn(Player player) {
-    if (player != null && (player.hasPermission(this.perm) || GlobalMarketChest.plugin.economy.hasPermissions(player, this.perm)))
-      return true;
-    return false;
+    return player != null && (player.hasPermission(this.perm) || GlobalMarketChest.plugin.economy.hasPermissions(player, this.perm));
   }
 
   /**

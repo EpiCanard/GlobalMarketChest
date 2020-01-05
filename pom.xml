@@ -11,7 +11,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <powermock.version>1.7.1</powermock.version>
-    <spigot.version>1.14.4-R0.1-SNAPSHOT</spigot.version>
+    <spigot.version>1.15.1-R0.1-SNAPSHOT</spigot.version>
   </properties>
   <build>
     <finalName>${project.name}-${project.version}</finalName>

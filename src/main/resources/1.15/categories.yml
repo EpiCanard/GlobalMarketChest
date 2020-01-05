@@ -1,6 +1,6 @@
 # ======================= File categories.yml =======================
 #
-# Version : 1.14
+# Version : 1.15
 #
 # This file contains all categories available for global shop
 #
@@ -10,7 +10,7 @@
 # - GroupsLevels => Level of ordering used for this category (There is 3 levels max, see wiki)
 # - Position => The position of the item inside chest (value must be between 0 and 53)
 # - Items => list of items (minecraft key)
-# - IsActive (Optional, default: true) => Define if this category is active or not 
+# - IsActive (Optional, default: true) => Define if this category is active or not
 #       (if false, this category is not used inside shops)
 #
 # /!\ Important :
@@ -542,6 +542,10 @@ Decoration:
     - minecraft:stonecutter
     - minecraft:stone_brick_wall
     - minecraft:wither_rose
+    - minecraft:beehive
+    - minecraft:bee_nest
+    - minecraft:honeycomb_block
+    - minecraft:honey_block
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
@@ -803,6 +807,8 @@ Misc:
     - minecraft:wandering_trader_spawn_egg
     - minecraft:white_dye
     - minecraft:yellow_dye
+    - minecraft:bee_spawn_egg
+    - minecraft:honeycomb
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
@@ -845,8 +851,9 @@ Food:
     - minecraft:salmon
     - minecraft:spider_eye
     - minecraft:tropical_fish
-    - minecraft:sweet_berries
     - minecraft:suspicious_stew
+    - minecraft:sweet_berries
+    - minecraft:honey_bottle
 Tools:
   DisplayName: "Tools"
   DisplayItem: minecraft:iron_axe
