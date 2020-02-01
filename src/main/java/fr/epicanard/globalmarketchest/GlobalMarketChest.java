@@ -1,40 +1,36 @@
 package fr.epicanard.globalmarketchest;
 
-import java.util.logging.Level;
-
-import fr.epicanard.globalmarketchest.database.PatchHandler;
-import fr.epicanard.globalmarketchest.exceptions.FailedInitException;
-import fr.epicanard.globalmarketchest.utils.LoggerUtils;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import fr.epicanard.globalmarketchest.commands.CommandHandler;
 import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import fr.epicanard.globalmarketchest.database.PatchHandler;
 import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
 import fr.epicanard.globalmarketchest.database.connectors.MySQLConnector;
 import fr.epicanard.globalmarketchest.database.connectors.SQLiteConnector;
 import fr.epicanard.globalmarketchest.economy.VaultEconomy;
 import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
+import fr.epicanard.globalmarketchest.exceptions.FailedInitException;
 import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;
 import fr.epicanard.globalmarketchest.gui.CategoryHandler;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoriesHandler;
-import fr.epicanard.globalmarketchest.listeners.ChatListener;
-import fr.epicanard.globalmarketchest.listeners.CloseGUICollector;
-import fr.epicanard.globalmarketchest.listeners.GUIListener;
-import fr.epicanard.globalmarketchest.listeners.ShopCreationListener;
-import fr.epicanard.globalmarketchest.listeners.WorldListener;
+import fr.epicanard.globalmarketchest.listeners.*;
 import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
 import fr.epicanard.globalmarketchest.ranks.RanksLoader;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
+
 import lombok.Getter;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Level;
 
 
 public class GlobalMarketChest extends JavaPlugin {
@@ -104,6 +100,7 @@ public class GlobalMarketChest extends JavaPlugin {
     this.register(new CloseGUICollector());
     this.register(new WorldListener());
     this.register(new ShopCreationListener());
+    this.register(new PlayerListener());
   }
 
   @Override

@@ -205,6 +205,7 @@ InfoMessages:
   # If you don't have them a message will pop in console and no message will broadcast
   AcquireAuction: "&3%s &6kupił &2%d %s &6za &2%.2f&6 $ to &3%s&6."
   AcquireAuctionOwner: "&3%s &6kupił twoją aukcję &2%d %s &6za &2%.2f&6 $."
+  AuctionsSoldLastLogin: "&6You sold &3%d&6 auctions since your last connection"
   PluginReloading: "Odświeżanie pluginu..."
   PluginReloaded: "Plugin odświeżony."
   WriteGroupName: "Wpisz nazwę grupy"
