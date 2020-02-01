@@ -54,6 +54,8 @@ Options:
   MaxGlobalShopByPlayer: 1
   # Broadcast a message inside the current world when a player buy an auction
   BroadcastInsideWorld: true
+  # Send a message (number of sold auctions) to player when join a server
+  MessageLoginSoldAuctions: true
   # Notify the player everywhere on the server when a player buy one of his auctions
   NotifyPlayer: true
   # An auction expire if it is older than NumberDaysExpiration

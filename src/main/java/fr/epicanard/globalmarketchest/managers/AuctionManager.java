@@ -399,6 +399,29 @@ public class AuctionManager {
     });
   }
 
+  /**
+   * Count sold auctions since last player connection
+   *
+   * @param starter Owner of auctions
+   * @param consumer Consumer called when request is finished
+   */
+  public void countSoldAuctions(final OfflinePlayer starter, final Consumer<Integer> consumer) {
+    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
+    final Timestamp end = new Timestamp(starter.getLastPlayed());
+
+    builder.addField("COUNT(id) AS count");
+    this.defineStateCondition(builder, StatusAuction.FINISHED);
+    builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(starter));
+    builder.addCondition("end", end, ConditionType.SUPERIOR_EQUAL);
+
+    QueryExecutor.of().execute(builder, res -> {
+      try {
+        if (res.next())
+          consumer.accept(res.getInt("count"));
+      } catch (SQLException e) {}
+    });
+  }
+
   /*
    * ================================
    *             TOOLS
