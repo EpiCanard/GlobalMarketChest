@@ -45,9 +45,9 @@ public class AuctionManager {
    *
    * @return Return if execution succeed
    */
-  public Boolean createAuction(AuctionInfo auction, Integer repeat, Integer expirationDays) {
-    InsertBuilder builder = new InsertBuilder(DatabaseConnector.tableAuctions);
-    Timestamp ts = DatabaseUtils.getTimestamp();
+  public Boolean createAuction(final AuctionInfo auction, final Integer repeat, final Integer expirationDays) {
+    final InsertBuilder builder = new InsertBuilder(DatabaseConnector.tableAuctions);
+    final Timestamp ts = DatabaseUtils.getTimestamp();
 
     for (int i = 0; i < repeat; i++) {
       builder.addValue("itemStack", auction.getItemStack());
@@ -70,13 +70,13 @@ public class AuctionManager {
    * @param id Id of the auction to update
    * @param buyer Player that vuy the auction
    */
-  public Boolean buyAuction(int id, Player buyer) {
-    QueryExecutor executor = QueryExecutor.of();
+  public Boolean buyAuction(final int id, final Player buyer) {
+    final QueryExecutor executor = QueryExecutor.of();
 
     if (!this.canEditAuction(executor, id))
       return false;
 
-    UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
+    final UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
 
     builder.addValue("playerEnder", PlayerUtils.getUUIDToString(buyer));
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
@@ -97,12 +97,22 @@ public class AuctionManager {
    *
    * @param player Player target by renew of auctions
    * @param group Shop group name target
+   * @param state State of current auction
+   * @param auctions List of auctions to renew
+   * @param expirationDays Number of days to renew
    */
-  public Boolean renewGroupOfPlayerAuctions(Player player, String group, StatusAuction state, List<Integer> auctions, Integer expirationDays) {
-    UpdateBuilder builder = this.updateToNow(null, expirationDays);
-
+  public Boolean renewGroupOfPlayerAuctions(
+      final Player player,
+      final String group,
+      final StatusAuction state,
+      final List<Integer> auctions,
+      final Integer expirationDays
+  ) {
     if (state == StatusAuction.FINISHED || state == StatusAuction.ABANDONED)
       return false;
+
+    final UpdateBuilder builder = this.updateToNow(null, expirationDays);
+
     this.defineStateCondition(builder, state);
     builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(player));
     builder.addCondition("group", group);
@@ -114,10 +124,11 @@ public class AuctionManager {
    * Renew a specific auction
    *
    * @param id Id of the auction to renew
+   * @param expirationDays Number of days to renew
    */
   public Boolean renewAuction(final int id, final Integer expirationDays) {
-    UpdateBuilder builder = this.updateToNow(null, expirationDays);
-    QueryExecutor executor = QueryExecutor.of();
+    final UpdateBuilder builder = this.updateToNow(null, expirationDays);
+    final QueryExecutor executor = QueryExecutor.of();
 
     if (!this.canEditAuction(executor, id))
       return false;
@@ -137,16 +148,17 @@ public class AuctionManager {
    *
    * @param player Player target by remove of auctions
    * @param group Shop group name target
+   * @param auctions List of auctions to undo
    */
-  public Boolean undoGroupOfPlayerAuctions(Player player, String group, List<Integer> auctions) {
-    UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
-    String playeruuid = PlayerUtils.getUUIDToString(player);
+  public Boolean undoGroupOfPlayerAuctions(final Player player, final String group, final List<Integer> auctions) {
+    final UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
+    final String playerUuid = PlayerUtils.getUUIDToString(player);
 
     builder.addCondition("id", auctions, ConditionType.IN);
-    builder.addCondition("playerStarter", playeruuid);
+    builder.addCondition("playerStarter", playerUuid);
     builder.addCondition("group", group);
     builder.addValue("status", StatusAuction.ABANDONED.getValue());
-    builder.addValue("playerEnder", playeruuid);
+    builder.addValue("playerEnder", playerUuid);
     builder.addValue("end", DatabaseUtils.getTimestamp().toString());
     return QueryExecutor.of().execute(builder);
   }
@@ -158,8 +170,8 @@ public class AuctionManager {
    * @param playerUuid Uuid of player
    */
   public Boolean undoAuction(final int id, final String playerUuid) {
-    UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
-    QueryExecutor executor = QueryExecutor.of();
+    final UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
+    final QueryExecutor executor = QueryExecutor.of();
 
     if (!this.canEditAuction(executor, id))
       return false;
@@ -185,14 +197,19 @@ public class AuctionManager {
     QueryExecutor.of().execute(builder);
   }
 
-  /**
+  /*
    * =====================
    *     UPDATE AUCTIONS
    * =====================
    */
 
+  /**
+   * Update metadatas a group of auctions
+   *
+   * @param auctions Auctions to update
+   */
   public void updateGroupOfAuctionsMetadata(final List<AuctionInfo> auctions) {
-    UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
+    final UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
 
     auctions.forEach(auction -> {
       builder.resetConditions();
@@ -220,8 +237,15 @@ public class AuctionManager {
    * @param limit Limit of auctions to get from database
    * @param consumer Callback called when the sql request is executed
    */
-  public void getAuctions(GroupLevels level, String group, String category, AuctionInfo auction, Pair<Integer, Integer> limit, Consumer<List<Pair<ItemStack, AuctionInfo>>> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
+  public void getAuctions(
+      final GroupLevels level,
+      final String group,
+      final String category,
+      final AuctionInfo auction,
+      final Pair<Integer, Integer> limit,
+      final Consumer<List<Pair<ItemStack, AuctionInfo>>> consumer
+  ) {
+    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", group);
     this.defineStateCondition(builder, StatusAuction.IN_PROGRESS);
@@ -267,8 +291,15 @@ public class AuctionManager {
    * @param limit limit to use in request
    * @param consumer callable, send database return to this callabke
    */
-  public void getAuctions(String group, StatusAuction state, OfflinePlayer starter, OfflinePlayer ender, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
+  public void getAuctions(
+      final String group,
+      final StatusAuction state,
+      final OfflinePlayer starter,
+      final OfflinePlayer ender,
+      final Pair<Integer, Integer> limit,
+      final Consumer<List<AuctionInfo>> consumer
+  ) {
+    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", group);
     this.defineStateCondition(builder, state);
@@ -302,8 +333,13 @@ public class AuctionManager {
    * @param limit limit to use in request
    * @param consumer callable, send database return to this callabke
    */
-  public void getAuctionsByItemName(String group, String search, Pair<Integer, Integer> limit, Consumer<List<AuctionInfo>> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
+  public void getAuctionsByItemName(
+      final String group,
+      final String search,
+      final Pair<Integer, Integer> limit,
+      final Consumer<List<AuctionInfo>> consumer
+  ) {
+    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", group);
     this.defineStateCondition(builder, StatusAuction.IN_PROGRESS);
@@ -329,8 +365,8 @@ public class AuctionManager {
    * @param starter the player who created the auction
    * @param consumer callable, send database return to this callabke
    */
-  public void getAuctionNumber(String group, Player starter, Consumer<Integer> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
+  public void getAuctionNumber(final String group, final Player starter, final Consumer<Integer> consumer) {
+    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addField("COUNT(id) AS count");
     this.defineStateCondition(builder, StatusAuction.IN_PROGRESS);
@@ -351,8 +387,8 @@ public class AuctionManager {
    * @param auction AuctionInfo to search last matching auction
    * @param consumer Callback to call if price is found
    */
-  public void getLastPrice(AuctionInfo auction, Consumer<Double> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
+  public void getLastPrice(final AuctionInfo auction, final Consumer<Double> consumer) {
+    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     builder.addCondition("group", auction.getGroup());
     builder.addCondition("itemStack", auction.getItemStack());
@@ -374,8 +410,8 @@ public class AuctionManager {
    * @param all Define if it get only active auctions (not ended) or all auctions
    * @param consumer Callback to call if price is found
    */
-  public void getAllAuctions(Boolean all, Consumer<List<AuctionInfo>> consumer) {
-    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
+  public void getAllAuctions(final Boolean all, final Consumer<List<AuctionInfo>> consumer) {
+    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
     if (!all) {
       builder.addCondition("status", StatusAuction.IN_PROGRESS.getValue());
@@ -423,13 +459,13 @@ public class AuctionManager {
   /**
    * Create a querybuilder, update timestamp to now and change state to INPROGRESS
    *
-   * @param builder Base builder
+   * @param baseBuilder Base builder
+   * @param expirationDays Days of expiration for the auction
    * @return Return same builder
    */
-  private UpdateBuilder updateToNow(UpdateBuilder builder, Integer expirationDays) {
+  private UpdateBuilder updateToNow(final UpdateBuilder baseBuilder, final Integer expirationDays) {
     final Timestamp ts = DatabaseUtils.getTimestamp();
-    if (builder == null)
-      builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
+    final UpdateBuilder builder = (baseBuilder == null) ? new UpdateBuilder(DatabaseConnector.tableAuctions) : baseBuilder;
 
     builder.addValue("start", ts.toString());
     builder.addValue("end", DatabaseUtils.addDays(ts, expirationDays).toString());
@@ -444,7 +480,7 @@ public class AuctionManager {
    * @param builder builder on which set condition
    * @param state StateAuction to convert into condition
    */
-  private void defineStateCondition(ConditionBase builder, StatusAuction state) {
+  private void defineStateCondition(final ConditionBase builder, final StatusAuction state) {
     switch (state) {
       case EXPIRED:
         builder.addCondition("end", DatabaseUtils.getTimestamp(), ConditionType.INFERIOR);
@@ -464,9 +500,9 @@ public class AuctionManager {
    * @param id if the auction to verify
    * @return if auction is ended
    */
-  private Boolean canEditAuction(QueryExecutor executor, int id) {
-    SelectBuilder select = new SelectBuilder(DatabaseConnector.tableAuctions);
-    AtomicBoolean end = new AtomicBoolean(true);
+  private Boolean canEditAuction(final QueryExecutor executor, final int id) {
+    final SelectBuilder select = new SelectBuilder(DatabaseConnector.tableAuctions);
+    final AtomicBoolean end = new AtomicBoolean(true);
 
     select.addField("id");
     select.addCondition("id", id);
