@@ -41,9 +41,10 @@ public class EditAuction extends UndoAuction {
     final AuctionInfo auction = i.getTransactionValue(TransactionKey.AUCTION_INFO);
     final Integer maxAuctionNumber = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
     final Integer playerAuctions = this.inv.getTransactionValue(TransactionKey.PLAYER_AUCTIONS);
+    final Integer expirationDays = i.getPlayerRankProperties().getNumberDaysExpiration();
 
     if ((auction.getStatus() == StatusAuction.IN_PROGRESS || playerAuctions + 1 <= maxAuctionNumber)
-        && GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId())) {
+        && GlobalMarketChest.plugin.auctionManager.renewAuction(auction.getId(), expirationDays)) {
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewAuction");
       ReturnBack.execute(null, this.inv);
     } else {

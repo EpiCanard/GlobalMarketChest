@@ -81,12 +81,13 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     final Integer maxAuctionNumber = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
     final Integer playerAuctions = this.inv.getTransactionValue(TransactionKey.PLAYER_AUCTIONS);
-    List<Integer> auctions = Utils.mapList(this.current.auctions, auction -> auction.getId());
+    List<Integer> auctions = Utils.mapList(this.current.auctions, AuctionInfo::getId);
     if (this.current.state == StatusAuction.EXPIRED)
       auctions = new ArrayList<>(auctions.subList(0, Utils.getIndex(maxAuctionNumber - playerAuctions, auctions.size(), true)));
 
+    final Integer expirationDays = i.getPlayerRankProperties().getNumberDaysExpiration();
     if (auctions.size() > 0 &&
-      GlobalMarketChest.plugin.auctionManager.renewGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), this.current.state, auctions))
+      GlobalMarketChest.plugin.auctionManager.renewGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), this.current.state, auctions, expirationDays))
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewEveryAuction");
     else
       i.getWarn().warn("CantRenewEveryAuction", 4);

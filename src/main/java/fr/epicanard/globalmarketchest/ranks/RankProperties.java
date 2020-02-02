@@ -14,6 +14,8 @@ public class RankProperties {
   private Integer maxGlobalShopByPlayer = 0;
   @Getter @Setter
   private Boolean limitGlobalShopByPlayer;
+  @Getter @Setter
+  private Integer numberDaysExpiration = 1;
 
   /**
    * Init a RankProperties from ConfigurationSection
@@ -28,6 +30,7 @@ public class RankProperties {
       ret.setLimitGlobalShopByPlayer(section.getBoolean("LimitGlobalShopByPlayer"));
     }
     ret.setMaxGlobalShopByPlayer(section.getInt("MaxGlobalShopByPlayer", 0));
+    ret.setNumberDaysExpiration(section.getInt("NumberDaysExpiration", 1));
     return ret;
   }
 
@@ -42,6 +45,7 @@ public class RankProperties {
     ret.setMaxAuctionByPlayer(properties.getMaxAuctionByPlayer());
     ret.setLimitGlobalShopByPlayer(properties.getLimitGlobalShopByPlayer());
     ret.setMaxGlobalShopByPlayer(properties.getMaxGlobalShopByPlayer());
+    ret.setNumberDaysExpiration(properties.getNumberDaysExpiration());
     return ret;
   }
 
@@ -60,6 +64,9 @@ public class RankProperties {
     if (properties.getMaxGlobalShopByPlayer() > this.maxGlobalShopByPlayer) {
       this.maxGlobalShopByPlayer = properties.getMaxGlobalShopByPlayer();
     }
+    if (properties.getNumberDaysExpiration() > this.numberDaysExpiration) {
+      this.numberDaysExpiration = properties.getNumberDaysExpiration();
+    }
   }
 
   /**
@@ -74,6 +81,7 @@ public class RankProperties {
     append.accept("MaxAuctionByPlayer", this.maxAuctionByPlayer.toString());
     append.accept("LimitGlobalShopByPlayer", (this.limitGlobalShopByPlayer != null) ? this.limitGlobalShopByPlayer.toString() : "null");
     append.accept("MaxGlobalShopByPlayer", this.maxGlobalShopByPlayer.toString());
+    append.accept("NumberDaysExpiration", this.numberDaysExpiration.toString());
 
     return sb.toString();
   }  
