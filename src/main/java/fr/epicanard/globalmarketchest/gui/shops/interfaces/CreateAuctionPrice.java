@@ -127,7 +127,8 @@ public class CreateAuctionPrice extends ShopInterface {
       this.inv.getWarn().warn("MissingItems", 49);
       return;
     }
-    final Boolean ret = GlobalMarketChest.plugin.auctionManager.createAuction(auction, auctionNumber);
+    final Integer expirationDays = i.getPlayerRankProperties().getNumberDaysExpiration();
+    final Boolean ret = GlobalMarketChest.plugin.auctionManager.createAuction(auction, auctionNumber, expirationDays);
     if (!ret) {
       this.inv.getWarn().warn("FailCreateAuction", 49);
       return;

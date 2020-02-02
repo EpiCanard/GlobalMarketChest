@@ -45,14 +45,9 @@ public class AuctionManager {
    *
    * @return Return if execution succeed
    */
-  public Boolean createAuction(AuctionInfo auction, Integer repeat) {
+  public Boolean createAuction(AuctionInfo auction, Integer repeat, Integer expirationDays) {
     InsertBuilder builder = new InsertBuilder(DatabaseConnector.tableAuctions);
     Timestamp ts = DatabaseUtils.getTimestamp();
-    int days = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.NumberDaysExpiration", 7);
-    String[] stringTs = {
-      ts.toString(),
-      DatabaseUtils.addDays(ts, days).toString()
-    };
 
     for (int i = 0; i < repeat; i++) {
       builder.addValue("itemStack", auction.getItemStack());
@@ -62,8 +57,8 @@ public class AuctionManager {
       builder.addValue("status", StatusAuction.IN_PROGRESS.getValue());
       builder.addValue("type", auction.getType().getType());
       builder.addValue("playerStarter", auction.getPlayerStarter());
-      builder.addValue("start", stringTs[0]);
-      builder.addValue("end", stringTs[1]);
+      builder.addValue("start", ts.toString());
+      builder.addValue("end", DatabaseUtils.addDays(ts, expirationDays).toString());
       builder.addValue("group", auction.getGroup());
     }
     return QueryExecutor.of().execute(builder);
@@ -103,14 +98,13 @@ public class AuctionManager {
    * @param player Player target by renew of auctions
    * @param group Shop group name target
    */
-  public Boolean renewGroupOfPlayerAuctions(Player player, String group, StatusAuction state, List<Integer> auctions) {
-    UpdateBuilder builder = this.updateToNow(null);
+  public Boolean renewGroupOfPlayerAuctions(Player player, String group, StatusAuction state, List<Integer> auctions, Integer expirationDays) {
+    UpdateBuilder builder = this.updateToNow(null, expirationDays);
 
     if (state == StatusAuction.FINISHED || state == StatusAuction.ABANDONED)
       return false;
-    String playeruuid = PlayerUtils.getUUIDToString(player);
     this.defineStateCondition(builder, state);
-    builder.addCondition("playerStarter", playeruuid);
+    builder.addCondition("playerStarter", PlayerUtils.getUUIDToString(player));
     builder.addCondition("group", group);
     builder.addCondition("id", auctions, ConditionType.IN);
     return QueryExecutor.of().execute(builder);
@@ -121,8 +115,8 @@ public class AuctionManager {
    *
    * @param id Id of the auction to renew
    */
-  public Boolean renewAuction(int id) {
-    UpdateBuilder builder = this.updateToNow(null);
+  public Boolean renewAuction(final int id, final Integer expirationDays) {
+    UpdateBuilder builder = this.updateToNow(null, expirationDays);
     QueryExecutor executor = QueryExecutor.of();
 
     if (!this.canEditAuction(executor, id))
@@ -163,7 +157,7 @@ public class AuctionManager {
    * @param id Id of the auction to undo
    * @param playerUuid Uuid of player
    */
-  public Boolean undoAuction(int id, String playerUuid) {
+  public Boolean undoAuction(final int id, final String playerUuid) {
     UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
     QueryExecutor executor = QueryExecutor.of();
 
@@ -180,12 +174,10 @@ public class AuctionManager {
   /**
    * TODO
    * Remove every auction before a specific date
-   *
-   * @param useConfig Define if remove all or with the date in config file
    */
   public void purgeAuctions() {
     DeleteBuilder builder = new DeleteBuilder(DatabaseConnector.tableAuctions);
-    Integer purge = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.PurgeInterval");
+    int purge = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.PurgeInterval");
     if (purge < 0)
       return;
     builder.addCondition("end", DatabaseUtils.addDays(DatabaseUtils.getTimestamp(), purge * -1), ConditionType.INFERIOR_EQUAL);
@@ -199,7 +191,7 @@ public class AuctionManager {
    * =====================
    */
 
-  public void updateGroupOfAuctionsMetadata(List<AuctionInfo> auctions) {
+  public void updateGroupOfAuctionsMetadata(final List<AuctionInfo> auctions) {
     UpdateBuilder builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
 
     auctions.forEach(auction -> {
@@ -218,16 +210,16 @@ public class AuctionManager {
    * =====================
    */
 
-    /**
-     * List auctions depnding of group level
-     *
-     * @param level GroupLevel to analyse
-     * @param group Group of auction
-     * @param category Category of items to search
-     * @param auction Auction to search
-     * @param limit Limit of auctions to get from database
-     * @param consumer Callback called when the sql request is executed
-     */
+  /**
+   * List auctions depnding of group level
+   *
+   * @param level GroupLevel to analyse
+   * @param group Group of auction
+   * @param category Category of items to search
+   * @param auction Auction to search
+   * @param limit Limit of auctions to get from database
+   * @param consumer Callback called when the sql request is executed
+   */
   public void getAuctions(GroupLevels level, String group, String category, AuctionInfo auction, Pair<Integer, Integer> limit, Consumer<List<Pair<ItemStack, AuctionInfo>>> consumer) {
     SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
 
@@ -434,14 +426,13 @@ public class AuctionManager {
    * @param builder Base builder
    * @return Return same builder
    */
-  private UpdateBuilder updateToNow(UpdateBuilder builder) {
-    Timestamp ts = DatabaseUtils.getTimestamp();
+  private UpdateBuilder updateToNow(UpdateBuilder builder, Integer expirationDays) {
+    final Timestamp ts = DatabaseUtils.getTimestamp();
     if (builder == null)
       builder = new UpdateBuilder(DatabaseConnector.tableAuctions);
-    int days = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.NumberDaysExpiration", 7);
 
     builder.addValue("start", ts.toString());
-    builder.addValue("end", DatabaseUtils.addDays(ts, days).toString());
+    builder.addValue("end", DatabaseUtils.addDays(ts, expirationDays).toString());
     builder.addValue("status", StatusAuction.IN_PROGRESS.getValue());
 
     return builder;
