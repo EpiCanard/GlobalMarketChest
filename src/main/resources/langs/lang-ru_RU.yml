@@ -167,6 +167,8 @@ Buttons:
     Name: "&fНайти предмет с его именем"
   SearchByPlayer:
     Name: "&fНайти аукционы игрока"
+  LastAuctions:
+    Name: "&3Auctions of the last %d hours"
 ErrorMessages:
   UnknownWorld: "Неизвестный мир для магазина"
   ShopTypeNotSet: "Тип магазина не задан;&2Пожалуйста выберите хотя бы один тип"

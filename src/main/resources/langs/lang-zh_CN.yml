@@ -168,6 +168,8 @@ Buttons:
     Name: "&f根据物品名字查找"
   SearchByPlayer:
     Name: "&f根据玩家名字查找"
+  LastAuctions:
+    Name: "&3Auctions of the last %d hours"
 ErrorMessages:
   UnknownWorld: "未知商店"
   ShopTypeNotSet: "未设置商店类型；&2请至少选择一种类型"

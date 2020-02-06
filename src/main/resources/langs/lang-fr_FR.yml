@@ -169,6 +169,8 @@ Buttons:
     Name: "&fRechercher un item avec son nom"
   SearchByPlayer:
     Name: "&fRechercher les enchères d'un joueur"
+  LastAuctions:
+    Name: "&3Enchères des %d dernières heures"
 ErrorMessages:
   UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"

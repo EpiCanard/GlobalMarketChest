@@ -450,6 +450,34 @@ public class AuctionManager {
     });
   }
 
+  /**
+   * Get auctions of last n hours
+   *
+   */
+  public void getLastAuctions(
+      final String group,
+      final Integer hours,
+      final Pair<Integer, Integer> limit,
+      final Consumer<List<AuctionInfo>> consumer) {
+    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
+
+    builder.addCondition("group", group);
+    this.defineStateCondition(builder, StatusAuction.IN_PROGRESS);
+    builder.setExtension("ORDER BY start DESC");
+    builder.addCondition("start", DatabaseUtils.minusHours(DatabaseUtils.getTimestamp(), hours), ConditionType.SUPERIOR_EQUAL);
+
+    if (limit != null)
+      builder.addExtension(GlobalMarketChest.plugin.getSqlConnector().buildLimit(limit));
+    QueryExecutor.of().execute(builder, res -> {
+      List<AuctionInfo> auctions = new ArrayList<>();
+      try {
+        while (res.next())
+          auctions.add(new AuctionInfo(res));
+        consumer.accept(auctions);
+      } catch (SQLException e) {}
+    });
+  }
+
   /*
    * ================================
    *             TOOLS

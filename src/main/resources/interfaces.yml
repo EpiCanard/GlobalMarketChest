@@ -90,6 +90,13 @@ Interfaces:
       - DefaultFooter
       - WithGlobalView
 
+  # View to see auctions of last 24 hours
+  LastAuctionViewList:
+    Base:
+      - DefaultShopInterface
+      - DefaultFooter
+      - WithGlobalView
+
   BuyAuction:
     Base:
       - Return
