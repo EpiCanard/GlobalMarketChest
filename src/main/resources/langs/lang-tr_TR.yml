@@ -168,6 +168,8 @@ Buttons:
     Name: "&fİsim ile öğe bul"
   SearchByPlayer:
     Name: "&fBir oyuncunun açık artırmalarını bul"
+  LastAuctions:
+    Name: "&3Auctions of the last %d hours"
 ErrorMessages:
   UnknownWorld: "Dükkan için bilinmeyen dünya"
   ShopTypeNotSet: "Mağaza türü ayarlanmadı;&2 Lütfen en az bir tür seçin"

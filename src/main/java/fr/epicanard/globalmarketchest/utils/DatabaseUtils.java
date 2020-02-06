@@ -31,7 +31,7 @@ public class DatabaseUtils {
   }
 
   /**
-   * Add days to a spécific timestamp
+   * Add days to a specific timestamp
    *
    * @param ts    Timestamp used
    * @param days  Nummber of days to add
@@ -41,6 +41,20 @@ public class DatabaseUtils {
     Calendar cal = Calendar.getInstance();
     cal.setTime(ts);
     cal.add(Calendar.DAY_OF_WEEK, days);
+    return new Timestamp(cal.getTime().getTime());
+  }
+
+  /**
+   * Minus hours to a specific timestamp
+   *
+   * @param ts     Timestamp used
+   * @param hours  Nummber of hours to remove
+   * @return Return the new timestamp
+   */
+  public Timestamp minusHours(Timestamp ts, int hours) {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(ts);
+    cal.add(Calendar.HOUR, -1 * hours);
     return new Timestamp(cal.getTime().getTime());
   }
 

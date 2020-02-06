@@ -168,6 +168,8 @@ Buttons:
     Name: "&fZnajdź item z tą nazwą"
   SearchByPlayer:
     Name: "&fSzukaj aukcji gracza"
+  LastAuctions:
+    Name: "&3Auctions of the last %d hours"
 ErrorMessages:
   UnknownWorld: "Nieodpowiedni świat"
   ShopTypeNotSet: "Typ sklepu nie jest ustawiony;&2Wybierz przynajmniej jeden typ"

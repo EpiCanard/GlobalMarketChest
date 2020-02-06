@@ -168,6 +168,8 @@ Buttons:
     Name: "&fFind an item with his name"
   SearchByPlayer:
     Name: "&fFind auctions of a player"
+  LastAuctions:
+    Name: "&3Auctions of the last %d hours"
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"

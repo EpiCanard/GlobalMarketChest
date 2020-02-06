@@ -69,6 +69,10 @@ Options:
   RadiusLinkBlock: 1
   # When an admin removes an auction of other players, define if the admin get the items or if they are destroyed
   AdminRemoveAuctionGetItems: true
+  # Define if the view that display auctions of last n hours must be displayed
+  EnableLastAuctions: true
+  # Define the number of hours used to display last auctions in LastAuctions interface
+  LastAuctionsHours: 24
 Logs:
   # If set to true the prefix [GlobalMarketChest] inside messages will be removed
   HidePrefix: false
@@ -182,6 +186,7 @@ Interfaces:
     YesButton: minecraft:lime_wool
     NoButton: minecraft:red_wool
     Question: minecraft:redstone_torch
+    LastAuctions: minecraft:clock
 Sign:
   Appearance:
     # Config for GobalShop creation
