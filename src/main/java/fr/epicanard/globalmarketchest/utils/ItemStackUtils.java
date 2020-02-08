@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -229,7 +230,7 @@ public class ItemStackUtils {
    */
   @Version(name="isDamaged")
   public Boolean isDamaged_latest(ItemStack item) {
-    return ((Damageable)item.getItemMeta()).getDamage() > 0;
+    return ((Damageable)item.getItemMeta()).getDamage() > 0 && item.getType() != Material.getMaterial("PLAYER_HEAD");
   }
 
   /**
