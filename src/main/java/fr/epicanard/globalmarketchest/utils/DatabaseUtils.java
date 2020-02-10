@@ -19,14 +19,15 @@ import lombok.experimental.UtilityClass;
 /**
  * Utiity Class for database actions
  */
-@UtilityClass
 public class DatabaseUtils {
+
+  private DatabaseUtils() {}
   /**
    * Get current timestamp
    *
    * @return Timestamp
    */
-  public Timestamp getTimestamp() {
+  public static Timestamp getTimestamp() {
     return new Timestamp(System.currentTimeMillis());
   }
 
@@ -37,7 +38,7 @@ public class DatabaseUtils {
    * @param days  Nummber of days to add
    * @return Return the new timestamp
    */
-  public Timestamp addDays(Timestamp ts, int days) {
+  public static Timestamp addDays(Timestamp ts, int days) {
     Calendar cal = Calendar.getInstance();
     cal.setTime(ts);
     cal.add(Calendar.DAY_OF_WEEK, days);
@@ -51,7 +52,7 @@ public class DatabaseUtils {
    * @param hours  Nummber of hours to remove
    * @return Return the new timestamp
    */
-  public Timestamp minusHours(Timestamp ts, int hours) {
+  public static Timestamp minusHours(Timestamp ts, int hours) {
     Calendar cal = Calendar.getInstance();
     cal.setTime(ts);
     cal.add(Calendar.HOUR, -1 * hours);
@@ -63,10 +64,10 @@ public class DatabaseUtils {
    * Ex : 2 days
    *
    * @param value The long value
-   * @param timeLange The language vairable name
+   * @param timeLang The language vairable name
    * @return The string formatted
    */
-  private String getLanguageTime(long value, String timeLang) {
+  private static String getLanguageTime(long value, String timeLang) {
     return String.format("%d %s ", value, LangUtils.get("Divers." + timeLang));
   }
   /**
@@ -79,7 +80,7 @@ public class DatabaseUtils {
    * @param full Define which format use. True => Format A | False => Format B
    * @return The time string formatted
    */
-  public String getExpirationString(Timestamp tsA, Timestamp tsB, Boolean full) {
+  public static String getExpirationString(Timestamp tsA, Timestamp tsB, Boolean full) {
     Boolean ago = false;
     StringBuilder sb = new StringBuilder();
     long diff = tsA.getTime() - tsB.getTime();
@@ -112,7 +113,7 @@ public class DatabaseUtils {
    * @param res ResultSet
    * @return Return the id or -1
    */
-  public Integer getId(ResultSet res) {
+  public static Integer getId(ResultSet res) {
     Integer id = -1;
     try {
       res.next();
@@ -129,7 +130,7 @@ public class DatabaseUtils {
    * @param repeat Repeat number
    * @return Final composed string
    */
-  public String joinRepeat(String str, String sep, int repeat) {
+  public static String joinRepeat(String str, String sep, int repeat) {
     String ret = "";
     for (int i = 0; i < repeat; i++) {
       ret += str;
@@ -146,7 +147,7 @@ public class DatabaseUtils {
    * @param adding Biconsumer to apply modifications to the itemstack
    * @return A list of itemstack
    */
-  public List<ItemStack> toItemStacks(List<AuctionInfo> auctions, BiConsumer<ItemStack, AuctionInfo> adding) {
+  public static List<ItemStack> toItemStacks(List<AuctionInfo> auctions, BiConsumer<ItemStack, AuctionInfo> adding) {
     return auctions.stream().map(auction -> {
       ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
       if (item == null) {
@@ -166,7 +167,7 @@ public class DatabaseUtils {
    * @param item
    * @return return item serialized
    */
-  public String serialize(ItemStack item) {
+  public static String serialize(ItemStack item) {
     YamlConfiguration yaml = new YamlConfiguration();
     yaml.set("item", item);
     return yaml.saveToString();
@@ -178,7 +179,7 @@ public class DatabaseUtils {
    * @param content
    * @return return item deserialized
    */
-  public ItemStack deserialize(String content) {
+  public static ItemStack deserialize(String content) {
     YamlConfiguration yaml = new YamlConfiguration();
     try {
       yaml.loadFromString(content);
@@ -196,7 +197,7 @@ public class DatabaseUtils {
    * @param callback Callback that get the field
    * @return
    */
-  public <T> T getField(String field, ThrowableFunction<String, T, SQLException> callback) {
+  public static <T> T getField(String field, ThrowableFunction<String, T, SQLException> callback) {
     try {
       return callback.apply(field);
     } catch (SQLException e) {

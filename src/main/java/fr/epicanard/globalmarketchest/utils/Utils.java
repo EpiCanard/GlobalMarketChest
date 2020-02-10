@@ -1,28 +1,22 @@
 package fr.epicanard.globalmarketchest.utils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
-import lombok.Getter;
-import lombok.experimental.UtilityClass;
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Global Utility Class
  */
-@UtilityClass
 public class Utils {
 
   /**
@@ -30,13 +24,13 @@ public class Utils {
    * It get only the major version (ex: version 1.13.2 will get 1.13)
    */
   @Getter
-  private final String version;
+  private static final String version;
   /**
    * Last Support Version of minecraft for current plugin
    * Prevent loading config issues for versions not fully supported by the plugin
    */
   @Getter
-  private final String lastSupportedVersion = "1.14";
+  private static final String lastSupportedVersion = "1.14";
 
   static {
     version = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 4);
@@ -45,7 +39,7 @@ public class Utils {
   /**
    * Change String too support color
    */
-  public String toColor(String toChange) {
+  public static String toColor(String toChange) {
     return ChatColor.translateAlternateColorCodes('&', toChange);
   }
 
@@ -56,7 +50,7 @@ public class Utils {
    * @param y
    * @return position
    */
-  public int toPos(int x, int y) {
+  public static int toPos(int x, int y) {
     return y * 9 + x;
   }
 
@@ -67,7 +61,7 @@ public class Utils {
    * @param lineWidth line width if the used zone is smaller then the inventory width
    * @return line number
    */
-  public int getLine(int pos, int lineWidth) {
+  public static int getLine(int pos, int lineWidth) {
     return (pos - pos % lineWidth) / lineWidth;
   }
 
@@ -78,7 +72,7 @@ public class Utils {
    * @param lineWidth line width if the used zone is smaller then the inventory width
    * @return column number
    */
-  public int getCol(int pos, int lineWidth) {
+  public static int getCol(int pos, int lineWidth) {
     return pos % lineWidth;
   }
 
@@ -88,7 +82,7 @@ public class Utils {
    * @param buttonName button name to search inside config
    * @return item created
    */
-  public ItemStack getButton(String buttonName) {
+  public static ItemStack getButton(String buttonName) {
     if (buttonName == null)
       return null;
 
@@ -110,7 +104,7 @@ public class Utils {
    * @param lore Array to convert
    * @return List converted
    */
-  public List<String> toList(String[] lore) {
+  public static List<String> toList(String[] lore) {
     return (lore == null) ? null : Arrays.asList(lore);
   }
 
@@ -120,7 +114,7 @@ public class Utils {
    * @param lore String to split
    * @return List of element splitted
    */
-  public List<String> toList(String lore) {
+  public static List<String> toList(String lore) {
     return (lore == null) ? null : Arrays.asList(lore.split(";"));
   }
 
@@ -130,7 +124,7 @@ public class Utils {
    * @param lores List to concat
    * @return String concat
    */
-  public String fromList(List<String> lores) {
+  public static String fromList(List<String> lores) {
     return (lores == null) ? null : String.join(";", lores);
   }
 
@@ -141,7 +135,7 @@ public class Utils {
    * @param fct Function to map
    * @return The new list mapped
    */
-  public <T, R> List<T> mapList(List<R> lst, Function<R, T> fct) {
+  public static <T, R> List<T> mapList(List<R> lst, Function<R, T> fct) {
     return lst.stream().map(fct).collect(Collectors.toList());
   }
 
@@ -152,7 +146,7 @@ public class Utils {
    * @param fct Function to filter
    * @return The new list filtered
    */
-  public <T> List<T> filter(List<T> lst, Predicate<T> fct) {
+  public static <T> List<T> filter(List<T> lst, Predicate<T> fct) {
     return lst.stream().filter(fct).collect(Collectors.toList());
   }
 
@@ -163,7 +157,7 @@ public class Utils {
    * @param size Max size
    * @return index
    */
-  public int getIndex(int index, int size, Boolean exclusive) {
+  public static int getIndex(int index, int size, Boolean exclusive) {
     if (index <= 0 || size == 0)
       return 0;
     if (exclusive)
@@ -178,7 +172,7 @@ public class Utils {
    * @param defaut Param return when obj is null
    * @return Return obj or defaut of obj is null
    */
-  public <T> T getOrElse(T obj, T defaut) {
+  public static <T> T getOrElse(T obj, T defaut) {
     return Optional.ofNullable(obj).orElse(defaut);
   }
 
@@ -188,7 +182,7 @@ public class Utils {
    * @param loc Location of sign
    * @param lines Lines to set on the sign
    */
-  public void editSign(Location loc, String[] lines) {
+  public static void editSign(Location loc, String[] lines) {
     if (loc.getBlock().getState() instanceof Sign) {
       Sign signBlock = (Sign) loc.getBlock().getState();
 
