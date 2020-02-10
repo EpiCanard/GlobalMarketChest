@@ -140,6 +140,23 @@ public class Utils {
   }
 
   /**
+   * Map a function to a specific item
+   *
+   * @param list The list on which apply the function
+   * @param position Position of item to map
+   * @param fct Function to map to item
+   * @return The new list mapped
+   */
+  public static <T> List<T> mapItem(final List<T> list, final int position, final Function<T, T> fct) {
+    if (position >= 0 && position < list.size()) {
+      final List<T> finalList = new ArrayList<>(list);
+      finalList.set(position, fct.apply(list.get(position)));
+      return finalList;
+    }
+    return list;
+  }
+
+  /**
    * Execute a filter on a list
    *
    * @param lst The list on which apply the function

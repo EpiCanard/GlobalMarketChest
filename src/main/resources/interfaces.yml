@@ -164,6 +164,7 @@ Interfaces:
       - Return
       - Exit
     Items:
+      49: AdvicePriceInfo
       53: CreateAuction
 
   # =============

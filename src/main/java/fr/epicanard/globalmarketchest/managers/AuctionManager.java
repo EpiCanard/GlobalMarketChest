@@ -452,7 +452,6 @@ public class AuctionManager {
 
   /**
    * Get auctions of last n hours
-   *
    */
   public void getLastAuctions(
       final String group,
@@ -475,6 +474,38 @@ public class AuctionManager {
           auctions.add(new AuctionInfo(res));
         consumer.accept(auctions);
       } catch (SQLException e) {}
+    });
+  }
+
+  /**
+   * Get average price of one specific item from last n days
+   *
+   * @param auction Auction info of specific item
+   * @param days Number of days to analyze
+   * @param defaultPrice Default price to set if no price found
+   * @param consumer Consumer to send result
+   */
+  public void getAveragePriceItem(
+      final AuctionInfo auction,
+      final Integer days,
+      final Double defaultPrice,
+      final Consumer<Double> consumer) {
+    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableAuctions);
+
+    builder.addField("AVG(price) as averagePrice");
+    builder.addField("COUNT(id) as count");
+    builder.addCondition("group", auction.getGroup());
+    builder.addCondition("itemStack", auction.getItemStack());
+    builder.addCondition("itemMeta", auction.getItemMeta());
+    builder.addCondition("status", StatusAuction.ABANDONED.getValue(), ConditionType.NOTEQUAL);
+    builder.addCondition("start", DatabaseUtils.minusDays(DatabaseUtils.getTimestamp(), days), ConditionType.SUPERIOR_EQUAL);
+    QueryExecutor.of().execute(builder, res -> {
+      try {
+        if (res.next()) {
+          final double price = (res.getInt("count") > 0) ? res.getDouble("averagePrice") : defaultPrice;
+          consumer.accept(((Long)Math.round(price * 100)).doubleValue() / 100);
+        }
+      } catch(SQLException e) {}
     });
   }
 

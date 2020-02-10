@@ -46,6 +46,20 @@ public class DatabaseUtils {
   }
 
   /**
+   * Remove days to a specific timestamp
+   *
+   * @param ts    Timestamp used
+   * @param days  Nummber of days to remove
+   * @return Return the new timestamp
+   */
+  public static Timestamp minusDays(Timestamp ts, int days) {
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(ts);
+    cal.add(Calendar.DAY_OF_WEEK, -1 * days);
+    return new Timestamp(cal.getTime().getTime());
+  }
+
+  /**
    * Minus hours to a specific timestamp
    *
    * @param ts     Timestamp used

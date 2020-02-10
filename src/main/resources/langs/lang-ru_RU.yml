@@ -170,6 +170,9 @@ Buttons:
     Name: "&fНайти аукционы игрока"
   LastAuctions:
     Name: "&3Auctions of the last %d hours"
+  AdvicePriceInfo:
+    Name: "Advice price"
+    Description: "&3%s;&7Click to use advice price"
 ErrorMessages:
   UnknownWorld: "Неизвестный мир для магазина"
   ShopTypeNotSet: "Тип магазина не задан;&2Пожалуйста выберите хотя бы один тип"
