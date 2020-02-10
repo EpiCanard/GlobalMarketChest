@@ -9,6 +9,7 @@ InterfacesTitle:
   AuctionGlobalView: "&2Auction history"
   SearchView: "&2Search auctions"
   ConfirmView: "&2Confirmation"
+  LastAuctionViewList: "&2Last auctions"
   # Auction Creation
   CreateAuctionItem: "&2Select auction item"
   CreateAuctionPrice: "&2Select auction price"

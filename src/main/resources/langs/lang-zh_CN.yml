@@ -9,6 +9,7 @@ InterfacesTitle:
   AuctionGlobalView: "&2查看你上架中的商品"
   SearchView: "&2搜索拍卖"
   ConfirmView: "&2确认"
+  LastAuctionViewList: "&2Last auctions"
   # Auction Creation
   CreateAuctionItem: "&2选择拍卖物品 "
   CreateAuctionPrice: "&2设定拍卖价格"

@@ -9,6 +9,7 @@ InterfacesTitle:
   AuctionGlobalView: "&2Açık artırma geçmişi"
   SearchView: "&2Müzayede arama"
   ConfirmView: "&2Onay"
+  LastAuctionViewList: "&2Last auctions"
   # Auction Creation
   CreateAuctionItem: "&2Açık artırma öğesini seçin"
   CreateAuctionPrice: "&2Açık artırma fiyatını Seç"

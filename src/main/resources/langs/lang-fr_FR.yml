@@ -9,6 +9,7 @@ InterfacesTitle:
   AuctionGlobalView: "&2Historique des enchères"
   SearchView: "&2Recherche d'enchères"
   ConfirmView: "&2Confirmation"
+  LastAuctionViewList: "&2Dernières enchères"
   # Auction Creation
   CreateAuctionItem: "&2Sélection de l'item pour l'enchère"
   CreateAuctionPrice: "&2Sélection du prix de l'enchère"
