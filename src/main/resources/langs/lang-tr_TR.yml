@@ -171,6 +171,9 @@ Buttons:
     Name: "&fBir oyuncunun açık artırmalarını bul"
   LastAuctions:
     Name: "&3Auctions of the last %d hours"
+  AdvicePriceInfo:
+    Name: "Advice price"
+    Description: "&3%s;&7Click to use advice price"
 ErrorMessages:
   UnknownWorld: "Dükkan için bilinmeyen dünya"
   ShopTypeNotSet: "Mağaza türü ayarlanmadı;&2 Lütfen en az bir tür seçin"

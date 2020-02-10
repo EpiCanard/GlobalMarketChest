@@ -171,6 +171,9 @@ Buttons:
     Name: "&fFinde Auktionen von Spieler"
   LastAuctions:
     Name: "&3Auctions of the last %d hours"
+  AdvicePriceInfo:
+    Name: "Advice price"
+    Description: "&3%s;&7Click to use advice price"
 ErrorMessages:
   UnknownWorld: "Unbekannte Shop Welt"
   ShopTypeNotSet: "Der Shop typ ist nicht gesetzt;&2Bitte wähle mindestens einen Typ"

@@ -172,6 +172,9 @@ Buttons:
     Name: "&fRechercher les enchères d'un joueur"
   LastAuctions:
     Name: "&3Enchères des %d dernières heures"
+  AdvicePriceInfo:
+    Name: "Prix conseillé"
+    Description: "&3%s;&7Cliques pour utiliser ce prix"
 ErrorMessages:
   UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"

@@ -1,13 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
@@ -16,19 +8,29 @@ import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.*;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import static fr.epicanard.globalmarketchest.utils.Utils.mapItem;
+import static fr.epicanard.globalmarketchest.utils.Utils.toList;
 
 public class CreateAuctionPrice extends ShopInterface {
   private List<Double> prices;
   private List<String> priceItems;
   private Boolean dynamicFreePos;
+  private Double advicePrice;
 
   public CreateAuctionPrice(InventoryGUI inv) {
     super(inv);
     this.isTemp = true;
     this.actions.put(0, new PreviousInterface());
+    this.actions.put(49, i -> this.setPrice(this.advicePrice, true));
     this.actions.put(53, this::createAuction);
 
     final YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
@@ -62,6 +64,7 @@ public class CreateAuctionPrice extends ShopInterface {
     }
     this.inv.getInv().setItem((i == 9 || !this.dynamicFreePos) ? 40 : 27 + i, Utils.getButton("FreePrice"));
     this.setIcon(ItemStackUtils.setItemStackLore(item.clone(), lore));
+    this.setAveragePrice();
   }
 
   /**
@@ -124,13 +127,13 @@ public class CreateAuctionPrice extends ShopInterface {
     final PlayerInventory playerInv = i.getPlayer().getInventory();
 
     if (!playerInv.containsAtLeast(item, auction.getAmount() * auctionNumber)) {
-      this.inv.getWarn().warn("MissingItems", 49);
+      this.inv.getWarn().warn("MissingItems", 40);
       return;
     }
     final Integer expirationDays = i.getPlayerRankProperties().getNumberDaysExpiration();
     final Boolean ret = GlobalMarketChest.plugin.auctionManager.createAuction(auction, auctionNumber, expirationDays);
     if (!ret) {
-      this.inv.getWarn().warn("FailCreateAuction", 49);
+      this.inv.getWarn().warn("FailCreateAuction", 40);
       return;
     }
     Integer totalAmount = auction.getAmount() * auctionNumber;
@@ -148,5 +151,26 @@ public class CreateAuctionPrice extends ShopInterface {
   @Override
   public void destroy() {
     super.destroy();
+  }
+
+  /**
+   * Define the advice average price and update interface
+   */
+  private void setAveragePrice() {
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
+    final Integer days = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.AdvicePriceInfo", 30);
+    final Double defaultPrice = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDouble("Options.DefaultPrice", 0.0);
+    this.advicePrice = defaultPrice;
+
+    GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auction, days, defaultPrice, price -> {
+      this.advicePrice = price;
+      final ItemStack item = this.inv.getInv().getItem(49);
+      final List<String> description = toList(LangUtils.getOrElse("Buttons.AdvicePriceInfo.Description", "%s"));
+      final String formattedPrice = EconomyUtils.format(price);
+      this.inv.getInv().setItem(
+          49,
+          ItemStackUtils.setItemStackLore(item, mapItem(description, 0, desc -> String.format(desc, formattedPrice)))
+      );
+    });
   }
 }
