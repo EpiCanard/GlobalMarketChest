@@ -17,6 +17,8 @@ import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import lombok.Getter;
 import lombok.Setter;
 
+import static fr.epicanard.globalmarketchest.utils.DatabaseUtils.getField;
+
 public class AuctionInfo {
   @Getter
   private Integer id;
@@ -46,18 +48,18 @@ public class AuctionInfo {
   public AuctionInfo(ResultSet res) {
     if (res == null)
       throw new NullPointerException("Fail to get auction from database");
-    this.id = DatabaseUtils.getField("id", res::getInt);
-    this.itemStack = DatabaseUtils.getField("itemStack", res::getString);
-    this.itemMeta = DatabaseUtils.getField("itemMeta", res::getString);
-    this.amount = DatabaseUtils.getField("amount", res::getInt);
-    this.price = DatabaseUtils.getField("price", res::getDouble);
-    this.type = AuctionType.getAuctionType(DatabaseUtils.getField("type", res::getInt));
-    this.playerStarter = DatabaseUtils.getField("playerStarter", res::getString);
-    this.playerEnder = DatabaseUtils.getField("playerEnder", res::getString);
-    this.start = DatabaseUtils.getField("start", res::getTimestamp);
-    this.end = DatabaseUtils.getField("end", res::getTimestamp);
-    this.status = this.defineStatus(DatabaseUtils.getField("status", res::getInt), this.end);
-    this.group = DatabaseUtils.getField("group", res::getString);
+    this.id = getField("id", res::getInt);
+    this.itemStack = getField("itemStack", res::getString);
+    this.itemMeta = getField("itemMeta", res::getString);
+    this.amount = getField("amount", res::getInt);
+    this.price = getField("price", res::getDouble);
+    this.type = AuctionType.getAuctionType(getField("type", res::getInt));
+    this.playerStarter = getField("playerStarter", res::getString);
+    this.playerEnder = getField("playerEnder", res::getString);
+    this.start = getField("start", res::getTimestamp);
+    this.end = getField("end", res::getTimestamp);
+    this.status = this.defineStatus(getField("status", res::getInt), this.end);
+    this.group = getField("group", res::getString);
 
     if (this.itemMeta == null && this.itemStack != null) {
       this.itemMeta = DatabaseUtils.serialize(ItemStackUtils.getItemStack(this.itemStack));

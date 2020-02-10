@@ -1,9 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.economy.VaultEconomy;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.NewAuction;
@@ -13,6 +10,10 @@ import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import org.bukkit.inventory.ItemStack;
+
+import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
+import static fr.epicanard.globalmarketchest.utils.EconomyUtils.getMoneyOfPlayer;
 
 public class DefaultFooter extends ShopInterface {
 
@@ -28,11 +29,10 @@ public class DefaultFooter extends ShopInterface {
 
   private void updateBalance() {
     ItemStack item = this.inv.getInv().getItem(45);
-    VaultEconomy eco = GlobalMarketChest.plugin.economy;
 
     ItemStackUtils.setItemStackLore(item,
       Utils.toList(String.format("&3%s",
-      eco.getEconomy().format(eco.getMoneyOfPlayer(this.inv.getPlayer().getUniqueId()))
+      format(getMoneyOfPlayer(this.inv.getPlayer().getUniqueId()))
     )));
     this.inv.getInv().setItem(45, item);
   }
