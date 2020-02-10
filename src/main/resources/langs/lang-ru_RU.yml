@@ -9,6 +9,7 @@ InterfacesTitle:
   AuctionGlobalView: "&2История аукционов"
   SearchView: "&2Поиск аукционов"
   ConfirmView: "&2Подтверждение"
+  LastAuctionViewList: "&2Last auctions"
   # Создание аукциона
   CreateAuctionItem: "&2Выбор предмета аукциона"
   CreateAuctionPrice: "&2Выбор стоимости аукциона"
