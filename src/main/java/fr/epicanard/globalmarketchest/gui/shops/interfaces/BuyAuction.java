@@ -27,6 +27,8 @@ import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 
+import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
+
 public class BuyAuction extends UndoAuction {
 
   public BuyAuction(InventoryGUI inv) {
@@ -105,14 +107,14 @@ public class BuyAuction extends UndoAuction {
             buyer.getName(),
             auction.getAmount(),
             ItemStackUtils.getItemStackDisplayName(item),
-            auction.getTotalPrice()
+            format(auction.getTotalPrice())
         );
       }
       return String.format(LangUtils.get(langVariable),
           buyer.getName(),
           auction.getAmount(),
           ItemStackUtils.getItemStackDisplayName(item),
-          auction.getTotalPrice(),
+          format(auction.getTotalPrice()),
           PlayerUtils.getPlayerName(auction.getPlayerStarter())
       );
     } catch (MissingFormatArgumentException e) {

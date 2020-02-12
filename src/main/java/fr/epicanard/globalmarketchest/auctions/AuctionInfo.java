@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import static fr.epicanard.globalmarketchest.utils.DatabaseUtils.getField;
+import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
 
 public class AuctionInfo {
   @Getter
@@ -184,7 +185,7 @@ public class AuctionInfo {
   private String checkPrice(double price) {
     if (price == 0.0)
       return "&2" + LangUtils.get("Divers.Free");
-    return Double.toString(price);
+    return format(price);
   }
 
   /**

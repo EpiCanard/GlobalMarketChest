@@ -206,11 +206,11 @@ InfoMessages:
   RenewEveryAuction: "&2Alle Auktionen erfolgreich erneuert"
   UndoEveryAuction: "&2Alle Auktionen erfolgreich abgebrochen"
   ShopDeleted: "Shop erfolgreich gelöscht"
-  # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
-  # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
+  # Warning : don't change % and the letter(s) that follow (ex here : %d and %s)
+  # First %s is for buyer, First %d is for quantity, second %s for item name, third %s for price and last %s for buyer
   # If you don't have them a message will pop in console and no message will broadcast
-  AcquireAuction: "&3%s &6kaufte &2%d %s &6für &2%.2f&6 € an &3%s&6."
-  AcquireAuctionOwner: "&3%s &6kaufte deine Auktion &2%d %s &6for &2%.2f&6 €."
+  AcquireAuction: "&3%s &6kaufte &2%d %s &6für &2%s&6 an &3%s&6."
+  AcquireAuctionOwner: "&3%s &6kaufte deine Auktion &2%d %s &6for &2%s&6."
   AuctionsSoldLastLogin: "&6You sold &3%d&6 auctions since your last connection"
   PluginReloading: "Plugin lädt neu..."
   PluginReloaded: "Plugin ist neu geladen."

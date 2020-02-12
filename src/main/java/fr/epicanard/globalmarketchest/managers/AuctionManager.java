@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
+import fr.epicanard.globalmarketchest.utils.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.bukkit.OfflinePlayer;
@@ -25,12 +26,6 @@ import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuild
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.UpdateBuilder;
 import fr.epicanard.globalmarketchest.exceptions.EmptyCategoryException;
-import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.LoggerUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
 
 /**
  * Class that handle all auctions and communication with database
@@ -503,7 +498,7 @@ public class AuctionManager {
       try {
         if (res.next()) {
           final double price = (res.getInt("count") > 0) ? res.getDouble("averagePrice") : defaultPrice;
-          consumer.accept(((Long)Math.round(price * 100)).doubleValue() / 100);
+          consumer.accept(EconomyUtils.roundValue(price));
         }
       } catch(SQLException e) {}
     });

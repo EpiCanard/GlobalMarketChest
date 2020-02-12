@@ -25,4 +25,15 @@ public class EconomyUtils {
   public static double getMoneyOfPlayer(final UUID uuid) {
     return GlobalMarketChest.plugin.economy.getMoneyOfPlayer(uuid);
   }
+
+  /**
+   * Round a value
+   *
+   * @param value Value to round
+   * @return Rounded value
+   */
+  public static double roundValue(final double value) {
+    final double modulo = (value * 100) % 1;
+    return ((value * 100) - modulo) / 100;
+  }
 }

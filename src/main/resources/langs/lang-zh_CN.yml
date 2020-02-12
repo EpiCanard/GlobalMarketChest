@@ -206,11 +206,11 @@ InfoMessages:
   RenewEveryAuction: "&2所有物品已经成功续期"
   UndoEveryAuction: "&2所有物品已经成功删除"
   ShopDeleted: "商店已经移除..."
-  # Warning : don't change % and the letter(s) that follow (ex here : %s, %d and %.2f)
-  # First %s is for buyer, First %d is for quantity, second %s for item name, %.2f for price and last %s for buyer
+  # Warning : don't change % and the letter(s) that follow (ex here : %d and %s)
+  # First %s is for buyer, First %d is for quantity, second %s for item name, third %s for price and last %s for buyer
   # If you don't have them a message will pop in console and no message will broadcast
-  AcquireAuction: "&c[&e&l养老商城&c]&3%s &6购买了 &2%d个 %s &6价格: &2%.2f&6 元 卖家: &3%s&6."
-  AcquireAuctionOwner: "&c[&e&l养老商城&c]&3%s &6成功购买你的物品 &2%d个 %s &6价格: &2%.2f&6 元."
+  AcquireAuction: "&c[&e&l养老商城&c]&3%s &6购买了 &2%d个 %s &6价格: &2%s&6 卖家: &3%s&6."
+  AcquireAuctionOwner: "&c[&e&l养老商城&c]&3%s &6成功购买你的物品 &2%d个 %s &6价格: &2%s&6."
   AuctionsSoldLastLogin: "&6You sold &3%d&6 auctions since your last connection"
   PluginReloading: "插件重载中...."
   PluginReloaded: "插件重载成功"
