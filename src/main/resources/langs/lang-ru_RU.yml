@@ -205,10 +205,10 @@ InfoMessages:
   RenewEveryAuction: "&2Каждый аукцион успешно возобновлен"
   UndoEveryAuction: "&2Каждый аукцион успешно удален"
   ShopDeleted: "Магазин успешно удален"
-  # ВНИМАНИЕ : не изменяйте % и буква(ы), которые следуют за текстом ( такие как: %s, %d и %.2f)
+  # ВНИМАНИЕ : не изменяйте % и буква(ы), которые следуют за текстом ( такие как: %d и %s)
   # Иначе сообщения будут выведены в игре неккоректно!
-  AcquireAuction: "&3%s &6купил &2%d %s &6за &2%.2f&6 $ у &3%s&6."
-  AcquireAuctionOwner: "&3%s &6купил у вас аукцион &2%d %s &6за &2%.2f&6 $."
+  AcquireAuction: "&3%s &6купил &2%d %s &6за &2%s&6 у &3%s&6."
+  AcquireAuctionOwner: "&3%s &6купил у вас аукцион &2%d %s &6за &2%s&6."
   AuctionsSoldLastLogin: "&6You sold &3%d&6 auctions since your last connection"
   PluginReloading: "Плагин перезагружается..."
   PluginReloaded: "Плагин успешно перезагружен."
