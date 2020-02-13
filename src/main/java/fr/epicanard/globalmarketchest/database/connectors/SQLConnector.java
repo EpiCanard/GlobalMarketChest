@@ -36,7 +36,7 @@ public abstract class SQLConnector extends DatabaseConnector {
     this.port = config.getString("Storage.Connection.Port");
     this.database = config.getString("Storage.Connection.Database");
     this.user = config.getString("Storage.Connection.User");
-    this.password = config.getString("Storage.Connection.Password");
+    this.password = config.getString("Storage.Connection.Password", "");
 
     if (this.host == null || this.port == null || this.database == null || this.user == null || this.password == null)
       throw new ConfigException("Some database informations are missing");
