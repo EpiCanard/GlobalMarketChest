@@ -1,16 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.util.Arrays;
-import java.util.MissingFormatArgumentException;
-import java.util.UUID;
-import java.util.function.Consumer;
-
-import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.UndoAuction;
-import fr.epicanard.globalmarketchest.permissions.Permissions;
-import org.apache.commons.lang3.tuple.Pair;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
@@ -19,13 +8,20 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.UndoAuction;
+import fr.epicanard.globalmarketchest.listeners.events.MoneyExchangeEvent;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.LoggerUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.WorldUtils;
+import fr.epicanard.globalmarketchest.utils.*;
+import org.apache.commons.lang3.tuple.Pair;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.MissingFormatArgumentException;
+import java.util.UUID;
+import java.util.function.Consumer;
 
 import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
 
@@ -78,7 +74,8 @@ public class BuyAuction extends UndoAuction {
       if (!GlobalMarketChest.plugin.auctionManager.buyAuction(auction.getId(), i.getPlayer()))
         throw new WarnException("CantBuyAuction");
 
-      GlobalMarketChest.plugin.economy.exchangeMoney(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice());
+      final MoneyExchangeEvent event = new MoneyExchangeEvent(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice());
+      Bukkit.getServer().getPluginManager().callEvent(event);
 
       i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
 

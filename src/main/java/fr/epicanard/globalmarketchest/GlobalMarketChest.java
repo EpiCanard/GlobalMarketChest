@@ -101,6 +101,7 @@ public class GlobalMarketChest extends JavaPlugin {
     this.register(new WorldListener());
     this.register(new ShopCreationListener());
     this.register(new PlayerListener());
+    this.register(new MoneyExchangeListener());
   }
 
   @Override
