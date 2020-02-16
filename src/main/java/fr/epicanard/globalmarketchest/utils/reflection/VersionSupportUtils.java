@@ -1,15 +1,16 @@
 package fr.epicanard.globalmarketchest.utils.reflection;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
+import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
+import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
+import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
-import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
-import fr.epicanard.globalmarketchest.utils.annotations.Version;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import static fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils.*;
 
 public class VersionSupportUtils {
 
@@ -46,6 +47,15 @@ public class VersionSupportUtils {
   }
 
 
+  private Object newInstance(String path, Object ...args) {
+    try {
+      return getClassFromPath(VersionSupportUtils.Path.MINECRAFT, path).getConstructor(fromObjectToClass(args)).newInstance(args);
+    } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
   // ======== TOOLS ============
 
   /**
@@ -59,68 +69,6 @@ public class VersionSupportUtils {
   private Class<?> getClassFromPath(Path basePath, String path) throws ClassNotFoundException {
     return Class.forName(String.format("%s.%s.%s", basePath.path, this.version, path));
   }
-
-  /**
-   * Transform an object array into a class array
-   *
-   * @param args Object array
-   * @return return an array of class from each object
-   */
-  private Class<?>[] fromObjectToClass(Object[] args) {
-    Class<?>[] classes = new Class<?>[0];
-
-    if (args != null) {
-      classes = new Class<?>[args.length];
-      for (int i = 0; i < args.length; i++) {
-        classes[i] = args[i].getClass();
-      }
-    }
-    return classes;
-  }
-
-  /**
-   * Invoke the method of an object
-   *
-   * @param object the object on which call the method
-   * @param method the method name to calle
-   * @param args all the arguments that must be send to the method
-   * @return return the object return by the method
-   */
-  public Object invokeMethod(Object object, String method, Object ...args) {
-    try {
-      return object.getClass().getMethod(method, fromObjectToClass(args)).invoke(object, args);
-    } catch(InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
-  /**
-   * Define if the current object has the specified method
-   *
-   * @param object the object on which call the method
-   * @param method the method name to calle
-   * @param args all the arguments that must be send to the method
-   * @return return a boolean
-   */
-  public Boolean hasMethod(Object object, String method, Object ...args) {
-    try {
-      object.getClass().getMethod(method, fromObjectToClass(args));
-      return true;
-    } catch(NoSuchMethodException e) {
-      return false;
-    }
-  }
-
-  private Object newInstance(String path, Object ...args) {
-    try {
-      return getClassFromPath(Path.MINECRAFT, path).getConstructor(fromObjectToClass(args)).newInstance(args);
-    } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
 
   /**
    * Get the static object Item.REGISTRY
@@ -183,7 +131,7 @@ public class VersionSupportUtils {
   /**
    * Get the minecraftkey in string. Format minecraft:dirt
    *
-   * @param item
+   * @param itemStack
    *          ItemStack
    * @return return the string minecraft key
    */
@@ -218,19 +166,19 @@ public class VersionSupportUtils {
   /**
    * Get the display name of an itemstack
    *
-   * @param item ItemStack
+   * @param itemStack ItemStack
    * @return return the displayname
    */
   public String getItemStackDisplayName(ItemStack itemStack) {
     try {
       Method asNMSCopy = getClassFromPath(Path.BUKKIT, "inventory.CraftItemStack").getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
-      Object name = this.invokeMethod(nmsItemStack, "getName");
+      Object name = invokeMethod(nmsItemStack, "getName");
 
       if (name instanceof String) {
         return (String)name;
       }
-      return this.invokeMethod(name, "getString").toString();
+      return invokeMethod(name, "getString").toString();
     } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
       e.printStackTrace();
     }
@@ -308,9 +256,9 @@ public class VersionSupportUtils {
       Method asNMSCopy = getClassFromPath(Path.BUKKIT, "inventory.CraftItemStack").getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
 
-      Object tagCompound = this.invokeMethod(nmsItemStack, "getTag");
+      Object tagCompound = invokeMethod(nmsItemStack, "getTag");
 
-      return (tagCompound != null && (Boolean)this.invokeMethod(tagCompound, "hasKey", this.NBTTAG));
+      return (tagCompound != null && (Boolean)invokeMethod(tagCompound, "hasKey", this.NBTTAG));
 
     } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
       e.printStackTrace();
@@ -333,7 +281,7 @@ public class VersionSupportUtils {
       Method asNMSCopy = craftItemStack.getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
 
-      Object tagCompound = this.invokeMethod(nmsItemStack, "getTag");
+      Object tagCompound = invokeMethod(nmsItemStack, "getTag");
 
       if (tagCompound == null) {
         tagCompound = this.newInstance("NBTTagCompound");
@@ -341,7 +289,7 @@ public class VersionSupportUtils {
 
       tagCompound.getClass().getMethod("setBoolean", String.class, boolean.class).invoke(tagCompound, this.NBTTAG, true);
 
-      this.invokeMethod(nmsItemStack, "setTag", tagCompound);
+      invokeMethod(nmsItemStack, "setTag", tagCompound);
       return (ItemStack)craftItemStack.getDeclaredMethod("asBukkitCopy", nmsItemStack.getClass()).invoke(null, nmsItemStack);
 
     } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
