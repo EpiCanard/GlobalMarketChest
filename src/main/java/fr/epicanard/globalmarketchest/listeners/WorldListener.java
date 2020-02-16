@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -62,7 +63,7 @@ public class WorldListener implements Listener {
    */
   @Version(name="getAttachedBlock")
   public Block getAttachedBlock_latest(Block block) {
-    final BlockData data = (BlockData)VersionSupportUtils.getInstance().invokeMethod(block.getState(), "getBlockData", (Object[])null);
+    final BlockData data = (BlockData) ReflectionUtils.invokeMethod(block.getState(), "getBlockData", (Object[])null);
 
     if (data instanceof Directional) {
       return block.getRelative(((Directional)data).getFacing().getOppositeFace());
