@@ -22,14 +22,15 @@ import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
-
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Optional;
 import java.util.logging.Level;
 
 
@@ -101,7 +102,11 @@ public class GlobalMarketChest extends JavaPlugin {
     this.register(new WorldListener());
     this.register(new ShopCreationListener());
     this.register(new PlayerListener());
-    this.register(new MoneyExchangeListener());
+    // If MysqlPlayerDataBridge is present add DataBridgeListiner else use MoneyExchangeListener for money sync
+    final Listener moneyExchange = getPlugin("MysqlPlayerDataBridge").filter(Plugin::isEnabled)
+        .map(dataBridge -> (Listener)new DataBridgeListener(dataBridge))
+        .orElseGet(MoneyExchangeListener::new);
+    this.register(moneyExchange);
   }
 
   @Override
@@ -192,5 +197,15 @@ public class GlobalMarketChest extends JavaPlugin {
    */
   private void register(Listener listener) {
     getServer().getPluginManager().registerEvents(listener, this);
+  }
+
+  /**
+   * Get plugin from it's name
+   *
+   * @param pluginName Name of plugin to get
+   * @return Optional of plugin
+   */
+  private Optional<Plugin> getPlugin(final String pluginName) {
+    return Optional.ofNullable(getServer().getPluginManager().getPlugin(pluginName));
   }
 }
