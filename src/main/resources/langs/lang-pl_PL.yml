@@ -9,7 +9,7 @@ InterfacesTitle:
   AuctionGlobalView: "&2Historia aukcji"
   SearchView: "&2Szukaj aukcji"
   ConfirmView: "&2Potwierdzenie"
-  LastAuctionViewList: "&2Last auctions"
+  LastAuctionViewList: "&2Ostatnie aukcje"
   # Auction Creation
   CreateAuctionItem: "&2Wybierz item do aukcji"
   CreateAuctionPrice: "&2Wybierz cenę aukcji"
@@ -170,10 +170,10 @@ Buttons:
   SearchByPlayer:
     Name: "&fSzukaj aukcji gracza"
   LastAuctions:
-    Name: "&3Auctions of the last %d hours"
+    Name: "&3Aukcje z ostatnich %d godzin"
   AdvicePriceInfo:
-    Name: "Advice price"
-    Description: "&3%s;&7Click to use advice price"
+    Name: "Cena polecana"
+    Description: "&3%s;&7Kliknij, aby użyć polecanej ceny"
 ErrorMessages:
   UnknownWorld: "Nieodpowiedni świat"
   ShopTypeNotSet: "Typ sklepu nie jest ustawiony;&2Wybierz przynajmniej jeden typ"
@@ -211,7 +211,7 @@ InfoMessages:
   # If you don't have them a message will pop in console and no message will broadcast
   AcquireAuction: "&3%s &6kupił &2%d %s &6za &2%s&6 to &3%s&6."
   AcquireAuctionOwner: "&3%s &6kupił twoją aukcję &2%d %s &6za &2%s&6."
-  AuctionsSoldLastLogin: "&6You sold &3%d&6 auctions since your last connection"
+  AuctionsSoldLastLogin: "&6Sprzedałeś &3%d&6 aukcji od ostatniego połączenia"
   PluginReloading: "Odświeżanie pluginu..."
   PluginReloaded: "Plugin odświeżony."
   WriteGroupName: "Wpisz nazwę grupy"
