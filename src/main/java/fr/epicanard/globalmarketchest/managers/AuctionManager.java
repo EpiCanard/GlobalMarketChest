@@ -178,20 +178,6 @@ public class AuctionManager {
     return executor.execute(builder);
   }
 
-  /**
-   * TODO
-   * Remove every auction before a specific date
-   */
-  public void purgeAuctions() {
-    DeleteBuilder builder = new DeleteBuilder(DatabaseConnector.tableAuctions);
-    int purge = ConfigUtils.getInt("Options.PurgeInterval");
-    if (purge < 0)
-      return;
-    builder.addCondition("end", DatabaseUtils.addDays(DatabaseUtils.getTimestamp(), purge * -1), ConditionType.INFERIOR_EQUAL);
-
-    QueryExecutor.of().execute(builder);
-  }
-
   /*
    * =====================
    *     UPDATE AUCTIONS
