@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -20,7 +21,7 @@ public abstract class SQLConnector extends DatabaseConnector {
     super(needConnection);
 
     this.pool = new LinkedBlockingQueue<>();
-    this.simultaneousConnections = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Storage.Connection.SimultaneousConnection");
+    this.simultaneousConnections = ConfigUtils.getInt("Storage.Connection.SimultaneousConnection");
     if (this.simultaneousConnections <= 0)
       this.simultaneousConnections = 1;
   }
@@ -30,7 +31,7 @@ public abstract class SQLConnector extends DatabaseConnector {
    */
   @Override
   public void configFromConfigFile() throws ConfigException {
-    YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
+    YamlConfiguration config = ConfigUtils.get();
 
     this.host = config.getString("Storage.Connection.Host");
     this.port = config.getString("Storage.Connection.Port");

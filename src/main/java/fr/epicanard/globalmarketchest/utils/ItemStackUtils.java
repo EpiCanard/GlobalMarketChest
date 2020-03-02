@@ -63,7 +63,7 @@ public class ItemStackUtils {
    * @return ItemStack created from minecraft key
    */
   public ItemStack getItemStackFromConfig(String path) {
-    String itemName = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString(path);
+    String itemName = ConfigUtils.getString(path);
     return ItemStackUtils.getItemStack(itemName);
   }
 
@@ -256,6 +256,6 @@ public class ItemStackUtils {
    */
   public Boolean isBlacklisted(ItemStack item) {
     String mk = ItemStackUtils.getMinecraftKey(item);
-    return GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("ItemsBlacklist").contains(mk);
+    return ConfigUtils.getStringList("ItemsBlacklist").contains(mk);
   }
 }

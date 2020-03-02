@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class RanksLoader {
    */
   public void loadRanks() {
     ranks.clear();
-    final YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
+    final YamlConfiguration config = ConfigUtils.get();
     final ConfigurationSection ranksSection = config.getConfigurationSection("Ranking.Ranks");
     if (ranksSection != null) {
       final Set<String> ranksKeys =  ranksSection.getKeys(false);

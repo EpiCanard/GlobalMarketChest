@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.shops;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
 /**
@@ -67,7 +68,7 @@ public enum ShopType {
    * @return
    */
   public String getFirstLineToCreate() {
-    return GlobalMarketChest.plugin.getConfigLoader().getConfig().getString(
+    return ConfigUtils.getString(
       String.format("Sign.Appearance.%s.FirstLineToCreate", this.confName));
   }
 
@@ -77,7 +78,7 @@ public enum ShopType {
    * @return
    */
   public String getDisplayName() {
-    return Utils.toColor(GlobalMarketChest.plugin.getConfigLoader().getConfig().getString(
+    return Utils.toColor(ConfigUtils.getString(
       String.format("Sign.Appearance.%s.DisplayName", this.confName)));
   }
 
@@ -87,7 +88,6 @@ public enum ShopType {
    * @return
    */
   public String getErrorDisplayName() {
-    return Utils.toColor(GlobalMarketChest.plugin.getConfigLoader().getConfig()
-      .getString("Sign.Appearance.NotWorkingShopDisplayName"));
+    return Utils.toColor(ConfigUtils.getString("Sign.Appearance.NotWorkingShopDisplayName"));
   }
 }

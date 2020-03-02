@@ -6,14 +6,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.epicanard.globalmarketchest.utils.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -70,7 +67,7 @@ public class AuctionInfo {
   public AuctionInfo(AuctionType type, Player owner, String group) {
     this.status = StatusAuction.IN_PROGRESS;
     this.type = AuctionType.getAuctionType(type.getType());
-    this.price = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDouble("Options.DefaultPrice", 0.0);
+    this.price = ConfigUtils.getDouble("Options.DefaultPrice", 0.0);
     this.playerStarter = owner.getUniqueId().toString();
     this.group = group;
   }

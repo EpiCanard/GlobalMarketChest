@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.Properties;
 
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import lombok.Getter;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -31,7 +32,7 @@ public abstract class DatabaseConnector {
   }
 
   public static void configureTables() throws ConfigException {
-    final String prefix = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("Storage.TablePrefix", "GMC_");
+    final String prefix = ConfigUtils.getString("Storage.TablePrefix", "GMC_");
     if (!prefix.matches("[a-zA-Z_]*"))
       throw new ConfigException("tablePrefix not containing only letters or/and _");
 

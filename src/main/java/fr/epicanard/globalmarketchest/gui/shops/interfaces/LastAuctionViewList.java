@@ -6,6 +6,7 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.AuctionViewBase;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
@@ -62,6 +63,6 @@ public class LastAuctionViewList extends AuctionViewBase {
    * @return Number of hours
    */
   public static Integer getLastHours() {
-    return GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.LastAuctionsHours", 24);
+    return ConfigUtils.getInt("Options.LastAuctionsHours", 24);
   }
 }
