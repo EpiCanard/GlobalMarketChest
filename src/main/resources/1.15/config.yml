@@ -31,6 +31,10 @@ Storage:
     # UseSSL: false
     # The simultaneous connection always active to reduce time of interface execution
     SimultaneousConnection: 4
+# Contains all config about multi-server support
+MultiServer:
+  # Enable support of MysqlPlayerDataBridge to sync money exchange
+  MysqlPlayerDataBridgeSupport: true
 Options:
   # To see auctions that don't have category
   UncategorizedItems: false
