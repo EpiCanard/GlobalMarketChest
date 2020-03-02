@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.gui;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -125,7 +126,7 @@ public class InterfacesLoader {
    * Load backgrounds from config
    */
   private void loadBackgrounds() {
-    Optional<ConfigurationSection> section = Optional.ofNullable(GlobalMarketChest.plugin.getConfigLoader().getConfig()
+    Optional<ConfigurationSection> section = Optional.ofNullable(ConfigUtils.get()
         .getConfigurationSection("Interfaces.Backgrounds"));
 
     section.ifPresent(sec -> sec.getValues(false).forEach((key, value) -> {

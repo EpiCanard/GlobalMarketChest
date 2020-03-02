@@ -78,7 +78,7 @@ public class WorldUtils {
   public List<Block> getNearAllowedBlocks(Location location) {
     final List<Block> listBlocks = new ArrayList<Block>();
     final List<Material> allowed = ShopUtils.getAllowedLinkBlock();
-    Integer radius = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.RadiusLinkBlock", 1);
+    Integer radius = ConfigUtils.getInt("Options.RadiusLinkBlock", 1);
     if (radius < 1 || radius > 3) {
       LoggerUtils.warn("RadiusLinkBlock must be between 1 and 3 included. Current: " + radius);
       if (radius < 1) {
@@ -181,8 +181,8 @@ public class WorldUtils {
   public Boolean isAllowedWorld(String worldName) throws WorldDoesntExist {
     if (Bukkit.getWorld(worldName) == null)
       throw new WorldDoesntExist(worldName);
-    final Boolean containsWorld = GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("ShopWorlds.Worlds").contains(worldName);
-    final Boolean whitelist = GlobalMarketChest.plugin.getConfigLoader().getConfig().getString("ShopWorlds.Type", "blacklist").equals("whitelist");
+    final Boolean containsWorld = ConfigUtils.getStringList("ShopWorlds.Worlds").contains(worldName);
+    final Boolean whitelist = ConfigUtils.getString("ShopWorlds.Type", "blacklist").equals("whitelist");
 
     return (whitelist) ? containsWorld : !containsWorld;
   }

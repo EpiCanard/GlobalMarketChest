@@ -133,11 +133,11 @@ public class BuyAuction extends UndoAuction {
     final Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
 
     final String message = formatMessage(false, auction, buyer, item);
-    if (message != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.BroadcastInsideWorld", true)) {
+    if (message != null && ConfigUtils.getBoolean("Options.BroadcastInsideWorld", true)) {
       WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(starter));
     }
 
-    if (starter != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.NotifyPlayer", true)) {
+    if (starter != null && ConfigUtils.getBoolean("Options.NotifyPlayer", true)) {
       final String messageOwner = formatMessage(true, auction, buyer, item);
       if (messageOwner != null)
         PlayerUtils.sendMessage(starter, messageOwner);
@@ -162,7 +162,7 @@ public class BuyAuction extends UndoAuction {
    */
   private void removeAuction(Boolean remove) {
     if (remove) {
-      this.undoAuction(this.inv, GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AdminRemoveAuctionGetItems", true), true);
+      this.undoAuction(this.inv, ConfigUtils.getBoolean("Options.AdminRemoveAuctionGetItems", true), true);
     } else {
       inv.unloadLastInterface();
     }

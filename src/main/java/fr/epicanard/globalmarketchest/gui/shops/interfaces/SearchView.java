@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -40,7 +41,7 @@ public class SearchView extends DefaultFooter {
    */
   @Override
   public void onDrop(InventoryClickEvent event, InventoryGUI inv) {
-    if (!GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableSimilarAuctions", true)) {
+    if (!ConfigUtils.getBoolean("Options.EnableSimilarAuctions", true)) {
       return;
     }
     ItemStack item = null;

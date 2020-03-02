@@ -65,7 +65,7 @@ public class ShopUtils {
   }
 
   public void init()  {
-    List<String> blocks = GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList("AllowedLinkBlock");
+    List<String> blocks = ConfigUtils.getStringList("AllowedLinkBlock");
 
     ShopUtils.allowedBlock.clear();
     blocks.forEach(bl -> {

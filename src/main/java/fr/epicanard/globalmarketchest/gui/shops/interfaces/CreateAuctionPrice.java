@@ -33,7 +33,7 @@ public class CreateAuctionPrice extends ShopInterface {
     this.actions.put(49, i -> this.setPrice(this.advicePrice, true));
     this.actions.put(53, this::createAuction);
 
-    final YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
+    final YamlConfiguration config = ConfigUtils.get();
 
     this.prices = config.getDoubleList("Price.Ranges");
     this.prices = this.prices.subList(0, Utils.getIndex(9, this.prices.size(), true));
@@ -158,8 +158,8 @@ public class CreateAuctionPrice extends ShopInterface {
    */
   private void setAveragePrice() {
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
-    final Integer days = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.AdvicePriceInfo", 30);
-    final Double defaultPrice = GlobalMarketChest.plugin.getConfigLoader().getConfig().getDouble("Options.DefaultPrice", 0.0);
+    final Integer days = ConfigUtils.getInt("Options.AdvicePriceInfo", 30);
+    final Double defaultPrice = ConfigUtils.getDouble("Options.DefaultPrice", 0.0);
     this.advicePrice = defaultPrice;
 
     GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auction, days, defaultPrice, price -> {

@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.utils.chat;
 
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationFactory;
@@ -83,7 +84,7 @@ public class ChatUtils {
       .addConversationAbandonedListener(new ChatAbandon())
       .thatExcludesNonPlayersWithMessage(LangUtils.get("ErrorMessages.PlayerOnly"));
 
-    final YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
+    final YamlConfiguration config = ConfigUtils.get();
     if (config.getBoolean("Chat.UseExitSequence", false)) {
       factory.withEscapeSequence(config.getString("Chat.ExitSequence", "exit"));
     }

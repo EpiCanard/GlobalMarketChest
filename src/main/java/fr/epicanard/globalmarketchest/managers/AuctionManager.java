@@ -184,7 +184,7 @@ public class AuctionManager {
    */
   public void purgeAuctions() {
     DeleteBuilder builder = new DeleteBuilder(DatabaseConnector.tableAuctions);
-    int purge = GlobalMarketChest.plugin.getConfigLoader().getConfig().getInt("Options.PurgeInterval");
+    int purge = ConfigUtils.getInt("Options.PurgeInterval");
     if (purge < 0)
       return;
     builder.addCondition("end", DatabaseUtils.addDays(DatabaseUtils.getTimestamp(), purge * -1), ConditionType.INFERIOR_EQUAL);

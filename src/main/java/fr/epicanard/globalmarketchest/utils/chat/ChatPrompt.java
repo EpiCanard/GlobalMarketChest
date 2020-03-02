@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.utils.chat;
 
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
@@ -39,7 +40,7 @@ class ChatPrompt extends StringPrompt {
    */
   @Override
   public String getPromptText(ConversationContext context) {
-    final YamlConfiguration config = GlobalMarketChest.plugin.getConfigLoader().getConfig();
+    final YamlConfiguration config = ConfigUtils.get();
     String extra = "";
     if (config.getBoolean("Chat.UseExitSequence", false) && config.getBoolean("Chat.DisplayHelpExit", false)) {
       extra = String.format(LangUtils.get("Divers.ExitChatMode"), config.getString("Chat.ExitSequence", "exit"));

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import fr.epicanard.globalmarketchest.utils.ItemUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.utils.*;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,8 +19,6 @@ import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 
 public class CreateAuctionItem extends ShopInterface {
@@ -34,11 +32,13 @@ public class CreateAuctionItem extends ShopInterface {
     this.actions.put(22, i -> this.unsetItem());
     this.actions.put(0, new PreviousInterface());
 
-    this.acceptDamagedItems = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.AcceptDamagedItems", true);
+    final YamlConfiguration config = ConfigUtils.get();
 
-    final Boolean max = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxRepeat", true);
-    final Boolean one = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableMaxInOne", true);
-    this.oneByOne = GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.EnableRepeatOneByOne", true);
+    this.acceptDamagedItems = config.getBoolean("Options.AcceptDamagedItems", true);
+
+    final boolean max = config.getBoolean("Options.EnableMaxRepeat", true);
+    final boolean one = config.getBoolean("Options.EnableMaxInOne", true);
+    this.oneByOne = config.getBoolean("Options.EnableRepeatOneByOne", true);
 
     if (one) {
       this.actions.put(48, i -> this.defineMaxInOne());
@@ -138,7 +138,7 @@ public class CreateAuctionItem extends ShopInterface {
    */
   private Boolean checkItem() {
     final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
-    if (item != null && GlobalMarketChest.plugin.getConfigLoader().getConfig().getBoolean("Options.UseLastPrice", true)) {
+    if (item != null && ConfigUtils.getBoolean("Options.UseLastPrice", true)) {
       final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
       GlobalMarketChest.plugin.auctionManager.getLastPrice(auction, auction::setPrice);
     }
