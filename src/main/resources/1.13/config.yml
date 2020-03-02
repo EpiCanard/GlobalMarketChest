@@ -64,9 +64,6 @@ Options:
   NotifyPlayer: true
   # An auction expire if it is older than NumberDaysExpiration
   NumberDaysExpiration: 7
-  # -1 to ignore purge else specific a number of days to purge database every n days
-  # NOT YET SUPPORTED
-  PurgeInterval: 30
   # Define if the player can create auctions with an item damaged
   AcceptDamagedItems: false
   # Radius around the sign an 'AllowedLinkBlock' can be linked
