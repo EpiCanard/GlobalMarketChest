@@ -102,8 +102,8 @@ public class GlobalMarketChest extends JavaPlugin {
     this.register(new WorldListener());
     this.register(new ShopCreationListener());
     this.register(new PlayerListener());
-    // If MysqlPlayerDataBridge is present add DataBridgeListiner else use MoneyExchangeListener for money sync
-    final Listener moneyExchange = getPlugin("MysqlPlayerDataBridge").filter(Plugin::isEnabled)
+    final Listener moneyExchange = getPlugin("MysqlPlayerDataBridge")
+        .filter(DataBridgeListener::canBeEnabled)
         .map(dataBridge -> (Listener)new DataBridgeListener(dataBridge))
         .orElseGet(MoneyExchangeListener::new);
     this.register(moneyExchange);
