@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PatchHandler {
+public class PatchHandler extends DatabaseManager {
   private DatabaseConnector connector;
   private final List<String> requiredTables = ImmutableList.of(
       DatabaseConnector.tableAuctions,
@@ -22,6 +22,7 @@ public class PatchHandler {
   );
 
   public PatchHandler(DatabaseConnector connector) {
+    super(DatabaseConnector.tablePatches);
     this.connector = connector;
   }
 
@@ -100,7 +101,7 @@ public class PatchHandler {
    * @param patches List of patch to apply
    */
   private void addPatches(List<String> patches) {
-    final InsertBuilder builder = new InsertBuilder(DatabaseConnector.tablePatches);
+    final InsertBuilder builder = insert();
 
     patches.forEach(patch -> builder.addValue("patch", patch));
 
@@ -130,20 +131,18 @@ public class PatchHandler {
    *
    * @return List of patches
    */
-  private List<String> getAppliedPatches(List<String> existingTables) {
+  private List<String> getAppliedPatches(final List<String> existingTables) {
     if (!existingTables.contains(DatabaseConnector.tablePatches)) {
       return Collections.emptyList();
     }
 
-    final SelectBuilder builder = new SelectBuilder(DatabaseConnector.tablePatches);
-    List<String> patches = new ArrayList<>();
+    final SelectBuilder builder = select();
+    final List<String> patches = new ArrayList<>();
 
     QueryExecutor.of().execute(builder, res -> {
-      try {
-        while (res.next()) {
-          patches.add(res.getString("patch"));
-        }
-      } catch (SQLException e) {}
+      while (res.next()) {
+        patches.add(res.getString("patch"));
+      }
     });
     return patches;
   }
@@ -154,7 +153,7 @@ public class PatchHandler {
    * @param query Query to convert
    * @return Query converted
    */
-  private String replaceScriptVariables(String query) {
+  private String replaceScriptVariables(final String query) {
     return query
         .replace("{table_auctions}", DatabaseConnector.tableAuctions)
         .replace("{table_shops}", DatabaseConnector.tableShops)
@@ -167,14 +166,14 @@ public class PatchHandler {
    * @param file Name to file
    * @return List of line not empty
    */
-  private List<String> readFileLines(String file) {
+  private List<String> readFileLines(final String file) {
     final String path = String.format("scripts/%s/%s", this.connector.getDatabaseType(), file);
     final List<String> lines = new ArrayList<>();
 
     String line;
     try {
-      InputStream stream = GlobalMarketChest.plugin.getResource(path);
-      BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+      final InputStream stream = GlobalMarketChest.plugin.getResource(path);
+      final BufferedReader br = new BufferedReader(new InputStreamReader(stream));
       while((line = br.readLine()) != null) {
         if (line.length() > 0) {
           lines.add(line);
