@@ -1,16 +1,9 @@
 package fr.epicanard.globalmarketchest.managers;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
-
-import org.bukkit.Location;
-
+import fr.epicanard.globalmarketchest.database.DatabaseManager;
 import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
+import fr.epicanard.globalmarketchest.database.querybuilder.SqlConsumer;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
@@ -19,19 +12,29 @@ import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import lombok.Getter;
+import org.bukkit.Location;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Class that handle all shops and communication with database
  */
-public class ShopManager {
+public class ShopManager extends DatabaseManager {
   @Getter
-  private List<ShopInfo> shops = new ArrayList<ShopInfo>();
+  private List<ShopInfo> shops = new ArrayList<>();
+
+  public ShopManager() {
+    super(DatabaseConnector.tableShops);
+  }
 
   /**
    * Remove every metadata from shop and clear the shops list
    */
-  public void resetShopList() {
-    this.shops.stream().filter(shop -> shop.getExists()).forEach(shop -> shop.removeMetadata());
+  private void resetShopList() {
+    this.shops.stream().filter(ShopInfo::getExists).forEach(ShopInfo::removeMetadata);
     this.shops.clear();
   }
 
@@ -41,25 +44,23 @@ public class ShopManager {
   public void updateShops() {
     this.resetShopList();
 
-    SelectBuilder builder = new SelectBuilder(DatabaseConnector.tableShops);
+    final SelectBuilder builder = select();
     QueryExecutor.of().execute(builder, res -> {
-      try {
-        while (res.next()) {
-          ShopInfo shop = new ShopInfo(res);
-          if (shop.getSignLocation() != null && shop.getSignLocation().getWorld() != null) {
-            shop.addMetadata();
-          } else {
-            shop.setExists(false);
-          }
-          this.shops.add(shop);
+      while (res.next()) {
+        final ShopInfo shop = new ShopInfo(res);
+        if (shop.getSignLocation() != null && shop.getSignLocation().getWorld() != null) {
+          shop.addMetadata();
+        } else {
+          shop.setExists(false);
         }
-      } catch(SQLException e) {e.printStackTrace();}
-    });
+        this.shops.add(shop);
+      }
+    }, Exception::printStackTrace);
   }
 
   /**
    * Get a shop with his ID
-   * 
+   *
    * @param id id of the shop
    * @return Return the shop with this id
    */
@@ -70,31 +71,30 @@ public class ShopManager {
     }
     return null;
   }
-  
+
   /**
    * Create a shop inside database and add it in list shops
-   * 
-   * @param owner
-   * @param sign
-   * @param other
-   * @param mask
-   * @param group
+   *
+   * @param owner Owner of the shop
+   * @param sign  Location of sign placed
+   * @param other Linked location to sign
+   * @param mask  Shop type
+   * @param group Group of shop to link auctions
    * @return Return shop id created
    */
-  public Integer createShop(String owner, Location sign, Location other, int mask, String group) throws ShopAlreadyExistException {
-    if (!this.shops.stream().allMatch(shop -> !WorldUtils.compareLocations(shop.getSignLocation(), sign)))
+  private Integer createShop(String owner, Location sign, Location other, int mask, String group) throws ShopAlreadyExistException {
+    if (this.shops.stream().anyMatch(shop -> WorldUtils.compareLocations(shop.getSignLocation(), sign)))
       throw new ShopAlreadyExistException(sign);
 
-    InsertBuilder builder = new InsertBuilder(DatabaseConnector.tableShops);
+    final InsertBuilder builder = insert()
+        .addValue("owner", owner)
+        .addValue("signLocation", WorldUtils.getStringFromLocation(sign))
+        .addValue("otherLocation", WorldUtils.getStringFromLocation(other))
+        .addValue("type", mask)
+        .addValue("group", group);
 
-    builder.addValue("owner", owner);
-    builder.addValue("signLocation", WorldUtils.getStringFromLocation(sign));
-    builder.addValue("otherLocation", WorldUtils.getStringFromLocation(other));
-    builder.addValue("type", mask);
-    builder.addValue("group", group);
-
-    AtomicInteger id = new AtomicInteger(-1);
-    Consumer<ResultSet> cs = res -> {
+    final AtomicInteger id = new AtomicInteger(-1);
+    final SqlConsumer<ResultSet> cs = res -> {
       id.set(DatabaseUtils.getId(res));
     };
     if (QueryExecutor.of().execute(builder, cs))
@@ -104,7 +104,7 @@ public class ShopManager {
 
   /**
    * Create a shop inside database and add it in list shops
-   * 
+   *
    * @param shop Info about a shop
    * @return Return Shop id created
    */
@@ -115,7 +115,7 @@ public class ShopManager {
 
   /**
    * Delete shop at the specific location
-   * 
+   *
    * @param shop Shop to delete
    * @return Return true if succeed else false
    */
@@ -126,9 +126,9 @@ public class ShopManager {
     this.shops.removeIf(s -> s.getId() == shop.getId());
     shop.removeMetadata();
 
-    DeleteBuilder builder = new DeleteBuilder(DatabaseConnector.tableShops);
+    final DeleteBuilder builder = delete()
+        .addCondition("id", shop.getId());
 
-    builder.addCondition("id", shop.getId());
     return QueryExecutor.of().execute(builder);
   }
 }
