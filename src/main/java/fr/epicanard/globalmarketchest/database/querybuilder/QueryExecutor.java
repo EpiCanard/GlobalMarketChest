@@ -70,7 +70,7 @@ public class QueryExecutor {
    * @param builder BaseBuilder that contains the query
    * @param consumer Callback called with the query response
    */
-  public Boolean execute(BaseBuilder builder, Consumer<ResultSet> consumer) {
+  public Boolean execute(final BaseBuilder builder, final SqlConsumer<ResultSet> consumer, final Consumer<SQLException> error) {
     Connection co = GlobalMarketChest.plugin.getSqlConnector().getConnection();
     Boolean ret = false;
     AtomicReference<ResultSet> res = new AtomicReference<>();
@@ -86,8 +86,16 @@ public class QueryExecutor {
       });
       ret = builder.execute(prepared, res);
 
-      if (consumer != null)
-        Optional.ofNullable(res.get()).ifPresent(consumer);
+      if (consumer != null && res.get() != null) {
+        try {
+          consumer.accept(res.get());
+        } catch (SQLException exception) {
+          if (error != null) {
+            error.accept(exception);
+          }
+        }
+
+      }
 
     } catch (TypeNotSupported e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
@@ -98,6 +106,10 @@ public class QueryExecutor {
       GlobalMarketChest.plugin.getSqlConnector().getBackConnection(co);
     }
     return ret;
+  }
+
+  public Boolean execute(final BaseBuilder builder, final SqlConsumer<ResultSet> consumer) {
+    return this.execute(builder, consumer, null);
   }
 
   /**
@@ -132,7 +144,7 @@ public class QueryExecutor {
   }
 
   public Boolean execute(BaseBuilder builder) {
-    return this.execute(builder, null);
+    return this.execute(builder, null, null);
   }
 
   public static QueryExecutor of() {
