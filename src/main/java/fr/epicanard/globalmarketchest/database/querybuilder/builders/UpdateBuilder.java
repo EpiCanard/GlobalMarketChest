@@ -1,71 +1,58 @@
 package fr.epicanard.globalmarketchest.database.querybuilder.builders;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
 import fr.epicanard.globalmarketchest.database.querybuilder.ExceptionConsumer;
 import fr.epicanard.globalmarketchest.database.querybuilder.MultiConditionMap;
 import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
 
-public class UpdateBuilder extends ConditionBase {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicReference;
+
+public class UpdateBuilder extends ConditionBase<UpdateBuilder> {
   protected MultiConditionMap values = new MultiConditionMap();
 
-  public UpdateBuilder(String tableName) {
+  private UpdateBuilder(final String tableName) {
     super(tableName);
+  }
+
+  public static UpdateBuilder of(final String tableName) {
+    return new UpdateBuilder(tableName);
   }
 
   /**
    * Add a value to values variable with default ConditionType to equal
    */
-  public void addValue(String key, Object value) {
+  public UpdateBuilder addValue(final String key, final Object value) {
     this.values.put(key, value, ConditionType.EQUAL);
+    return this;
   }
 
   /**
    * Reset values
    */
-  public void resetValues() {
+  public UpdateBuilder resetValues() {
     this.values.clear();
+    return this;
   }
 
-  /**
-   * Build the query
-   *
-   * @return query string built
-   */
   @Override
   public String build() {
-    StringBuilder builder = new StringBuilder("UPDATE " + this.tableName);
+    final StringBuilder builder = new StringBuilder("UPDATE " + this.tableName);
     this.buildClause(builder, "SET", ", ", this.values);
     this.buildWhereClause(builder);
     return this.buildExtension(builder).toString();
   }
 
-  /**
-   * Prepare the query params
-   *
-   * @param consumer
-   */
   @Override
-  public void prepare(ExceptionConsumer<List<Object>> consumer) throws TypeNotSupported, SQLException {
+  public void prepare(final ExceptionConsumer consumer) throws TypeNotSupported, SQLException {
     consumer.accept(this.values.values());
     consumer.accept(this.conditions.values());
   }
 
-  /**
-   * Execute the query
-   *
-   * @param statement
-   * @param resultSet
-   *
-   * @return return if execution succeed
-   */
   @Override
-  public Boolean execute(PreparedStatement statement, AtomicReference<ResultSet> resultSet) throws SQLException {
+  public Boolean execute(final PreparedStatement statement, final AtomicReference<ResultSet> resultSet) throws SQLException {
     return statement.executeUpdate() > 0;
   }
 }

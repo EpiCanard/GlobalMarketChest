@@ -6,10 +6,9 @@ import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class SimpleQueryBuilder extends BaseBuilder {
+public class SimpleQueryBuilder extends BaseBuilder<SimpleQueryBuilder> {
   private final String request;
   private final Boolean asReturn;
 
@@ -25,10 +24,10 @@ public class SimpleQueryBuilder extends BaseBuilder {
   }
 
   @Override
-  public void prepare(ExceptionConsumer<List<Object>> consumer) throws TypeNotSupported, SQLException {}
+  public void prepare(ExceptionConsumer consumer) throws TypeNotSupported, SQLException {}
 
   @Override
-  public Boolean execute(PreparedStatement statement, AtomicReference<ResultSet> resultSet) throws SQLException {
+  public Boolean execute(final PreparedStatement statement, final AtomicReference<ResultSet> resultSet) throws SQLException {
     if (asReturn) {
       resultSet.set(statement.executeQuery());
     }
