@@ -1,52 +1,37 @@
 package fr.epicanard.globalmarketchest.database.querybuilder.builders;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-
 import fr.epicanard.globalmarketchest.database.querybuilder.ExceptionConsumer;
 import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
 
-public class DeleteBuilder extends ConditionBase {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicReference;
 
-  public DeleteBuilder(String tableName) {
+public class DeleteBuilder extends ConditionBase<DeleteBuilder> {
+
+  private DeleteBuilder(String tableName) {
     super(tableName);
   }
 
-  /**
-   * Build the query
-   *
-   * @return query string built
-   */
+  public static DeleteBuilder of(final String tableName) {
+    return new DeleteBuilder(tableName);
+  }
+
   @Override
   public String build() {
-    StringBuilder builder = new StringBuilder("DELETE FROM " + this.tableName);
+    final StringBuilder builder = new StringBuilder("DELETE FROM " + this.tableName);
     this.buildWhereClause(builder);
     return this.buildExtension(builder).toString();
   }
 
-  /**
-   * Prepare the query params
-   *
-   * @param consumer
-   */
   @Override
-  public void prepare(ExceptionConsumer<List<Object>> consumer) throws TypeNotSupported, SQLException{
+  public void prepare(final ExceptionConsumer consumer) throws TypeNotSupported, SQLException{
     consumer.accept(this.conditions.values());
   }
 
-  /**
-   * Execute the query
-   *
-   * @param statement
-   * @param resultSet
-   *
-   * @return return if execution succeed
-   */
   @Override
-  public Boolean execute(PreparedStatement statement, AtomicReference<ResultSet> resultSet) throws SQLException {
+  public Boolean execute(final PreparedStatement statement, final AtomicReference<ResultSet> resultSet) throws SQLException {
     return statement.executeUpdate() > 0;
   }
 }

@@ -1,33 +1,26 @@
 package fr.epicanard.globalmarketchest.database.querybuilder.builders;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionStructure;
 import fr.epicanard.globalmarketchest.database.querybuilder.ExceptionConsumer;
 import fr.epicanard.globalmarketchest.database.querybuilder.MultiConditionMap;
 import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
-import lombok.Setter;
 
-public abstract class BaseBuilder {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.concurrent.atomic.AtomicReference;
+
+public abstract class BaseBuilder<T extends BaseBuilder<T>> {
   protected String tableName;
-  @Setter
-  protected String extension;
+  protected String extension = "";
 
-  public BaseBuilder(String tableName) {
+  BaseBuilder(final String tableName) {
     this.tableName = tableName;
   }
 
-  /**
-   * Get the extension with a default empty string if null
-   *
-   * @return
-   */
-  public String getExtension() {
-    return (this.extension == null) ? "" : this.extension;
+  public T setExtension(final String extension) {
+    this.extension = extension;
+    return (T) this;
   }
 
   /**
@@ -35,8 +28,9 @@ public abstract class BaseBuilder {
    *
    * @param add
    */
-  public void addExtension(String add) {
-    this.extension = this.getExtension() + " " + add;
+  public T addExtension(final String add) {
+    this.extension += " " + add;
+    return (T) this;
   }
 
   /**
@@ -49,11 +43,12 @@ public abstract class BaseBuilder {
    *
    * @return return the param builder
    */
-  protected StringBuilder buildClause(StringBuilder builder, String clause, String sep, MultiConditionMap map) {
+  protected StringBuilder buildClause(final StringBuilder builder, final String clause, final String sep, final MultiConditionMap map) {
     if (map.size() == 0)
       return builder;
-    builder.append(" " + clause + " ");
-    builder.append(String.join(" " + sep + " ",
+    builder
+        .append(" " + clause + " ")
+        .append(String.join(" " + sep + " ",
     map.getMap().stream()
     .map(ConditionStructure::build)
     .toArray(String[]::new)));
@@ -67,8 +62,8 @@ public abstract class BaseBuilder {
    * @param builder string builder to use
    * @return return the param builder
    */
-  protected StringBuilder buildExtension(StringBuilder builder) {
-    if (this.extension != null)
+  protected StringBuilder buildExtension(final StringBuilder builder) {
+    if (!this.extension.isEmpty())
       builder.append(" " + this.extension);
     return builder;
   }
@@ -85,7 +80,7 @@ public abstract class BaseBuilder {
    *
    * @param consumer
    */
-  public abstract void prepare(ExceptionConsumer<List<Object>> consumer) throws TypeNotSupported, SQLException;
+  public abstract void prepare(ExceptionConsumer consumer) throws TypeNotSupported, SQLException;
 
   /**
    * Execute the query
