@@ -252,10 +252,31 @@ public class ItemStackUtils {
    * Define if the block is black listed or not
    * 
    * @param item Item to define if blacklisted
-   * @return
+   * @return If item is blacklisted
    */
-  public Boolean isBlacklisted(ItemStack item) {
-    String mk = ItemStackUtils.getMinecraftKey(item);
-    return ConfigUtils.getStringList("ItemsBlacklist").contains(mk);
+  public Boolean isBlacklisted(final ItemStack item) {
+    final String mk = ItemStackUtils.getMinecraftKey(item);
+    final List<String> itemLore = item.getItemMeta().getLore();
+    final List<String> blacklistLore = ConfigUtils.getStringList("ItemsBlacklist.Lores");
+    return ConfigUtils.getStringList("ItemsBlacklist.Items").contains(mk) || matchLore(itemLore, blacklistLore);
+  }
+
+  /**
+   * Match if one of itemLore contains one of blacklistLore element
+   *
+   * @param itemLore Item lore list
+   * @param blacklistLore Blacklist lore
+   * @return If two lore list match
+   */
+  private Boolean matchLore(final List<String> itemLore, final List<String> blacklistLore) {
+    if (itemLore != null && blacklistLore != null) {
+      for (String lore : itemLore) {
+        for (String bl: blacklistLore) {
+          if (lore.contains(bl))
+            return true;
+        }
+      }
+    }
+    return false;
   }
 }

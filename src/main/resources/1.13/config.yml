@@ -116,17 +116,22 @@ Price:
     - minecraft:coal
     - minecraft:redstone
     - minecraft:lapis_lazuli
-# Items that can't be sold
+# Config for items that can't be sold
 ItemsBlacklist:
-  - minecraft:barrier
-  - minecraft:chain_command_block
-  - minecraft:command_block
-  - minecraft:command_block_minecart
-  - minecraft:debug_stick
-  - minecraft:knowledge_book
-  - minecraft:repeating_command_block
-  - minecraft:structure_block
-  - minecraft:structure_void
+  # MinecraftKeys of items blacklisted
+  Items:
+    - minecraft:barrier
+    - minecraft:chain_command_block
+    - minecraft:command_block
+    - minecraft:command_block_minecart
+    - minecraft:debug_stick
+    - minecraft:knowledge_book
+    - minecraft:repeating_command_block
+    - minecraft:structure_block
+    - minecraft:structure_void
+  # Lores of items blacklisted
+  Lores:
+    # - "Can't sell"
 Interfaces:
   # Warning interface messages are represented by flashing item alternating Background this item
   Warn: minecraft:red_stained_glass_pane
