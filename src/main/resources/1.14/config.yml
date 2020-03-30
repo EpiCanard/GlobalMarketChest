@@ -42,7 +42,7 @@ Options:
   EnableMaxInOne: true
   # Define if the button MaxRepeat in CreateAuction view must be here
   EnableMaxRepeat: true
-  # Define if the buttons to repeat the auction one by one in CreateAuction view must be here (RepeatIncresae and RepeatDecrease)
+  # Define if the buttons to repeat the auction one by one in CreateAuction view must be here (RepeatIncrease and RepeatDecrease)
   EnableRepeatOneByOne: true
   # Define if a player can find similar auctions with drag and drop on category view
   EnableSimilarAuctions: true
@@ -56,12 +56,6 @@ Options:
   LimitGlobalShopByPlayer: false
   # Define the max globalshop a player can create. To works, player must have permission: globalmarketchest.globalshop.createshop
   MaxGlobalShopByPlayer: 1
-  # Broadcast a message inside the current world when a player buy an auction
-  BroadcastInsideWorld: true
-  # Send a message (number of sold auctions) to player when join a server
-  MessageLoginSoldAuctions: true
-  # Notify the player everywhere on the server when a player buy one of his auctions
-  NotifyPlayer: true
   # An auction expire if it is older than NumberDaysExpiration
   NumberDaysExpiration: 7
   # Define if the player can create auctions with an item damaged
@@ -76,6 +70,16 @@ Options:
   LastAuctionsHours: 24
   # Define the number of days to analyze for average of advice price on choice price view
   AdvicePriceDays: 30
+  # Contains configs about broadcasted message when player create or buy an auction
+  Broadcast:
+    # Broadcast a message inside the current world when a player create an auction
+    CreationInsideWorld: true
+    # Broadcast a message inside the current world when a player buy an auction
+    BuyInsideWorld: true
+    # Send a message (number of sold auctions) to player when join a server
+    MessageLoginSoldAuctions: true
+    # Notify the player everywhere on the server when a player buy one of his auctions
+    NotifyPlayer: true
 Logs:
   # If set to true the prefix [GlobalMarketChest] inside messages will be removed
   HidePrefix: false

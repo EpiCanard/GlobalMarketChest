@@ -209,6 +209,7 @@ InfoMessages:
   # Иначе сообщения будут выведены в игре неккоректно!
   AcquireAuction: "&3%s &6купил &2%d %s &6за &2%s&6 у &3%s&6."
   AcquireAuctionOwner: "&3%s &6купил у вас аукцион &2%d %s &6за &2%s&6."
+  AuctionCreated: "&3%s &6created &3%d&6 auctions of &2%d %s &6for &2%s&6."
   AuctionsSoldLastLogin: "&6You sold &3%d&6 auctions since your last connection"
   PluginReloading: "Плагин перезагружается..."
   PluginReloaded: "Плагин успешно перезагружен."

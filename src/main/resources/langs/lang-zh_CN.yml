@@ -211,6 +211,7 @@ InfoMessages:
   # If you don't have them a message will pop in console and no message will broadcast
   AcquireAuction: "&c[&e&l养老商城&c]&3%s &6购买了 &2%d个 %s &6价格: &2%s&6 卖家: &3%s&6."
   AcquireAuctionOwner: "&c[&e&l养老商城&c]&3%s &6成功购买你的物品 &2%d个 %s &6价格: &2%s&6."
+  AuctionCreated: "&3%s &6created &3%d&6 auctions of &2%d %s &6for &2%s&6."
   AuctionsSoldLastLogin: "&6在你下线的时候，共卖出了 &3%d&6 件商品"
   PluginReloading: "插件重载中...."
   PluginReloaded: "插件重载成功"

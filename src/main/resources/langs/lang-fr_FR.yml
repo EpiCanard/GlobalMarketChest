@@ -212,6 +212,7 @@ InfoMessages:
   # If you don't have them a message will pop in console and no message will broadcast
   AcquireAuction: "&3%s &6a acheté &2%d %s &6pour &2%s&6 à &3%s&6."
   AcquireAuctionOwner: "&3%s &6a acheté votre enchère &2%d %s &6pour &2%s&6."
+  AuctionCreated: "&3%s &6a créé &3%d&6 enchères de &2%d %s &6pour &2%s&6."
   AuctionsSoldLastLogin: "&6Vous avez vendu &3%d&6 enchères depuis votre dernière connexion"
   PluginReloading: "Le plugin est en train de recharger..."
   PluginReloaded: "Le plugin a fini de recharger."

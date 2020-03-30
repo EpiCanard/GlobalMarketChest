@@ -8,15 +8,20 @@ import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.*;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.MissingFormatArgumentException;
 
+import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
 import static fr.epicanard.globalmarketchest.utils.Utils.mapItem;
 import static fr.epicanard.globalmarketchest.utils.Utils.toList;
 
@@ -71,7 +76,7 @@ public class CreateAuctionPrice extends ShopInterface {
    * Add the price gave in parameter to the current price and update interface
    *
    * @param price price to set or add
-   * @param set Define if price must be set or added
+   * @param set   Define if price must be set or added
    */
   private void setPrice(double price, Boolean set) {
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
@@ -111,7 +116,7 @@ public class CreateAuctionPrice extends ShopInterface {
 
     final List<String> lore = auction.getLore(AuctionLoreConfig.SELECTPRICE);
     if (auctionNumber > 1)
-      lore.set(0,String.format("%s &ax&9%s", lore.get(0), auctionNumber));
+      lore.set(0, String.format("%s &ax&9%s", lore.get(0), auctionNumber));
     return lore;
   }
 
@@ -144,7 +149,9 @@ public class CreateAuctionPrice extends ShopInterface {
       playerInv.removeItem(it);
       totalAmount -= stackSize;
     }
-    PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.CreateAuction");
+
+    this.broadcastAuctionCreation(i.getPlayer(), auction, auctionNumber, item);
+
     ReturnBack.execute(null, i);
   }
 
@@ -172,5 +179,36 @@ public class CreateAuctionPrice extends ShopInterface {
           ItemStackUtils.setItemStackLore(item, mapItem(description, 0, desc -> String.format(desc, formattedPrice)))
       );
     });
+  }
+
+  /**
+   * Broadcast a message inside current world to inform about the creation of this auction
+   *
+   * @param owner         Owner of auction
+   * @param auction       Auction created
+   * @param auctionNumber Number of time si auction is repeated
+   * @param item          Item sold
+   */
+  private void broadcastAuctionCreation(final Player owner, final AuctionInfo auction, final int auctionNumber, final ItemStack item) {
+    PlayerUtils.sendMessageConfig(owner, "InfoMessages.CreateAuction");
+
+    if (!ConfigUtils.getBoolean("Options.Broadcast.CreationInsideWorld", true)) {
+      return;
+    }
+
+    try {
+      String message = String.format(LangUtils.get("InfoMessages.AuctionCreated"),
+          owner.getName(),
+          auctionNumber,
+          auction.getAmount(),
+          ItemStackUtils.getItemStackDisplayName(item),
+          format(auction.getTotalPrice())
+      );
+
+      final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
+      WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(owner));
+    } catch (MissingFormatArgumentException e) {
+      LoggerUtils.warn("Missing or malformed language variable 'InfoMessages.AuctionCreated'. Please add it in language file.");
+    }
   }
 }
