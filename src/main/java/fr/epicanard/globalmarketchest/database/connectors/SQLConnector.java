@@ -49,6 +49,8 @@ public abstract class SQLConnector extends DatabaseConnector {
     this.properties.put("autoReconnect", "true");
     this.properties.put("user", this.user);
     this.properties.put("password", this.password);
+    this.properties.put("useUnicode", "true");
+    this.properties.put("characterEncoding", "UTF-8");
   }
 
 
