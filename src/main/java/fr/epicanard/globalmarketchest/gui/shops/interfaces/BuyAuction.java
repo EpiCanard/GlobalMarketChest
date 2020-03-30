@@ -133,11 +133,11 @@ public class BuyAuction extends UndoAuction {
     final Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
 
     final String message = formatMessage(false, auction, buyer, item);
-    if (message != null && ConfigUtils.getBoolean("Options.BroadcastInsideWorld", true)) {
+    if (message != null && ConfigUtils.getBoolean("Options.Broadcast.BuyInsideWorld", true)) {
       WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(starter));
     }
 
-    if (starter != null && ConfigUtils.getBoolean("Options.NotifyPlayer", true)) {
+    if (starter != null && ConfigUtils.getBoolean("Options.Broadcast.NotifyPlayer", true)) {
       final String messageOwner = formatMessage(true, auction, buyer, item);
       if (messageOwner != null)
         PlayerUtils.sendMessage(starter, messageOwner);

@@ -14,7 +14,7 @@ public class PlayerListener implements Listener {
 
   @EventHandler
   public void onPlayerConnect(final PlayerJoinEvent event) {
-    if (ConfigUtils.getBoolean("Options.MessageLoginSoldAuctions", true)) {
+    if (ConfigUtils.getBoolean("Options.Broadcast.MessageLoginSoldAuctions", true)) {
       Bukkit.getScheduler().scheduleSyncDelayedTask(GlobalMarketChest.plugin, () -> countSoldAuctions(event.getPlayer()), 20L);
     }
   }

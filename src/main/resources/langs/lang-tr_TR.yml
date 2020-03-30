@@ -211,6 +211,7 @@ InfoMessages:
   # If you don't have them a message will pop in console and no message will broadcast
   AcquireAuction: "&3%s &6bought &2%d %s &6for &2%s&6 to &3%s&6."
   AcquireAuctionOwner: "&3%s &6bought your auction &2%d %s &6for &2%s&6."
+  AuctionCreated: "&3%s &6created &3%d&6 auctions of &2%d %s &6for &2%s&6."
   AuctionsSoldLastLogin: "&6You sold &3%d&6 auctions since your last connection"
   PluginReloading: "Plugin is reloading..."
   PluginReloaded: "Plugin is reloaded."
