@@ -10,6 +10,7 @@ InterfacesTitle:
   SearchView: "&2Szukaj aukcji"
   ConfirmView: "&2Potwierdzenie"
   LastAuctionViewList: "&2Ostatnie aukcje"
+  ShulkerBoxContent: "&2Shulker box content"
   # Auction Creation
   CreateAuctionItem: "&2Wybierz item do aukcji"
   CreateAuctionPrice: "&2Wybierz cenę aukcji"
@@ -174,6 +175,8 @@ Buttons:
   AdvicePriceInfo:
     Name: "Cena polecana"
     Description: "&3%s;&7Kliknij, aby użyć polecanej ceny"
+  SeeShulkerBoxContent:
+    Name: "See content of this shulker box"
 ErrorMessages:
   UnknownWorld: "Nieodpowiedni świat"
   ShopTypeNotSet: "Typ sklepu nie jest ustawiony;&2Wybierz przynajmniej jeden typ"

@@ -10,6 +10,7 @@ InterfacesTitle:
   SearchView: "&2Recherche d'enchères"
   ConfirmView: "&2Confirmation"
   LastAuctionViewList: "&2Dernières enchères"
+  ShulkerBoxContent: "&2Contenu de la boîte de shulker"
   # Auction Creation
   CreateAuctionItem: "&2Sélection de l'item pour l'enchère"
   CreateAuctionPrice: "&2Sélection du prix de l'enchère"
@@ -175,6 +176,8 @@ Buttons:
   AdvicePriceInfo:
     Name: "Prix conseillé"
     Description: "&3%s;&7Cliques pour utiliser ce prix"
+  SeeShulkerBoxContent:
+    Name: "Voir le contenu de cette boîte de shulker"
 ErrorMessages:
   UnknownWorld: "Monde inconnu pour la boutique"
   ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"

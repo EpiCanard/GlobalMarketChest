@@ -70,6 +70,8 @@ Options:
   LastAuctionsHours: 24
   # Define the number of days to analyze for average of advice price on choice price view
   AdvicePriceDays: 30
+  # Allow to see content of shulker when a player want to buy it
+  SeeShulkerBoxContent: true
   # Contains configs about broadcasted message when player create or buy an auction
   Broadcast:
     # Broadcast a message inside the current world when a player create an auction
@@ -195,6 +197,7 @@ Interfaces:
     Question: minecraft:redstone_torch
     LastAuctions: minecraft:clock
     AdvicePriceInfo: minecraft:name_tag
+    SeeShulkerBoxContent: minecraft:shulker_shell
 Sign:
   Appearance:
     # Config for GobalShop creation
