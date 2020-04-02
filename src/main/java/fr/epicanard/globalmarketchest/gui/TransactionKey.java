@@ -14,6 +14,7 @@ public enum TransactionKey {
   QUESTION,
   PLAYER,
   ITEM_SEARCH,
-  HAS_RETURN
+  HAS_RETURN,
+  AUCTION_LORE_CONFIG
   ;
 }

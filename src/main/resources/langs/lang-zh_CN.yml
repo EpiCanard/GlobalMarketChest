@@ -10,6 +10,7 @@ InterfacesTitle:
   SearchView: "&2搜索拍卖"
   ConfirmView: "&2确认"
   LastAuctionViewList: "&2上次拍卖"
+  ShulkerBoxContent: "&2Shulker box content"
   # Auction Creation
   CreateAuctionItem: "&2选择拍卖物品 "
   CreateAuctionPrice: "&2设定拍卖价格"
@@ -174,6 +175,8 @@ Buttons:
   AdvicePriceInfo:
     Name: "建议价格"
     Description: "&3%s;&7点击使用建议价格"
+  SeeShulkerBoxContent:
+    Name: "See content of this shulker box"
 ErrorMessages:
   UnknownWorld: "未知商店"
   ShopTypeNotSet: "未设置商店类型；&2请至少选择一种类型"

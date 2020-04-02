@@ -10,6 +10,7 @@ InterfacesTitle:
   SearchView: "&2Müzayede arama"
   ConfirmView: "&2Onay"
   LastAuctionViewList: "&2Last auctions"
+  ShulkerBoxContent: "&2Shulker box content"
   # Auction Creation
   CreateAuctionItem: "&2Açık artırma öğesini seçin"
   CreateAuctionPrice: "&2Açık artırma fiyatını Seç"
@@ -174,6 +175,8 @@ Buttons:
   AdvicePriceInfo:
     Name: "Advice price"
     Description: "&3%s;&7Click to use advice price"
+  SeeShulkerBoxContent:
+    Name: "See content of this shulker box"
 ErrorMessages:
   UnknownWorld: "Dükkan için bilinmeyen dünya"
   ShopTypeNotSet: "Mağaza türü ayarlanmadı;&2 Lütfen en az bir tür seçin"

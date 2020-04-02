@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import fr.epicanard.globalmarketchest.exceptions.InterfaceLoadException;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.entity.Player;
@@ -150,16 +152,21 @@ public class InventoryGUI {
    * @param name Interface name
    */
   public void loadInterface(String name) {
+    Optional<ShopInterface> lastInterface = Optional.empty();
     try {
       ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops.interfaces." + name)
           .getDeclaredConstructor(InventoryGUI.class).newInstance(this);
-      Optional.ofNullable(this.shopStack.peek()).ifPresent(ShopInterface::unload);
+      lastInterface = Optional.ofNullable(this.shopStack.peek());
+      lastInterface.ifPresent(ShopInterface::unload);
 
       shop.load();
       this.shopStack.push(shop);
     } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
         | InvocationTargetException e) {
       e.printStackTrace();
+    } catch (InterfaceLoadException e) {
+      LoggerUtils.warn(e.getMessage());
+      lastInterface.ifPresent(ShopInterface::load);
     }
   }
 

@@ -6,6 +6,7 @@ import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.UndoAuction;
@@ -30,6 +31,7 @@ public class BuyAuction extends UndoAuction {
   public BuyAuction(InventoryGUI inv) {
     super(inv);
 
+    this.inv.getTransaction().put(TransactionKey.AUCTION_LORE_CONFIG, AuctionLoreConfig.TOSELL);
     this.isTemp = true;
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
@@ -40,6 +42,10 @@ public class BuyAuction extends UndoAuction {
     if (Permissions.ADMIN_REMOVEAUCTION.isSetOn(inv.getPlayer())) {
       this.togglers.get(28).set();
       this.actions.put(28, this::adminRemoveAuction);
+    }
+    if (ConfigUtils.getBoolean("Options.SeeShulkerBoxContent", true) && ShulkerBoxContent.isShulker(item)) {
+      this.togglers.get(34).set();
+      this.actions.put(34, new NextInterface("ShulkerBoxContent"));
     }
   }
 
@@ -172,5 +178,6 @@ public class BuyAuction extends UndoAuction {
   public void destroy() {
     super.destroy();
     this.inv.getTransaction().remove(TransactionKey.AUCTION_INFO);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_LORE_CONFIG);
   }
 }
