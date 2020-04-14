@@ -1,3 +1,19 @@
+# ========================= File lang-fr_FR.yml =============================================
+#
+# Language :        French
+# Translation by :  EpiCanard
+#
+# Ce fichier contient tous les textes affichés par le plugin GlobalMarketChest
+#
+# Informations:
+#   Dans certains textes, il y a des variables comme celle-ci: {shopName}.
+#   NE LES TRADUISEZ PAS !
+#   Ces variables sont remplacées à l'intérieur du plugin pour afficher du texte dynamique
+#   L'ordre des variables peut être modifié.
+#   Si vous supprimez une variable, cela ne créera pas d'erreur.
+#
+# ===========================================================================================
+
 InterfacesTitle:
   EditAuction: "&2Modification de l'enchère"
   BuyAuction: "&2Achat de l'enchère"
@@ -37,15 +53,15 @@ Divers:
   Ended: "Terminé"
   CanceledBy: "Annulé par"
   Free: "Gratuit"
-  WithStatus: "&fAvec le statut : &2%s"
+  WithStatus: "&fAvec le statut : &2{status}"
   Days: "jours"
   Hours: "heures"
   Minutes: "minutes"
   Seconds: "secondes"
-  PastDate: "il y a %s"
+  PastDate: "il y a {date}"
   UnknownPlayer: "Inconnu au bataillon"
-  SearchItemTextIcon: "&7Recherche: &3%s"
-  ExitChatMode: "&7 - (Ecris &9%s&7 pour quitter le mode tchat)"
+  SearchItemTextIcon: "&7Recherche: &3{search}"
+  ExitChatMode: "&7 - (Ecris &9{exit}&7 pour quitter le mode tchat)"
 States:
   InProgress: "En Cours"
   Expired: "Expiré"
@@ -75,7 +91,7 @@ Buttons:
     Name: "&2Créer le Shop"
   NewAuction:
     Name: "&2Créer une nouvelle enchère"
-    Description: "&7Nombre d'enchères (%d/%d);&7Cliquer ici pour vendre vos objets"
+    Description: "&7Nombre d'enchères ({auctionNumber}/{maxAuctionNumber});&7Cliquer ici pour vendre vos objets"
   CreateAuction:
     Name: "&2Créer l'enchère"
   BuyAuction:
@@ -166,16 +182,16 @@ Buttons:
     Name: " "
   SearchItemDrop:
     Name: "&fRechercher des items similaires"
-    Description: "&7Cliques avec l'item;&7Ou utilises SHIFT+Click"
+    Description: "&7Clique avec l'item;&7Ou utilises SHIFT+Click"
   SearchItemText:
     Name: "&fRechercher un item avec son nom"
   SearchByPlayer:
     Name: "&fRechercher les enchères d'un joueur"
   LastAuctions:
-    Name: "&3Enchères des %d dernières heures"
+    Name: "&3Enchères des {hours} dernières heures"
   AdvicePriceInfo:
     Name: "Prix conseillé"
-    Description: "&3%s;&7Cliques pour utiliser ce prix"
+    Description: "&3{advicePrice};&7Clique pour utiliser ce prix"
   SeeShulkerBoxContent:
     Name: "Voir le contenu de cette boîte de shulker"
 ErrorMessages:
@@ -201,7 +217,7 @@ ErrorMessages:
   DamagedItem: "Vous ne pouvez pas vendre un item endommagé"
   BlacklistedItem: "Vous ne pouvez pas vendre un item blacklisté"
   CommandInChat: "&cVous n'êtes pas autorisé à exécuter des commandes dans le mode tchat"
-  MaxGlobalShop: "&cVous avez atteint le nombre maximum de GlobalShop que vous pouvez créer (%d GlobalShop)"
+  MaxGlobalShop: "&cVous avez atteint le nombre maximum de GlobalShop que vous pouvez créer ({maxGlobalShop} GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Enchère supprimée avec succès"
   RemoveAuction: "&2Enchère supprimée avec succès"
@@ -210,23 +226,20 @@ InfoMessages:
   RenewEveryAuction: "&2Toutes les enchères ont été renouvelées avec succès"
   UndoEveryAuction: "&2Toutes les enchères ont été supprimées avec succès"
   ShopDeleted: "Shop supprimé avec succès"
-  # Warning : don't change % and the letter(s) that follow (ex here : %d and %s)
-  # First %s is for buyer, First %d is for quantity, second %s for item name, third %s for price and last %s for buyer
-  # If you don't have them a message will pop in console and no message will broadcast
-  AcquireAuction: "&3%s &6a acheté &2%d %s &6pour &2%s&6 à &3%s&6."
-  AcquireAuctionOwner: "&3%s &6a acheté votre enchère &2%d %s &6pour &2%s&6."
-  AuctionCreated: "&3%s &6a créé &3%d&6 enchères de &2%d %s &6pour &2%s&6."
-  AuctionsSoldLastLogin: "&6Vous avez vendu &3%d&6 enchères depuis votre dernière connexion"
+  AcquireAuction: "&3{buyer} &6a acheté &2{quantity} {itemName} &6pour &2{price}&6 à &3{seller}&6."
+  AcquireAuctionOwner: "&3{buyer} &6a acheté votre enchère &2{quantity} {itemName} &6pour &2{price}&6."
+  AuctionCreated: "&3{seller} &6a créé &3{auctionNumber}&6 enchères de &2{quantity} {itemName} &6pour &2{price}&6."
+  AuctionsSoldLastLogin: "&6Vous avez vendu &3{auctionNumber}&6 enchères depuis votre dernière connexion"
   PluginReloading: "Le plugin est en train de recharger..."
   PluginReloaded: "Le plugin a fini de recharger."
   WriteGroupName: "Tapez le nom du groupe que vous voulez saisir"
   WriteItemName: "Tapez le nom de l'item que vous recherchez"
   WritePlayerName: "Tapez le nom du joueur que vous cherchez"
   DeleteShopQuestion: "Êtes-vous sûr de vouloir supprimer ce shop ?"
-  ConvertingShopAuctions: "Conversion des enchères du shop : &6%s&7"
-  ShopAuctionsConverted: "Shop &6%s&7 : &3%d&9/%d&7 enchères converties"
+  ConvertingShopAuctions: "Conversion des enchères du shop : &6{shopName}&7"
+  ShopAuctionsConverted: "Shop &6{shopName}&7 : &3{updated}&9/{total}&7 enchères converties"
   ShopTemporarilyLocked: "Ce shop est temporairement verouillé"
-  ConversionMode: "Mode de conversion : &6%s&7"
+  ConversionMode: "Mode de conversion : &6{mode}&7"
 Commands:
   Buttons:
     OpenText: "Ouvrir"

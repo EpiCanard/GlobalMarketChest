@@ -1,15 +1,17 @@
 package fr.epicanard.globalmarketchest.utils.chat;
 
-import fr.epicanard.globalmarketchest.utils.ConfigUtils;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.Prompt;
 import org.bukkit.conversations.StringPrompt;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+
+import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
+
 
 class ChatPrompt extends StringPrompt {
   private final String prompt;
@@ -40,10 +42,10 @@ class ChatPrompt extends StringPrompt {
    */
   @Override
   public String getPromptText(ConversationContext context) {
-    final YamlConfiguration config = ConfigUtils.get();
+    final ConfigurationSection config = ConfigUtils.get().getConfigurationSection("Chat");
     String extra = "";
-    if (config.getBoolean("Chat.UseExitSequence", false) && config.getBoolean("Chat.DisplayHelpExit", false)) {
-      extra = String.format(LangUtils.get("Divers.ExitChatMode"), config.getString("Chat.ExitSequence", "exit"));
+    if (config.getBoolean("UseExitSequence", false) && config.getBoolean("DisplayHelpExit", false)) {
+      extra = format("Divers.ExitChatMode", "exit", config.getString("ExitSequence", "exit"));
     }
     
     return PlayerUtils.getPrefix() + Utils.toColor(this.prompt) + extra;

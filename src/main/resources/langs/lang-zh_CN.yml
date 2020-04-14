@@ -1,3 +1,19 @@
+# ========================= File lang-zh_CN.yml =============================
+#
+# Language :        Chinese
+# Translation by :  Coby_Cola
+#
+# This file contains all text displayed by the plugin GlobalMarketChest
+#
+# Information:
+#   In some texts, there are variables like this: {shopName}.
+#   DO NOT TRANSLATE THEM !
+#   These variables are replaced inside the plugin to display dynamic text.
+#   The order of the variables can be changed.
+#   If you remove a variable, this will not create an error.
+#
+# ===========================================================================
+
 InterfacesTitle:
   EditAuction: "&2编辑拍卖"
   BuyAuction: "&2购买拍卖"
@@ -37,15 +53,15 @@ Divers:
   Ended: "已经结束"
   CanceledBy: "取消"
   Free: "免费"
-  WithStatus: "&f当前状态 : &2%s"
+  WithStatus: "&f当前状态 : &2{status}"
   Days: "天"
   Hours: "时"
   Minutes: "分"
   Seconds: "秒"
-  PastDate: "%s"
+  PastDate: "{date}"
   UnknownPlayer: "未知"
-  SearchItemTextIcon: "&7搜索: &3%s"
-  ExitChatMode: "&7 - (输入 &9%s&7 离开此模式)"
+  SearchItemTextIcon: "&7搜索: &3{search}"
+  ExitChatMode: "&7 - (输入 &9{exit}&7 离开此模式)"
 States:
   InProgress: "进行中"
   Expired: "已过期 "
@@ -75,7 +91,7 @@ Buttons:
     Name: "&2创建商店"
   NewAuction:
     Name: "&2创建新的拍卖"
-    Description: "&7拍卖编号 (%d/%d);&7点击以出售你的商品"
+    Description: "&7拍卖编号 ({auctionNumber}/{maxAuctionNumber});&7点击以出售你的商品"
   CreateAuction:
     Name: "&2创建拍卖"
   BuyAuction:
@@ -171,10 +187,10 @@ Buttons:
   SearchByPlayer:
     Name: "&f根据玩家名字查找"
   LastAuctions:
-    Name: "&3最近 %d 小时的拍卖"
+    Name: "&3最近 {hours} 小时的拍卖"
   AdvicePriceInfo:
     Name: "建议价格"
-    Description: "&3%s;&7点击使用建议价格"
+    Description: "&3{advicePrice};&7点击使用建议价格"
   SeeShulkerBoxContent:
     Name: "See content of this shulker box"
 ErrorMessages:
@@ -200,7 +216,7 @@ ErrorMessages:
   DamagedItem: "你不能卖损坏的东西"
   BlacklistedItem: "你不能卖黑名单的商品"
   CommandInChat: "&c不允许在此模式下执行命令"
-  MaxGlobalShop: "&c你已经达到创建商店的最大值了 (%d GlobalShop)"
+  MaxGlobalShop: "&c你已经达到创建商店的最大值了 ({maxGlobalShop} GlobalShop)"
 InfoMessages:
   UndoAuction: "&2删除成功"
   RemoveAuction: "&2成功删除该拍卖"
@@ -209,23 +225,20 @@ InfoMessages:
   RenewEveryAuction: "&2所有物品已经成功续期"
   UndoEveryAuction: "&2所有物品已经成功删除"
   ShopDeleted: "商店已经移除..."
-  # Warning : don't change % and the letter(s) that follow (ex here : %d and %s)
-  # First %s is for buyer, First %d is for quantity, second %s for item name, third %s for price and last %s for buyer
-  # If you don't have them a message will pop in console and no message will broadcast
-  AcquireAuction: "&c[&e&l养老商城&c]&3%s &6购买了 &2%d个 %s &6价格: &2%s&6 卖家: &3%s&6."
-  AcquireAuctionOwner: "&c[&e&l养老商城&c]&3%s &6成功购买你的物品 &2%d个 %s &6价格: &2%s&6."
-  AuctionCreated: "&3%s &6created &3%d&6 auctions of &2%d %s &6for &2%s&6."
-  AuctionsSoldLastLogin: "&6在你下线的时候，共卖出了 &3%d&6 件商品"
+  AcquireAuction: "&c[&e&l养老商城&c]&3{buyer} &6购买了 &2{quantity}个 {itemName} &6价格: &2{price}&6 卖家: &3{seller}&6."
+  AcquireAuctionOwner: "&c[&e&l养老商城&c]&3{buyer} &6成功购买你的物品 &2{quantity}个 {itemName} &6价格: &2{price}&6."
+  AuctionCreated: "&3{seller} &6created &3{auctionNumber}&6 auctions of &2{quantity} {itemName} &6for &2{price}&6."
+  AuctionsSoldLastLogin: "&6在你下线的时候，共卖出了 &3{auctionNumber}&6 件商品"
   PluginReloading: "插件重载中...."
   PluginReloaded: "插件重载成功"
   WriteGroupName: "写下你想要的组名"
   WriteItemName: "输入你要找的物品的名称"
   WritePlayerName: "输入你要找的玩家名称"
   DeleteShopQuestion: "确定删除此商店?"
-  ConvertingShopAuctions: "转换店铺拍卖 : &6%s&7"
-  ShopAuctionsConverted: "Shop &6%s&7 : &3%d&9/%d&7 auctions converted"
+  ConvertingShopAuctions: "转换店铺拍卖 : &6{shopName}&7"
+  ShopAuctionsConverted: "Shop &6{shopName}&7 : &3{updated}&9/{total}&7 auctions converted"
   ShopTemporarilyLocked: "这个商店暂时上锁了"
-  ConversionMode: "转换模式 : &6%s&7"
+  ConversionMode: "转换模式 : &6{mode}&7"
 Commands:
   Buttons:
     OpenText: "打开"

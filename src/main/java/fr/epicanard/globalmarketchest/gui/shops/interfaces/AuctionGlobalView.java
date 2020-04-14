@@ -1,9 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.StatusAuction;
@@ -14,8 +10,17 @@ import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.BaseAuctionGlobalView;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.*;
+import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import org.bukkit.OfflinePlayer;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
 
 public class AuctionGlobalView extends BaseAuctionGlobalView {
   public AuctionGlobalView(InventoryGUI inv) {
@@ -46,7 +51,7 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
       this.togglers.forEach((key, toggler) -> {
         if (key != 10 && key != 11)
           return;
-        final String lore = String.format(LangUtils.get("Divers.WithStatus"), this.current.state.getLang());
+        final String lore = format("Divers.WithStatus", "status", this.current.state.getLang());
         ItemStackUtils.setItemStackLore(toggler.getSetItem(), Utils.toList(lore));
         toggler.set();
       });
@@ -86,8 +91,8 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
       auctions = new ArrayList<>(auctions.subList(0, Utils.getIndex(maxAuctionNumber - playerAuctions, auctions.size(), true)));
 
     final Integer expirationDays = i.getPlayerRankProperties().getNumberDaysExpiration();
-    if (auctions.size() > 0 &&
-      GlobalMarketChest.plugin.auctionManager.renewGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), this.current.state, auctions, expirationDays))
+    if (auctions.size() > 0 && GlobalMarketChest.plugin.auctionManager
+        .renewGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), this.current.state, auctions, expirationDays))
       PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.RenewEveryAuction");
     else
       i.getWarn().warn("CantRenewEveryAuction", 4);

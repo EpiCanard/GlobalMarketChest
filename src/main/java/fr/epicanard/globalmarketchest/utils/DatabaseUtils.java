@@ -1,5 +1,11 @@
 package fr.epicanard.globalmarketchest.utils;
 
+import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
+import fr.epicanard.globalmarketchest.database.ThrowableFunction;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -8,20 +14,18 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
-
-import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
-import fr.epicanard.globalmarketchest.database.ThrowableFunction;
-import lombok.experimental.UtilityClass;
+import static fr.epicanard.globalmarketchest.utils.LangUtils.formatString;
+import static fr.epicanard.globalmarketchest.utils.LangUtils.getOrElse;
+import static java.util.Collections.singletonMap;
 
 /**
  * Utiity Class for database actions
  */
 public class DatabaseUtils {
 
-  private DatabaseUtils() {}
+  private DatabaseUtils() {
+  }
+
   /**
    * Get current timestamp
    *
@@ -34,8 +38,8 @@ public class DatabaseUtils {
   /**
    * Add days to a specific timestamp
    *
-   * @param ts    Timestamp used
-   * @param days  Nummber of days to add
+   * @param ts   Timestamp used
+   * @param days Nummber of days to add
    * @return Return the new timestamp
    */
   public static Timestamp addDays(Timestamp ts, int days) {
@@ -48,8 +52,8 @@ public class DatabaseUtils {
   /**
    * Remove days to a specific timestamp
    *
-   * @param ts    Timestamp used
-   * @param days  Nummber of days to remove
+   * @param ts   Timestamp used
+   * @param days Nummber of days to remove
    * @return Return the new timestamp
    */
   public static Timestamp minusDays(Timestamp ts, int days) {
@@ -62,8 +66,8 @@ public class DatabaseUtils {
   /**
    * Minus hours to a specific timestamp
    *
-   * @param ts     Timestamp used
-   * @param hours  Nummber of hours to remove
+   * @param ts    Timestamp used
+   * @param hours Nummber of hours to remove
    * @return Return the new timestamp
    */
   public static Timestamp minusHours(Timestamp ts, int hours) {
@@ -77,20 +81,21 @@ public class DatabaseUtils {
    * Get language from config and format it with value
    * Ex : 2 days
    *
-   * @param value The long value
+   * @param value    The long value
    * @param timeLang The language vairable name
    * @return The string formatted
    */
   private static String getLanguageTime(long value, String timeLang) {
     return String.format("%d %s ", value, LangUtils.get("Divers." + timeLang));
   }
+
   /**
    * Compare two timestamp and get the diff inside string
    * Format A : 0 days 0 hours 0 minutes (ago)
    * Format B : 0 days 0 hours (ago) |or| 0 hours 0 minutes (ago)
    *
-   * @param tsA First Timestamp
-   * @param tsB Second Timestamp
+   * @param tsA  First Timestamp
+   * @param tsB  Second Timestamp
    * @param full Define which format use. True => Format A | False => Format B
    * @return The time string formatted
    */
@@ -117,7 +122,7 @@ public class DatabaseUtils {
     if (days == 0 && hours == 0 && (seconds > 0 || minutes == 0))
       sb.append(DatabaseUtils.getLanguageTime(seconds, "Seconds"));
     if (ago)
-      return String.format(LangUtils.getOrElse("Divers.PastDate", "%s"), sb.toString());
+      return formatString(getOrElse("Divers.PastDate", "{date}"), singletonMap("date", sb.toString()));
     return sb.toString();
   }
 
@@ -132,15 +137,17 @@ public class DatabaseUtils {
     try {
       res.next();
       id = res.getInt(1);
-    } catch(SQLException e) { e.printStackTrace(); }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
     return id;
   }
 
   /**
    * Repeat a string a certain amount of time with a separator
    *
-   * @param str String to repeat
-   * @param sep Separator
+   * @param str    String to repeat
+   * @param sep    Separator
    * @param repeat Repeat number
    * @return Final composed string
    */
@@ -158,7 +165,7 @@ public class DatabaseUtils {
    * Convert a list of auction into a list of itemstacks
    *
    * @param auctions
-   * @param adding Biconsumer to apply modifications to the itemstack
+   * @param adding   Biconsumer to apply modifications to the itemstack
    * @return A list of itemstack
    */
   public static List<ItemStack> toItemStacks(List<AuctionInfo> auctions, BiConsumer<ItemStack, AuctionInfo> adding) {
@@ -205,9 +212,9 @@ public class DatabaseUtils {
 
   /**
    * Get a field inside a ResultSet or return null if not exist
-   * 
-   * @param <T> Return type of callback
-   * @param field Field name to get
+   *
+   * @param <T>      Return type of callback
+   * @param field    Field name to get
    * @param callback Callback that get the field
    * @return
    */

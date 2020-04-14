@@ -1,23 +1,24 @@
 package fr.epicanard.globalmarketchest.commands.consumers;
 
+import com.google.common.collect.ImmutableMap;
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
+import fr.epicanard.globalmarketchest.commands.CommandConsumer;
+import fr.epicanard.globalmarketchest.commands.CommandNode;
+import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.inventory.ItemStack;
-
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
-import fr.epicanard.globalmarketchest.commands.CommandConsumer;
-import fr.epicanard.globalmarketchest.commands.CommandNode;
-import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
 
 /**
  * Command that convert old minecraft itemMeta to new minecraft version
@@ -32,18 +33,18 @@ public class FixAuctionsConsumer implements CommandConsumer {
 
   public static List<String> getFixAuctionsType() {
     return Arrays.asList(
-      FIX_ACTIVE,
-      FIX_ALL
+        FIX_ACTIVE,
+        FIX_ALL
     );
   }
 
   /**
    * Method called when consumer is executed
    *
-   * @param node Command node
+   * @param node    Command node
    * @param command Command executed
-   * @param sender Command's executor (player or console)
-   * @param args Arguments of command
+   * @param sender  Command's executor (player or console)
+   * @param args    Arguments of command
    */
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
     final String fixType = (args.length == 0) ? FIX_ACTIVE : args[0];
@@ -66,11 +67,11 @@ public class FixAuctionsConsumer implements CommandConsumer {
    * Update all auctions to convert from old auctions to new
    * It run execution asynchronously
    *
-   * @param all Define if it convert alsol history
+   * @param all    Define if it convert alsol history
    * @param sender Command Sender that executed the command
    */
   private void updateAuctions(Boolean all, CommandSender sender) {
-    PlayerUtils.sendMessageAndConsole(sender, String.format(LangUtils.get("InfoMessages.ConversionMode"), (all) ? FIX_ALL : FIX_ACTIVE));
+    PlayerUtils.sendMessageAndConsole(sender, format("InfoMessages.ConversionMode", "mode", (all) ? FIX_ALL : FIX_ACTIVE));
 
     Bukkit.getScheduler().runTaskAsynchronously(GlobalMarketChest.plugin, () -> {
       GlobalMarketChest.plugin.auctionManager.getAllAuctions(all, (auctions) -> {
@@ -84,12 +85,12 @@ public class FixAuctionsConsumer implements CommandConsumer {
   /**
    * Convert auctions of one shop kind
    *
-   * @param group Shop group name
+   * @param group    Shop group name
    * @param auctions List of auction of current shop group
-   * @param sender Command Sender that executed the command
+   * @param sender   Command Sender that executed the command
    */
   private void convertShopAuctions(String group, List<AuctionInfo> auctions, CommandSender sender) {
-    PlayerUtils.sendMessageAndConsole(sender, String.format(LangUtils.get("InfoMessages.ConvertingShopAuctions"), group));
+    PlayerUtils.sendMessageAndConsole(sender, format("InfoMessages.ConvertingShopAuctions", "shopName", group));
     ShopUtils.lockShop(group);
 
     final List<AuctionInfo> toUpdate = auctions.stream().map(auction -> {
@@ -109,6 +110,10 @@ public class FixAuctionsConsumer implements CommandConsumer {
 
     ShopUtils.unlockShop(group);
 
-    PlayerUtils.sendMessageAndConsole(sender, String.format(LangUtils.get("InfoMessages.ShopAuctionsConverted"), group, toUpdate.size(), auctions.size()));
+    PlayerUtils.sendMessageAndConsole(sender, format("InfoMessages.ShopAuctionsConverted", ImmutableMap.of(
+        "shopName", group,
+        "updated", toUpdate.size(),
+        "total", auctions.size()
+    )));
   }
 }

@@ -1,3 +1,19 @@
+# ========================= File lang-de_DE.yml =============================
+#
+# Language :        German
+# Translation by :  Drynael
+#
+# This file contains all text displayed by the plugin GlobalMarketChest
+#
+# Information:
+#   In some texts, there are variables like this: {shopName}.
+#   DO NOT TRANSLATE THEM !
+#   These variables are replaced inside the plugin to display dynamic text.
+#   The order of the variables can be changed.
+#   If you remove a variable, this will not create an error.
+#
+# ===========================================================================
+
 InterfacesTitle:
   EditAuction: "&2Auktion Bearbeiten"
   BuyAuction: "&2Kaufen"
@@ -37,15 +53,15 @@ Divers:
   Ended: "Beendet"
   CanceledBy: "Abgebrochen von"
   Free: "Gratis"
-  WithStatus: "&fMit Status: &2%s"
+  WithStatus: "&fMit Status: &2{status}"
   Days: "Tage"
   Hours: "Stunden"
   Minutes: "Minuten"
   Seconds: "Sekunden"
-  PastDate: "%szuvor"
+  PastDate: "{date}zuvor"
   UnknownPlayer: "Unbekanner Spieler"
-  SearchItemTextIcon: "&7Suche: &3%s"
-  ExitChatMode: "&7 - (Schreibe &9%s&7 um den Chatmodus zu verlassen.)"
+  SearchItemTextIcon: "&7Suche: &3{search}"
+  ExitChatMode: "&7 - (Schreibe &9{exit}&7 um den Chatmodus zu verlassen.)"
 States:
   InProgress: "In Bearbeitung"
   Expired: "Abgelaufen"
@@ -75,7 +91,7 @@ Buttons:
     Name: "&2Erstelle Shop"
   NewAuction:
     Name: "&2Erstelle neue Auktion"
-    Description: "&7Auktion Nummer (%d/%d);&7Klick hier um deine Items zu verkaufen"
+    Description: "&7Auktion Nummer ({auctionNumber}/{maxAuctionNumber});&7Klick hier um deine Items zu verkaufen"
   CreateAuction:
     Name: "&2Erstelle Auktion"
   BuyAuction:
@@ -171,10 +187,10 @@ Buttons:
   SearchByPlayer:
     Name: "&fFinde Auktionen von Spieler"
   LastAuctions:
-    Name: "&3Auktionen der letzten %d Stunden"
+    Name: "&3Auktionen der letzten {hours} Stunden"
   AdvicePriceInfo:
     Name: "Vorgeschlagener Preis"
-    Description: "&3%s;&7Klicken um den vorgeschlagenen Preis zu benutzen"
+    Description: "&3{advicePrice};&7Klicken um den vorgeschlagenen Preis zu benutzen"
   SeeShulkerBoxContent:
     Name: "See content of this shulker box"
 ErrorMessages:
@@ -200,7 +216,7 @@ ErrorMessages:
   DamagedItem: "Du kannst keine beschädigte Gegenstände verkaufen!"
   BlacklistedItem: "Du kannst keine verbotenen Gegenstände verkaufen!"
   CommandInChat: "&cDu bist nicht berechtigt diesen Befehl im chat auszuführen."
-  MaxGlobalShop: "&cDu hast die maximale Anzahl an GlobalShop´s erreicht. Du kannst (%d GlobalShop) erstellen."
+  MaxGlobalShop: "&cDu hast die maximale Anzahl an GlobalShop´s erreicht. Du kannst ({maxGlobalShop} GlobalShop) erstellen."
 InfoMessages:
   UndoAuction: "&2Auktion erfolgreich abgebrochen"
   RemoveAuction: "&2Auktion erfolgreich entfernt"
@@ -209,23 +225,20 @@ InfoMessages:
   RenewEveryAuction: "&2Alle Auktionen erfolgreich erneuert"
   UndoEveryAuction: "&2Alle Auktionen erfolgreich abgebrochen"
   ShopDeleted: "Shop erfolgreich gelöscht"
-  # Warning : don't change % and the letter(s) that follow (ex here : %d and %s)
-  # First %s is for buyer, First %d is for quantity, second %s for item name, third %s for price and last %s for buyer
-  # If you don't have them a message will pop in console and no message will broadcast
-  AcquireAuction: "&3%s &6kaufte &2%d %s &6für &2%s&6 an &3%s&6."
-  AcquireAuctionOwner: "&3%s &6kaufte deine Auktion &2%d %s &6for &2%s&6."
-  AuctionCreated: "&3%s &6created &3%d&6 auctions of &2%d %s &6for &2%s&6."
-  AuctionsSoldLastLogin: "&6Du hast &3%d&6 Auktionen seit deiner letzten Verbindung verkauft."
+  AcquireAuction: "&3{buyer} &6kaufte &2{quantity} {itemName} &6für &2{price}&6 an &3{seller}&6."
+  AcquireAuctionOwner: "&3{buyer} &6kaufte deine Auktion &2{quantity} {itemName} &6for &2{price}&6."
+  AuctionCreated: "&3{seller} &6created &3{auctionNumber}&6 auctions of &2{quantity} {itemName} &6for &2{price}&6."
+  AuctionsSoldLastLogin: "&6Du hast &3{auctionNumber}&6 Auktionen seit deiner letzten Verbindung verkauft."
   PluginReloading: "Plugin lädt neu..."
   PluginReloaded: "Plugin ist neu geladen."
   WriteGroupName: "Schreibe den Gruppennamen den du möchtest"
   WriteItemName: "Schreibe den Namen des gegenstand den du suchst"
   WritePlayerName: "Schreibe den namen des Spieler den du suchst"
   DeleteShopQuestion: "Bist du dir sicher das du diesen Shop löschen willst?"
-  ConvertingShopAuctions: "Auktionen des Shops konvertieren : &6%s&7"
-  ShopAuctionsConverted: "Shop &6%s&7 : &3%d&9/%d&7 Auktionen konvertiert"
+  ConvertingShopAuctions: "Auktionen des Shops konvertieren : &6{shopName}&7"
+  ShopAuctionsConverted: "Shop &6{shopName}&7 : &3{updated}&9/{total}&7 Auktionen konvertiert"
   ShopTemporarilyLocked: "Dieser Shop ist vorübergehend gesperrt"
-  ConversionMode: "Konvertierungs Modus : &6%s&7"
+  ConversionMode: "Konvertierungs Modus : &6{mode}&7"
 Commands:
   Buttons:
     OpenText: "Öffnen"

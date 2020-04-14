@@ -13,6 +13,8 @@ import fr.epicanard.globalmarketchest.utils.Utils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
+
 public class LastAuctionViewList extends AuctionViewBase {
   private Integer lastHours = 24;
 
@@ -23,13 +25,14 @@ public class LastAuctionViewList extends AuctionViewBase {
       final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
       GlobalMarketChest.plugin.auctionManager.getLastAuctions(shop.getGroup(), this.lastHours, this.paginator.getLimit(),
-        auctions -> {
-          if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
-            this.auctions = auctions;
-          pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-            ItemStackUtils.addItemStackLore(itemstack, auction.getLore(AuctionLoreConfig.TOSELL));
-          }));
-        });
+          auctions -> {
+            if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
+              this.auctions = auctions;
+            pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
+              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(AuctionLoreConfig.TOSELL));
+            }));
+          }
+      );
     });
 
     this.paginator.setClickConsumer(this::selectAuction);
@@ -52,7 +55,7 @@ public class LastAuctionViewList extends AuctionViewBase {
     final ItemStack item = Utils.getButton("LastAuctions");
     final ItemMeta meta = item.getItemMeta();
 
-    meta.setDisplayName(String.format(meta.getDisplayName(), hours));
+    meta.setDisplayName(format("Buttons.LastAuctions.Name", "hours", hours));
     item.setItemMeta(meta);
     return item;
   }
