@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
+import com.google.common.collect.ImmutableMap;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
@@ -8,12 +9,12 @@ import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import org.bukkit.inventory.ItemStack;
 
 import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
 import static fr.epicanard.globalmarketchest.utils.EconomyUtils.getMoneyOfPlayer;
+import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
 
 public class DefaultFooter extends ShopInterface {
 
@@ -31,23 +32,24 @@ public class DefaultFooter extends ShopInterface {
     ItemStack item = this.inv.getInv().getItem(45);
 
     ItemStackUtils.setItemStackLore(item,
-      Utils.toList(String.format("&3%s",
-      format(getMoneyOfPlayer(this.inv.getPlayer().getUniqueId()))
-    )));
+        Utils.toList("&3" + format(getMoneyOfPlayer(this.inv.getPlayer().getUniqueId())))
+    );
     this.inv.getInv().setItem(45, item);
   }
 
   protected void updateAuctionNumber() {
     final ItemStack item = this.inv.getInv().getItem(53);
-    final String lore = LangUtils.get("Buttons.NewAuction.Description");
     final Integer maxAuctionNumber = this.inv.getPlayerRankProperties().getMaxAuctionByPlayer();
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
-    GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), this.inv.getPlayer(), auctionNumber ->  {
+    GlobalMarketChest.plugin.auctionManager.getAuctionNumber(shop.getGroup(), this.inv.getPlayer(), auctionNumber -> {
       this.inv.getTransaction().put(TransactionKey.PLAYER_AUCTIONS, auctionNumber);
       ItemStackUtils.setItemStackLore(item,
-        Utils.toList(String.format(lore, auctionNumber, maxAuctionNumber)
-      ));
+          Utils.toList(format("Buttons.NewAuction.Description", ImmutableMap.of(
+              "auctionNumber", auctionNumber,
+              "maxAuctionNumber", maxAuctionNumber
+          )))
+      );
       this.inv.getInv().setItem(53, item);
     });
   }

@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
+import com.google.common.collect.ImmutableMap;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
@@ -19,11 +20,12 @@ import org.bukkit.inventory.PlayerInventory;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.MissingFormatArgumentException;
+import java.util.Map;
 
-import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
-import static fr.epicanard.globalmarketchest.utils.Utils.mapItem;
+import static fr.epicanard.globalmarketchest.utils.LangUtils.formatString;
+import static fr.epicanard.globalmarketchest.utils.LangUtils.getOrElse;
 import static fr.epicanard.globalmarketchest.utils.Utils.toList;
+import static java.util.Collections.singletonMap;
 
 public class CreateAuctionPrice extends ShopInterface {
   private List<Double> prices;
@@ -165,19 +167,19 @@ public class CreateAuctionPrice extends ShopInterface {
    */
   private void setAveragePrice() {
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
-    final Integer days = ConfigUtils.getInt("Options.AdvicePriceInfo", 30);
+    final Integer days = ConfigUtils.getInt("Options.AdvicePriceDays", 30);
     final Double defaultPrice = ConfigUtils.getDouble("Options.DefaultPrice", 0.0);
     this.advicePrice = defaultPrice;
 
     GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auction, days, defaultPrice, price -> {
       this.advicePrice = price;
       final ItemStack item = this.inv.getInv().getItem(49);
-      final List<String> description = toList(LangUtils.getOrElse("Buttons.AdvicePriceInfo.Description", "%s"));
       final String formattedPrice = EconomyUtils.format(price);
-      this.inv.getInv().setItem(
-          49,
-          ItemStackUtils.setItemStackLore(item, mapItem(description, 0, desc -> String.format(desc, formattedPrice)))
+      final String description = formatString(
+          getOrElse("Buttons.AdvicePriceInfo.Description", "{advicePrice}"),
+          singletonMap("advicePrice", formattedPrice)
       );
+      this.inv.getInv().setItem(49, ItemStackUtils.setItemStackLore(item, toList(description)));
     });
   }
 
@@ -196,19 +198,16 @@ public class CreateAuctionPrice extends ShopInterface {
       return;
     }
 
-    try {
-      String message = String.format(LangUtils.get("InfoMessages.AuctionCreated"),
-          owner.getName(),
-          auctionNumber,
-          auction.getAmount(),
-          ItemStackUtils.getItemStackDisplayName(item),
-          format(auction.getTotalPrice())
-      );
+    final Map<String, Object> mapping = ImmutableMap.of(
+        "seller", owner.getName(),
+        "auctionNumber", auctionNumber,
+        "quantity", auction.getAmount(),
+        "itemName", ItemStackUtils.getItemStackDisplayName(item),
+        "price", EconomyUtils.format(auction.getTotalPrice())
+    );
 
-      final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
-      WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(owner));
-    } catch (MissingFormatArgumentException e) {
-      LoggerUtils.warn("Missing or malformed language variable 'InfoMessages.AuctionCreated'. Please add it in language file.");
-    }
+    final String message = LangUtils.format("InfoMessages.AuctionCreated", mapping);
+    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
+    WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(owner));
   }
 }

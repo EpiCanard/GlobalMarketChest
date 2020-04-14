@@ -1,3 +1,19 @@
+# ========================= File lang-pl_PL.yml =============================
+#
+# Language :        Polish
+# Translation by :  Ranqstrail
+#
+# This file contains all text displayed by the plugin GlobalMarketChest
+#
+# Information:
+#   In some texts, there are variables like this: {shopName}.
+#   DO NOT TRANSLATE THEM !
+#   These variables are replaced inside the plugin to display dynamic text.
+#   The order of the variables can be changed.
+#   If you remove a variable, this will not create an error.
+#
+# ===========================================================================
+
 InterfacesTitle:
   EditAuction: "&2Edytuj aukcje"
   BuyAuction: "&2Kup aukcje"
@@ -37,15 +53,15 @@ Divers:
   Ended: "Zakończone"
   CanceledBy: "Wycofane przez"
   Free: "Darmowe"
-  WithStatus: "&fStatus : &2%s"
+  WithStatus: "&fStatus : &2{status}"
   Days: "dni"
   Hours: "godzin"
   Minutes: "minut"
   Seconds: "sekund"
-  PastDate: "%stemu"
+  PastDate: "{date}temu"
   UnknownPlayer: "Nieznany gracz"
-  SearchItemTextIcon: "&7Szukaj: &3%s"
-  ExitChatMode: "&7 - (Wpisz &9%s&7 aby anylować)"
+  SearchItemTextIcon: "&7Szukaj: &3{search}"
+  ExitChatMode: "&7 - (Wpisz &9{exit}&7 aby anylować)"
 States:
   InProgress: "W trakcie realizacji"
   Expired: "Wygasło"
@@ -75,7 +91,7 @@ Buttons:
     Name: "&2Stwórz sklep"
   NewAuction:
     Name: "&2Stwórz nową aukcję"
-    Description: "&7Liczba aukcji (%d/%d);&7Kliknij tutaj aby wystawić aukcję"
+    Description: "&7Liczba aukcji ({auctionNumber}/{maxAuctionNumber});&7Kliknij tutaj aby wystawić aukcję"
   CreateAuction:
     Name: "&2Stwórz aukcję"
   BuyAuction:
@@ -171,10 +187,10 @@ Buttons:
   SearchByPlayer:
     Name: "&fSzukaj aukcji gracza"
   LastAuctions:
-    Name: "&3Aukcje z ostatnich %d godzin"
+    Name: "&3Aukcje z ostatnich {hours} godzin"
   AdvicePriceInfo:
     Name: "Cena polecana"
-    Description: "&3%s;&7Kliknij, aby użyć polecanej ceny"
+    Description: "&3{advicePrice};&7Kliknij, aby użyć polecanej ceny"
   SeeShulkerBoxContent:
     Name: "See content of this shulker box"
 ErrorMessages:
@@ -200,7 +216,7 @@ ErrorMessages:
   DamagedItem: "Nie możesz sprzedać uszkodzonego itemu"
   BlacklistedItem: "Nie możesz sprzedawać itemu z blacklisty"
   CommandInChat: "&cNie możesz wykonywać komend na czacie"
-  MaxGlobalShop: "&cPrzekroczyłeś maksymalną liczbbę GlobalShop'ów (%d GlobalShop)"
+  MaxGlobalShop: "&cPrzekroczyłeś maksymalną liczbbę GlobalShop'ów ({maxGlobalShop} GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Aukcja pomyślnie wycofana"
   RemoveAuction: "&2Aukcja usunięta"
@@ -209,23 +225,20 @@ InfoMessages:
   RenewEveryAuction: "&2Wszystkie aukcje pomyślnie ponowione"
   UndoEveryAuction: "&2Wszystkie aukcje pomyślnie usunięte"
   ShopDeleted: "Sklep pomyslnie usunięty"
-  # Warning : don't change % and the letter(s) that follow (ex here : %d and %s)
-  # First %s is for buyer, First %d is for quantity, second %s for item name, third %s for price and last %s for buyer
-  # If you don't have them a message will pop in console and no message will broadcast
-  AcquireAuction: "&3%s &6kupił &2%d %s &6za &2%s&6 to &3%s&6."
-  AcquireAuctionOwner: "&3%s &6kupił twoją aukcję &2%d %s &6za &2%s&6."
-  AuctionCreated: "&3%s &6created &3%d&6 auctions of &2%d %s &6for &2%s&6."
-  AuctionsSoldLastLogin: "&6Sprzedałeś &3%d&6 aukcji od ostatniego połączenia"
+  AcquireAuction: "&3{buyer} &6kupił &2{quantity} {itemName} &6za &2{price}&6 to &3{seller}&6."
+  AcquireAuctionOwner: "&3{buyer} &6kupił twoją aukcję &2{quantity} {itemName} &6za &2{price}&6."
+  AuctionCreated: "&3{seller} &6created &3{auctionNumber}&6 auctions of &2{quantity} {itemName} &6for &2{price}&6."
+  AuctionsSoldLastLogin: "&6Sprzedałeś &3{auctionNumber}&6 aukcji od ostatniego połączenia"
   PluginReloading: "Odświeżanie pluginu..."
   PluginReloaded: "Plugin odświeżony."
   WriteGroupName: "Wpisz nazwę grupy"
   WriteItemName: "Wpisz nazwę itemu, którego szukasz"
   WritePlayerName: "Wpisz nazwę gracza, którego szukasz"
   DeleteShopQuestion: "Jesteś pewien, że chcesz usunąć ten sklep?"
-  ConvertingShopAuctions: "Przetwarzanie aukcji sklepu : &6%s&7"
-  ShopAuctionsConverted: "Sklep &6%s&7 : &3%d&9/%d&7 aukcje przetworzone"
+  ConvertingShopAuctions: "Przetwarzanie aukcji sklepu : &6{shopName}&7"
+  ShopAuctionsConverted: "Sklep &6{shopName}&7 : &3{updated}&9/{total}&7 aukcje przetworzone"
   ShopTemporarilyLocked: "Ten sklep jest czasowo niedostępny"
-  ConversionMode: "Tryb konwersji : &6%s&7"
+  ConversionMode: "Tryb konwersji : &6{mode}&7"
 Commands:
   Buttons:
     OpenText: "Otwórz"

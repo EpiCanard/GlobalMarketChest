@@ -1,9 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.util.Arrays;
-
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
@@ -12,8 +8,10 @@ import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.AuctionViewBase;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import org.bukkit.inventory.ItemStack;
+
+import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
 
 public class AuctionViewItem extends AuctionViewBase {
   public AuctionViewItem(InventoryGUI inv) {
@@ -39,7 +37,7 @@ public class AuctionViewItem extends AuctionViewBase {
     final String search = this.inv.getTransactionValue(TransactionKey.ITEM_SEARCH);
 
     final ItemStack  icon = Utils.getButton("SearchItemText");
-    ItemStackUtils.addItemStackLore(icon, Arrays.asList(String.format(LangUtils.get("Divers.SearchItemTextIcon"), search)));
+    ItemStackUtils.addItemStackLore(icon, Utils.toList(format("Divers.SearchItemTextIcon", "search", search)));
     this.setIcon(icon);
 
     super.load();

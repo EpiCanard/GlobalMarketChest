@@ -1,10 +1,5 @@
 package fr.epicanard.globalmarketchest.listeners;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.SignChangeEvent;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
@@ -13,11 +8,16 @@ import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.ranks.RankProperties;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
+
+import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
 
 /**
  * Listener for creation process
@@ -42,7 +42,7 @@ public class ShopCreationListener implements Listener {
       if (this.canCreateShop(player, playerRankProperties)) {
         this.openCreationShopInterface(player, event);
       } else {
-        PlayerUtils.sendMessage(player, String.format(LangUtils.get("ErrorMessages.MaxGlobalShop"),  playerRankProperties.getMaxGlobalShopByPlayer()));
+        PlayerUtils.sendMessage(player, format("ErrorMessages.MaxGlobalShop", "maxGlobalShop", playerRankProperties.getMaxGlobalShopByPlayer()));
       }
     }
   }
@@ -51,7 +51,7 @@ public class ShopCreationListener implements Listener {
    * Open shop interface to create it
    *
    * @param player Player that create the shop
-   * @param event Sign event
+   * @param event  Sign event
    */
   private void openCreationShopInterface(Player player, SignChangeEvent event) {
     final ShopInfo shop = new ShopInfo(-1, player.getUniqueId().toString(), ShopType.GLOBALSHOP.setOn(0), event.getBlock().getLocation(), null, ShopUtils.generateName());
@@ -66,7 +66,7 @@ public class ShopCreationListener implements Listener {
 
   /**
    * Define if the player can create GlobalShop
-   * 
+   *
    * @param player Player that try to create a shop
    * @return
    */

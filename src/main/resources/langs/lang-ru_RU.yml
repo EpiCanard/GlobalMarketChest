@@ -1,3 +1,20 @@
+# ========================= File lang-ru_RU.yml =============================
+#
+# Language :        Russian
+# Translation by :  VStitch
+# /!\ Need a maintainer - May contain untranslated sentences
+#
+# This file contains all text displayed by the plugin GlobalMarketChest
+#
+# Information:
+#   In some texts, there are variables like this: {shopName}.
+#   DO NOT TRANSLATE THEM !
+#   These variables are replaced inside the plugin to display dynamic text.
+#   The order of the variables can be changed.
+#   If you remove a variable, this will not create an error.
+#
+# ===========================================================================
+
 InterfacesTitle:
   EditAuction: "&2Редактировать аукцион"
   BuyAuction: "&2Купить с аукциона"
@@ -37,15 +54,15 @@ Divers:
   Ended: "Окончен"
   CanceledBy: "Отменено"
   Free: "Даром"
-  WithStatus: "&fСо статусом : &2%s"
+  WithStatus: "&fСо статусом : &2{status}"
   Days: "дня(ей)"
   Hours: "час(ов)"
   Minutes: "минут(ы)"
   Seconds: "секунд(ы)"
-  PastDate: "%sназад"
+  PastDate: "{date}назад"
   UnknownPlayer: "Неизвестный игрок"
-  SearchItemTextIcon: "&7Поиск: &3%s"
-  ExitChatMode: "&7 - (Напишите &9%s&7 чтобы покинуть режим чата)"
+  SearchItemTextIcon: "&7Поиск: &3{search}"
+  ExitChatMode: "&7 - (Напишите &9{exit}&7 чтобы покинуть режим чата)"
 States:
   InProgress: "В процессе"
   Expired: "Просрочен"
@@ -74,7 +91,7 @@ Buttons:
     Name: "&2Создать магазин"
   NewAuction:
     Name: "&2Создать новый аукцион"
-    Description: "&7Имя аукциона (%d/%d);&7Кликните сюда, чтобы выбрать предмет"
+    Description: "&7Имя аукциона ({auctionNumber}/{maxAuctionNumber});&7Кликните сюда, чтобы выбрать предмет"
   CreateAuction:
     Name: "&2Создать аукцион"
   BuyAuction:
@@ -170,10 +187,10 @@ Buttons:
   SearchByPlayer:
     Name: "&fНайти аукционы игрока"
   LastAuctions:
-    Name: "&3Auctions of the last %d hours"
+    Name: "&3Auctions of the last {hours} hours"
   AdvicePriceInfo:
     Name: "Advice price"
-    Description: "&3%s;&7Click to use advice price"
+    Description: "&3{advicePrice};&7Click to use advice price"
   SeeShulkerBoxContent:
     Name: "See content of this shulker box"
 ErrorMessages:
@@ -199,7 +216,7 @@ ErrorMessages:
   DamagedItem: "Вы не можете продать поврежденный товар"
   BlacklistedItem: "Вы не можете продавать предметы которые находятся в ЧС"
   CommandInChat: "&cВы не можете выполнять команды в &4режиме чата"
-  MaxGlobalShop: "&cВы достигли макс. кол-ва GlobalShop, которое вы могли создать (%d GlobalShop)"
+  MaxGlobalShop: "&cВы достигли макс. кол-ва GlobalShop, которое вы могли создать ({maxGlobalShop} GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Аукцион успешно удален"
   RemoveAuction: "&2Аукцион успешно удален"
@@ -208,22 +225,20 @@ InfoMessages:
   RenewEveryAuction: "&2Каждый аукцион успешно возобновлен"
   UndoEveryAuction: "&2Каждый аукцион успешно удален"
   ShopDeleted: "Магазин успешно удален"
-  # ВНИМАНИЕ : не изменяйте % и буква(ы), которые следуют за текстом ( такие как: %d и %s)
-  # Иначе сообщения будут выведены в игре неккоректно!
-  AcquireAuction: "&3%s &6купил &2%d %s &6за &2%s&6 у &3%s&6."
-  AcquireAuctionOwner: "&3%s &6купил у вас аукцион &2%d %s &6за &2%s&6."
-  AuctionCreated: "&3%s &6created &3%d&6 auctions of &2%d %s &6for &2%s&6."
-  AuctionsSoldLastLogin: "&6You sold &3%d&6 auctions since your last connection"
+  AcquireAuction: "&3{buyer} &6купил &2{quantity} {itemName} &6за &2{price}&6 у &3{seller}&6."
+  AcquireAuctionOwner: "&3{buyer} &6купил у вас аукцион &2{quantity} {itemName} &6за &2{price}&6."
+  AuctionCreated: "&3{seller} &6created &3{auctionNumber}&6 auctions of &2{quantity} {itemName} &6for &2{price}&6."
+  AuctionsSoldLastLogin: "&6You sold &3{auctionNumber}&6 auctions since your last connection"
   PluginReloading: "Плагин перезагружается..."
   PluginReloaded: "Плагин успешно перезагружен."
   WriteGroupName: "Напишите имя группы, которое вы хотите"
   WriteItemName: "Напишите имя предмета, который вы ищете"
   WritePlayerName: "Напишите имя игрока, которого вы ищете"
   DeleteShopQuestion: "Вы уверены, что хотите удалить этот магазин ?"
-  ConvertingShopAuctions: "Конвертация аукционов в магазин : &6%s&7"
-  ShopAuctionsConverted: "Магазин &6%s&7 : &3%d&9/%d&7 аукционов конвертировано"
+  ConvertingShopAuctions: "Конвертация аукционов в магазин : &6{shopName}&7"
+  ShopAuctionsConverted: "Магазин &6{shopName}&7 : &3{updated}&9/{total}&7 аукционов конвертировано"
   ShopTemporarilyLocked: "Этот магазин временно заблокирован"
-  ConversionMode: "Режим конвертирования : &6%s&7"
+  ConversionMode: "Режим конвертирования : &6{mode}&7"
 Commands:
   Buttons:
     OpenText: "Открыть"

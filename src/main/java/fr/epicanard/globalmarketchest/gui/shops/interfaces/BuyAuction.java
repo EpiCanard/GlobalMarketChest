@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
+import com.google.common.collect.ImmutableMap;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
@@ -20,11 +21,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.MissingFormatArgumentException;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
-
-import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
 
 public class BuyAuction extends UndoAuction {
 
@@ -103,27 +102,15 @@ public class BuyAuction extends UndoAuction {
    */
   private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
     final String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
+    final Map<String, Object> mapping = ImmutableMap.of(
+        "buyer", buyer.getName(),
+        "quantity", auction.getAmount(),
+        "itemName", ItemStackUtils.getItemStackDisplayName(item),
+        "price", EconomyUtils.format(auction.getTotalPrice()),
+        "seller", PlayerUtils.getPlayerName(auction.getPlayerStarter())
+    );
 
-    try {
-      if (isOwner) {
-        return String.format(LangUtils.get(langVariable),
-            buyer.getName(),
-            auction.getAmount(),
-            ItemStackUtils.getItemStackDisplayName(item),
-            format(auction.getTotalPrice())
-        );
-      }
-      return String.format(LangUtils.get(langVariable),
-          buyer.getName(),
-          auction.getAmount(),
-          ItemStackUtils.getItemStackDisplayName(item),
-          format(auction.getTotalPrice()),
-          PlayerUtils.getPlayerName(auction.getPlayerStarter())
-      );
-    } catch (MissingFormatArgumentException e) {
-      LoggerUtils.warn(String.format("Missing or malformed language variable '%s'. Please add it in language file.", langVariable));
-    }
-    return null;
+    return LangUtils.format(langVariable, mapping);
   }
 
   /**

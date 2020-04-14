@@ -1,3 +1,19 @@
+# ========================= File lang-en_US.yml =============================
+#
+# Language :        English
+# Translation by :  EpiCanard
+#
+# This file contains all text displayed by the plugin GlobalMarketChest
+#
+# Information:
+#   In some texts, there are variables like this: {shopName}.
+#   DO NOT TRANSLATE THEM !
+#   These variables are replaced inside the plugin to display dynamic text.
+#   The order of the variables can be changed.
+#   If you remove a variable, this will not create an error.
+#
+# ===========================================================================
+
 InterfacesTitle:
   EditAuction: "&2Edit auction"
   BuyAuction: "&2Buy auction"
@@ -37,15 +53,15 @@ Divers:
   Ended: "Ended"
   CanceledBy: "Canceled by"
   Free: "Free"
-  WithStatus: "&fWith status : &2%s"
+  WithStatus: "&fWith status : &2{status}"
   Days: "days"
   Hours: "hours"
   Minutes: "minutes"
   Seconds: "seconds"
-  PastDate: "%sago"
+  PastDate: "{date}ago"
   UnknownPlayer: "Unknown player"
-  SearchItemTextIcon: "&7Search: &3%s"
-  ExitChatMode: "&7 - (Write &9%s&7 to leave the chat mode)"
+  SearchItemTextIcon: "&7Search: &3{search}"
+  ExitChatMode: "&7 - (Write &9{exit}&7 to leave the chat mode)"
 States:
   InProgress: "In Progress"
   Expired: "Expired"
@@ -75,7 +91,7 @@ Buttons:
     Name: "&2Create Shop"
   NewAuction:
     Name: "&2Create new auction"
-    Description: "&7Auctions number (%d/%d);&7Click here to sell your items"
+    Description: "&7Auctions number ({auctionNumber}/{maxAuctionNumber});&7Click here to sell your items"
   CreateAuction:
     Name: "&2Create auction"
   BuyAuction:
@@ -171,10 +187,10 @@ Buttons:
   SearchByPlayer:
     Name: "&fFind auctions of a player"
   LastAuctions:
-    Name: "&3Auctions of the last %d hours"
+    Name: "&3Auctions of the last {hours} hours"
   AdvicePriceInfo:
     Name: "Advice price"
-    Description: "&3%s;&7Click to use advice price"
+    Description: "&3{advicePrice};&7Click to use advice price"
   SeeShulkerBoxContent:
     Name: "See content of this shulker box"
 ErrorMessages:
@@ -200,7 +216,7 @@ ErrorMessages:
   DamagedItem: "You can't sell a damaged item"
   BlacklistedItem: "You can't sell a blacklisted item"
   CommandInChat: "&cYou are not allowed to execute commands in chat mode"
-  MaxGlobalShop: "&cYou have reached the maximum number of GlobalShop you can create (%d GlobalShop)"
+  MaxGlobalShop: "&cYou have reached the maximum number of GlobalShop you can create ({maxGlobalShop} GlobalShop)"
 InfoMessages:
   UndoAuction: "&2Auction successfully deleted"
   RemoveAuction: "&2Auction successfully removed"
@@ -209,23 +225,20 @@ InfoMessages:
   RenewEveryAuction: "&2Every auction successfully renewed"
   UndoEveryAuction: "&2Every auction successfully deleted"
   ShopDeleted: "Shop successfully deleted"
-  # Warning : don't change % and the letter(s) that follow (ex here : %d and %s)
-  # First %s is for buyer, First %d is for quantity, second %s for item name, third %s for price and last %s for buyer
-  # If you don't have them a message will pop in console and no message will broadcast
-  AcquireAuction: "&3%s &6bought &2%d %s &6for &2%s&6 to &3%s&6."
-  AcquireAuctionOwner: "&3%s &6bought your auction &2%d %s &6for &2%s&6."
-  AuctionCreated: "&3%s &6created &3%d&6 auctions of &2%d %s &6for &2%s&6."
-  AuctionsSoldLastLogin: "&6You sold &3%d&6 auctions since your last connection"
+  AcquireAuction: "&3{buyer} &6bought &2{quantity} {itemName} &6for &2{price}&6 to &3{seller}&6."
+  AcquireAuctionOwner: "&3{buyer} &6bought your auction &2{quantity} {itemName} &6for &2{price}&6."
+  AuctionCreated: "&3{seller} &6created &3{auctionNumber}&6 auctions of &2{quantity} {itemName} &6for &2{price}&6."
+  AuctionsSoldLastLogin: "&6You sold &3{auctionNumber}&6 auctions since your last connection"
   PluginReloading: "Plugin is reloading..."
   PluginReloaded: "Plugin is reloaded."
   WriteGroupName: "Write the group name that you want"
   WriteItemName: "Write the name of the item you are looking for"
   WritePlayerName: "Write the name of the player you are looking for"
   DeleteShopQuestion: "Are you sure you want to delete this shop ?"
-  ConvertingShopAuctions: "Converting auctions of shop : &6%s&7"
-  ShopAuctionsConverted: "Shop &6%s&7 : &3%d&9/%d&7 auctions converted"
+  ConvertingShopAuctions: "Converting auctions of shop : &6{shopName}&7"
+  ShopAuctionsConverted: "Shop &6{shopName}&7 : &3{updated}&9/{total}&7 auctions converted"
   ShopTemporarilyLocked: "This shop is temporarily locked"
-  ConversionMode: "Conversion mode : &6%s&7"
+  ConversionMode: "Conversion mode : &6{mode}&7"
 Commands:
   Buttons:
     OpenText: "Open"

@@ -2,13 +2,14 @@ package fr.epicanard.globalmarketchest.listeners;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
 
 public class PlayerListener implements Listener {
 
@@ -27,7 +28,7 @@ public class PlayerListener implements Listener {
   private void countSoldAuctions(final Player player) {
     GlobalMarketChest.plugin.auctionManager.countSoldAuctions(player, (count) -> {
       if (count > 0) {
-        PlayerUtils.sendMessage(player, String.format(LangUtils.get("InfoMessages.AuctionsSoldLastLogin"), count));
+        PlayerUtils.sendMessage(player, format("InfoMessages.AuctionsSoldLastLogin", "auctionNumber", count));
       }
     });
   }
