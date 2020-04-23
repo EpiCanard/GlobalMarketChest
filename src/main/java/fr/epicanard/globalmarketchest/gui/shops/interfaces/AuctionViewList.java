@@ -1,9 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.util.Optional;
-
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
@@ -12,15 +8,22 @@ import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.AuctionViewBase;
 import fr.epicanard.globalmarketchest.managers.GroupLevels;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.*;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Optional;
 
 public class AuctionViewList extends AuctionViewBase {
   private GroupLevels level;
   private String category;
   private ItemStack item;
   private AuctionInfo auctionRef;
+  private ShopInfo shopInfo;
+
+  private final Integer days = ConfigUtils.getInt("Options.AdvicePrice.Days", 30);
+  private final String analyze = ConfigUtils.getString("Options.AdvicePrice.Analyze", "all");
+  private final String priceTitle = LangUtils.get("Divers.AdvicePriceIcon");
+
 
   public AuctionViewList(InventoryGUI inv) {
     super(inv);
@@ -28,13 +31,12 @@ public class AuctionViewList extends AuctionViewBase {
     this.item = this.inv.getTransactionValue(TransactionKey.AUCTION_ITEM);
     this.category = this.inv.getTransactionValue(TransactionKey.CATEGORY);
     this.auctionRef = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
+    this.shopInfo = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     this.level = Optional.ofNullable((GroupLevels) this.inv.getTransactionValue(TransactionKey.GROUP_LEVEL))
-      .orElse(GroupLevels.LEVEL1);
+        .orElse(GroupLevels.LEVEL1);
 
     this.paginator.setLoadConsumer(pag -> {
-      final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
-
-      GlobalMarketChest.plugin.auctionManager.getAuctions(this.level, shop.getGroup(), this.category, this.auctionRef, this.paginator.getLimit(),
+      GlobalMarketChest.plugin.auctionManager.getAuctions(this.level, this.shopInfo.getGroup(), this.category, this.auctionRef, this.paginator.getLimit(),
           auctions -> {
             if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
               this.auctions = Utils.mapList(auctions, auction -> auction.getRight());
@@ -55,8 +57,30 @@ public class AuctionViewList extends AuctionViewBase {
 
   @Override
   public void load() {
-    this.setIcon(this.item);
     super.load();
+    if (this.level.getNextLevel(category) == null && this.auctionRef != null) {
+      this.buildAdvicePrice();
+    } else {
+      this.setIcon(this.item);
+    }
+  }
+
+  /**
+   * Build the icon with advice price
+   */
+  private void buildAdvicePrice() {
+    GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auctionRef.getItemMeta(), shopInfo.getGroup(), days,analyze, price -> {
+      String adviceMessage;
+      if (price != null) {
+        adviceMessage = LangUtils.format("Divers.AdvicePriceIcon", "advicePrice", EconomyUtils.format(price));
+      } else {
+        adviceMessage = LangUtils.get("Divers.NoAdvicePrice");
+      }
+
+      final ItemStack iconItem = ItemStackUtils.addItemStackLore(this.item.clone(), Utils.toList("&6--------------", adviceMessage));
+      this.setIcon(iconItem);
+    });
+
   }
 
   /**
