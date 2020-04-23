@@ -62,6 +62,7 @@ Divers:
   UnknownPlayer: "未知"
   SearchItemTextIcon: "&7搜索: &3{search}"
   ExitChatMode: "&7 - (输入 &9{exit}&7 离开此模式)"
+  NoAdvicePrice: "&3No advice price"
 States:
   InProgress: "进行中"
   Expired: "已过期 "
