@@ -68,8 +68,12 @@ Options:
   EnableLastAuctions: true
   # Define the number of hours used to display last auctions in LastAuctions interface
   LastAuctionsHours: 24
-  # Define the number of days to analyze for average of advice price on choice price view
-  AdvicePriceDays: 30
+  # Contains configs about advice price
+  AdvicePrice:
+    # Define the type of analyze to use for advice price. Possible values: all, in_progress, finished
+    Analyze: "all"
+    # Define the number of days to analyze for advice price on choice price view and list view
+    Days: 30
   # Allow to see content of shulker when a player want to buy it
   SeeShulkerBoxContent: true
   # Contains configs about broadcasted message when player create or buy an auction
@@ -91,7 +95,7 @@ Logs:
 ShopWorlds:
   # Define which type of filter is used
   # Possible value : whitelist or blacklist (default blacklist if not specified)
-  Type: 'blacklist'
+  Type: "blacklist"
   # List of world allowed (whitelist) or forbidden (blacklist)
   Worlds:
   # - world
