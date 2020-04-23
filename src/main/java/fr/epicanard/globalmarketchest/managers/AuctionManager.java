@@ -424,25 +424,25 @@ public class AuctionManager extends DatabaseManager {
   /**
    * Get average price of one specific item from last n days
    *
-   * @param auction      Auction info of specific item
-   * @param days         Number of days to analyze
-   * @param defaultPrice Default price to set if no price found
-   * @param consumer     Consumer to send result
+   * @param itemMeta Item to get price
+   * @param group    Shop group
+   * @param days     Number of days to analyze
+   * @param analyze  Type of analyze to do (running, history or both
+   * @param consumer Consumer to send result
    */
   public void getAveragePriceItem(
-      final AuctionInfo auction,
+      final String itemMeta,
+      final String group,
       final Integer days,
-      final Double defaultPrice,
+      final String analyze,
       final Consumer<Double> consumer) {
     final SelectBuilder builder = select()
         .addField("AVG(price) as averagePrice")
         .addField("COUNT(id) as count")
-        .addCondition("group", auction.getGroup())
-        .addCondition("itemStack", auction.getItemStack())
-        .addCondition("itemMeta", auction.getItemMeta())
-        .addCondition("status", StatusAuction.ABANDONED.getValue(), ConditionType.NOTEQUAL)
+        .addCondition("group", group)
+        .addCondition("itemMeta", itemMeta)
         .addCondition("start", DatabaseUtils.minusDays(DatabaseUtils.getTimestamp(), days), ConditionType.SUPERIOR_EQUAL);
-    QueryExecutor.of().execute(builder, res -> {
+    QueryExecutor.of().execute(defineAnalyzeAveragePrice(builder, analyze), res -> {
       if (res.next()) {
         final double price = (res.getInt("count") > 0) ? res.getDouble("averagePrice") : defaultPrice;
         consumer.accept(EconomyUtils.roundValue(price));
@@ -455,6 +455,24 @@ public class AuctionManager extends DatabaseManager {
    *             TOOLS
    * ================================
    */
+
+  /**
+   * Define the status of the auction for the process of average price
+   *
+   * @param builder Base builder to add condition on
+   * @param analyze Type of analyze to apply
+   * @return Return builder modified
+   */
+  private SelectBuilder defineAnalyzeAveragePrice(final SelectBuilder builder, final String analyze) {
+    switch (analyze) {
+      case "finished":
+        return builder.addCondition("status", StatusAuction.FINISHED.getValue());
+      case "in_progress":
+        return builder.addCondition("status", StatusAuction.IN_PROGRESS.getValue());
+      default:
+        return builder.addCondition("status", StatusAuction.ABANDONED.getValue(), ConditionType.NOTEQUAL);
+    }
+  }
 
   /**
    * Create a querybuilder, update timestamp to now and change state to INPROGRESS
@@ -508,12 +526,19 @@ public class AuctionManager extends DatabaseManager {
         .addCondition("status", StatusAuction.IN_PROGRESS.getValue(), ConditionType.NOTEQUAL);
 
     executor.execute(select, res -> {
-        if (res != null && res.next())
-          end.set(false);
+      if (res != null && res.next())
+        end.set(false);
     }, Exception::printStackTrace);
     return end.get();
   }
 
+  /**
+   * Execute the query that listing auctions
+   *
+   * @param builder  Builder to execute
+   * @param limit    Limit of results to return
+   * @param consumer Consumer to call when listing works
+   */
   private void executeListingAuctions(final BaseBuilder builder, final Pair<Integer, Integer> limit, final Consumer<List<AuctionInfo>> consumer) {
     if (limit != null)
       builder.addExtension(GlobalMarketChest.plugin.getSqlConnector().buildLimit(limit));

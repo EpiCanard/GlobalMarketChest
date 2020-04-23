@@ -167,9 +167,10 @@ public class CreateAuctionPrice extends ShopInterface {
    */
   private void setAveragePrice() {
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
-    final Integer days = ConfigUtils.getInt("Options.AdvicePriceDays", 30);
-    final Double defaultPrice = ConfigUtils.getDouble("Options.DefaultPrice", 0.0);
-    this.advicePrice = defaultPrice;
+    final Integer days = ConfigUtils.getInt("Options.AdvicePrice.Days", 30);
+    final String analyze = ConfigUtils.getString("Options.AdvicePrice.Analyze", "all");
+
+    GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auction.getItemMeta(), auction.getGroup(), days, analyze, price -> {
 
     GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auction, days, defaultPrice, price -> {
       this.advicePrice = price;
