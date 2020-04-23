@@ -62,6 +62,7 @@ Divers:
   UnknownPlayer: "Inconnu au bataillon"
   SearchItemTextIcon: "&7Recherche: &3{search}"
   ExitChatMode: "&7 - (Ecris &9{exit}&7 pour quitter le mode tchat)"
+  NoAdvicePrice: "&3Aucun prix conseillé"
 States:
   InProgress: "En Cours"
   Expired: "Expiré"

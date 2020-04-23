@@ -104,7 +104,7 @@ public class Utils {
    * @param lore Array to convert
    * @return List converted
    */
-  public static List<String> toList(String[] lore) {
+  public static List<String> toList(String ...lore) {
     return (lore == null) ? null : Arrays.asList(lore);
   }
 

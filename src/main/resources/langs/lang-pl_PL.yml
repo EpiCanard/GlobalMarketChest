@@ -62,6 +62,7 @@ Divers:
   UnknownPlayer: "Nieznany gracz"
   SearchItemTextIcon: "&7Szukaj: &3{search}"
   ExitChatMode: "&7 - (Wpisz &9{exit}&7 aby anylować)"
+  NoAdvicePrice: "&3No advice price"
 States:
   InProgress: "W trakcie realizacji"
   Expired: "Wygasło"

@@ -63,6 +63,7 @@ Divers:
   UnknownPlayer: "Bilinmeyen oyuncu"
   SearchItemTextIcon: "&7Arama: &3{search}"
   ExitChatMode: "&7 - (Write &9{exit}&7 to leave the chat mode)"
+  NoAdvicePrice: "&3No advice price"
 States:
   InProgress: "Devam ediyor"
   Expired: "Süresi dolmuş"

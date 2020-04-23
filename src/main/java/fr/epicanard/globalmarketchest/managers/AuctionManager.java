@@ -444,9 +444,12 @@ public class AuctionManager extends DatabaseManager {
         .addCondition("start", DatabaseUtils.minusDays(DatabaseUtils.getTimestamp(), days), ConditionType.SUPERIOR_EQUAL);
     QueryExecutor.of().execute(defineAnalyzeAveragePrice(builder, analyze), res -> {
       if (res.next()) {
-        final double price = (res.getInt("count") > 0) ? res.getDouble("averagePrice") : defaultPrice;
-        consumer.accept(EconomyUtils.roundValue(price));
+        if (res.getInt("count") > 0) {
+          consumer.accept(EconomyUtils.roundValue(res.getDouble("averagePrice")));
+          return;
+        }
       }
+      consumer.accept(null);
     });
   }
 

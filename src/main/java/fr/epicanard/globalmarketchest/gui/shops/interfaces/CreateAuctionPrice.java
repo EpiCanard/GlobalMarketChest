@@ -37,7 +37,6 @@ public class CreateAuctionPrice extends ShopInterface {
     super(inv);
     this.isTemp = true;
     this.actions.put(0, new PreviousInterface());
-    this.actions.put(49, i -> this.setPrice(this.advicePrice, true));
     this.actions.put(53, this::createAuction);
 
     final YamlConfiguration config = ConfigUtils.get();
@@ -171,15 +170,19 @@ public class CreateAuctionPrice extends ShopInterface {
     final String analyze = ConfigUtils.getString("Options.AdvicePrice.Analyze", "all");
 
     GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auction.getItemMeta(), auction.getGroup(), days, analyze, price -> {
+      String description;
+      if (price != null) {
+        description = formatString(
+            getOrElse("Buttons.AdvicePriceInfo.Description", "{advicePrice}"),
+            singletonMap("advicePrice", EconomyUtils.format(price))
+        );
+        this.advicePrice = price;
+        this.actions.put(49, i -> this.setPrice(this.advicePrice, true));
+      } else {
+        description = LangUtils.get("Divers.NoAdvicePrice");
+      }
 
-    GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auction, days, defaultPrice, price -> {
-      this.advicePrice = price;
       final ItemStack item = this.inv.getInv().getItem(49);
-      final String formattedPrice = EconomyUtils.format(price);
-      final String description = formatString(
-          getOrElse("Buttons.AdvicePriceInfo.Description", "{advicePrice}"),
-          singletonMap("advicePrice", formattedPrice)
-      );
       this.inv.getInv().setItem(49, ItemStackUtils.setItemStackLore(item, toList(description)));
     });
   }

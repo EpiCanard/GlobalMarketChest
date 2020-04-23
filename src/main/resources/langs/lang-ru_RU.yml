@@ -63,6 +63,7 @@ Divers:
   UnknownPlayer: "Неизвестный игрок"
   SearchItemTextIcon: "&7Поиск: &3{search}"
   ExitChatMode: "&7 - (Напишите &9{exit}&7 чтобы покинуть режим чата)"
+  NoAdvicePrice: "&3No advice price"
 States:
   InProgress: "В процессе"
   Expired: "Просрочен"
