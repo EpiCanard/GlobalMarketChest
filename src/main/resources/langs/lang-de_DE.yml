@@ -62,6 +62,7 @@ Divers:
   UnknownPlayer: "Unbekanner Spieler"
   SearchItemTextIcon: "&7Suche: &3{search}"
   ExitChatMode: "&7 - (Schreibe &9{exit}&7 um den Chatmodus zu verlassen.)"
+  AdvicePriceIcon: "&7Advice price : &3{advicePrice}"
   NoAdvicePrice: "&3No advice price"
 States:
   InProgress: "In Bearbeitung"
