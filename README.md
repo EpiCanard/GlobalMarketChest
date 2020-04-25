@@ -78,7 +78,7 @@ If you have any question, you can contact me on discord.
 
 You will find all development build on discord, so don't hesitate to come.
 
-Discord: [https://discord.gg/UuGAcCa](https://discord.gg/UuGAcCa)
+Discord: [https://discord.gg/TndZcuy](https://discord.gg/TndZcuy)
 
 Source GitHub: [https://github.com/EpiCanard/GlobalMarketChest](https://github.com/EpiCanard/GlobalMarketChest)
 
