@@ -60,7 +60,9 @@ public class DetailConsumer implements CommandConsumer {
 
     for (ShopInfo shop : shops) {
       message.addExtra("\n");
-      TextComponent line = ChatUtils.newComponent(" - " + shop.getSignLocationString() + " ");
+      TextComponent line = ChatUtils.newComponent(" - " +
+          ChatColor.DARK_GREEN + shop.getServer() + " " +
+          ChatColor.GOLD + shop.getSignLocationString() + " ");
 
       if (Permissions.CMD_LIST_TP.isSetOn(sender, false) && shop.getExists()) {
         TextComponent linkTP = ChatUtils.createLinkWithBracket(LangUtils.get("Commands.Buttons.TeleportText"),

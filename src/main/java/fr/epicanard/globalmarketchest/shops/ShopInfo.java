@@ -31,6 +31,8 @@ public class ShopInfo {
   private Location otherLocation;
   @Getter @Setter  @NonNull
   private String group;
+  @Getter
+  private String server;
 
   @Getter @Setter
   private Boolean exists = true;
@@ -51,6 +53,7 @@ public class ShopInfo {
       this.otherLocation = WorldUtils.getLocationFromString(this.otherLocationString, null);
       this.type = res.getInt("type");
       this.group = res.getString("group");
+      this.server = res.getString("server");
     } catch (SQLException e) {
       LoggerUtils.warn(e.getMessage());
     }
@@ -79,7 +82,7 @@ public class ShopInfo {
   /**
    * Remove shop metadata from specific location
    * 
-   * @param loca Location where remove metadata
+   * @param loc Location where remove metadata
    */
   private void removeMetadata(Location loc) {
     loc.getBlock().removeMetadata(ShopUtils.META_KEY, GlobalMarketChest.plugin);

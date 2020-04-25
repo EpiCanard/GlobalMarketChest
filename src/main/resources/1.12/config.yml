@@ -33,6 +33,8 @@ Storage:
     SimultaneousConnection: 4
 # Contains all config about multi-server support
 MultiServer:
+  # Name of server to assign to shops
+  ServerName: "default"
   # Enable support of MysqlPlayerDataBridge to sync money exchange
   MysqlPlayerDataBridgeSupport: true
 Options:

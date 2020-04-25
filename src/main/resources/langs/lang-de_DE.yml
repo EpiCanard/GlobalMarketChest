@@ -44,6 +44,7 @@ Divers:
   Start: "Gestartet"
   Location: "Koordinaten"
   OtherLocation: "andere Koordinaten"
+  Server: "Server"
   Group: "Gruppe"
   Type: "Typ"
   Warning: "Warnung"

@@ -142,9 +142,10 @@ public class ShopUtils {
    * @return Return lore as String array
    */
   public List<String> generateLore(ShopInfo shop) {
-    List<String> lore = new ArrayList<>();
+    final List<String> lore = new ArrayList<>();
 
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Location"), WorldUtils.getStringFromLocation(shop.getSignLocation())));
+    lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Server"), shop.getServer()));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Group"), shop.getGroup()));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Type"), ShopUtils.generateShopType(shop)));
     return lore;
@@ -156,10 +157,11 @@ public class ShopUtils {
    * @return Return lore as String array
    */
   public List<String> generateLoreWithOther(ShopInfo shop) {
-    List<String> lore = new ArrayList<>();
+    final List<String> lore = new ArrayList<>();
 
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Location"), WorldUtils.getStringFromLocation(shop.getSignLocation())));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.OtherLocation"), WorldUtils.getStringFromLocation(shop.getOtherLocation())));
+    lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Server"), shop.getServer()));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Group"), shop.getGroup()));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Type"), ShopUtils.generateShopType(shop)));
     return lore;

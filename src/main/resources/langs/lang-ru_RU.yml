@@ -45,6 +45,7 @@ Divers:
   Start: "Начатый"
   Location: "Местность"
   OtherLocation: "Другая местность"
+  Server: "Server"
   Group: "Группа"
   Type: "Тип"
   Warning: "Внимание"
