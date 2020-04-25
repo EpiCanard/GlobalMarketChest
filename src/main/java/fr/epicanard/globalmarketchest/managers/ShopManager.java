@@ -9,6 +9,7 @@ import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuild
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
 import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import lombok.Getter;
@@ -25,37 +26,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ShopManager extends DatabaseManager {
   @Getter
   private List<ShopInfo> shops = new ArrayList<>();
+  private String serverName;
 
   public ShopManager() {
     super(DatabaseConnector.tableShops);
   }
 
   /**
-   * Remove every metadata from shop and clear the shops list
+   * Load the list of shops
    */
-  private void resetShopList() {
-    this.shops.stream().filter(ShopInfo::getExists).forEach(ShopInfo::removeMetadata);
-    this.shops.clear();
-  }
-
-  /**
-   * Update shops informations from Database informations
-   */
-  public void updateShops() {
-    this.resetShopList();
-
-    final SelectBuilder builder = select();
-    QueryExecutor.of().execute(builder, res -> {
-      while (res.next()) {
-        final ShopInfo shop = new ShopInfo(res);
-        if (shop.getSignLocation() != null && shop.getSignLocation().getWorld() != null) {
-          shop.addMetadata();
-        } else {
-          shop.setExists(false);
-        }
-        this.shops.add(shop);
-      }
-    }, Exception::printStackTrace);
+  public void loadShops() {
+    this.serverName = ConfigUtils.getString("MultiServer.ServerName", "default");
+    this.updateShops();
   }
 
   /**
@@ -70,36 +52,6 @@ public class ShopManager extends DatabaseManager {
         return info;
     }
     return null;
-  }
-
-  /**
-   * Create a shop inside database and add it in list shops
-   *
-   * @param owner Owner of the shop
-   * @param sign  Location of sign placed
-   * @param other Linked location to sign
-   * @param mask  Shop type
-   * @param group Group of shop to link auctions
-   * @return Return shop id created
-   */
-  private Integer createShop(String owner, Location sign, Location other, int mask, String group) throws ShopAlreadyExistException {
-    if (this.shops.stream().anyMatch(shop -> WorldUtils.compareLocations(shop.getSignLocation(), sign)))
-      throw new ShopAlreadyExistException(sign);
-
-    final InsertBuilder builder = insert()
-        .addValue("owner", owner)
-        .addValue("signLocation", WorldUtils.getStringFromLocation(sign))
-        .addValue("otherLocation", WorldUtils.getStringFromLocation(other))
-        .addValue("type", mask)
-        .addValue("group", group);
-
-    final AtomicInteger id = new AtomicInteger(-1);
-    final SqlConsumer<ResultSet> cs = res -> {
-      id.set(DatabaseUtils.getId(res));
-    };
-    if (QueryExecutor.of().execute(builder, cs))
-      this.updateShops();
-    return id.get();
   }
 
   /**
@@ -130,5 +82,65 @@ public class ShopManager extends DatabaseManager {
         .addCondition("id", shop.getId());
 
     return QueryExecutor.of().execute(builder);
+  }
+
+  /**
+   * Create a shop inside database and add it in list shops
+   *
+   * @param owner Owner of the shop
+   * @param sign  Location of sign placed
+   * @param other Linked location to sign
+   * @param mask  Shop type
+   * @param group Group of shop to link auctions
+   * @return Return shop id created
+   */
+  private Integer createShop(String owner, Location sign, Location other, int mask, String group) throws ShopAlreadyExistException {
+    if (this.shops.stream().anyMatch(shop -> WorldUtils.compareLocations(shop.getSignLocation(), sign)))
+      throw new ShopAlreadyExistException(sign);
+
+    final InsertBuilder builder = insert()
+        .addValue("owner", owner)
+        .addValue("signLocation", WorldUtils.getStringFromLocation(sign))
+        .addValue("otherLocation", WorldUtils.getStringFromLocation(other))
+        .addValue("type", mask)
+        .addValue("group", group)
+        .addValue("server", this.serverName);
+
+    final AtomicInteger id = new AtomicInteger(-1);
+    final SqlConsumer<ResultSet> cs = res -> {
+      id.set(DatabaseUtils.getId(res));
+    };
+    if (QueryExecutor.of().execute(builder, cs))
+      this.updateShops();
+    return id.get();
+  }
+
+
+  /**
+   * Remove every metadata from shop and clear the shops list
+   */
+  private void resetShopList() {
+    this.shops.stream().filter(ShopInfo::getExists).forEach(ShopInfo::removeMetadata);
+    this.shops.clear();
+  }
+
+  /**
+   * Update shops informations from Database informations
+   */
+  private void updateShops() {
+    this.resetShopList();
+
+    final SelectBuilder builder = select();
+    QueryExecutor.of().execute(builder, res -> {
+      while (res.next()) {
+        final ShopInfo shop = new ShopInfo(res);
+        if (shop.getSignLocation() != null && shop.getSignLocation().getWorld() != null && shop.getServer().equals(this.serverName)) {
+          shop.addMetadata();
+        } else {
+          shop.setExists(false);
+        }
+        this.shops.add(shop);
+      }
+    }, Exception::printStackTrace);
   }
 }

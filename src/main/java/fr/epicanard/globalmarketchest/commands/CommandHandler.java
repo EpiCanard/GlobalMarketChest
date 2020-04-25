@@ -26,6 +26,7 @@ import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
+import org.bukkit.entity.HumanEntity;
 
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
@@ -122,7 +123,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     if (args.length == 1) {
       return GlobalMarketChest.plugin.shopManager.getShops().stream()
       .filter(shop -> shop.getGroup().startsWith(args[0]))
-      .map(shop -> shop.getGroup())
+      .map(ShopInfo::getGroup)
       .collect(Collectors.toList());
     }
     return new ArrayList<>();
@@ -141,20 +142,18 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
   private List<String> shopIdTabComplete(CommandSender sender, String[] args) {
     if (args.length == 1 || args.length == 2) {
       final Stream<ShopInfo> shopsStream = GlobalMarketChest.plugin.shopManager.getShops().stream()
-      .filter(shop -> shop.getExists());
+      .filter(ShopInfo::getExists);
 
       if (args.length == 1) {
         return shopsStream
           .filter(shop ->  shop.getGroup().startsWith(args[0]))
-          .map(shop -> shop.getGroup())
+          .map(ShopInfo::getGroup)
           .collect(Collectors.toList());
       }
-      if (args.length == 2) {
-        return shopsStream
-          .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]))
-          .map(shop -> WorldUtils.getStringFromLocation(shop.getSignLocation(), ",", true))
-          .collect(Collectors.toList());
-      }
+      return shopsStream
+        .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]))
+        .map(shop -> WorldUtils.getStringFromLocation(shop.getSignLocation(), ",", true))
+        .collect(Collectors.toList());
     }
     return new ArrayList<>();
   }
@@ -169,7 +168,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
   private List<String> playersTabComplete(CommandSender sender, String[] args) {
     if (args.length == 1) {
       return GlobalMarketChest.plugin.getServer().getOnlinePlayers().stream()
-        .map(player -> player.getName())
+        .map(HumanEntity::getName)
         .filter(name -> name.startsWith(args[0]))
         .collect(Collectors.toList());
     }

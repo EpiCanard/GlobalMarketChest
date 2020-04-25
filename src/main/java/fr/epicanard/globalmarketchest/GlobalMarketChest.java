@@ -92,7 +92,7 @@ public class GlobalMarketChest extends JavaPlugin {
     }
 
     this.ranksLoader.loadRanks();
-    this.shopManager.updateShops();
+    this.shopManager.loadShops();
 
     getCommand("GlobalMarketChest").setExecutor(new CommandHandler());
 

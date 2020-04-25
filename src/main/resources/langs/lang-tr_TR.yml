@@ -45,6 +45,7 @@ Divers:
   Start: "Başladı"
   Location: "Konum"
   OtherLocation: "Diğer konum"
+  Server: "Server"
   Group: "Grup"
   Type: "Tip"
   Warning: "Uyarı"

@@ -44,6 +44,7 @@ Divers:
   Start: "开始!"
   Location: "位置"
   OtherLocation: "其他位置"
+  Server: "Server"
   Group: "组"
   Type: "种类"
   Warning: "警告"
