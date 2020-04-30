@@ -139,7 +139,8 @@ public class WorldUtils {
       return "";
     String finalString = "";
     if (world) {
-      finalString += loc.getWorld().getName() + sep;
+      finalString += loc.getWorld() != null ? loc.getWorld().getName() : "?";
+      finalString += sep;
     }
     return finalString + loc.getBlockX() + sep + loc.getBlockY() + sep + loc.getBlockZ();
   }
@@ -175,7 +176,7 @@ public class WorldUtils {
   /**
    * Verify if the specified World is allowed to create shop
    *
-   * @throws WorldDoesnExist
+   * @throws WorldDoesntExist
    * @return false if it not allowed
    */
   public Boolean isAllowedWorld(String worldName) throws WorldDoesntExist {
