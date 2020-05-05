@@ -1,18 +1,18 @@
 package fr.epicanard.globalmarketchest.auctions;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.configuration.PriceLimit;
+import fr.epicanard.globalmarketchest.utils.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.epicanard.globalmarketchest.utils.*;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import lombok.Getter;
-import lombok.Setter;
 
 import static fr.epicanard.globalmarketchest.utils.DatabaseUtils.getField;
 import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
@@ -124,8 +124,40 @@ public class AuctionInfo {
    * @param config Config used to define which infos must be displayed
    * @return the lore
    */
-  public List<String> getLore(AuctionLoreConfig config) {
-    List<String> lore = new ArrayList<>();
+  public List<String> getLore(final AuctionLoreConfig config) {
+    final List<String> lore = this.buildBaseLore(config);
+    lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(this.itemStack));
+    return lore;
+  }
+
+  /**
+   * Build and return lore for current auction
+   *
+   * @param config Config used to define which infos must be displayed
+   * @return the lore
+   */
+  public List<String> getLore(final AuctionLoreConfig config, final PriceLimit priceLimit) {
+    final List<String> lore = this.buildBaseLore(config);
+    if (priceLimit != null) {
+      if (priceLimit.Min > 0) {
+        this.addLore(lore, "MinPrice", "&6", format(priceLimit.Min));
+      }
+      if (priceLimit.Max > 0) {
+        this.addLore(lore, "MaxPrice", "&6", format(priceLimit.Max));
+      }
+    }
+    lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(this.itemStack));
+    return lore;
+  }
+
+  /**
+   * Build and return the base lore for current auction
+   *
+   * @param config Config used to define which infos must be displayed
+   * @return the lore
+   */
+  private List<String> buildBaseLore(final AuctionLoreConfig config) {
+    final List<String> lore = new ArrayList<>();
 
     double totalPrice = BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
     if (config.getFrame())
@@ -144,28 +176,28 @@ public class AuctionInfo {
       this.addLore(lore, "Buyer", "&9", PlayerUtils.getPlayerName(this.playerEnder));
     if (config.getStarted())
       this.addLore(lore, "Started", "&6",
-        DatabaseUtils.getExpirationString(this.start, DatabaseUtils.getTimestamp(), false));
+          DatabaseUtils.getExpirationString(this.start, DatabaseUtils.getTimestamp(), false));
     if (config.getEnded())
       this.addLore(lore, "Ended", "&6",
-        DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
+          DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
     if (config.getExpire()) {
       String path = (this.end.getTime() < DatabaseUtils.getTimestamp().getTime()) ? "Expired" : "ExpireIn";
       this.addLore(lore, path, "&6",
-        DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
+          DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
     }
     if (config.getCanceled() && !this.playerStarter.equals(this.playerEnder))
       this.addLore(lore, "CanceledBy", "&c", PlayerUtils.getPlayerName(this.playerEnder));
     if (config.getFrame())
       lore.add("&6--------------");
-    lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(this.itemStack));
     return lore;
   }
+
 
   /**
    * Add a formatted lore inside a list of lore
    *
-   * @param lore List of lore
-   * @param key Key to add
+   * @param lore  List of lore
+   * @param key   Key to add
    * @param color Color to use for value
    * @param value Value to use
    */
@@ -188,7 +220,7 @@ public class AuctionInfo {
   /**
    * Define real status depending of registered status and expiration date
    *
-   * @param status Status registered
+   * @param status  Status registered
    * @param endTime Expiration date of auction
    * @return The correct status
    */

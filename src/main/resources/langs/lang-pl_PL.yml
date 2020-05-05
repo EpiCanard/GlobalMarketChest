@@ -65,6 +65,8 @@ Divers:
   ExitChatMode: "&7 - (Wpisz &9{exit}&7 aby anylować)"
   AdvicePriceIcon: "&7Advice price : &3{advicePrice}"
   NoAdvicePrice: "&3No advice price"
+  MinPrice: "Minimum price"
+  MaxPrice: "Maximum price"
 States:
   InProgress: "W trakcie realizacji"
   Expired: "Wygasło"
