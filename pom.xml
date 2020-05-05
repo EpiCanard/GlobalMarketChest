@@ -82,7 +82,8 @@
       <url>https://mvnrepository.com/artifact/org.apache.commons/commons-lang3</url>
     </repository>
     <repository>
-      <id>duckconfig-repo</id>
+      <id>github</id>
+      <name>duckconfig-repo</name>
       <url>https://maven.pkg.github.com/EpiCanard/DuckConfig</url>
     </repository>
   </repositories>
