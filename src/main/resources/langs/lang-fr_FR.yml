@@ -65,6 +65,8 @@ Divers:
   ExitChatMode: "&7 - (Ecris &9{exit}&7 pour quitter le mode tchat)"
   AdvicePriceIcon: "&7Prix conseillé : &3{advicePrice}"
   NoAdvicePrice: "&3Aucun prix conseillé"
+  MinPrice: "Prix minimum"
+  MaxPrice: "Prix maximum"
 States:
   InProgress: "En Cours"
   Expired: "Expiré"

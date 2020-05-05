@@ -65,6 +65,8 @@ Divers:
   ExitChatMode: "&7 - (Write &9{exit}&7 to leave the chat mode)"
   AdvicePriceIcon: "&7Advice price : &3{advicePrice}"
   NoAdvicePrice: "&3No advice price"
+  MinPrice: "Minimum price"
+  MaxPrice: "Maximum price"
 States:
   InProgress: "Devam ediyor"
   Expired: "Süresi dolmuş"

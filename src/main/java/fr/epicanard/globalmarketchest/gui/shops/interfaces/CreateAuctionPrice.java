@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
+import fr.epicanard.globalmarketchest.configuration.PriceLimit;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
@@ -22,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static fr.epicanard.globalmarketchest.GlobalMarketChest.plugin;
 import static fr.epicanard.globalmarketchest.utils.LangUtils.formatString;
 import static fr.epicanard.globalmarketchest.utils.LangUtils.getOrElse;
 import static fr.epicanard.globalmarketchest.utils.Utils.toList;
@@ -32,6 +34,7 @@ public class CreateAuctionPrice extends ShopInterface {
   private List<String> priceItems;
   private Boolean dynamicFreePos;
   private Double advicePrice;
+  private PriceLimit itemPriceLimit;
 
   public CreateAuctionPrice(InventoryGUI inv) {
     super(inv);
@@ -59,6 +62,12 @@ public class CreateAuctionPrice extends ShopInterface {
   public void load() {
     super.load();
     final ItemStack item = this.inv.getTransactionValue(TransactionKey.TEMP_ITEM);
+    final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
+
+    if (plugin.getPriceLimits() != null && plugin.getPriceLimits().containsKey(auction.getItemStack())) {
+      this.itemPriceLimit = plugin.getPriceLimits().get(auction.getItemStack());
+      this.setPrice(auction.getPrice(), true);
+    }
 
     final List<String> lore = this.getLore();
 
@@ -82,12 +91,15 @@ public class CreateAuctionPrice extends ShopInterface {
   private void setPrice(double price, Boolean set) {
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
 
+    double newPrice = price;
     if (!set) {
       final BigDecimal dec = BigDecimal.valueOf(auction.getPrice()).add(BigDecimal.valueOf(price));
-      auction.setPrice((dec.doubleValue() < 0.0) ? 0 : dec.doubleValue());
-    } else {
-      auction.setPrice(price);
+      newPrice = (dec.doubleValue() < 0.0) ? 0 : dec.doubleValue();
     }
+    if (itemPriceLimit != null) {
+      newPrice = itemPriceLimit.validatePrice(newPrice);
+    }
+    auction.setPrice(newPrice);
     this.updatePrice();
   }
 
@@ -115,7 +127,7 @@ public class CreateAuctionPrice extends ShopInterface {
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     final Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTION_NUMBER);
 
-    final List<String> lore = auction.getLore(AuctionLoreConfig.SELECTPRICE);
+    final List<String> lore = auction.getLore(AuctionLoreConfig.SELECTPRICE, this.itemPriceLimit);
     if (auctionNumber > 1)
       lore.set(0, String.format("%s &ax&9%s", lore.get(0), auctionNumber));
     return lore;

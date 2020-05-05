@@ -107,6 +107,8 @@ AllowedLinkBlock:
   - minecraft:ender_chest
   - minecraft:chest
 Price:
+  # Limit the price an item can be sold (generate the file price-limits.yml to configure the price by item)
+  LimitPriceChoice: false
   # Define if the button "Free" must be place dynamically at the end of the line or at a fixed position
   DynamicFreePosition: true
   # All price ranges value, you can have maximum 9 ranges (chest width)

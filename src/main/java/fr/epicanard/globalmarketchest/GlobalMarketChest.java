@@ -2,6 +2,7 @@ package fr.epicanard.globalmarketchest;
 
 import fr.epicanard.globalmarketchest.commands.CommandHandler;
 import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import fr.epicanard.globalmarketchest.configuration.PriceLimit;
 import fr.epicanard.globalmarketchest.database.PatchHandler;
 import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
 import fr.epicanard.globalmarketchest.database.connectors.MySQLConnector;
@@ -30,6 +31,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -49,6 +51,8 @@ public class GlobalMarketChest extends JavaPlugin {
   public final AuctionManager auctionManager;
   @Getter
   private CategoryHandler catHandler;
+  @Getter
+  private Map<String, PriceLimit> priceLimits;
 
   public GlobalMarketChest() {
     // Initialization of loader
@@ -93,6 +97,8 @@ public class GlobalMarketChest extends JavaPlugin {
 
     this.ranksLoader.loadRanks();
     this.shopManager.loadShops();
+
+    this.priceLimits = this.configLoader.loadPriceLimitConfig();
 
     getCommand("GlobalMarketChest").setExecutor(new CommandHandler());
 

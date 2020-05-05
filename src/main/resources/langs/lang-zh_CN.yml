@@ -65,6 +65,8 @@ Divers:
   ExitChatMode: "&7 - (输入 &9{exit}&7 离开此模式)"
   AdvicePriceIcon: "&7Advice price : &3{advicePrice}"
   NoAdvicePrice: "&3No advice price"
+  MinPrice: "Minimum price"
+  MaxPrice: "Maximum price"
 States:
   InProgress: "进行中"
   Expired: "已过期 "
