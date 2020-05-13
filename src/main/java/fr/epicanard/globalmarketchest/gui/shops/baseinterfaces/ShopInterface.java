@@ -123,13 +123,6 @@ public abstract class ShopInterface {
   }
 
   /**
-   * Called when a mouse drop event is done inside inventory
-   *
-   * @param event
-   */
-  public void onDrop(InventoryClickEvent event, InventoryGUI inv) {}
-
-  /**
    * Update the interface title
    */
   public void updateInterfaceTitle() {

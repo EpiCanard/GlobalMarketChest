@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fr.epicanard.globalmarketchest.gui.shops.Droppable;
 import fr.epicanard.globalmarketchest.utils.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.inventory.InventoryAction;
@@ -21,7 +22,7 @@ import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 
-public class CreateAuctionItem extends ShopInterface {
+public class CreateAuctionItem extends ShopInterface implements Droppable {
   private Integer maxAuctions = 0;
   private Boolean acceptDamagedItems;
   private final Boolean oneByOne;

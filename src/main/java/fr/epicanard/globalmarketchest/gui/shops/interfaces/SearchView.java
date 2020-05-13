@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
+import fr.epicanard.globalmarketchest.gui.shops.Droppable;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.inventory.InventoryAction;
@@ -16,7 +17,7 @@ import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.DefaultFooter;
 import fr.epicanard.globalmarketchest.managers.GroupLevels;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
-public class SearchView extends DefaultFooter {
+public class SearchView extends DefaultFooter implements Droppable {
 
   public SearchView(InventoryGUI inv) {
     super(inv);
