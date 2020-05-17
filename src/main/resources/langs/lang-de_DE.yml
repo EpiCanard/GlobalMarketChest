@@ -26,7 +26,7 @@ InterfacesTitle:
   SearchView: "&2Auktionen suchen"
   ConfirmView: "&2Bestätigen"
   LastAuctionViewList: "&2Letzte Auktionen"
-  ShulkerBoxContent: "&2Shulker box content"
+  ShulkerBoxContent: "&2Shulker Box Inhalt"
   # Auction Creation
   CreateAuctionItem: "&2Item auswählen"
   CreateAuctionPrice: "&2Preis wählen"
@@ -63,10 +63,10 @@ Divers:
   UnknownPlayer: "Unbekanner Spieler"
   SearchItemTextIcon: "&7Suche: &3{search}"
   ExitChatMode: "&7 - (Schreibe &9{exit}&7 um den Chatmodus zu verlassen.)"
-  AdvicePriceIcon: "&7Advice price : &3{advicePrice}"
-  NoAdvicePrice: "&3No advice price"
-  MinPrice: "Minimum price"
-  MaxPrice: "Maximum price"
+  AdvicePriceIcon: "&7Preisvorschlag : &3{advicePrice}"
+  NoAdvicePrice: "&3Kein Preisvorschlag"
+  MinPrice: "Minimum Preis"
+  MaxPrice: "Maximum Preis"
 States:
   InProgress: "In Bearbeitung"
   Expired: "Abgelaufen"
@@ -197,7 +197,7 @@ Buttons:
     Name: "Vorgeschlagener Preis"
     Description: "&3{advicePrice};&7Klicken um den vorgeschlagenen Preis zu benutzen"
   SeeShulkerBoxContent:
-    Name: "See content of this shulker box"
+    Name: "Siehe den Inhalt dieser Shulker Box"
 ErrorMessages:
   UnknownWorld: "Unbekannte Shop Welt"
   ShopTypeNotSet: "Der Shop typ ist nicht gesetzt;&2Bitte wähle mindestens einen Typ"
@@ -232,7 +232,7 @@ InfoMessages:
   ShopDeleted: "Shop erfolgreich gelöscht"
   AcquireAuction: "&3{buyer} &6kaufte &2{quantity} {itemName} &6für &2{price}&6 an &3{seller}&6."
   AcquireAuctionOwner: "&3{buyer} &6kaufte deine Auktion &2{quantity} {itemName} &6for &2{price}&6."
-  AuctionCreated: "&3{seller} &6created &3{auctionNumber}&6 auctions of &2{quantity} {itemName} &6for &2{price}&6."
+  AuctionCreated: "&3{seller} &6erstellte &3{auctionNumber}&6 Auktionen von &2{quantity} {itemName} &6für &2{price}&6."
   AuctionsSoldLastLogin: "&6Du hast &3{auctionNumber}&6 Auktionen seit deiner letzten Verbindung verkauft."
   PluginReloading: "Plugin lädt neu..."
   PluginReloaded: "Plugin ist neu geladen."
