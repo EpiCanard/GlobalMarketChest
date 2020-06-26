@@ -76,8 +76,15 @@ Options:
     Analyze: "all"
     # Define the number of days to analyze for average of advice price on choice price view
     Days: 30
-  # Allow to see content of shulker when a player want to buy it
-  SeeShulkerBoxContent: true
+  # Config about shulker box
+  ShulkerBox:
+    # Allow to see the content of a shulker box when a player want to buy it
+    SeeContent: true
+    # List of display names not affected by SeeContent config parameter
+    # If SeeContent is true, can't see the content of shulker box that contains following displaynames (ignore case)
+    # If SeeContent is false, can see only the content of shulker box that contains following displaynames (ignore case)
+    ExceptDisplayNames:
+    #  - "lucky"
   # Contains configs about broadcasted message when player create or buy an auction
   Broadcast:
     # Broadcast a message inside the current world when a player create an auction
