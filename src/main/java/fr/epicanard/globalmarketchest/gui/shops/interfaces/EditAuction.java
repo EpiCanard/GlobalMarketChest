@@ -30,7 +30,7 @@ public class EditAuction extends UndoAuction {
 
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
-    if (ConfigUtils.getBoolean("Options.SeeShulkerBoxContent", true) && ShulkerBoxContent.isShulker(item)) {
+    if (ShulkerBoxContent.isShulker(item)) {
       this.togglers.get(49).set();
       this.actions.put(49, new NextInterface("ShulkerBoxContent"));
     }

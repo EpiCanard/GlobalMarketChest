@@ -42,7 +42,7 @@ public class BuyAuction extends UndoAuction {
       this.togglers.get(28).set();
       this.actions.put(28, this::adminRemoveAuction);
     }
-    if (ConfigUtils.getBoolean("Options.SeeShulkerBoxContent", true) && ShulkerBoxContent.isShulker(item)) {
+    if (canSeeShulkerBoxContent(item)) {
       this.togglers.get(34).set();
       this.actions.put(34, new NextInterface("ShulkerBoxContent"));
     }
@@ -53,6 +53,13 @@ public class BuyAuction extends UndoAuction {
     super.load();
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(AuctionLoreConfig.TOSELL)));
+  }
+
+  @Override
+  public void destroy() {
+    super.destroy();
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_INFO);
+    this.inv.getTransaction().remove(TransactionKey.AUCTION_LORE_CONFIG);
   }
 
   /**
@@ -161,10 +168,21 @@ public class BuyAuction extends UndoAuction {
     }
   }
 
-  @Override
-  public void destroy() {
-    super.destroy();
-    this.inv.getTransaction().remove(TransactionKey.AUCTION_INFO);
-    this.inv.getTransaction().remove(TransactionKey.AUCTION_LORE_CONFIG);
+  /**
+   * Define if a player can see the shulker box content.
+   *
+   * @param item Item to analyze
+   * @return If a player can see the content
+   */
+  private static boolean canSeeShulkerBoxContent(final ItemStack item) {
+    if (item == null || item.getItemMeta() == null) {
+      return false;
+    }
+
+    final String displayName = item.getItemMeta().getDisplayName().toLowerCase();
+    return ShulkerBoxContent.isShulker(item) && (
+        ConfigUtils.getBoolean("Options.ShulkerBox.SeeContent", true) ^
+        ConfigUtils.getStringList("Options.ShulkerBox.ExceptDisplayNames").stream().anyMatch(except -> displayName.contains(except.toLowerCase()))
+    );
   }
 }
