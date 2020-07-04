@@ -26,7 +26,7 @@ InterfacesTitle:
   SearchView: "&2Açık arttırma ara"
   ConfirmView: "&2Onayla"
   LastAuctionViewList: "&2Son Açık Arttırmalar"
-  ShulkerBoxContent: "&2Shulker box content"
+  ShulkerBoxContent: "&2Shulker kutusu içeriği "
   # Auction Creation
   CreateAuctionItem: "&2Açık artırma öğesini seçin"
   CreateAuctionPrice: "&2Açık artırma fiyatını Seç"
@@ -44,7 +44,7 @@ Divers:
   Start: "Başladı"
   Location: "Konum"
   OtherLocation: "Diğer konum"
-  Server: "Server"
+  Server: "Sunucu"
   Group: "Grup"
   Type: "Tip"
   Warning: "Uyarı"
@@ -63,10 +63,10 @@ Divers:
   UnknownPlayer: "Bilinmeyen oyuncu"
   SearchItemTextIcon: "&7Arama: &3{search}"
   ExitChatMode: "&7 - (Write &9{exit}&7 to leave the chat mode)"
-  AdvicePriceIcon: "&7Advice price : &3{advicePrice}"
-  NoAdvicePrice: "&3No advice price"
-  MinPrice: "Minimum price"
-  MaxPrice: "Maximum price"
+  AdvicePriceIcon: "&7Tavsiye fiyat : &3{advicePrice}"
+  NoAdvicePrice: "&3Tavsiye fiyat yok"
+  MinPrice: "Minimum fiyat"
+  MaxPrice: "Maximum fiyat"
 States:
   InProgress: "Devam ediyor"
   Expired: "Süresi dolmuş"
@@ -197,7 +197,7 @@ Buttons:
     Name: "Tavsiye Edilen Fiyat"
     Description: "&3{advicePrice};&7Tavsiye fiyatı kullanmak için tıkla"
   SeeShulkerBoxContent:
-    Name: "See content of this shulker box"
+    Name: "Shulker kutusunun içeriğine bakın"
 ErrorMessages:
   UnknownWorld: "Dükkan için bilinmeyen dünya"
   ShopTypeNotSet: "Mağaza türü ayarlanmadı;&2 Lütfen en az bir tür seçin"

@@ -26,8 +26,8 @@ InterfacesTitle:
   AuctionGlobalView: "&2История аукционов"
   SearchView: "&2Поиск аукционов"
   ConfirmView: "&2Подтверждение"
-  LastAuctionViewList: "&2Last auctions"
-  ShulkerBoxContent: "&2Shulker box content"
+  LastAuctionViewList: "&2Последние аукционы"
+  ShulkerBoxContent: "&2Содержимое сундука Шалкера"
   # Создание аукциона
   CreateAuctionItem: "&2Выбор предмета аукциона"
   CreateAuctionPrice: "&2Выбор стоимости аукциона"
@@ -45,7 +45,7 @@ Divers:
   Start: "Начатый"
   Location: "Местность"
   OtherLocation: "Другая местность"
-  Server: "Server"
+  Server: "Сервер"
   Group: "Группа"
   Type: "Тип"
   Warning: "Внимание"
@@ -64,10 +64,10 @@ Divers:
   UnknownPlayer: "Неизвестный игрок"
   SearchItemTextIcon: "&7Поиск: &3{search}"
   ExitChatMode: "&7 - (Напишите &9{exit}&7 чтобы покинуть режим чата)"
-  AdvicePriceIcon: "&7Advice price : &3{advicePrice}"
-  NoAdvicePrice: "&3No advice price"
-  MinPrice: "Minimum price"
-  MaxPrice: "Maximum price"
+  AdvicePriceIcon: "&7Рекоменд. цена : &3{advicePrice}"
+  NoAdvicePrice: "&3Не рекоменд. цена"
+  MinPrice: "Мин. цена"
+  MaxPrice: "Макс. цена"
 States:
   InProgress: "В процессе"
   Expired: "Просрочен"
@@ -192,12 +192,12 @@ Buttons:
   SearchByPlayer:
     Name: "&fНайти аукционы игрока"
   LastAuctions:
-    Name: "&3Auctions of the last {hours} hours"
+    Name: "&3Аукционы за последние {hours} часа(ов)"
   AdvicePriceInfo:
-    Name: "Advice price"
-    Description: "&3{advicePrice};&7Click to use advice price"
+    Name: "Рекоменд. цена"
+    Description: "&3{advicePrice};&7Кликните, чтобы использов. рекоменд. цену"
   SeeShulkerBoxContent:
-    Name: "See content of this shulker box"
+    Name: "См. содержимое сундука Шалкера"
 ErrorMessages:
   UnknownWorld: "Неизвестный мир для магазина"
   ShopTypeNotSet: "Тип магазина не задан;&2Пожалуйста выберите хотя бы один тип"
@@ -232,8 +232,8 @@ InfoMessages:
   ShopDeleted: "Магазин успешно удален"
   AcquireAuction: "&3{buyer} &6купил &2{quantity} {itemName} &6за &2{price}&6 у &3{seller}&6."
   AcquireAuctionOwner: "&3{buyer} &6купил у вас аукцион &2{quantity} {itemName} &6за &2{price}&6."
-  AuctionCreated: "&3{seller} &6created &3{auctionNumber}&6 auctions of &2{quantity} {itemName} &6for &2{price}&6."
-  AuctionsSoldLastLogin: "&6You sold &3{auctionNumber}&6 auctions since your last connection"
+  AuctionCreated: "&3{seller} &6создал &3{auctionNumber}&6 аукцион &2{quantity} {itemName} &6за &2{price}&6."
+  AuctionsSoldLastLogin: "&6Вы продали &3{auctionNumber}&6 аукционы с момента вашего последнего подключения"
   PluginReloading: "Плагин перезагружается..."
   PluginReloaded: "Плагин успешно перезагружен."
   WriteGroupName: "Напишите имя группы, которое вы хотите"
