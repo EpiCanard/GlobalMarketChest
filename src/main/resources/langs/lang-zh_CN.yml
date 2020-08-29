@@ -1,7 +1,7 @@
 # ========================= File lang-zh_CN.yml =============================
 #
 # Language :        Chinese
-# Translation by :  Coby_Cola
+# Translation by :  Coby_Cola and XiangZi_
 #
 # This file contains all text displayed by the plugin GlobalMarketChest
 #
@@ -131,13 +131,13 @@ Buttons:
     Description: "设定是否可以通过玩家查看物品"
   ViewByLastCreated:
     Name: "按上次创建时间查看"
-    Description: "Can player see auctions by last created ?"
+    Description: "玩家可以查看最后创建的拍卖品嘛？"
   GlobalShop:
     Name: "全球市场"
   AuctionShop:
-    Name: "AuctionShop"
+    Name: "拍卖市场"
   LocalShop:
-    Name: "LocalShop"
+    Name: "本地商店"
   AdminShop:
     Name: "管理员商店"
   EditGroupName:
@@ -241,7 +241,7 @@ InfoMessages:
   WritePlayerName: "输入你要找的玩家名称"
   DeleteShopQuestion: "确定删除此商店?"
   ConvertingShopAuctions: "转换店铺拍卖 : &6{shopName}&7"
-  ShopAuctionsConverted: "Shop &6{shopName}&7 : &3{updated}&9/{total}&7 auctions converted"
+  ShopAuctionsConverted: "商店 &6{shopName}&7 : &3{updated}&9/{total}&7 店铺转换"
   ShopTemporarilyLocked: "这个商店暂时上锁了"
   ConversionMode: "转换模式 : &6{mode}&7"
 Commands:
