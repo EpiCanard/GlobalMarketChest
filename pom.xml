@@ -11,9 +11,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <powermock.version>1.7.1</powermock.version>
-    <spigot.version>1.16.2-R0.1-SNAPSHOT</spigot.version>
+    <spigot.version>1.16.3-R0.1-SNAPSHOT</spigot.version>
     <duckconfig.version>1.0.0</duckconfig.version>
+    <lombok.version>1.18.16</lombok.version>
   </properties>
 
   <build>
@@ -74,14 +74,6 @@
       <url>https://ci.ender.zone/plugin/repository/everything</url>
     </repository>
     <repository>
-      <id>lombok-repo</id>
-      <url>https://mvnrepository.com/artifact/org.projectlombok/lombok</url>
-    </repository>
-    <repository>
-      <id>apache-repo</id>
-      <url>https://mvnrepository.com/artifact/org.apache.commons/commons-lang3</url>
-    </repository>
-    <repository>
       <id>duckconfig-repo</id>
       <url>https://maven.epicanard.com/releases</url>
     </repository> 
@@ -92,13 +84,13 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.4</version>
+      <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
-    <!--Spigot API and NMS -->
+    <!--Spigot API -->
     <dependency>
       <groupId>org.spigotmc</groupId>
-      <artifactId>spigot</artifactId>
+      <artifactId>spigot-api</artifactId>
       <version>${spigot.version}</version>
       <scope>provided</scope>
     </dependency>
