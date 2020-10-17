@@ -82,26 +82,12 @@
       <url>https://mvnrepository.com/artifact/org.apache.commons/commons-lang3</url>
     </repository>
     <repository>
-      <id>github</id>
-      <name>duckconfig-repo</name>
-      <url>https://maven.pkg.github.com/EpiCanard/DuckConfig</url>
-    </repository>
+      <id>duckconfig-repo</id>
+      <url>https://maven.epicanard.com/releases</url>
+    </repository> 
   </repositories>
 
   <dependencies>
-    <!-- Unit test -->
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-module-junit4</artifactId>
-      <version>${powermock.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-api-mockito2</artifactId>
-      <version>${powermock.version}</version>
-      <scope>test</scope>
-    </dependency>
     <!-- Lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
