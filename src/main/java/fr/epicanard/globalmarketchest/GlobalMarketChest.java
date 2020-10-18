@@ -19,11 +19,14 @@ import fr.epicanard.globalmarketchest.listeners.*;
 import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
 import fr.epicanard.globalmarketchest.ranks.RanksLoader;
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
 import lombok.Getter;
+
+import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
@@ -113,6 +116,10 @@ public class GlobalMarketChest extends JavaPlugin {
         .map(dataBridge -> (Listener)new DataBridgeListener(dataBridge))
         .orElseGet(MoneyExchangeListener::new);
     this.register(moneyExchange);
+
+    if (ConfigUtils.getBoolean("General.Metrics", true)) {
+      new Metrics(this, 7557);
+    }
   }
 
   @Override
