@@ -37,10 +37,17 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <relocations>
+                <relocation>
+                  <pattern>org.bstats</pattern>
+                  <shadedPattern>fr.epicanard.globalmarketchest.utils.metrics</shadedPattern>
+                </relocation>
+              </relocations>
               <artifactSet>
                 <includes>
                   <include>org.apache.commons:commons-lang3</include>
                   <include>fr.epicanard:duckconfig</include>
+                  <include>org.bstats:bstats-bukkit</include>
                 </includes>
               </artifactSet>
             </configuration>
@@ -77,6 +84,10 @@
       <id>duckconfig-repo</id>
       <url>https://maven.epicanard.com/releases</url>
     </repository> 
+    <repository>
+      <id>CodeMC</id>
+      <url>https://repo.codemc.org/repository/maven-public</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -100,6 +111,7 @@
       <version>1.7</version>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
@@ -109,6 +121,12 @@
       <groupId>fr.epicanard</groupId>
       <artifactId>duckconfig</artifactId>
       <version>${duckconfig.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.bstats</groupId>
+      <artifactId>bstats-bukkit</artifactId>
+      <version>1.7</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>
