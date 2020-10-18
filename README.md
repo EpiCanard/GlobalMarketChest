@@ -4,9 +4,13 @@ GlobalMarketChest is a spigot plugin that allows to easily create global shops t
 
 ![dependencies](https://user-images.githubusercontent.com/29657498/52743417-45af4080-2fda-11e9-8be7-4b645e77e898.png)
 
-To work you will need the plugin **Vault** to handle the economy.
+To work you will need :
+- **Vault**
+- An **economy plugin** compatible with Vault to manage your economy
 
-While there is no other storage system you will also need **MySQL**.
+
+*Soft Dependencies* :
+- If you want to use MySQL instead of default SQLite you will need to install a MySQL Server by yourself.
 
 ![features](https://user-images.githubusercontent.com/29657498/52743424-4ba52180-2fda-11e9-8fe1-dded69d0dd85.png)
 
@@ -22,6 +26,7 @@ While there is no other storage system you will also need **MySQL**.
  - Advanced feature to repeat the auction that you are creating as many as possible or one by one
  - Advanced feature to put all similar items of your inventory  in the auction that you are creating (you can go higher than 64 items)
  - Advanced categories system by default inspired by creative tabs but can be totally customized
+ - List of the last 24 hours of auctions created
  - Detailed permissions system
  - Complete commands to list, teleport to, open and close shops (with autocompletion)
  - Ranks system to configure some properties to specific players
@@ -29,7 +34,7 @@ While there is no other storage system you will also need **MySQL**.
    - All items composing interfaces can be changed (item used, title and lore)
    - Language can easily be configured
    - Categories totally configurable (display item, title, position, items contains, GroupLevels)
-    - Many features can be configured/disabled
+   - Many features can be configured/disabled
  - Multi database support. The plugin actually support SQLite database (local) and MySQL database (remote)
  - Admin features to remove player auctions
 
@@ -83,6 +88,8 @@ Discord: [https://discord.gg/TndZcuy](https://discord.gg/TndZcuy)
 Source GitHub: [https://github.com/EpiCanard/GlobalMarketChest](https://github.com/EpiCanard/GlobalMarketChest)
 
 Spigot : [https://www.spigotmc.org/resources/globalmarketchest-gui-shop-plugin.64921/](https://www.spigotmc.org/resources/globalmarketchest-gui-shop-plugin.64921/)
+
+Metrics : [bstats.org](https://bstats.org/plugin/bukkit/GlobalMarketChest/7557)
 
 If you want to test work in progress features you will find all development builds on Jenkins.
 Jenkins: [https://www.globalmarketchest-jenkins.fr](https://www.globalmarketchest-jenkins.fr)
