@@ -245,6 +245,7 @@ InfoMessages:
   ShopAuctionsConverted: "Shop &6{shopName}&7 : &3{updated}&9/{total}&7 enchères converties"
   ShopTemporarilyLocked: "Ce shop est temporairement verouillé"
   ConversionMode: "Mode de conversion : &6{mode}&7"
+  NewVersionAvailable: "&6La nouvelle version &3{lastVersion}&6 de GlobalMarketChest est désormais disponible sur spigot ! &7(actuel : {currentVersion})"
 Commands:
   Buttons:
     OpenText: "Ouvrir"

@@ -34,9 +34,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.logging.Level;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 public class GlobalMarketChest extends JavaPlugin {
@@ -120,6 +126,8 @@ public class GlobalMarketChest extends JavaPlugin {
     if (ConfigUtils.getBoolean("General.Metrics", true)) {
       new Metrics(this, 7557);
     }
+
+    GlobalMarketChest.checkNewVersion(this.getServer().getConsoleSender());
   }
 
   @Override
@@ -220,5 +228,28 @@ public class GlobalMarketChest extends JavaPlugin {
    */
   private Optional<Plugin> getPlugin(final String pluginName) {
     return Optional.ofNullable(getServer().getPluginManager().getPlugin(pluginName));
+  }
+
+  /**
+   * Check if a new version of plugin is available
+   * Request https://api.spiget.org/v2/resources/64921/versions/latest to get the last version of plugin
+   *
+   * @param sender Player to send the message
+   */
+  public static void checkNewVersion(final CommandSender sender) {
+    try (Scanner s = new Scanner(new URL("https://api.spiget.org/v2/resources/64921/versions/latest").openStream())) {
+      final String value = s.useDelimiter("\\A").next();
+      final JsonObject obj = (JsonObject) new JsonParser().parse(value);
+      final String lastVersion = obj.get("name").getAsString();
+      final String currentVersion = GlobalMarketChest.plugin.getDescription().getVersion();
+
+      if (!currentVersion.equals(lastVersion)) {
+        PlayerUtils.sendMessage(sender, LangUtils.format("InfoMessages.NewVersionAvailable", ImmutableMap.of(
+                "lastVersion", lastVersion,
+                "currentVersion", currentVersion)));
+      }
+    } catch (Exception e) {
+      System.out.println(e);
+    }
   }
 }

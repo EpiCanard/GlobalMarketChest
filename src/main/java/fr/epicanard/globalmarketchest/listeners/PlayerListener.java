@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.listeners;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import org.bukkit.Bukkit;
@@ -17,6 +18,9 @@ public class PlayerListener implements Listener {
   public void onPlayerConnect(final PlayerJoinEvent event) {
     if (ConfigUtils.getBoolean("Options.Broadcast.MessageLoginSoldAuctions", true)) {
       Bukkit.getScheduler().scheduleSyncDelayedTask(GlobalMarketChest.plugin, () -> countSoldAuctions(event.getPlayer()), 20L);
+    }
+    if (Permissions.ADMIN_NEWVERSION.isSetOn(event.getPlayer())) {
+      GlobalMarketChest.checkNewVersion(event.getPlayer());
     }
   }
 
