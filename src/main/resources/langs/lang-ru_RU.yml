@@ -244,6 +244,7 @@ InfoMessages:
   ShopAuctionsConverted: "Магазин &6{shopName}&7 : &3{updated}&9/{total}&7 аукционов конвертировано"
   ShopTemporarilyLocked: "Этот магазин временно заблокирован"
   ConversionMode: "Режим конвертирования : &6{mode}&7"
+  NewVersionAvailable: "&6The new version &3{lastVersion}&6 of GlobalMarketChest is now available on spigot ! &7(current : {currentVersion})"
 Commands:
   Buttons:
     OpenText: "Открыть"

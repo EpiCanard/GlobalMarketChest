@@ -13,6 +13,7 @@ public enum Permissions {
   ADMIN_DELETESHOP("globalmarketchest.admin.shops.deleteshop"),
   ADMIN_REMOVEAUCTION("globalmarketchest.admin.shops.removeauction"),
   ADMIN_SEEAUCTIONS("globalmarketchest.admin.shops.seeauctions"),
+  ADMIN_NEWVERSION("globalmarketchest.admin.newversion"),
   GS_CREATESHOP("globalmarketchest.globalshop.createshop"),
   GS_OPENSHOP("globalmarketchest.globalshop.openshop"),
   GS_CREATEAUCTION("globalmarketchest.globalshop.createauction"),

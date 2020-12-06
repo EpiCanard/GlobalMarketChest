@@ -244,6 +244,7 @@ InfoMessages:
   ShopAuctionsConverted: "商店 &6{shopName}&7 : &3{updated}&9/{total}&7 店铺转换"
   ShopTemporarilyLocked: "这个商店暂时上锁了"
   ConversionMode: "转换模式 : &6{mode}&7"
+  NewVersionAvailable: "&6The new version &3{lastVersion}&6 of GlobalMarketChest is now available on spigot ! &7(current : {currentVersion})"
 Commands:
   Buttons:
     OpenText: "打开"
