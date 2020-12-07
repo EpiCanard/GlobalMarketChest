@@ -67,6 +67,7 @@ Divers:
   NoAdvicePrice: "&3No advice price"
   MinPrice: "Minimum price"
   MaxPrice: "Maximum price"
+  Anonymous: "Anonymous"
 States:
   InProgress: "In Progress"
   Expired: "Expired"

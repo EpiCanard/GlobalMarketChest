@@ -67,6 +67,7 @@ Divers:
   NoAdvicePrice: "&3当前没有建议价格"
   MinPrice: "最低价格"
   MaxPrice: "最高价格"
+  Anonymous: "Anonymous"
 States:
   InProgress: "进行中"
   Expired: "已过期 "

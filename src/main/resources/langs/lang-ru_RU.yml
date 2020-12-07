@@ -68,6 +68,7 @@ Divers:
   NoAdvicePrice: "&3Не рекоменд. цена"
   MinPrice: "Мин. цена"
   MaxPrice: "Макс. цена"
+  Anonymous: "Anonymous"
 States:
   InProgress: "В процессе"
   Expired: "Просрочен"

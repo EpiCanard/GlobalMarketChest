@@ -215,7 +215,7 @@ public class CreateAuctionPrice extends ShopInterface {
     }
 
     final Map<String, Object> mapping = ImmutableMap.of(
-        "seller", owner.getName(),
+        "seller", ConfigUtils.getBoolean("Options.Anonymous.Seller", false) ? LangUtils.getOrElse("Divers.Anonymous", "Anonymous") : owner.getName(),
         "auctionNumber", auctionNumber,
         "quantity", auction.getAmount(),
         "itemName", ItemStackUtils.getItemStackDisplayName(item),
