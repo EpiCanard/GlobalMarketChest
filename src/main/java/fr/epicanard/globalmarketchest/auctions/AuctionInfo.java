@@ -170,9 +170,9 @@ public class AuctionInfo {
       this.addLore(lore, "UnitPrice", "&c", this.checkPrice(this.price));
     if (config.getTotalPrice())
       this.addLore(lore, "TotalPrice", "&c", this.checkPrice(totalPrice));
-    if (config.getStarter())
+    if (config.getStarter() && !ConfigUtils.getBoolean("Options.Anonymous.Seller", false))
       this.addLore(lore, "Seller", "&9", PlayerUtils.getPlayerName(this.playerStarter));
-    if (config.getEnder())
+    if (config.getEnder() && !ConfigUtils.getBoolean("Options.Anonymous.Buyer", false))
       this.addLore(lore, "Buyer", "&9", PlayerUtils.getPlayerName(this.playerEnder));
     if (config.getStarted())
       this.addLore(lore, "Started", "&6",

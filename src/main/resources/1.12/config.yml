@@ -97,6 +97,12 @@ Options:
     MessageLoginSoldAuctions: true
     # Notify the player everywhere on the server when a player buy one of his auctions
     NotifyPlayer: true
+  # Config about anonymous auctions
+  Anonymous:
+    # Define if Seller name must be hide (anonymous)
+    Seller: false
+    # Define if Buyer name must be hide (anonymous)
+    Buyer: false
 Logs:
   # If set to true the prefix [GlobalMarketChest] inside messages will be removed
   HidePrefix: false

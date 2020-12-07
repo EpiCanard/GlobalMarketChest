@@ -110,11 +110,11 @@ public class BuyAuction extends UndoAuction {
   private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
     final String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
     final Map<String, Object> mapping = ImmutableMap.of(
-        "buyer", buyer.getName(),
+        "buyer", ConfigUtils.getBoolean("Options.Anonymous.Buyer", false) ? LangUtils.getOrElse("Divers.Anonymous", "Anonymous") : buyer.getName(),
         "quantity", auction.getAmount(),
         "itemName", ItemStackUtils.getItemStackDisplayName(item),
         "price", EconomyUtils.format(auction.getTotalPrice()),
-        "seller", PlayerUtils.getPlayerName(auction.getPlayerStarter())
+        "seller", ConfigUtils.getBoolean("Options.Anonymous.Seller", false) ? LangUtils.getOrElse("Divers.Anonymous", "Anonymous") : PlayerUtils.getPlayerName(auction.getPlayerStarter())
     );
 
     return LangUtils.format(langVariable, mapping);

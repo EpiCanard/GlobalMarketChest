@@ -67,6 +67,7 @@ Divers:
   NoAdvicePrice: "&3Tavsiye fiyat yok"
   MinPrice: "Minimum fiyat"
   MaxPrice: "Maximum fiyat"
+  Anonymous: "Anonymous"
 States:
   InProgress: "Devam ediyor"
   Expired: "Süresi dolmuş"
