@@ -261,7 +261,7 @@ Commands:
     Reload: "&c/globalmarketchest reload&6 - Plugini yeniden başlat"
     List: "&c/globalmarketchest list&6 - Tüm globalshop listesini listele"
     Detail: "&c/globalmarketchest list detail <shop>&6 - Tüm fiziksel glboalshop listesini listele"
-    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teleport the player a specific shop position"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Oyuncuyu belirlenen pozisyonda markete ışınla"
     Open: "&c/globalmarketchest open <shop>&6 -  globalshop Marketini aç "
     AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - globalshop Oyuncu marketini aç"
     Close: "&c/globalmarketchest close <player>&6 - Oyuncu marketini kapat"
