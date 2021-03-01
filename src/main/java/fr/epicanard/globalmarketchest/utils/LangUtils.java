@@ -65,6 +65,9 @@ public class LangUtils {
    * @return Mapped string
    */
   public static String formatString(final String langStr, final Map<String, Object> args) {
+    if (args == null || langStr == null) {
+      return langStr;
+    }
     final Matcher matcher = replacePattern.matcher(langStr);
     final StringBuffer result = new StringBuffer(langStr.length());
 

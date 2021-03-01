@@ -194,6 +194,10 @@ Buttons:
     Name: "&fBir oyuncunun açık artırmalarını bul"
   LastAuctions:
     Name: "&3Son {hours} saatin açık arttırmaları"
+  LastCreatedAuctions:
+    Name: "&3Auctions created in last {hours} hours"
+  LastBoughtAuctions:
+    Name: "&3Auctions bought in last {hours} hours"
   AdvicePriceInfo:
     Name: "Tavsiye Edilen Fiyat"
     Description: "&3{advicePrice};&7Tavsiye fiyatı kullanmak için tıkla"

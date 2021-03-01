@@ -194,6 +194,10 @@ Buttons:
     Name: "&fFinde Auktionen von Spieler"
   LastAuctions:
     Name: "&3Auktionen der letzten {hours} Stunden"
+  LastCreatedAuctions:
+    Name: "&3Auctions created in last {hours} hours"
+  LastBoughtAuctions:
+    Name: "&3Auctions bought in last {hours} hours"
   AdvicePriceInfo:
     Name: "Vorgeschlagener Preis"
     Description: "&3{advicePrice};&7Klicken um den vorgeschlagenen Preis zu benutzen"

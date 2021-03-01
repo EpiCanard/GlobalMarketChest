@@ -195,6 +195,10 @@ Buttons:
     Name: "&fRechercher les enchères d'un joueur"
   LastAuctions:
     Name: "&3Enchères des {hours} dernières heures"
+  LastCreatedAuctions:
+    Name: "&3Enchères créées dans les {hours} dernières heures"
+  LastBoughtAuctions:
+    Name: "&3Enchères achetées dans les {hours} dernières heures"
   AdvicePriceInfo:
     Name: "Prix conseillé"
     Description: "&3{advicePrice};&7Clique pour utiliser ce prix"

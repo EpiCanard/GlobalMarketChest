@@ -10,6 +10,7 @@ import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.DefaultFooter;
 import fr.epicanard.globalmarketchest.managers.GroupLevels;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 
 public class CategoryView extends DefaultFooter {
   private Boolean lastAuctionsEnabled;
@@ -27,7 +28,7 @@ public class CategoryView extends DefaultFooter {
   public void load() {
     super.load();
     if (this.lastAuctionsEnabled) {
-      this.inv.getInv().setItem(1, LastAuctionViewList.getLastAuctionsIcon(LastAuctionViewList.getLastHours()));
+      this.inv.getInv().setItem(1, Utils.getButton("LastAuctions", "hours", LastAuctionViewList.getLastHours()));
     }
     final Consumer<InventoryGUI> callable = new NextInterface("AuctionViewList");
 

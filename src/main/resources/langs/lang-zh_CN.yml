@@ -194,6 +194,10 @@ Buttons:
     Name: "&f根据玩家名字查找"
   LastAuctions:
     Name: "&3最近 {hours} 小时的拍卖"
+  LastCreatedAuctions:
+    Name: "&3Auctions created in last {hours} hours"
+  LastBoughtAuctions:
+    Name: "&3Auctions bought in last {hours} hours"
   AdvicePriceInfo:
     Name: "建议价格"
     Description: "&3{advicePrice};&7点击使用建议价格"

@@ -14,6 +14,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static fr.epicanard.globalmarketchest.utils.LangUtils.formatString;
+
 /**
  * Global Utility Class
  */
@@ -76,13 +78,20 @@ public class Utils {
     return pos % lineWidth;
   }
 
+  public static ItemStack getButton(String buttonName) {
+    return Utils.getButton(buttonName, null);
+  }
+
+  public static ItemStack getButton(String buttonName, final String key, final Object value) {
+    return Utils.getButton(buttonName, Collections.singletonMap(key, value));
+  }
   /**
    * Get a button from the config file and create itemstack
    *
    * @param buttonName button name to search inside config
    * @return item created
    */
-  public static ItemStack getButton(String buttonName) {
+  public static ItemStack getButton(String buttonName, final Map<String, Object> args) {
     if (buttonName == null)
       return null;
 
@@ -93,7 +102,7 @@ public class Utils {
 
     if (sec != null) {
       Map<String, Object> tmp = sec.getValues(false);
-      ItemStackUtils.setItemStackMeta(itemStack, (String) tmp.get("Name"), Utils.toList((String)tmp.get("Description")));
+      ItemStackUtils.setItemStackMeta(itemStack, formatString((String) tmp.get("Name"), args), Utils.toList(formatString((String)tmp.get("Description"), args)));
     }
     return itemStack;
   }
