@@ -194,6 +194,10 @@ Buttons:
     Name: "&fНайти аукционы игрока"
   LastAuctions:
     Name: "&3Аукционы за последние {hours} часа(ов)"
+  LastCreatedAuctions:
+    Name: "&3Auctions created in last {hours} hours"
+  LastBoughtAuctions:
+    Name: "&3Auctions bought in last {hours} hours"
   AdvicePriceInfo:
     Name: "Рекоменд. цена"
     Description: "&3{advicePrice};&7Кликните, чтобы использов. рекоменд. цену"

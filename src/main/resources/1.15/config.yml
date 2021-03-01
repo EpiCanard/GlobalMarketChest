@@ -219,6 +219,8 @@ Interfaces:
     NoButton: minecraft:red_wool
     Question: minecraft:redstone_torch
     LastAuctions: minecraft:clock
+    LastCreatedAuctions: minecraft:clock
+    LastBoughtAuctions: minecraft:compass
     AdvicePriceInfo: minecraft:name_tag
     SeeShulkerBoxContent: minecraft:shulker_shell
 Sign:

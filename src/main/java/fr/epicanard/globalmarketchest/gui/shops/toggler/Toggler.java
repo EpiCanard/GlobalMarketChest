@@ -69,7 +69,7 @@ public abstract class Toggler {
   /**
    * Set items in loaded view
    */
-  private void setItemsView() {
+  public void setItemsView() {
     Map<Integer, ItemStack> items = this.getItems();
     items.forEach((position, itemstack) -> {
       this.inv.setItem(position, itemstack);
@@ -78,4 +78,11 @@ public abstract class Toggler {
 
   public abstract Map<Integer, ItemStack> getItems();
 
+  public ItemStack getCurrentItem() {
+    return (this.isSet) ? this.getSetItem() : this.getUnsetItem();
+  }
+
+  public ItemStack getOppositeItem() {
+    return (!this.isSet) ? this.getSetItem() : this.getUnsetItem();
+  }
 }

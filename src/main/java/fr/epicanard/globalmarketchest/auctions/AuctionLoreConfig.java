@@ -8,6 +8,7 @@ public enum AuctionLoreConfig {
   OWN(true, true, true, true, false, false, true, false, true, false, true),
   SOLD(true, true, true, true, false, true, true, true, false, false, true),
   BOUGHT(true, true, true, true, true, false, true, true, false, false, true),
+  BOUGHT_SOON(false, true, true, true, true, true, true, true, false, false, true),
   OWNENDED(true, true, true, true, false, false, true, true, false, true, true),
   SELECTPRICE(false, true, true, true, false, false, false, false, false, false, false)
   ;

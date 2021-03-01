@@ -408,14 +408,15 @@ public class AuctionManager extends DatabaseManager {
   public void getLastAuctions(
       final String group,
       final Integer hours,
+      final StatusAuction status,
       final Pair<Integer, Integer> limit,
       final Consumer<List<AuctionInfo>> consumer) {
     final SelectBuilder builder = select()
         .addCondition("group", group);
 
-    this.defineStateCondition(builder, StatusAuction.IN_PROGRESS);
+    this.defineStateCondition(builder, status);
     builder
-        .addCondition("start", DatabaseUtils.minusHours(DatabaseUtils.getTimestamp(), hours), ConditionType.SUPERIOR_EQUAL)
+        .addCondition((status == StatusAuction.FINISHED) ? "end" : "start", DatabaseUtils.minusHours(DatabaseUtils.getTimestamp(), hours), ConditionType.SUPERIOR_EQUAL)
         .setExtension("ORDER BY start DESC");
 
     executeListingAuctions(builder, limit, consumer);

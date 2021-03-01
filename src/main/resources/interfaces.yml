@@ -96,6 +96,10 @@ Interfaces:
       - DefaultShopInterface
       - DefaultFooter
       - WithGlobalView
+    Togglers:
+      - Pos: 7
+        SetItem: LastBoughtAuctions
+        UnsetItem: LastCreatedAuctions
 
   # View to see the content of a shulker box
   ShulkerBoxContent:
