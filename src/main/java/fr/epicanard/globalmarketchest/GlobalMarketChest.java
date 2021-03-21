@@ -249,7 +249,7 @@ public class GlobalMarketChest extends JavaPlugin {
                 "currentVersion", currentVersion)));
       }
     } catch (Exception e) {
-      System.out.println(e);
+      System.out.println(e.getMessage());
     }
   }
 }

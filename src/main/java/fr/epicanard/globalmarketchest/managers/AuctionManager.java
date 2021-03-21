@@ -19,7 +19,10 @@ import org.bukkit.inventory.ItemStack;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
@@ -381,24 +384,32 @@ public class AuctionManager extends DatabaseManager {
   }
 
   /**
-   * Count sold auctions since last player connection
+   * Count sold and expired auctions since last player connection
    *
    * @param starter  Owner of auctions
    * @param consumer Consumer called when request is finished
    */
-  public void countSoldAuctions(final OfflinePlayer starter, final Consumer<Integer> consumer) {
+  public void countSoldAndExpiredAuctions(final OfflinePlayer starter, final Consumer<Map<StatusAuction, Integer>> consumer) {
     final Timestamp end = new Timestamp(starter.getLastPlayed());
 
     final SelectBuilder builder = select()
+        .addField("status")
         .addField("COUNT(id) AS count");
-    this.defineStateCondition(builder, StatusAuction.FINISHED);
     builder
         .addCondition("playerStarter", PlayerUtils.getUUIDToString(starter))
-        .addCondition("end", end, ConditionType.SUPERIOR_EQUAL);
+        .addCondition("end", end, ConditionType.SUPERIOR_EQUAL)
+        .addCondition("end", DatabaseUtils.getTimestamp(), ConditionType.INFERIOR)
+        .addCondition("status", Arrays.asList(StatusAuction.IN_PROGRESS.getValue(), StatusAuction.FINISHED.getValue()), ConditionType.IN)
+        .addExtension("GROUP BY status");
+
 
     QueryExecutor.of().execute(builder, res -> {
-      if (res.next())
-        consumer.accept(res.getInt("count"));
+      Map<StatusAuction, Integer> map = new HashMap<>();
+
+      while (res.next()) {
+        map.put(StatusAuction.getStatusAuction(res.getInt("status")), res.getInt("count"));
+      }
+      consumer.accept(map);
     });
   }
 

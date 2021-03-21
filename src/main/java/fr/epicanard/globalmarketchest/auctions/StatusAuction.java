@@ -25,7 +25,7 @@ public enum StatusAuction {
   /**
    * Get translate language for status
    * Path inside language file : States.<key>
-   * 
+   *
    * @return Translated lang
    */
   public String getLang() {

@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.SkullType;
@@ -82,6 +83,10 @@ public class PlayerUtils {
    */
   public void sendMessage(Player pl, String message) {
     pl.sendMessage(PlayerUtils.getPrefix() + Utils.toColor(message));
+  }
+
+  public void sendSyncMessage(Player pl, String message) {
+    Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> sendMessage(pl, message));
   }
 
   /**

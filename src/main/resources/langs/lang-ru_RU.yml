@@ -238,7 +238,10 @@ InfoMessages:
   AcquireAuction: "&3{buyer} &6купил &2{quantity} {itemName} &6за &2{price}&6 у &3{seller}&6."
   AcquireAuctionOwner: "&3{buyer} &6купил у вас аукцион &2{quantity} {itemName} &6за &2{price}&6."
   AuctionCreated: "&3{seller} &6создал &3{auctionNumber}&6 аукцион &2{quantity} {itemName} &6за &2{price}&6."
-  AuctionsSoldLastLogin: "&6Вы продали &3{auctionNumber}&6 аукционы с момента вашего последнего подключения"
+  LoginMessage:
+    BaseMessage: "&6Since your last connection :"
+    SoldAuctions: "&6- You sold &3{count}&6 auctions"
+    ExpiredAuctions:  "&6- &3{count}&6 auctions has expired"
   PluginReloading: "Плагин перезагружается..."
   PluginReloaded: "Плагин успешно перезагружен."
   WriteGroupName: "Напишите имя группы, которое вы хотите"
