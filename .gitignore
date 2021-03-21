@@ -9,6 +9,8 @@ Notes.java
 .factorypath
 .idea
 .metals
+*.iml
+.project
 
 # Compiled class file
 *.class
