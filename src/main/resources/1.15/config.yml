@@ -93,8 +93,12 @@ Options:
     CreationInsideWorld: true
     # Broadcast a message inside the current world when a player buy an auction
     BuyInsideWorld: true
-    # Send a message (number of sold auctions) to player when join a server
-    MessageLoginSoldAuctions: true
+    # Send a message to the player on join to the server
+    LoginMessage:
+      # Send the number of sold auctions
+      SoldAuctions: true
+      # Send the number of expired auctions
+      ExpiredAuctions: true
     # Notify the player everywhere on the server when a player buy one of his auctions
     NotifyPlayer: true
   # Config about anonymous auctions

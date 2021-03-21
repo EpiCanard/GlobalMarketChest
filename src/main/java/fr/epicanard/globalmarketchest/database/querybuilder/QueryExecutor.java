@@ -84,6 +84,7 @@ public class QueryExecutor {
       builder.prepare(lst -> {
         this.setPrepared(preparedCopy, lst, atomint);
       });
+
       ret = builder.execute(prepared, res);
 
       if (consumer != null && res.get() != null) {
