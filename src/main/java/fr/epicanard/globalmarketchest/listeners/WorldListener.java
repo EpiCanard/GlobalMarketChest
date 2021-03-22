@@ -190,8 +190,10 @@ public class WorldListener implements Listener {
       if (shop == null)
         return;
       event.setCancelled(true);
-      if (Permissions.GS_OPENSHOP.isSetOnWithMessage(player)) {
+      if (Permissions.GS_OPENSHOP.isSetOn(player) || Permissions.GS_SHOP_OPENSHOP.isSetOnWithShop(player, shop.getGroup())) {
         ShopUtils.openShop(player, shop, inv -> inv.loadInterface("CategoryView"));
+      } else {
+        Permissions.sendMessage(player);
       }
     }
   }

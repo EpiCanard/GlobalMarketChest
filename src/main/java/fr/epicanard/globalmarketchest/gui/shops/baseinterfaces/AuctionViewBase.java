@@ -7,8 +7,9 @@ import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
-import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+
+import static fr.epicanard.globalmarketchest.permissions.Permissions.*;
 
 public class AuctionViewBase extends DefaultFooter {
   protected List<AuctionInfo> auctions = new ArrayList<>();
@@ -30,7 +31,7 @@ public class AuctionViewBase extends DefaultFooter {
    * This method is called when player click on item inside paginator
    * If it is the owner auction it open edit interface
    * If it is not it open buy interface
-   * 
+   *
    * @param pos Position clicked inside paginator
    */
   protected void selectAuction(Integer pos) {
@@ -39,8 +40,9 @@ public class AuctionViewBase extends DefaultFooter {
     AuctionInfo auction = this.auctions.get(pos);
     Boolean isOwner = auction.getPlayerStarter().equals(PlayerUtils.getUUIDToString(this.inv.getPlayer()));
 
-    if (!isOwner && !Permissions.GS_BUYAUCTION.isSetOnWithMessage(this.inv.getPlayer()))
+    if (!isOwner && !GS_BUYAUCTION.isSetOn(this.inv.getPlayer()) && !GS_SHOP_BUYAUCTION.isSetOnWithShop(this.inv.getPlayer(), this.shopInfo.getGroup())) {
       return;
+    }
 
     this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, auction);
     if (isOwner)
