@@ -16,8 +16,11 @@ public enum Permissions {
   ADMIN_NEWVERSION("globalmarketchest.admin.newversion"),
   GS_CREATESHOP("globalmarketchest.globalshop.createshop"),
   GS_OPENSHOP("globalmarketchest.globalshop.openshop"),
+  GS_SHOP_OPENSHOP("globalmarketchest.globalshop.%s.openshop"),
   GS_CREATEAUCTION("globalmarketchest.globalshop.createauction"),
+  GS_SHOP_CREATEAUCTION("globalmarketchest.globalshop.%s.createauction"),
   GS_BUYAUCTION("globalmarketchest.globalshop.buyauction"),
+  GS_SHOP_BUYAUCTION("globalmarketchest.globalshop.%s.buyauction"),
   CMD("globalmarketchest.commands"),
   CMD_RELOAD("globalmarketchest.commands.reload"),
   CMD_OPEN("globalmarketchest.commands.open"),
@@ -56,7 +59,18 @@ public enum Permissions {
    * @return Return a boolean to define if the permission is set
    */
   public Boolean isSetOn(Player player) {
-    return player != null && (player.hasPermission(this.perm) || GlobalMarketChest.plugin.economy.hasPermissions(player, this.perm));
+    return Permissions.isSetOn(player, this.perm);
+  }
+
+  /**
+   * Define if the permission is set for the specified shop
+   *
+   * @param player Player on which check the permissions
+   * @param shop   Name of shop to add in permission
+   * @return Return a boolean to define if the permission is set
+   */
+  public Boolean isSetOnWithShop(final Player player, final String shop) {
+    return Permissions.isSetOn(player, String.format(this.perm, shop));
   }
 
   /**

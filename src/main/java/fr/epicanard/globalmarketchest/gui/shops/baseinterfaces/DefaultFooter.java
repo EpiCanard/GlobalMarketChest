@@ -6,7 +6,6 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.NewAuction;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
-import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
@@ -16,13 +15,18 @@ import org.bukkit.inventory.ItemStack;
 import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
 import static fr.epicanard.globalmarketchest.utils.EconomyUtils.getMoneyOfPlayer;
 import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
+import static fr.epicanard.globalmarketchest.permissions.Permissions.*;
 
 public class DefaultFooter extends ShopInterface {
+
+  protected ShopInfo shopInfo;
 
   public DefaultFooter(InventoryGUI inv) {
     super(inv);
 
-    if (Permissions.GS_CREATEAUCTION.isSetOn(this.inv.getPlayer())) {
+    this.shopInfo = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
+
+    if (GS_CREATEAUCTION.isSetOn(this.inv.getPlayer()) || GS_SHOP_CREATEAUCTION.isSetOnWithShop(this.inv.getPlayer(), this.shopInfo.getGroup())) {
       this.actions.put(53, new NewAuction());
       this.togglers.get(53).set();
     }
@@ -61,8 +65,9 @@ public class DefaultFooter extends ShopInterface {
     Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> {
       this.updateBalance();
 
-      if (Permissions.GS_CREATEAUCTION.isSetOn(this.inv.getPlayer()))
+      if (GS_CREATEAUCTION.isSetOn(this.inv.getPlayer()) || GS_SHOP_CREATEAUCTION.isSetOnWithShop(this.inv.getPlayer(), this.shopInfo.getGroup())) {
         this.updateAuctionNumber();
+      }
     });
   }
 }
