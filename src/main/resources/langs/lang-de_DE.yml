@@ -67,7 +67,7 @@ Divers:
   NoAdvicePrice: "&3Kein Preisvorschlag"
   MinPrice: "Minimum Preis"
   MaxPrice: "Maximum Preis"
-  Anonymous: "Anonymous"
+  Anonymous: "Anonym"
 States:
   InProgress: "In Bearbeitung"
   Expired: "Abgelaufen"
@@ -195,9 +195,9 @@ Buttons:
   LastAuctions:
     Name: "&3Auktionen der letzten {hours} Stunden"
   LastCreatedAuctions:
-    Name: "&3Auctions created in last {hours} hours"
+    Name: "&3Auktionen, die in den letzten {hours} Stunden erstellt wurden"
   LastBoughtAuctions:
-    Name: "&3Auctions bought in last {hours} hours"
+    Name: "&3Auktionen, die in den letzten {hours} Stunden gekauft wurden"
   AdvicePriceInfo:
     Name: "Vorgeschlagener Preis"
     Description: "&3{advicePrice};&7Klicken um den vorgeschlagenen Preis zu benutzen"
@@ -239,9 +239,9 @@ InfoMessages:
   AcquireAuctionOwner: "&3{buyer} &6kaufte deine Auktion &2{quantity} {itemName} &6for &2{price}&6."
   AuctionCreated: "&3{seller} &6erstellte &3{auctionNumber}&6 Auktionen von &2{quantity} {itemName} &6für &2{price}&6."
   LoginMessage:
-    BaseMessage: "&6Since your last connection :"
-    SoldAuctions: "&6- You sold &3{count}&6 auctions"
-    ExpiredAuctions:  "&6- &3{count}&6 auctions has expired"
+    BaseMessage: "&6Seit der letzten Verbindung :"
+    SoldAuctions: "&6- Es wurden &3{count}&6 Auktionen verkauft."
+    ExpiredAuctions:  "&6- &3{count}&6 Auktionen sind abgelaufen"
   PluginReloading: "Plugin lädt neu..."
   PluginReloaded: "Plugin ist neu geladen."
   WriteGroupName: "Schreibe den Gruppennamen den du möchtest"
@@ -252,7 +252,7 @@ InfoMessages:
   ShopAuctionsConverted: "Shop &6{shopName}&7 : &3{updated}&9/{total}&7 Auktionen konvertiert"
   ShopTemporarilyLocked: "Dieser Shop ist vorübergehend gesperrt"
   ConversionMode: "Konvertierungs Modus : &6{mode}&7"
-  NewVersionAvailable: "&6The new version &3{lastVersion}&6 of GlobalMarketChest is now available on spigot ! &7(current : {currentVersion})"
+  NewVersionAvailable: "&6Die neue Version &3{lastVersion}&6 von GlobalMarketChest ist ist jetzt auf Spigot verfügbar ! &7(Aktuelle Version : {currentVersion})"
 Commands:
   Buttons:
     OpenText: "Öffnen"

@@ -67,7 +67,7 @@ Divers:
   NoAdvicePrice: "&3当前没有建议价格"
   MinPrice: "最低价格"
   MaxPrice: "最高价格"
-  Anonymous: "Anonymous"
+  Anonymous: "匿名的"
 States:
   InProgress: "进行中"
   Expired: "已过期 "
@@ -195,9 +195,9 @@ Buttons:
   LastAuctions:
     Name: "&3最近 {hours} 小时的拍卖"
   LastCreatedAuctions:
-    Name: "&3Auctions created in last {hours} hours"
+    Name: "&3 近{hours} 小时内创建的拍卖"
   LastBoughtAuctions:
-    Name: "&3Auctions bought in last {hours} hours"
+    Name: "&3 近{hours} 小时内购买的拍卖品"
   AdvicePriceInfo:
     Name: "建议价格"
     Description: "&3{advicePrice};&7点击使用建议价格"
@@ -239,9 +239,9 @@ InfoMessages:
   AcquireAuctionOwner: "&c[&e&l养老商城&c]&3{buyer} &6成功购买你的物品 &2{quantity}个 {itemName} &6价格: &2{price}&6."
   AuctionCreated: "&3{seller} &6创建了 &3{auctionNumber}&6 号拍卖 &2数量:{quantity} 物品名称:{itemName} &6价格: &2{price}&6."
   LoginMessage:
-    BaseMessage: "&6Since your last connection :"
-    SoldAuctions: "&6- You sold &3{count}&6 auctions"
-    ExpiredAuctions:  "&6- &3{count}&6 auctions has expired"
+    BaseMessage: "&6自从你上次上线以来 :"
+    SoldAuctions: "&6- 你一共卖出 &3{count}&6 件拍卖品"
+    ExpiredAuctions: "&6- &3{count}&6 拍卖已经过期"
   PluginReloading: "插件重载中...."
   PluginReloaded: "插件重载成功"
   WriteGroupName: "写下你想要的组名"
@@ -252,7 +252,7 @@ InfoMessages:
   ShopAuctionsConverted: "商店 &6{shopName}&7 : &3{updated}&9/{total}&7 店铺转换"
   ShopTemporarilyLocked: "这个商店暂时上锁了"
   ConversionMode: "转换模式 : &6{mode}&7"
-  NewVersionAvailable: "&6The new version &3{lastVersion}&6 of GlobalMarketChest is now available on spigot ! &7(current : {currentVersion})"
+  NewVersionAvailable: "&6GlobalMarketChest的最新版本:&3{lastVersion}&6 已经在spigot更新,地址: &7(current : {currentVersion})"
 Commands:
   Buttons:
     OpenText: "打开"
