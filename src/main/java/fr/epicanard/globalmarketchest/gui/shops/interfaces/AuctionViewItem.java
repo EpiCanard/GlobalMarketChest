@@ -34,12 +34,13 @@ public class AuctionViewItem extends AuctionViewBase {
 
   @Override
   public void load() {
-    super.load();
     final String search = this.inv.getTransactionValue(TransactionKey.ITEM_SEARCH);
 
     final ItemStack  icon = Utils.getButton("SearchItemText");
     ItemStackUtils.addItemStackLore(icon, Utils.toList(format("Divers.SearchItemTextIcon", "search", search)));
     this.setIcon(icon);
+
+    super.load();
   }
 
   @Override

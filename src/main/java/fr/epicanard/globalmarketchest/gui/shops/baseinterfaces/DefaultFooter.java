@@ -9,7 +9,6 @@ import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
@@ -62,12 +61,10 @@ public class DefaultFooter extends ShopInterface {
   @Override
   public void load() {
     super.load();
-    Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> {
-      this.updateBalance();
+    this.updateBalance();
 
-      if (GS_CREATEAUCTION.isSetOn(this.inv.getPlayer()) || GS_SHOP_CREATEAUCTION.isSetOnWithShop(this.inv.getPlayer(), this.shopInfo.getGroup())) {
-        this.updateAuctionNumber();
-      }
-    });
+    if (GS_CREATEAUCTION.isSetOn(this.inv.getPlayer()) || GS_SHOP_CREATEAUCTION.isSetOnWithShop(this.inv.getPlayer(), this.shopInfo.getGroup())) {
+      this.updateAuctionNumber();
+    }
   }
 }

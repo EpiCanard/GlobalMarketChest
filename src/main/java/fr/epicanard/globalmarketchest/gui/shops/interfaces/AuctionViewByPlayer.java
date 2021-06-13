@@ -34,8 +34,8 @@ public class AuctionViewByPlayer extends AuctionViewBase {
 
   @Override
   public void load() {
-    super.load();
     this.setIcon(PlayerUtils.getPlayerHead(this.inv.getTransactionValue(TransactionKey.PLAYER)));
+    super.load();
   }
 
   @Override
