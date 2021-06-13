@@ -10,23 +10,21 @@ import java.util.Optional;
 
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import lombok.experimental.UtilityClass;
 
 /**
  * Class that allow to call method with annotations @Version
  */
-@UtilityClass
-public class AnnotationCaller {
+public final class AnnotationCaller {
 
   /**
    * Get all methods of a class with the annotation @Version.name = methodName
    * And @Version.value = server version or "latest"
-   * 
+   *
    * @param methodName Name of annotation to search
    * @param objectClass Class on which find the methods
    * @return Return a map of string and method where string is the version
    */
-  private Map<String, Method> getMethods(String methodName, Class<?> objectClass) {
+  private static Map<String, Method> getMethods(String methodName, Class<?> objectClass) {
     final List<Method> methods = Arrays.asList(objectClass.getMethods());
     final Map<String, Method> finalMethods = new HashMap<>();
 
@@ -47,17 +45,17 @@ public class AnnotationCaller {
   /**
    * Search a method with annotation Version.name=@param methodName
    * And Version.versions=Server version or Version.versions=value
-   * 
+   *
    * This process allow to have multi version of one method tagged for each version
-   * 
+   *
    * Exemple:
    * @Version(name="test", versions={"1.13"})
    * myMethod() {}
-   * 
+   *
    * AnnotationCaller.call("test", my_obj, null)
-   * 
+   *
    * See: fr.epicanard.globalmarketchest.utils.annotations.Version
-   * 
+   *
    * @param <T> Return type of called method
    * @param methodName Name of the annotation to find
    * @param object Object on which is declared the method
@@ -65,24 +63,24 @@ public class AnnotationCaller {
    * @return Return what is return by the method called
    * @throws MissingMethodException Throw when method with name (methodName) is missing with the server version and latest
    */
-  public <T> T call(String methodName, Object object, Object ...args) throws MissingMethodException {
+  public static <T> T call(String methodName, Object object, Object ...args) throws MissingMethodException {
     return AnnotationCaller.call(methodName, object.getClass(), object, args);
   }
 
   /**
    * Search a method with annotation Version.name=@param methodName
    * And Version.versions=Server version or Version.versions=value
-   * 
+   *
    * This process allow to have multi version of one method tagged for each version
-   * 
+   *
    * Exemple:
    * @Version(name="test", versions={"1.13"})
    * myMethod() {}
-   * 
+   *
    * AnnotationCaller.call("test", my_obj, null)
-   * 
+   *
    * See: fr.epicanard.globalmarketchest.utils.annotations.Version
-   * 
+   *
    * @param <T> Return type of called method
    * @param methodName Name of the annotation to find
    * @param objectClass Class of object
@@ -92,7 +90,7 @@ public class AnnotationCaller {
    * @throws MissingMethodException Throw when method with name (methodName) is missing with the server version and latest
    */
   @SuppressWarnings("unchecked")
-  public <T> T call(String methodName, Class<?> objectClass, Object object, Object ...args) throws MissingMethodException {
+  public static <T> T call(String methodName, Class<?> objectClass, Object object, Object ...args) throws MissingMethodException {
     final Map<String, Method> methods = AnnotationCaller.getMethods(methodName, objectClass);
     final Method method = Optional.ofNullable(methods.get(Utils.getVersion())).orElse(methods.get("latest"));
 
