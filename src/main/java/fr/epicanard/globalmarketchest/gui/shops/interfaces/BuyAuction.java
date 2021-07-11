@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -179,7 +180,7 @@ public class BuyAuction extends UndoAuction {
       return false;
     }
 
-    final String displayName = item.getItemMeta().getDisplayName().toLowerCase();
+    final String displayName = Optional.ofNullable(item.getItemMeta().getDisplayName()).map(String::toLowerCase).orElse("");
     return ShulkerBoxContent.isShulker(item) && (
         ConfigUtils.getBoolean("Options.ShulkerBox.SeeContent", true) ^
         ConfigUtils.getStringList("Options.ShulkerBox.ExceptDisplayNames").stream().anyMatch(except -> displayName.contains(except.toLowerCase()))
