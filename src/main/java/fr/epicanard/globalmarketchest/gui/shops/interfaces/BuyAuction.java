@@ -89,7 +89,7 @@ public class BuyAuction extends UndoAuction {
       if (!GlobalMarketChest.plugin.auctionManager.buyAuction(auction.getId(), i.getPlayer()))
         throw new WarnException("CantBuyAuction");
 
-      final MoneyExchangeEvent event = new MoneyExchangeEvent(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice());
+      final MoneyExchangeEvent event = new MoneyExchangeEvent(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice(), auction.getTaxedPrice());
       Bukkit.getServer().getPluginManager().callEvent(event);
 
       i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
@@ -111,14 +111,16 @@ public class BuyAuction extends UndoAuction {
    * @param item    ItemStack bought
    */
   private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
-    final String langVariable = isOwner ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
-    final Map<String, Object> mapping = ImmutableMap.of(
-        "buyer", anonymousPlayer("Buyer").orElseGet(() -> buyer.getName()),
-        "quantity", auction.getAmount(),
-        "itemName", ItemStackUtils.getItemStackDisplayName(item),
-        "price", EconomyUtils.format(auction.getTotalPrice()),
-        "seller", anonymousPlayer("Seller").orElseGet(() -> PlayerUtils.getPlayerName(auction.getPlayerStarter()))
-    );
+    final String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
+    final Map<String, Object> mapping = ImmutableMap.<String, Object>builder()
+            .put("buyer", anonymousPlayer("Buyer").orElseGet(() -> buyer.getName()))
+            .put("quantity", auction.getAmount())
+            .put("itemName", ItemStackUtils.getItemStackDisplayName(item))
+            .put("price", EconomyUtils.format(auction.getTotalPrice()))
+            .put("finalPrice", EconomyUtils.format(auction.getTaxedPrice()))
+            .put("seller", anonymousPlayer("Seller").orElseGet(() -> PlayerUtils.getPlayerName(auction.getPlayerStarter())))
+            .put("tax", auction.getTaxAmount())
+            .build();
 
     return LangUtils.format(langVariable, mapping);
   }
