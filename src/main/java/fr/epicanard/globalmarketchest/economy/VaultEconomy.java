@@ -122,8 +122,8 @@ public class VaultEconomy {
     return this.economy.getBalance(player);
   }
 
-  public void exchangeMoney(UUID playerTake, UUID playerGive, Double price) {
+  public void exchangeMoney(UUID playerTake, UUID playerGive, Double price, Double priceAfterTax) {
     this.takeMoneyToPlayer(playerTake, price);
-    this.giveMoneyToPlayer(playerGive, price);
+    this.giveMoneyToPlayer(playerGive, priceAfterTax);
   }
 }

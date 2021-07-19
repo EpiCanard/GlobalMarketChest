@@ -86,6 +86,34 @@ public class AuctionInfo {
   }
 
   /**
+   * Get final total price of auction after tax
+   *
+   * @return Final total price after tax
+   */
+  public Double getTaxedPrice() {
+    //Check if the tax is a valid multiplier or bad things may happen if configured outside the proper bounds
+    double taxMultiplier = 1 - ConfigUtils.getDouble("Options.ServerTax", 0);
+    if (taxMultiplier < 0 || taxMultiplier > 1) {
+      taxMultiplier = 0.0;
+    }
+    return BigDecimal.valueOf(getTotalPrice()).multiply(BigDecimal.valueOf(taxMultiplier)).doubleValue();
+  }
+
+  /**
+   * Get taxed amount
+   *
+   * @return Total tax amount
+   */
+  public Double getTaxAmount() {
+    //Check if the tax is a valid multiplier or bad things may happen if configured outside the propper bounds
+    double taxMultiplier = ConfigUtils.getDouble("Options.ServerTax", 0);
+    if (taxMultiplier < 0 || taxMultiplier > 1) {
+      taxMultiplier = 0.0;
+    }
+    return BigDecimal.valueOf(getTotalPrice()).multiply(BigDecimal.valueOf(taxMultiplier)).doubleValue();
+  }
+
+  /**
    * Set itemstack inside auction
    *
    * @param item Item to set inside auction
