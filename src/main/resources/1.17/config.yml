@@ -80,6 +80,8 @@ Options:
     Analyze: "all"
     # Define the number of days to analyze for average of advice price on choice price view
     Days: 30
+  # Server tax (decimal, between 0 and 1) to be withheld after someone makes a purchase. Use 0.0 to disable.
+  ServerTax: 0.2
   # Config about shulker box
   ShulkerBox:
     # Allow to see the content of a shulker box when a player want to buy it
