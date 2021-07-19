@@ -17,6 +17,8 @@ public class MoneyExchangeEvent extends Event {
   private UUID targetPlayer;
   @Getter
   private Double price;
+  @Getter
+  private Double priceAfterTax;
 
   @Override
   public HandlerList getHandlers() {

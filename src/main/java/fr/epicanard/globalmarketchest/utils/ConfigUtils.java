@@ -51,3 +51,4 @@ public class ConfigUtils {
     return GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList(path);
   }
 }
+
