@@ -50,4 +50,5 @@ public class ConfigUtils {
   public List<String> getStringList(final String path) {
     return GlobalMarketChest.plugin.getConfigLoader().getConfig().getStringList(path);
   }
+
 }

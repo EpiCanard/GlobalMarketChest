@@ -1,18 +1,17 @@
 package fr.epicanard.globalmarketchest.economy;
 
-import java.util.UUID;
-
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
+
+import java.util.UUID;
 
 public class VaultEconomy {
   private Economy economy;
@@ -123,8 +122,8 @@ public class VaultEconomy {
     return this.economy.getBalance(player);
   }
 
-  public void exchangeMoney(UUID playerTake, UUID playerGive, Double price) {
+  public void exchangeMoney(UUID playerTake, UUID playerGive, Double price, Double priceAfterTax) {
     this.takeMoneyToPlayer(playerTake, price);
-    this.giveMoneyToPlayer(playerGive, price);
+    this.giveMoneyToPlayer(playerGive, priceAfterTax);
   }
 }

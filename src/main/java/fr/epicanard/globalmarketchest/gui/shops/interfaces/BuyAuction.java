@@ -87,7 +87,7 @@ public class BuyAuction extends UndoAuction {
       if (!GlobalMarketChest.plugin.auctionManager.buyAuction(auction.getId(), i.getPlayer()))
         throw new WarnException("CantBuyAuction");
 
-      final MoneyExchangeEvent event = new MoneyExchangeEvent(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice());
+      final MoneyExchangeEvent event = new MoneyExchangeEvent(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice(), auction.getTaxedPrice());
       Bukkit.getServer().getPluginManager().callEvent(event);
 
       i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
@@ -110,13 +110,15 @@ public class BuyAuction extends UndoAuction {
    */
   private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
     final String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
-    final Map<String, Object> mapping = ImmutableMap.of(
-        "buyer", ConfigUtils.getBoolean("Options.Anonymous.Buyer", false) ? LangUtils.getOrElse("Divers.Anonymous", "Anonymous") : buyer.getName(),
-        "quantity", auction.getAmount(),
-        "itemName", ItemStackUtils.getItemStackDisplayName(item),
-        "price", EconomyUtils.format(auction.getTotalPrice()),
-        "seller", ConfigUtils.getBoolean("Options.Anonymous.Seller", false) ? LangUtils.getOrElse("Divers.Anonymous", "Anonymous") : PlayerUtils.getPlayerName(auction.getPlayerStarter())
-    );
+    final Map<String, Object> mapping = ImmutableMap.<String, Object>builder()
+            .put("buyer", ConfigUtils.getBoolean("Options.Anonymous.Buyer", false) ? LangUtils.getOrElse("Divers.Anonymous", "Anonymous") : buyer.getName())
+            .put("quantity", auction.getAmount())
+            .put("itemName", ItemStackUtils.getItemStackDisplayName(item))
+            .put("price", EconomyUtils.format(auction.getTotalPrice()))
+            .put("finalPrice", EconomyUtils.format(auction.getTaxedPrice()))
+            .put("seller", ConfigUtils.getBoolean("Options.Anonymous.Seller", false) ? LangUtils.getOrElse("Divers.Anonymous", "Anonymous") : PlayerUtils.getPlayerName(auction.getPlayerStarter()))
+            .put("tax", auction.getTaxAmount())
+            .build();
 
     return LangUtils.format(langVariable, mapping);
   }
