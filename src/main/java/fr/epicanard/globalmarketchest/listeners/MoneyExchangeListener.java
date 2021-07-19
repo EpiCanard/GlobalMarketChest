@@ -9,6 +9,6 @@ public class MoneyExchangeListener implements Listener {
 
   @EventHandler
   public void onMoneyExchange(final MoneyExchangeEvent event) {
-    GlobalMarketChest.plugin.economy.exchangeMoney(event.getSourcePlayer(), event.getTargetPlayer(), event.getPrice());
+    GlobalMarketChest.plugin.economy.exchangeMoney(event.getSourcePlayer(), event.getTargetPlayer(), event.getPrice(), event.getPriceAfterTax());
   }
 }
