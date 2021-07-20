@@ -86,17 +86,12 @@ public class AuctionInfo {
   }
 
   /**
-   * Get final total price of auction after tax
+   * Get final total price of auction the seller will receive after tax deduction
    *
    * @return Final total price after tax
    */
   public Double getTaxedPrice() {
-    //Check if the tax is a valid multiplier or bad things may happen if configured outside the proper bounds
-    double taxMultiplier = 1 - ConfigUtils.getDouble("Options.ServerTax", 0);
-    if (taxMultiplier < 0 || taxMultiplier > 1) {
-      taxMultiplier = 0.0;
-    }
-    return BigDecimal.valueOf(getTotalPrice()).multiply(BigDecimal.valueOf(taxMultiplier)).doubleValue();
+    return BigDecimal.valueOf(getTotalPrice()).subtract(BigDecimal.valueOf(getTaxAmount())).doubleValue();
   }
 
   /**
