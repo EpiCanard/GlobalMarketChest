@@ -19,13 +19,8 @@ import fr.epicanard.globalmarketchest.listeners.*;
 import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
 import fr.epicanard.globalmarketchest.ranks.RanksLoader;
-import fr.epicanard.globalmarketchest.utils.ConfigUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.LoggerUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import fr.epicanard.globalmarketchest.utils.*;
 import lombok.Getter;
-
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -34,15 +29,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Scanner;
 import java.util.logging.Level;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 
 public class GlobalMarketChest extends JavaPlugin {
@@ -237,7 +226,7 @@ public class GlobalMarketChest extends JavaPlugin {
    * @param sender Player to send the message
    */
   public static void checkNewVersion(final CommandSender sender) {
-    try (Scanner s = new Scanner(new URL("https://api.spiget.org/v2/resources/64921/versions/latest").openStream())) {
+    /*try (Scanner s = new Scanner(new URL("https://api.spiget.org/v2/resources/64921/versions/latest").openStream())) {
       final String value = s.useDelimiter("\\A").next();
       final JsonObject obj = (JsonObject) new JsonParser().parse(value);
       final String lastVersion = obj.get("name").getAsString();
@@ -251,5 +240,6 @@ public class GlobalMarketChest extends JavaPlugin {
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
+    */
   }
 }
