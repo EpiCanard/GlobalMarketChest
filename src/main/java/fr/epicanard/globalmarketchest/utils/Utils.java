@@ -32,7 +32,7 @@ public class Utils {
    * Prevent loading config issues for versions not fully supported by the plugin
    */
   @Getter
-  private static final String lastSupportedVersion = "1.17";
+  private static final String lastSupportedVersion = "1.18";
 
   static {
     version = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 4);
