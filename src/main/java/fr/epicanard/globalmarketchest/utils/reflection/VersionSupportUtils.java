@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.utils.reflection;
 
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,6 +9,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils.*;
 import static fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller.call;
@@ -114,9 +118,14 @@ public class VersionSupportUtils {
     return getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "IRegistry").getField("ITEM").get(null);
   }
 
+  @Version(name="getRegistry", versions={"1.17"})
+  public Object getRegistry_1_17() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
+    return getClassFromPath(Path.MINECRAFT_CORE, "IRegistry").getField("Z").get(null);
+  }
+
   @Version(name="getRegistry")
   public Object getRegistry_latest() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
-    return getClassFromPath(Path.MINECRAFT_CORE, "IRegistry").getField("Z").get(null);
+    return getClassFromPath(Path.MINECRAFT_CORE, "IRegistry").getField("aa").get(null);
   }
 
   @Version(name="getRegistryItem", versions={"1.12"})
@@ -124,9 +133,14 @@ public class VersionSupportUtils {
     return registry.getClass().getMethod("get", Object.class).invoke(registry, minecraftKey);
   }
 
+  @Version(name="getRegistryItem", versions={"1.13", "1.14", "1.15", "1.16", "1.17"})
+  public Object getRegistryItem_old(Object registry, Object minecraftKey) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    return registry.getClass().getMethod("get", minecraftKey.getClass()).invoke(registry, minecraftKey);
+  }
+
   @Version(name="getRegistryItem")
   public Object getRegistryItem(Object registry, Object minecraftKey) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-    return registry.getClass().getMethod("get", minecraftKey.getClass()).invoke(registry, minecraftKey);
+    return registry.getClass().getMethod("a", minecraftKey.getClass()).invoke(registry, minecraftKey);
   }
 
   @Version(name="getMinecraftKeyClass", versions = {"1.12", "1.13", "1.14", "1.15", "1.16"})
@@ -140,23 +154,38 @@ public class VersionSupportUtils {
   }
 
   @Version(name="getMinecraftKey", versions = {"1.12"})
-  public Object getMinecraftKey_old(Object registry, Object nmsItemStack) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+  public Object getMinecraftKey_1_12(Object registry, Object nmsItemStack) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
     return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "getItem"));
+  }
+
+  @Version(name="getMinecraftKey", versions = {"1.13", "1.14", "1.15", "1.16", "1.17"})
+  public Object getMinecraftKey_old(Object registry, Object nmsItemStack) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    return registry.getClass().getMethod("getKey", Object.class).invoke(registry, invokeMethod(nmsItemStack, "getItem"));
   }
 
   @Version(name="getMinecraftKey")
   public Object getMinecraftKey_latest(Object registry, Object nmsItemStack) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-    return registry.getClass().getMethod("getKey", Object.class).invoke(registry, invokeMethod(nmsItemStack, "getItem"));
+    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "c"));
   }
 
-  @Version(name="getNamespace", versions = {"1.12", "1.13"})
+  @Version(name="getNamespace", versions = {"1.14", "1.15", "1.16", "1.17"})
   public Object getNamespace_old(Object minecraftKey) {
-    return invokeMethod(minecraftKey, "b");
+    return invokeMethod(minecraftKey, "getNamespace");
   }
 
   @Version(name="getNamespace")
   public Object getNamespace_latest(Object minecraftKey) {
-    return invokeMethod(minecraftKey, "getNamespace");
+    return invokeMethod(minecraftKey, "b");
+  }
+
+  @Version(name="getKey", versions = {"1.12", "1.13", "1.14", "1.15", "1.16", "1.17"})
+  public Object getKey_old(Object minecraftKey) {
+    return invokeMethod(minecraftKey, "getKey");
+  }
+
+  @Version(name="getKey")
+  public Object getKey_latest(Object minecraftKey) {
+    return invokeMethod(minecraftKey, "a");
   }
 
   @Version(name="newNBTTagCompound", versions = {"1.12", "1.13", "1.14", "1.15", "1.16"})
@@ -179,6 +208,45 @@ public class VersionSupportUtils {
     return getClassFromPath(Path.MINECRAFT_WORLD_ITEM, "Item");
   }
 
+  @Version(name="getName", versions = {"1.12", "1.13", "1.14", "1.15", "1.16", "1.17"})
+  public Object getName_old(Object nmsItemStack) {
+    return invokeMethod(nmsItemStack, "getName");
+  }
+  @Version(name="getName")
+  public Object getName_latest(Object nmsItemStack) {
+    return invokeMethod(nmsItemStack, "v");
+  }
+
+  private String before1_18(String before, String after) {
+    switch (Utils.getVersion()) {
+      case "1.12":
+      case "1.13":
+      case "1.14":
+      case "1.15":
+      case "1.16":
+      case "1.17":
+        return before;
+      default:
+        return after;
+    }
+  }
+
+  public String getTagName() {
+    return before1_18("getTag", "s");
+  }
+
+  public String hasTagName() {
+    return before1_18("hasKey", "e");
+  }
+
+  public String setBooleanName() {
+    return before1_18("setBoolean", "a");
+  }
+
+  public String setTagName() {
+    return before1_18("setTag", "c");
+  }
+
   // ======= SPECIFIC METHOD ===========
 
   /**
@@ -198,7 +266,8 @@ public class VersionSupportUtils {
         return null;
 
       Class<?> itemCLass = call("getItemClass", this);
-      Method asNewCraftStack = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack").getMethod("asNewCraftStack", itemCLass);
+
+      Method asNewCraftStack = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack").getDeclaredMethod("asNewCraftStack", itemCLass);
       ItemStack itemStack = (ItemStack)asNewCraftStack.invoke(null, item);
 
       return this.setNbtTag(itemStack);
@@ -226,7 +295,7 @@ public class VersionSupportUtils {
       Object registry = getRegistry();
       Object minecraftKey = call("getMinecraftKey", this, registry, nmsItemStack);
 
-      return call("getNamespace", this, minecraftKey).toString() + ":" + invokeMethod(minecraftKey, "getKey").toString();
+      return call("getNamespace", this, minecraftKey) + ":" + call("getKey", this, minecraftKey);
 
     } catch(Exception e) {
       e.printStackTrace();
@@ -244,13 +313,13 @@ public class VersionSupportUtils {
     try {
       Method asNMSCopy = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack").getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
-      Object name = invokeMethod(nmsItemStack, "getName");
+      Object name = call("getName", this, nmsItemStack);
 
       if (name instanceof String) {
         return (String)name;
       }
       return invokeMethod(name, "getString").toString();
-    } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+    } catch(Exception e) {
       e.printStackTrace();
     }
     return null;
@@ -281,7 +350,7 @@ public class VersionSupportUtils {
       playerConnection.getClass().getMethod("sendPacket", getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Packet")).invoke(playerConnection, packet);
       entityPlayer.getClass().getMethod("updateInventory", getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Container")).invoke(entityPlayer, activeContainerVF.value());
 
-    } catch(NoSuchFieldException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException  e) {
+    } catch(Exception e) {
       e.printStackTrace();
     }
   }
@@ -322,8 +391,8 @@ public class VersionSupportUtils {
    * @param title The new inventory Name
    * @param player The player
    */
-  @Version(name="updateInventoryName")
-  public void updateInventoryName_latest(String title, Player player) {
+  @Version(name="updateInventoryName", versions = {"1.17"})
+  public void updateInventoryName_1_17(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
       Object chatMessage = newInstance(getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "ChatMessage"), title, new Object[]{});
@@ -344,6 +413,28 @@ public class VersionSupportUtils {
     }
   }
 
+  @Version(name="updateInventoryName")
+  public void updateInventoryName_latest(String title, Player player) {
+    try {
+      Object entityPlayer = invokeMethod(player, "getHandle");
+      Object chatMessage = newInstance(getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "ChatMessage"), title, new Object[]{});
+      VersionField activeContainerVF = VersionField.from(entityPlayer).get("bW");
+      Object windowId = activeContainerVF.get("j").value();
+
+      Class<?> iChat = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
+      Class<?> containers = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Containers");
+
+      Object packet = getClassFromPath(Path.MINECRAFT_NETWORK_GAME, "PacketPlayOutOpenWindow").getConstructor(Integer.TYPE, containers, iChat)
+        .newInstance( windowId, containers.getField("f").get(null), iChat.cast(chatMessage));
+
+      Object playerConnection = entityPlayer.getClass().getDeclaredField("b").get(entityPlayer);
+
+      playerConnection.getClass().getMethod("a", getClassFromPath(Path.MINECRAFT_NETWORK_PROTOCOL, "Packet")).invoke(playerConnection, packet);
+    } catch(NoSuchFieldException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException  e) {
+      e.printStackTrace();
+    }
+  }
+
   /**
    * Define if the GMC NBT TAG is set on this item
    *
@@ -355,11 +446,10 @@ public class VersionSupportUtils {
       Method asNMSCopy = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack").getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
 
-      Object tagCompound = invokeMethod(nmsItemStack, "getTag");
+      Object tagCompound = invokeMethod(nmsItemStack, getTagName());
 
-      return (tagCompound != null && (Boolean)invokeMethod(tagCompound, "hasKey", this.NBTTAG));
-
-    } catch(ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+      return (tagCompound != null && (Boolean)invokeMethod(tagCompound, hasTagName(), this.NBTTAG));
+    } catch(Exception e) {
       e.printStackTrace();
     }
     return false;
@@ -380,15 +470,15 @@ public class VersionSupportUtils {
       Method asNMSCopy = craftItemStack.getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
 
-      Object tagCompound = invokeMethod(nmsItemStack, "getTag");
+      Object tagCompound = invokeMethod(nmsItemStack, getTagName());
 
       if (tagCompound == null) {
         tagCompound = call("newNBTTagCompound", this);
       }
 
-      tagCompound.getClass().getMethod("setBoolean", String.class, boolean.class).invoke(tagCompound, this.NBTTAG, true);
+      tagCompound.getClass().getMethod(setBooleanName(), String.class, boolean.class).invoke(tagCompound, this.NBTTAG, true);
 
-      invokeMethod(nmsItemStack, "setTag", tagCompound);
+      invokeMethod(nmsItemStack, setTagName(), tagCompound);
       return (ItemStack)craftItemStack.getDeclaredMethod("asBukkitCopy", nmsItemStack.getClass()).invoke(null, nmsItemStack);
 
     } catch(Exception e) {
