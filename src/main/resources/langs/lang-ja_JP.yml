@@ -1,0 +1,277 @@
+# ========================= File lang-ja_JP.yml =============================
+#
+# Language :        Japanese
+# Translation by :  theilqer
+#
+# This file contains all text displayed by the plugin GlobalMarketChest
+#
+# Information:
+#   In some texts, there are variables like this: {shopName}.
+#   DO NOT TRANSLATE THEM !
+#   These variables are replaced inside the plugin to display dynamic text.
+#   The order of the variables can be changed.
+#   If you remove a variable, this will not create an error.
+#
+# ===========================================================================
+
+InterfacesTitle:
+  EditAuction: "&2オークションを編集する"
+  BuyAuction: "&2オークションを購入する"
+  CategoryView: "&2カテゴリビュー"
+  AuctionViewList: "&2オークションリスト"
+  AuctionViewByPlayer: "&2オークションリスト"
+  AuctionViewItem: "&2オークションリスト"
+  ConfigShop : "&2ショップ構成"
+  AuctionGlobalView: "&2オークション履歴"
+  SearchView: "&2オークションを検索"
+  ConfirmView: "&2確認"
+  LastAuctionViewList: "&2最後のオークション"
+  ShulkerBoxContent: "&2シュルカーボックスの内容"
+  # Auction Creation
+  CreateAuctionItem: "&2オークションアイテムを選択"
+  CreateAuctionPrice: "&2オークション価格を選択"
+  # Shop Creation
+  ShopCreationSelectType: "&2ショップタイプとリンクブロックを選択"
+  ShopCreationLink: "&2グループ名/リンクショップを設定する"
+Divers:
+  State: "状態"
+  Quantity: "額"
+  UnitPrice: "それぞれの値段"
+  TotalPrice: "価格合計"
+  AuctionNumber: "オークション番号"
+  Seller: "売り手"
+  Buyer: "買い手"
+  Start: "開始"
+  Location: "位置"
+  OtherLocation: "他の場所"
+  Server: "サーバ"
+  Group: "グループ"
+  Type: "タイプ"
+  Warning: "警告"
+  ExpireIn: "有効期限"
+  Expired: "期限切れ"
+  Started: "開始"
+  Ended: "終了しました"
+  CanceledBy: "によってキャンセルされました"
+  Free: "無料"
+  WithStatus: "&fステータス付き : &2{status}"
+  Days: "日々"
+  Hours: "時間"
+  Minutes: "分"
+  Seconds: "秒"
+  PastDate: "{date}前に"
+  UnknownPlayer: "不明なプレーヤー"
+  SearchItemTextIcon: "&7検索： &3{search}"
+  ExitChatMode: "&7 - (書く &9{exit}&7 チャットモードを終了するには)"
+  AdvicePriceIcon: "&7アドバイス価格 : &3{advicePrice}"
+  NoAdvicePrice: "&3アドバイス価格なし"
+  MinPrice: "最低価格"
+  MaxPrice: "最高価格"
+  Anonymous: "匿名"
+States:
+  InProgress: "進行中"
+  Expired: "期限切れ"
+  Abandoned: "放棄された"
+  Finished: "終了した"
+Shops:
+  ClickChangeGroup: "&cクリックしてショップグループ名を変更"
+  CurrentShop: "現在のお店"
+Buttons:
+  Background:
+    Name: " "
+  Money:
+    Name: "&6あなたのお金"
+  PreviousButton:
+    Name: "戻る"
+    Description: "&f以前のインベントリに戻る"
+  ExitButton:
+    Name: "&4出口"
+    Description: "&fこの在庫を閉じる"
+  Validate:
+    Name: "&2検証"
+    Description: "&f次のステップに進みます"
+  Return:
+    Name: "&4戻る"
+    Description: "&f前の手順に戻る"
+  CreateShop:
+    Name: "&2ショップを作成する"
+  NewAuction:
+    Name: "&2新しいオークションを作成する"
+    Description: "&7オークション番号 ({auctionNumber}/{maxAuctionNumber});&7ここをクリックしてアイテムを販売してください"
+  CreateAuction:
+    Name: "&2オークションを作成する"
+  BuyAuction:
+    Name: "&2このオークションを購入する"
+  AdminRemoveAuction:
+    Name: "&cこのオークションを削除する"
+  AdminSeePlayerAuctions:
+    Name: "&cプレーヤーのオークションを見る"
+  RenewAuction:
+    Name: "&6このオークションを更新する"
+  UndoAuction:
+    Name: "&cこのオークションを元に戻す"
+  RenewEveryAuction:
+    Name: "&6すべてのオークションを更新します"
+  UndoEveryAuction:
+    Name: "&cすべてのオークションを元に戻す"
+  GlobalView:
+    Name: "&f概要"
+    Description: "&5オークション履歴"
+  Search:
+    Name: "&3オークションを検索する"
+  DragItem:
+    Name: "&aここにアイテムをドラッグします"
+    Description: "&aまたはShiftキーを押しながらクリックします"
+  CancelAuction:
+    Name: "&4このオークションをキャンセルする"
+  ViewByCategory:
+    Name: "カテゴリ別に表示"
+    Description: "プレイヤーはカテゴリ別にオークションを見ることができますか？"
+  ViewByPlayer:
+    Name: "プレイヤーごとに表示"
+    Description: "プレイヤーはプレイヤーごとにオークションを見ることができますか？"
+  ViewByLastCreated:
+    Name: "最後に作成されたもので表示"
+    Description: "プレイヤーは最後に作成されたオークションを見ることができますか？"
+  GlobalShop:
+    Name: "グローバルショップ"
+  AuctionShop:
+    Name: "オークションショップ"
+  LocalShop:
+    Name: "地元の店"
+  AdminShop:
+    Name: "管理店"
+  EditGroupName:
+    Name: "&fグループ名の編集"
+  PreviousPage:
+    Name: "前のページ"
+  NextPage:
+    Name: "次のページ"
+  NumPage:
+    Name: "ページ番号"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2ここにアイテムをドロップします"
+    Description: "&2またはShiftキーを押しながらクリックします"
+  MaxInOne:
+    Name: "&f1回のオークションでの最大アイテム数"
+  MaxRepeat:
+    Name: "&fできるだけ多くのオークションを繰り返します"
+  RepeatIncrease:
+    Name: "&2+"
+  RepeatDecrease:
+    Name: "&4-"
+  InProgressAuction:
+    Name: "&a進行中のオークション"
+  ExpiredAuction:
+    Name: "&c期限切れのオークション"
+  SoldAuction:
+    Name: "&bオークション販売"
+  BoughtAuction:
+    Name: "&9オークションを購入しました"
+  CanceledAuction:
+    Name: "&6キャンセルされたオークション"
+  FreePrice:
+    Name: "&a無料"
+    Description: "&7価格をゼロに設定します"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
+  YesButton:
+    Name: "はい"
+  NoButton:
+    Name: "いいえ"
+  Question:
+    Name: " "
+  SearchItemDrop:
+    Name: "&f類似のアイテムを探す"
+    Description: "&7必要なアイテムをクリックします;＆7またはShiftキーを押しながらクリックします"
+  SearchItemText:
+    Name: "&f彼の名前のアイテムを探す"
+  SearchByPlayer:
+    Name: "&fプレーヤーのオークションを検索する"
+  LastAuctions:
+    Name: "&3最後のオークション {hours} 時間"
+  LastCreatedAuctions:
+    Name: "&3最後に作成されたオークション {hours} 時間"
+  LastBoughtAuctions:
+    Name: "&3最後に購入したオークション {hours} 時間"
+  AdvicePriceInfo:
+    Name: "アドバイス価格"
+    Description: "&3{advicePrice};&7クリックしてアドバイス価格を使用"
+  SeeShulkerBoxContent:
+    Name: "このシュルカーボックスの内容を見る"
+ErrorMessages:
+  UnknownWorld: "ショップの未知の世界"
+  ShopTypeNotSet: "ショップタイプが設定されていません;＆2少なくとも1つのタイプを選択してください"
+  MissingItems: "アイテムの数が間違っています、いくつかのアイテムが欠落しています"
+  FailCreateAuction: "データベースにオークションを作成できない"
+  NotEnoughSpace: "すべてのアイテムを追加するのに十分なスペースがありません;＆7inプレーヤーインベントリ"
+  NotEnoughMoney: "このオークションを購入するのに十分なお金がありません"
+  CantBuyAuction: "オークションの購入に失敗した（期限切れまたはすでに販売済み）"
+  CantRenewAuction: "オークションの更新に失敗する"
+  CantUndoAuction: "オークションを取り消せない"
+  CantRemoveAuction: "オークションの削除に失敗する"
+  CantRenewEveryAuction: "すべてのオークションを更新しない"
+  CantUndoEveryAuction: "すべてのオークションを元に戻すことに失敗する"
+  PlayerDoesntExist: "このプレイヤーは存在しません"
+  MaxAuctionByPlayer: "これ以上オークションを作成できません;＆7最大オークション数に達しました"
+  PermissionNotAllowed: "&cこのアクションを実行することは許可されていません"
+  InvalidCommand: "&cこのコマンドは無効です : "
+  PlayerOnly: "&cこのコマンドはプレイヤーのみが実行できます"
+  UnknownShop: "&c不明なショップ : "
+  CantRemoveBlock: "&cショップが併設されているため、このブロックを削除することはできません。"
+  DamagedItem: "破損した商品は販売できません"
+  BlacklistedItem: "ブラックリストに載っている商品は販売できません"
+  CommandInChat: "&cチャットモードでコマンドを実行することは許可されていません"
+  MaxGlobalShop: "&c作成できるグローバルショップの最大数に達しました({maxGlobalShop} グローバルショップ)"
+InfoMessages:
+  UndoAuction: "&2オークションは正常に削除されました"
+  RemoveAuction: "&2オークションは正常に削除されました"
+  RenewAuction: "&2オークションが正常に更新されました"
+  CreateAuction: "&2オークションが正常に作成されました"
+  RenewEveryAuction: "&2すべてのオークションは正常に更新されました"
+  UndoEveryAuction: "&2すべてのオークションは正常に削除されました"
+  ShopDeleted: "ショップが正常に削除されました"
+  AcquireAuction: "&3{buyer} &6買った &2{quantity} {itemName} &6にとって &2{price}&6 に &3{seller}&6."
+  AcquireAuctionOwner: "&3{buyer} &6オークションを購入しました &2{quantity} {itemName} &6にとって &2{price}&6."
+  AuctionCreated: "&3{seller} &6作成した &3{auctionNumber}&6 のオークション&2{quantity} {itemName} &6にとって &2{price}&6."
+  LoginMessage:
+    BaseMessage: "&6最後の接続以降 :"
+    SoldAuctions: "&6- あなたは売りました &3{count}&6 オークション"
+    ExpiredAuctions:  "&6- &3{count}&6 オークションの有効期限が切れました"
+  PluginReloading: "プラグインをリロードしています。"
+  PluginReloaded: "プラグインがリロードされます。"
+  WriteGroupName: "必要なグループ名を記入してください"
+  WriteItemName: "あなたが探しているアイテムの名前を書いてください"
+  WritePlayerName: "あなたが探しているプレーヤーの名前を書いてください"
+  DeleteShopQuestion: "あなたが探しているプレーヤーの名前を書いてください"
+  ConvertingShopAuctions: "ショップのオークションの変換 : &6{shopName}&7"
+  ShopAuctionsConverted: "店 &6{shopName}&7 : &3{updated}&9/{total}&7 変換されたオークション"
+  ShopTemporarilyLocked: "このお店は一時的に施錠されています"
+  ConversionMode: "変換モード : &6{mode}&7"
+  NewVersionAvailable: "&6新しいバージョン &3{lastVersion}&6 GlobalMarketChestのがスピゴットで利用可能になりました！ &7(現在 : {currentVersion})"
+Commands:
+  Buttons:
+    OpenText: "開ける"
+    OpenHover: "クリックしてショップを開きます"
+    DetailText: "詳細"
+    DetailHover: "詳細を表示をクリックします"
+    TeleportText: "テレポート"
+    TeleportHover: "クリックしてショップにテレポートします"
+  ListShop: "お店一覧 : "
+  SeeHelp: "&6ヘルプを参照してください： &c/globalmarketchest help"
+  HelpCommand:
+    Usage: "&6使用法 :"
+    Help: "&c/globalmarketchest [help]&6 - ヘルプを表示"
+    Version: "&c/globalmarketchest version&6 - プラグインのバージョンを表示する"
+    Reload: "&c/globalmarketchest reload&6 - プラグインをリロードします"
+    List: "&c/globalmarketchest list&6 - すべてのグローバルショップを一覧表示"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - すべての物理的なグローバルショップを一覧表示する"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - プレイヤーを特定のショップポジションにテレポートします"
+    Open: "&c/globalmarketchest open <shop>&6 - グローバルショップを開く"
+    AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - グローバルショップを開く"
+    Close: "&c/globalmarketchest close <player>&6 - プレイヤーの店を閉める"
+    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - 古いMinecraftitemMetaを新しいMinecraftバージョンに変換する"
