@@ -1,0 +1,277 @@
+# ========================= File lang-es_PE.yml =============================
+#
+# Language :        Spanish
+# Translation by :  XLuxBX
+#
+# Este archivo contiene el texto mostrado por el plugin GlobalMarketChest
+#
+# Información:
+#   En algunos textos, vas encontrar variables como: {shopName}.
+#   NO LOS TRADUZCAS!
+#   Estas variables son reemplazadas dentro del plugin para mostrar texto dinámico.
+#   El orden de las variables puede cambiarse.
+#   Si remueves una variable, esto no va generar un error.
+#
+# ===========================================================================
+
+InterfacesTitle:
+  EditAuction: "&2Editar subasta"
+  BuyAuction: "&2Comprar subaste"
+  CategoryView: "&2Vista de categoría"
+  AuctionViewList: "&2Lista de subastas"
+  AuctionViewByPlayer: "&2Lista de subastas"
+  AuctionViewItem: "&2Lista de subastas"
+  ConfigShop : "&2Configuración de la tienda"
+  AuctionGlobalView: "&2Historial de subasta"
+  SearchView: "&2Busca subastas"
+  ConfirmView: "&2Confirmación"
+  LastAuctionViewList: "&2Últimas subastas"
+  ShulkerBoxContent: "&2Contenido del shulkerbox"
+  # Auction Creation
+  CreateAuctionItem: "&2Selecciona el ítem a subastar"
+  CreateAuctionPrice: "&2Elige el precio"
+  # Shop Creation
+  ShopCreationSelectType: "&2Elige el tipo y bloque vinculado"
+  ShopCreationLink: "&2VínculoTienda[Elige nombre-grupo]"
+Divers:
+  State: "Estado"
+  Quantity: "Cantidad"
+  UnitPrice: "PrecioxUnidad"
+  TotalPrice: "PrecioTotal"
+  AuctionNumber: "Número de subasta"
+  Seller: "Vendedor"
+  Buyer: "Comprador"
+  Start: "Empezado"
+  Location: "Ubicación"
+  OtherLocation: "Otra Ubicación"
+  Server: "Servidor"
+  Group: "Grupo"
+  Type: "Tipo"
+  Warning: "Advertencia"
+  ExpireIn: "Expira en"
+  Expired: "Expirado"
+  Started: "Empezado"
+  Ended: "Terminado"
+  CanceledBy: "Cancelado por"
+  Free: "Gratis"
+  WithStatus: "&fCon estado: &2{status}"
+  Days: "días"
+  Hours: "horas"
+  Minutes: "minutos"
+  Seconds: "segundos"
+  PastDate: "{date}antes"
+  UnknownPlayer: "Jugador Desconocido"
+  SearchItemTextIcon: "&7Buscar: &3{search}"
+  ExitChatMode: "&7 - (Escribe &9{exit}&7 para dejar el modo de chat)"
+  AdvicePriceIcon: "&7PrecioSugerido: &3{advicePrice}"
+  NoAdvicePrice: "&3Sin precio sugerido"
+  MinPrice: "Precio mínimo"
+  MaxPrice: "Precio máximo"
+  Anonymous: "Anónimo"
+States:
+  InProgress: "En progreso"
+  Expired: "Expirado"
+  Abandoned: "Abandonado"
+  Finished: "Terminado"
+Shops:
+  ClickChangeGroup: "&cClick para cambiar el nombre de grupo de la tienda"
+  CurrentShop: "Tienda actual"
+Buttons:
+  Background:
+    Name: " "
+  Money:
+    Name: "&6Tu dinero"
+  PreviousButton:
+    Name: "Vuelve"
+    Description: "&fVuelve atras"
+  ExitButton:
+    Name: "&4Salir"
+    Description: "&fCierra esta interfaz"
+  Validate:
+    Name: "&2Validar"
+    Description: "&fVe al siguiente menú"
+  Return:
+    Name: "&4Vuelve"
+    Description: "&fVuelve al menú anterior"
+  CreateShop:
+    Name: "&2Crear tienda"
+  NewAuction:
+    Name: "&2Crea una nueva subasta"
+    Description: "&7Número de subastas ({auctionNumber}/{maxAuctionNumber});&7Click aquí para vender tus ítems"
+  CreateAuction:
+    Name: "&2Crear subasta"
+  BuyAuction:
+    Name: "&2Compra esta subasta"
+  AdminRemoveAuction:
+    Name: "&cRemueve esta subasta"
+  AdminSeePlayerAuctions:
+    Name: "&cVer subastas de un jugador"
+  RenewAuction:
+    Name: "&6Renueva esta subasta"
+  UndoAuction:
+    Name: "&cDeshacer esta subasta"
+  RenewEveryAuction:
+    Name: "&6Renovar todas las subastas"
+  UndoEveryAuction:
+    Name: "&cDeshacer todas las subastas"
+  GlobalView:
+    Name: "&fHistorial"
+    Description: "&5Historial de subastas"
+  Search:
+    Name: "&3Busca por una subasta"
+  DragItem:
+    Name: "&aSuelta un ítem aquí"
+    Description: "&ao usa SHIFT-Click"
+  CancelAuction:
+    Name: "&4Cancela esta subasta"
+  ViewByCategory:
+    Name: "Ver por categoría"
+    Description: "Pueden los jugadores mirar por categoría ?"
+  ViewByPlayer:
+    Name: "Ver por jugador"
+    Description: "Pueden los jugadores ver por usuario?"
+  ViewByLastCreated:
+    Name: "Mirar por creados recientemente"
+    Description: "Pueden los jugadores mirar por creados recientemente?"
+  GlobalShop:
+    Name: "TiendaGlobal"
+  AuctionShop:
+    Name: "TiendaSubastas"
+  LocalShop:
+    Name: "TiendaLocal"
+  AdminShop:
+    Name: "TiendaAdmin"
+  EditGroupName:
+    Name: "&fEdita el nombre de grupo"
+  PreviousPage:
+    Name: "Página anterior"
+  NextPage:
+    Name: "Página siguiente"
+  NumPage:
+    Name: "Número de página"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2Suelta un ítem aquí"
+    Description: "&2o usa SHIFT-Click"
+  MaxInOne:
+    Name: "&fÍtems máximos en una subasta"
+  MaxRepeat:
+    Name: "&fRepetir la subasta las veces que sea posible"
+  RepeatIncrease:
+    Name: "&2+"
+  RepeatDecrease:
+    Name: "&4-"
+  InProgressAuction:
+    Name: "&aSubastas en progreso"
+  ExpiredAuction:
+    Name: "&cSubastas expiradas"
+  SoldAuction:
+    Name: "&bSubastas vendidas"
+  BoughtAuction:
+    Name: "&9Subastas compradas"
+  CanceledAuction:
+    Name: "&6Subastas canceladas"
+  FreePrice:
+    Name: "&aGratis"
+    Description: "&7Coloca el precio a cero"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
+  YesButton:
+    Name: "SÍ"
+  NoButton:
+    Name: "NO"
+  Question:
+    Name: " "
+  SearchItemDrop:
+    Name: "&fEncuentra ítems similares"
+    Description: "&7Clik con el ítem deseado;&7o usa SHIFT+Click"
+  SearchItemText:
+    Name: "&fEncuentra un ítem con este nombre"
+  SearchByPlayer:
+    Name: "&fEncuentra la subasta de un jugador"
+  LastAuctions:
+    Name: "&3Subastas de las últimas {hours} horas"
+  LastCreatedAuctions:
+    Name: "&3Subastas creadas en las últimas {hours} horas"
+  LastBoughtAuctions:
+    Name: "&3Subastas compradas en las últimas {hours} horas"
+  AdvicePriceInfo:
+    Name: "Precio sugerido"
+    Description: "&3{advicePrice};&7Click para usar el precio sugerido"
+  SeeShulkerBoxContent:
+    Name: "Mirar el contenido de este shulker box"
+ErrorMessages:
+  UnknownWorld: "Mundo desconocido para la tienda"
+  ShopTypeNotSet: "El tipo de tienda no ha sido seleccionado;&2Por favor selecciona como mínimo un tipo"
+  MissingItems: "Número incorrecto de ítems, algunos ítems estan faltando"
+  FailCreateAuction: "Error para crear la subasta en la base de datos"
+  NotEnoughSpace: "No hay suficiente espacio para añadir todos los ítem;&7En el inventario del jugador"
+  NotEnoughMoney: "No tienes suficiente dinero para comprar esta subasta"
+  CantBuyAuction: "Error en comprar la subasta (expirado o ya se vendió)"
+  CantRenewAuction: "Error en renovar la subasta"
+  CantUndoAuction: "Error en deshacer la subasta"
+  CantRemoveAuction: "Error en remover la subasta"
+  CantRenewEveryAuction: "Error en renovar todas las subastas"
+  CantUndoEveryAuction: "Error en deshacer todas las subastas"
+  PlayerDoesntExist: "Este jugador no existe"
+  MaxAuctionByPlayer: "No se puede crear más acciones;&7Has alcanzado el número máximo de subastas"
+  PermissionNotAllowed: "&cNo tienes permitido hacer esta acción"
+  InvalidCommand: "&cEste comando no es válido : "
+  PlayerOnly: "&cEste comando solo puede ser ejecutado por un jugador"
+  UnknownShop: "&cTienda desconocida: "
+  CantRemoveBlock: "&cNo puedes remover este bloque porque una shop está vinculada a ella"
+  DamagedItem: "No puedes vender un ítem dañado"
+  BlacklistedItem: "Este ítem no está permitido para venderse"
+  CommandInChat: "&cNo tienes permitido ejecutar comandos en modo de chat"
+  MaxGlobalShop: "&cHas alcanzado el límite máximo de tiendas globales que puedes crear ({maxGlobalShop})"
+InfoMessages:
+  UndoAuction: "&2Subasta eliminada correctamente"
+  RemoveAuction: "&2Subasta removida correctamente"
+  RenewAuction: "&2Subasta renovada correctamente"
+  CreateAuction: "&2Subasta creada correctamente"
+  RenewEveryAuction: "&2Subastas renovadas correctamente"
+  UndoEveryAuction: "&2Subastas eliminadas correctamente"
+  ShopDeleted: "Tienda eliminada correctamente"
+  AcquireAuction: "&3{buyer} &6compró &2{itemName}|{quantity} &6por &2{price}&6 a &3{seller}&6."
+  AcquireAuctionOwner: "&3{buyer} &6compró tu subasta &2{itemName} | {quantity}  &6por &2{price}&6."
+  AuctionCreated: "&3{seller} &6creó &3{auctionNumber}&6 subastas de &2{itemName} | {quantity} &6por &2{price}&6."
+  LoginMessage:
+    BaseMessage: "&6Desde tu última conexión:"
+    SoldAuctions: "&6- Has vendido &3{count}&6 subastas"
+    ExpiredAuctions:  "&6- &3{count}&6 subastas han expirado"
+  PluginReloading: "El plugin se está recargando..."
+  PluginReloaded: "Plugin recargado."
+  WriteGroupName: "Escribe el nombre de grupo que quieres"
+  WriteItemName: "Escribe el nombre del ítem que estás buscando"
+  WritePlayerName: "Escribe el nombre del jugador, para mirar sus ofertas"
+  DeleteShopQuestion: "Estás seguro de eliminar estás subastas?"
+  ConvertingShopAuctions: "Convirtiendo acciones de la tienda: &6{shopName}&7"
+  ShopAuctionsConverted: "Tienda &6{shopName}&7: &3{updated}&9/{total}&7 subastas convertidas"
+  ShopTemporarilyLocked: "Esta tienda está bloqueada temporalmente"
+  ConversionMode: "Modo de conversión: &6{mode}&7"
+  NewVersionAvailable: "&6La nueva versión &3{lastVersion}&6 de GlobalMarketChest está disponible ahora en spigot ! &7(versión actual: {currentVersion})"
+Commands:
+  Buttons:
+    OpenText: "Abrir"
+    OpenHover: "Click para abrir la tienda"
+    DetailText: "Detalle"
+    DetailHover: "Click para mirar el detalle"
+    TeleportText: "Teletransporte"
+    TeleportHover: "Click para teletransportarte a la tienda"
+  ListShop: "Lista de tiendas: "
+  SeeHelp: "&6Mira ayuda con: &c/globalmarketchest help"
+  HelpCommand:
+    Usage: "&6Uso:"
+    Help: "&c/globalmarketchest [help]&6 - Mostrar ayuda"
+    Version: "&c/globalmarketchest version&6 - Muestra la versión del plugin"
+    Reload: "&c/globalmarketchest reload&6 - Recarga el plugin"
+    List: "&c/globalmarketchest list&6 - Lista todas las tiendas globales"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - Lista todas las tiendas físicas"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Teletransporta al jugador en una posición específica de la tienda"
+    Open: "&c/globalmarketchest open <shop>&6 - Abre una tienda global"
+    AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Abre una tienda global para un jugador"
+    Close: "&c/globalmarketchest close <player>&6 - Cierra la tienda de un jugador"
+    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - Convierte el itemMeta antiguo a la nueva versión de minecraft"
