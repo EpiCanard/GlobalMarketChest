@@ -7,7 +7,7 @@
 # ===================================================================
 
 General:
-  # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml, lang-pl_PL.yml, lang-tr_TR.yml, lang-ru_RU.yml
+  # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml, lang-pl_PL.yml, lang-tr_TR.yml, lang-ru_RU.yml, lang-ja_JP.yml, lang-es_PE.yml
   Lang: "lang-en_US.yml"
   # Defines if metrics are sent to Bstats. It helps me to know you a little more :)
   Metrics: true

@@ -92,7 +92,7 @@ Spigot : [https://www.spigotmc.org/resources/globalmarketchest-gui-shop-plugin.6
 Metrics : [bstats.org](https://bstats.org/plugin/bukkit/GlobalMarketChest/7557)
 
 If you want to test work in progress features you will find all development builds on Jenkins.
-Jenkins: [https://www.globalmarketchest-jenkins.fr](https://www.globalmarketchest-jenkins.fr)
+Jenkins: [https://jenkins.epicanard.com/](https://jenkins.epicanard.com/)
 
 ![screenshots](https://user-images.githubusercontent.com/29657498/52745804-4ea31080-2fe0-11e9-8604-8e5081c75605.png)
 
@@ -116,12 +116,14 @@ If you are using GlobalMarketChest on your server and your server is public you 
 I would like to thanks :
 
 - The server Freebuild.fr that helps me during development of this plugin.
-- The player @Icodak that make the logo of this plugin.
-- @Coby_Cola for the Chinese translation.
-- @Drynael for the German translation.
-- @Ranqstrail for the Polish translation.
-- @cvary61 for the Turkish translation.
-- @VStitch for the Russian translation.
+- The player **Icodak** that make the logo of this plugin.
+- **Coby_Cola** for the Chinese translation.
+- **Drynael** for the German translation.
+- **Ranqstrail** for the Polish translation.
+- **cvary61** for the Turkish translation.
+- **VStitch** for the Russian translation.
+- **theilqer** for the Japanese translation.
+- **XLuxBX** for the Spanish translation.
 
 
 ### Donation
