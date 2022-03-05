@@ -7,11 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import java.lang.reflect.*;
 import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import static fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils.*;
 import static fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller.call;
@@ -125,7 +123,15 @@ public class VersionSupportUtils {
 
   @Version(name="getRegistry")
   public Object getRegistry_latest() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
-    return getClassFromPath(Path.MINECRAFT_CORE, "IRegistry").getField("aa").get(null);
+    final Class<?> registryBlockClass = getClassFromPath(Path.MINECRAFT_CORE, "RegistryBlocks");
+    final Class<?> itemClass = getItemClass_latest();
+    final Optional<Field> maybeRegistryField = Arrays.stream(getClassFromPath(Path.MINECRAFT_CORE, "IRegistry").getFields())
+            .filter(f -> f.getType().isAssignableFrom(registryBlockClass) && ((ParameterizedType)f.getGenericType()).getActualTypeArguments()[0].equals(itemClass))
+            .findFirst();
+    if (!maybeRegistryField.isPresent()) {
+      throw new NoSuchFieldException("Can't find item Registry.");
+    }
+    return maybeRegistryField.get().get(null);
   }
 
   @Version(name="getRegistryItem", versions={"1.12"})
@@ -213,8 +219,9 @@ public class VersionSupportUtils {
     return invokeMethod(nmsItemStack, "getName");
   }
   @Version(name="getName")
-  public Object getName_latest(Object nmsItemStack) {
-    return invokeMethod(nmsItemStack, "v");
+  public Object getName_latest(Object nmsItemStack) throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    final Class<?> chatBaseComponent = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
+    return VersionField.from(nmsItemStack).invokeMethodWithType(chatBaseComponent);
   }
 
   private String before1_18(String before, String after) {
@@ -231,8 +238,20 @@ public class VersionSupportUtils {
     }
   }
 
-  public String getTagName() {
-    return before1_18("getTag", "s");
+  @Version(name="getTag", versions = {"1.12", "1.13", "1.14", "1.15", "1.16", "1.17"})
+  public Object getTagOld(Object itemStack) {
+    return invokeMethod(itemStack, "getTag");
+  }
+
+  @Version(name="getTag")
+  public Object getTag(Object itemStack) throws ClassNotFoundException, InvocationTargetException, IllegalAccessException {
+    final Class<?> nbtTagCompound = getClassFromPath(Path.MINECRAFT_NBT, "NBTTagCompound");
+    final Optional<Method> maybeMethod = Arrays.stream(itemStack.getClass().getMethods())
+            .filter(m -> m.getReturnType().isAssignableFrom(nbtTagCompound) && m.getParameters().length == 0)
+            .findFirst();
+    if (maybeMethod.isPresent())
+      return maybeMethod.get().invoke(itemStack);
+    return null;
   }
 
   public String hasTagName() {
@@ -418,7 +437,8 @@ public class VersionSupportUtils {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
       Object chatMessage = newInstance(getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "ChatMessage"), title, new Object[]{});
-      VersionField activeContainerVF = VersionField.from(entityPlayer).get("bW");
+      Class<?> containerClass = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Container");
+      VersionField activeContainerVF = VersionField.from(entityPlayer).getWithType(containerClass);
       Object windowId = activeContainerVF.get("j").value();
 
       Class<?> iChat = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
@@ -446,7 +466,7 @@ public class VersionSupportUtils {
       Method asNMSCopy = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack").getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
 
-      Object tagCompound = invokeMethod(nmsItemStack, getTagName());
+      Object tagCompound = call("getTag", this, nmsItemStack);
 
       return (tagCompound != null && (Boolean)invokeMethod(tagCompound, hasTagName(), this.NBTTAG));
     } catch(Exception e) {
@@ -470,7 +490,7 @@ public class VersionSupportUtils {
       Method asNMSCopy = craftItemStack.getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
 
-      Object tagCompound = invokeMethod(nmsItemStack, getTagName());
+      Object tagCompound = call("getTag", this, nmsItemStack);
 
       if (tagCompound == null) {
         tagCompound = call("newNBTTagCompound", this);
