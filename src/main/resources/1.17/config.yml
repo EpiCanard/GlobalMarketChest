@@ -11,6 +11,8 @@ General:
   Lang: "lang-en_US.yml"
   # Defines if metrics are sent to Bstats. It helps me to know you a little more :)
   Metrics: true
+  # Check new version is available.
+  CheckUpdate: true
 Storage:
   # Storage type. Possible values: sqlite, mysql
   # If Storage type is equals to mysql you will need to fill informations inside Connection part

@@ -127,7 +127,10 @@ public class GlobalMarketChest extends JavaPlugin {
       new Metrics(this, 7557);
     }
 
-    GlobalMarketChest.checkNewVersion(this.getServer().getConsoleSender());
+    if (ConfigUtils.getBoolean("General.CheckUpdate", true)) {
+      GlobalMarketChest.checkNewVersion(this.getServer().getConsoleSender());
+    }
+
   }
 
   @Override
