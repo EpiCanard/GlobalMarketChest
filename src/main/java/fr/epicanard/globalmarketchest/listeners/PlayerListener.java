@@ -21,7 +21,7 @@ public class PlayerListener implements Listener {
     if (ConfigUtils.getBoolean("Options.Broadcast.LoginMessage.SoldAuctions", true) || ConfigUtils.getBoolean("Options.Broadcast.LoginMessage.ExpiredAuctions", true)) {
       Bukkit.getScheduler().runTaskLaterAsynchronously(GlobalMarketChest.plugin, () -> broadcastSoldAndExpiredAuctions(event.getPlayer()), 20L);
     }
-    if (Permissions.ADMIN_NEWVERSION.isSetOn(event.getPlayer())) {
+    if (ConfigUtils.getBoolean("General.CheckUpdate", true) && Permissions.ADMIN_NEWVERSION.isSetOn(event.getPlayer())) {
       GlobalMarketChest.checkNewVersion(event.getPlayer());
     }
   }
