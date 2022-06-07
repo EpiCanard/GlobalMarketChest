@@ -432,11 +432,34 @@ public class VersionSupportUtils {
     }
   }
 
+  @Version(name="updateInventoryName", versions = {"1.18"})
+  public void updateInventoryName_1_18(String title, Player player) {
+    try {
+      Object entityPlayer = invokeMethod(player, "getHandle");
+      Object chatMessage = newInstance(getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "ChatMessage"), title, new Object[]{});
+      Class<?> containerClass = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Container");
+      VersionField activeContainerVF = VersionField.from(entityPlayer).getWithType(containerClass);
+      Object windowId = activeContainerVF.get("j").value();
+
+      Class<?> iChat = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
+      Class<?> containers = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Containers");
+
+      Object packet = getClassFromPath(Path.MINECRAFT_NETWORK_GAME, "PacketPlayOutOpenWindow").getConstructor(Integer.TYPE, containers, iChat)
+        .newInstance( windowId, containers.getField("f").get(null), iChat.cast(chatMessage));
+
+      Object playerConnection = entityPlayer.getClass().getDeclaredField("b").get(entityPlayer);
+
+      playerConnection.getClass().getMethod("a", getClassFromPath(Path.MINECRAFT_NETWORK_PROTOCOL, "Packet")).invoke(playerConnection, packet);
+    } catch(NoSuchFieldException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException  e) {
+      e.printStackTrace();
+    }
+  }
+
   @Version(name="updateInventoryName")
   public void updateInventoryName_latest(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
-      Object chatMessage = newInstance(getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "ChatMessage"), title, new Object[]{});
+      Object chatMessage = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent").getMethod("b", String.class).invoke(null, title);
       Class<?> containerClass = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Container");
       VersionField activeContainerVF = VersionField.from(entityPlayer).getWithType(containerClass);
       Object windowId = activeContainerVF.get("j").value();
