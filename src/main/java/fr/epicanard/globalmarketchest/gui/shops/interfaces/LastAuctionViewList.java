@@ -66,6 +66,7 @@ public class LastAuctionViewList extends AuctionViewBase {
 
   private void toggleLastAuctionMode(final InventoryGUI gui) {
     this.mode = this.mode.toggle(this.togglers.get(7), this::setIcon);
+    this.paginator.resetPage();
     this.paginator.reload();
   }
 
