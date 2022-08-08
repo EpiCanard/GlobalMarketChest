@@ -1,65 +1,41 @@
 package fr.epicanard.globalmarketchest.auctions;
 
-import lombok.Getter;
-
 public enum AuctionLoreConfig {
-  ALL(true, true, true, true, true, true, true, true, true, false, true),
-  TOSELL(false, true, true, true, true, false, true, false, true, false, true),
-  OWN(true, true, true, true, false, false, true, false, true, false, true),
-  SOLD(true, true, true, true, false, true, true, true, false, false, true),
-  BOUGHT(true, true, true, true, true, false, true, true, false, false, true),
-  BOUGHT_SOON(false, true, true, true, true, true, true, true, false, false, true),
-  OWNENDED(true, true, true, true, false, false, true, true, false, true, true),
-  SELECTPRICE(false, true, true, true, false, false, false, false, false, false, false)
+  ALL         ((short)0b11111111101),
+  TOSELL      ((short)0b01111010101),
+  OWN         ((short)0b11110010101),
+  SOLD        ((short)0b11110111001),
+  BOUGHT      ((short)0b11111011001),
+  BOUGHT_SOON ((short)0b01111111001),
+  OWNENDED    ((short)0b11110011011),
+  SELECTPRICE ((short)0b01110000000)
   ;
 
-  @Getter
-  private Boolean state;
-  @Getter
-  private Boolean quantity;
-  @Getter
-  private Boolean unitPrice;
-  @Getter
-  private Boolean totalPrice;
-  @Getter
-  private Boolean starter;
-  @Getter
-  private Boolean ender;
-  @Getter
-  private Boolean started;
-  @Getter
-  private Boolean ended;
-  @Getter
-  private Boolean expire;
-  @Getter
-  private Boolean canceled;
-  @Getter
-  private Boolean frame;
+  public Boolean state() { return (this.value & 1024) != 0; }
 
+  public Boolean quantity() { return (this.value & 512) != 0; }
 
-  AuctionLoreConfig(
-    Boolean state,
-    Boolean quantity,
-    Boolean unitPrice,
-    Boolean totalPrice,
-    Boolean starter,
-    Boolean ender,
-    Boolean started,
-    Boolean ended,
-    Boolean expire,
-    Boolean canceled,
-    Boolean frame
-  ) {
-    this.state = state;
-    this.quantity = quantity;
-    this.unitPrice = unitPrice;
-    this.totalPrice = totalPrice;
-    this.starter = starter;
-    this.ender = ender;
-    this.started = started;
-    this.ended = ended;
-    this.expire = expire;
-    this.canceled = canceled;
-    this.frame = frame;
+  public Boolean unitPrice() { return (this.value & 256) != 0; }
+
+  public Boolean totalPrice() { return (this.value & 128) != 0; }
+
+  public Boolean starter() { return (this.value & 64) != 0; }
+
+  public Boolean ender() { return (this.value & 32) != 0; }
+
+  public Boolean started() { return (this.value & 16) != 0; }
+
+  public Boolean ended() { return (this.value & 8) != 0; }
+
+  public Boolean expire() { return (this.value & 4) != 0; }
+
+  public Boolean canceled() { return (this.value & 2) != 0; }
+
+  public Boolean frame() { return (this.value & 1) != 0; }
+
+  private short value;
+
+  AuctionLoreConfig(short value) {
+    this.value = value;
   }
 }

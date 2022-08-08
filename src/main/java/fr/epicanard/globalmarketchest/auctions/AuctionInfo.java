@@ -160,34 +160,34 @@ public class AuctionInfo {
     final List<String> lore = new ArrayList<>();
 
     double totalPrice = BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
-    if (config.getFrame())
+    if (config.frame())
       lore.add("&6--------------");
-    if (config.getState())
+    if (config.state())
       this.addLore(lore, "State", "&2", this.status.getLang());
-    if (config.getQuantity())
+    if (config.quantity())
       this.addLore(lore, "Quantity", "&6", this.amount.toString());
-    if (config.getUnitPrice())
+    if (config.unitPrice())
       this.addLore(lore, "UnitPrice", "&c", this.checkPrice(this.price));
-    if (config.getTotalPrice())
+    if (config.totalPrice())
       this.addLore(lore, "TotalPrice", "&c", this.checkPrice(totalPrice));
-    if (config.getStarter() && !ConfigUtils.getBoolean("Options.Anonymous.Seller", false))
+    if (config.starter() && !ConfigUtils.getBoolean("Options.Anonymous.Seller", false))
       this.addLore(lore, "Seller", "&9", PlayerUtils.getPlayerName(this.playerStarter));
-    if (config.getEnder() && !ConfigUtils.getBoolean("Options.Anonymous.Buyer", false))
+    if (config.ender() && !ConfigUtils.getBoolean("Options.Anonymous.Buyer", false))
       this.addLore(lore, "Buyer", "&9", PlayerUtils.getPlayerName(this.playerEnder));
-    if (config.getStarted())
+    if (config.started())
       this.addLore(lore, "Started", "&6",
           DatabaseUtils.getExpirationString(this.start, DatabaseUtils.getTimestamp(), false));
-    if (config.getEnded())
+    if (config.ended())
       this.addLore(lore, "Ended", "&6",
           DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
-    if (config.getExpire()) {
+    if (config.expire()) {
       String path = (this.end.getTime() < DatabaseUtils.getTimestamp().getTime()) ? "Expired" : "ExpireIn";
       this.addLore(lore, path, "&6",
           DatabaseUtils.getExpirationString(this.end, DatabaseUtils.getTimestamp(), false));
     }
-    if (config.getCanceled() && !this.playerStarter.equals(this.playerEnder))
+    if (config.canceled() && !this.playerStarter.equals(this.playerEnder))
       this.addLore(lore, "CanceledBy", "&c", PlayerUtils.getPlayerName(this.playerEnder));
-    if (config.getFrame())
+    if (config.frame())
       lore.add("&6--------------");
     return lore;
   }
