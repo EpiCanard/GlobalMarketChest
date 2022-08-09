@@ -1,8 +1,8 @@
 package fr.epicanard.globalmarketchest.gui.actions;
 
-import java.util.function.Consumer;
-
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+
+import java.util.function.Consumer;
 
 /**
  * Consumer to leave the inventoryGUI

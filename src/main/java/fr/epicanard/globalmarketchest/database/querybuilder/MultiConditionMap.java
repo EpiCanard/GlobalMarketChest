@@ -1,10 +1,10 @@
 package fr.epicanard.globalmarketchest.database.querybuilder;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import lombok.Getter;
 
 /**
  * List that store key, value, and ConditionType for query composition

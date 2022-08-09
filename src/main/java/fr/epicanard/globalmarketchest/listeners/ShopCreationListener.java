@@ -54,7 +54,14 @@ public class ShopCreationListener implements Listener {
    * @param event  Sign event
    */
   private void openCreationShopInterface(Player player, SignChangeEvent event) {
-    final ShopInfo shop = new ShopInfo(-1, player.getUniqueId().toString(), ShopType.GLOBALSHOP.setOn(0), event.getBlock().getLocation(), null, ShopUtils.generateName());
+    final ShopInfo shop = new ShopInfo(
+        -1,
+        player.getUniqueId().toString(),
+        ShopType.GLOBALSHOP.setOn(0),
+        event.getBlock().getLocation(),
+        null,
+        ShopUtils.generateName()
+    );
     final InventoryGUI inv = new InventoryGUI(player);
 
     inv.getTransaction().put(TransactionKey.SHOP_INFO, shop);

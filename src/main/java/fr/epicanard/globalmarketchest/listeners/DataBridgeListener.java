@@ -104,8 +104,8 @@ public class DataBridgeListener implements Listener {
    * @return Can be activate
    */
   public static Boolean canBeEnabled(final Plugin dataBridgePlugin) {
-    if (dataBridgePlugin == null || dataBridgePlugin.isEnabled() ||
-        !ConfigUtils.getBoolean("MultiServer.MysqlPlayerDataBridgeSupport", false)) {
+    if (dataBridgePlugin == null || dataBridgePlugin.isEnabled()
+        || !ConfigUtils.getBoolean("MultiServer.MysqlPlayerDataBridgeSupport", false)) {
       return false;
     }
     if (!DataBridgeListener.shareEconomy(dataBridgePlugin)) {

@@ -1,26 +1,21 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.util.List;
-import java.util.function.Consumer;
-
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
-import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
-import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopCreationInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
+import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopCreationInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.ShopUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.*;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Shop Interface for Creation Process
@@ -50,7 +45,7 @@ public class ShopCreationLink extends ShopCreationInterface {
     try {
       GlobalMarketChest.plugin.shopManager.createShop(shop);
 
-      Utils.editSign(this.inv.getTransactionValue(TransactionKey.SIGN_LOCATION), new String[] {
+      Utils.editSign(this.inv.getTransactionValue(TransactionKey.SIGN_LOCATION), new String[]{
         ShopType.GLOBALSHOP.getDisplayName()
       });
 

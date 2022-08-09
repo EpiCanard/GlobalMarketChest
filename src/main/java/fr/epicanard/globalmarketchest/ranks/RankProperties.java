@@ -1,11 +1,10 @@
 package fr.epicanard.globalmarketchest.ranks;
 
-import java.util.function.BiConsumer;
-
-import org.bukkit.configuration.ConfigurationSection;
-
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.configuration.ConfigurationSection;
+
+import java.util.function.BiConsumer;
 
 public class RankProperties {
   @Getter @Setter
@@ -19,7 +18,7 @@ public class RankProperties {
 
   /**
    * Init a RankProperties from ConfigurationSection
-   * 
+   *
    * @param section ConfigurationSection on which is paremeters
    * @return New RankProperties
    */
@@ -36,7 +35,7 @@ public class RankProperties {
 
   /**
    * Init a RankProperties from other RankProperties
-   * 
+   *
    * @param properties Other properties to clone
    * @return New RankProperties
    */
@@ -51,7 +50,7 @@ public class RankProperties {
 
   /**
    * Merge ranks properties to get final rank properties
-   * 
+   *
    * @param properties Properties to check and merge
    */
   public void mergeRankProperties(RankProperties properties) {
@@ -84,5 +83,5 @@ public class RankProperties {
     append.accept("NumberDaysExpiration", this.numberDaysExpiration.toString());
 
     return sb.toString();
-  }  
+  }
 }

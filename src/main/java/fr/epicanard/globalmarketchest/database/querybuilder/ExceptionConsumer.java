@@ -1,9 +1,9 @@
 package fr.epicanard.globalmarketchest.database.querybuilder;
 
+import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
+
 import java.sql.SQLException;
 import java.util.List;
-
-import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
 
 @FunctionalInterface
 public interface ExceptionConsumer {

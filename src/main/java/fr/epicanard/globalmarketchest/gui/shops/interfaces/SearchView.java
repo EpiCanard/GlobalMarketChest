@@ -1,21 +1,20 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
-import fr.epicanard.globalmarketchest.gui.shops.Droppable;
-import fr.epicanard.globalmarketchest.utils.ConfigUtils;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
+import fr.epicanard.globalmarketchest.gui.shops.Droppable;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.DefaultFooter;
 import fr.epicanard.globalmarketchest.managers.GroupLevels;
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class SearchView extends DefaultFooter implements Droppable {
 

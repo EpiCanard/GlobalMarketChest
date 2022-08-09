@@ -8,6 +8,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Version {
-    String name();
-    String[] versions() default {"latest"};
+  String name();
+  String[] versions() default {"latest"};
 }

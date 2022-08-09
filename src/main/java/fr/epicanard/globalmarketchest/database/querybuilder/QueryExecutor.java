@@ -1,20 +1,19 @@
 package fr.epicanard.globalmarketchest.database.querybuilder;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.BaseBuilder;
+import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.logging.Level;
-
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.database.querybuilder.builders.BaseBuilder;
-import fr.epicanard.globalmarketchest.exceptions.TypeNotSupported;
 
 public class QueryExecutor {
 
@@ -31,30 +30,30 @@ public class QueryExecutor {
         case "ColumnType":
           continue;
         case "String":
-          prepared.setString(inc.get(), (String)value);
+          prepared.setString(inc.get(), (String) value);
           break;
         case "Boolean":
-          prepared.setBoolean(inc.get(), (Boolean)value);
+          prepared.setBoolean(inc.get(), (Boolean) value);
           break;
         case "Timestamp":
           prepared.setString(inc.get(), value.toString());
           break;
         case "Integer":
-          prepared.setInt(inc.get(), (Integer)value);
+          prepared.setInt(inc.get(), (Integer) value);
           break;
         case "Short":
-          prepared.setShort(inc.get(), (Short)value);
+          prepared.setShort(inc.get(), (Short) value);
           break;
         case "Double":
-          prepared.setDouble(inc.get(), (Double)value);
+          prepared.setDouble(inc.get(), (Double) value);
           break;
         case "ArrayList":
           inc.decrementAndGet();
-          for(Object val: (List<Object>)value) {
+          for (Object val : (List<Object>) value) {
             if (val instanceof String)
-              prepared.setString(inc.incrementAndGet(), (String)val);
+              prepared.setString(inc.incrementAndGet(), (String) val);
             if (val instanceof Integer)
-              prepared.setInt(inc.incrementAndGet(), (Integer)val);
+              prepared.setInt(inc.incrementAndGet(), (Integer) val);
           }
           break;
         default:
@@ -113,6 +112,10 @@ public class QueryExecutor {
     return this.execute(builder, consumer, null);
   }
 
+  public Boolean execute(BaseBuilder builder) {
+    return this.execute(builder, null, null);
+  }
+
   /**
    * Prepare and execute the query
    *
@@ -142,10 +145,6 @@ public class QueryExecutor {
       GlobalMarketChest.plugin.getSqlConnector().getBackConnection(co);
     }
     return ret;
-  }
-
-  public Boolean execute(BaseBuilder builder) {
-    return this.execute(builder, null, null);
   }
 
   public static QueryExecutor of() {

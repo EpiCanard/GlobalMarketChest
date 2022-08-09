@@ -1,10 +1,9 @@
 package fr.epicanard.globalmarketchest.permissions;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * Class that handle permissions of plugin
@@ -63,17 +62,6 @@ public enum Permissions {
   }
 
   /**
-   * Define if the permission is set for the specified shop
-   *
-   * @param player Player on which check the permissions
-   * @param shop   Name of shop to add in permission
-   * @return Return a boolean to define if the permission is set
-   */
-  public Boolean isSetOnWithShop(final Player player, final String shop) {
-    return Permissions.isSetOn(player, String.format(this.perm, shop));
-  }
-
-  /**
    * Define if the permission is set on the CommandSender
    * If the CommandSender is not a Player (ex: console) the result is set with the value
    * of param defaultSender
@@ -97,6 +85,17 @@ public enum Permissions {
    */
   public Boolean isSetOn(CommandSender sender) {
     return this.isSetOn(sender, true);
+  }
+
+  /**
+   * Define if the permission is set for the specified shop
+   *
+   * @param player Player on which check the permissions
+   * @param shop   Name of shop to add in permission
+   * @return Return a boolean to define if the permission is set
+   */
+  public Boolean isSetOnWithShop(final Player player, final String shop) {
+    return Permissions.isSetOn(player, String.format(this.perm, shop));
   }
 
   /**

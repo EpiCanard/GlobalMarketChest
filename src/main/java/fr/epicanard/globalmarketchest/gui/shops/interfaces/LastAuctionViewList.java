@@ -38,7 +38,7 @@ public class LastAuctionViewList extends AuctionViewBase {
       );
     });
 
-    this.paginator.setClickConsumer((pos) -> {
+    this.paginator.setClickConsumer(pos -> {
       if (this.mode == LastAuctionMode.LAST_CREATED) {
         this.selectAuction(pos);
       }

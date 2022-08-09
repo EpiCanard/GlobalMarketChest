@@ -1,15 +1,15 @@
 package fr.epicanard.globalmarketchest.gui;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InterfaceLoadException;
+import fr.epicanard.globalmarketchest.gui.shops.Warning;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
+import fr.epicanard.globalmarketchest.ranks.RankProperties;
+import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.chat.ChatUtils;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.entity.Player;
@@ -17,14 +17,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
-import fr.epicanard.globalmarketchest.ranks.RankProperties;
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.gui.shops.Warning;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
-import fr.epicanard.globalmarketchest.utils.chat.ChatUtils;
-import lombok.Getter;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Inventory Class that manage inventory view

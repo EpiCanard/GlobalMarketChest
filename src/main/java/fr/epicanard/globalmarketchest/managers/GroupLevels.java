@@ -1,7 +1,5 @@
 package fr.epicanard.globalmarketchest.managers;
 
-import java.util.Arrays;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.database.querybuilder.ConditionType;
@@ -9,6 +7,8 @@ import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuild
 import fr.epicanard.globalmarketchest.exceptions.EmptyCategoryException;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+
+import java.util.Arrays;
 
 public enum GroupLevels {
   LEVEL3(3, null),
@@ -58,14 +58,15 @@ public enum GroupLevels {
     Integer groupLevels = GlobalMarketChest.plugin.getCatHandler().getGroupLevels(category);
 
     switch (this) {
-      case LEVEL1:
-        this.level1(builder, groupLevels, match, category);
+      case LEVEL3:
+        this.level3(builder, groupLevels, match, category);
         break;
       case LEVEL2:
         this.level2(builder, groupLevels, match, category);
         break;
-      case LEVEL3:
-        this.level3(builder, groupLevels, match, category);
+      case LEVEL1:
+      default:
+        this.level1(builder, groupLevels, match, category);
         break;
     }
   }
@@ -85,7 +86,7 @@ public enum GroupLevels {
     String[] items = GlobalMarketChest.plugin.getCatHandler().getItems(category);
     if (items.length == 0)
       throw new EmptyCategoryException(category);
-    builder.addCondition("itemStack", Arrays.asList(items), (category.equals("!")) ? ConditionType.NOTIN : ConditionType.IN);
+    builder.addCondition("itemStack", Arrays.asList(items), ("!".equals(category)) ? ConditionType.NOTIN : ConditionType.IN);
     switch (groupLevels) {
       case 3:
         builder.addField("itemStack");
@@ -99,6 +100,7 @@ public enum GroupLevels {
         break;
       case 1:
         builder.setExtension("ORDER BY price ASC, start ASC");
+        break;
       default:
         builder.addField("*");
     }
@@ -125,6 +127,7 @@ public enum GroupLevels {
       case 2:
         builder.addCondition("itemMeta", match.getItemMeta());
         builder.setExtension("ORDER BY price ASC, start ASC");
+        break;
       default:
         builder.addField("*");
     }
@@ -145,6 +148,7 @@ public enum GroupLevels {
       case 3:
         builder.addCondition("itemMeta", match.getItemMeta());
         builder.setExtension("ORDER BY price ASC, start ASC");
+        break;
       default:
         builder.addField("*");
     }

@@ -85,6 +85,7 @@ public class Utils {
   public static ItemStack getButton(String buttonName, final String key, final Object value) {
     return Utils.getButton(buttonName, Collections.singletonMap(key, value));
   }
+
   /**
    * Get a button from the config file and create itemstack
    *
@@ -102,7 +103,11 @@ public class Utils {
 
     if (sec != null) {
       Map<String, Object> tmp = sec.getValues(false);
-      ItemStackUtils.setItemStackMeta(itemStack, formatString((String) tmp.get("Name"), args), Utils.toList(formatString((String)tmp.get("Description"), args)));
+      ItemStackUtils.setItemStackMeta(
+          itemStack,
+          formatString((String) tmp.get("Name"), args),
+          Utils.toList(formatString((String) tmp.get("Description"), args))
+      );
     }
     return itemStack;
   }
@@ -113,7 +118,7 @@ public class Utils {
    * @param lore Array to convert
    * @return List converted
    */
-  public static List<String> toList(String ...lore) {
+  public static List<String> toList(String... lore) {
     return (lore == null) ? null : Arrays.asList(lore);
   }
 
@@ -193,7 +198,7 @@ public class Utils {
 
   /**
    * If first param is null return the defaut param
-   * 
+   *
    * @param obj Param to get
    * @param defaut Param return when obj is null
    * @return Return obj or defaut of obj is null
@@ -219,4 +224,6 @@ public class Utils {
       signBlock.update();
     }
   }
+
+  private Utils() {}
 }

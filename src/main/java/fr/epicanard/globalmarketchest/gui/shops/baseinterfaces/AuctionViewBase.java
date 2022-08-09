@@ -1,13 +1,13 @@
 package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static fr.epicanard.globalmarketchest.permissions.Permissions.*;
 

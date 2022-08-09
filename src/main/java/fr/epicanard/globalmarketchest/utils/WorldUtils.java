@@ -1,12 +1,9 @@
 package fr.epicanard.globalmarketchest.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
-
 import com.google.common.util.concurrent.AtomicDouble;
-
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
+import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,9 +11,10 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
-import lombok.experimental.UtilityClass;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 /**
  * Utility Class for world link action
@@ -33,12 +31,14 @@ public class WorldUtils {
    */
   private void getRadiusBlock(Location location, int radius, Consumer<Block> consumer) {
     int diameter = 1 + 2 * radius;
-    int x, y, z;
+    int x;
+    int y;
+    int z;
 
     for (int i = 0; i < Math.pow(diameter, 3); i++) {
       x = i % diameter - radius;
-      y = (int)Math.floor(i / Math.pow(diameter, 2)) - radius;
-      z = (i % (int)Math.pow(diameter, 2)) / diameter - radius;
+      y = (int) Math.floor(i / Math.pow(diameter, 2)) - radius;
+      z = (i % (int) Math.pow(diameter, 2)) / diameter - radius;
 
       if (x == 0 && y == 0 && z == 0)
         continue;
@@ -112,7 +112,10 @@ public class WorldUtils {
       return null;
 
     if (location == null) {
-      location = new Location(GlobalMarketChest.plugin.getServer().getWorld(args[0]), Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3]));
+      location = new Location(
+          GlobalMarketChest.plugin.getServer().getWorld(args[0]),
+          Double.parseDouble(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3])
+      );
     } else {
       World world = GlobalMarketChest.plugin.getServer().getWorld(args[0]);
       if (world == null) {
@@ -164,10 +167,10 @@ public class WorldUtils {
   public Boolean compareLocations(Location first, Location second) {
     if (first == null || second == null)
       return false;
-    if (first.getBlockX() == second.getBlockX() &&
-      first.getBlockY() == second.getBlockY() &&
-      first.getBlockZ() == second.getBlockZ() &&
-      first.getWorld() == second.getWorld())
+    if (first.getBlockX() == second.getBlockX()
+      && first.getBlockY() == second.getBlockY()
+      && first.getBlockZ() == second.getBlockZ()
+      && first.getWorld() == second.getWorld())
       return true;
     else
       return false;
@@ -183,9 +186,9 @@ public class WorldUtils {
     if (Bukkit.getWorld(worldName) == null)
       throw new WorldDoesntExist(worldName);
     final Boolean containsWorld = ConfigUtils.getStringList("ShopWorlds.Worlds").contains(worldName);
-    final Boolean whitelist = ConfigUtils.getString("ShopWorlds.Type", "blacklist").equals("whitelist");
+    final Boolean whitelist = "whitelist".equals(ConfigUtils.getString("ShopWorlds.Type", "blacklist"));
 
-    return (whitelist) ? containsWorld : !containsWorld;
+    return whitelist ? containsWorld : !containsWorld;
   }
 
   /**

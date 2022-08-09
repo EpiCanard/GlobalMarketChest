@@ -1,16 +1,15 @@
 package fr.epicanard.globalmarketchest.gui;
 
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.LoggerUtils;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.inventory.ItemStack;
-
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 
 /**
  * Handlle all categories specified in the file 'categories.yml'
@@ -45,7 +44,7 @@ public class CategoryHandler {
    * @return Return a set of category name ignoring '!'
    */
   public Set<String> getCategories() {
-    return this.categories.stream().filter(cat -> !cat.equals("!")).collect(Collectors.toSet());
+    return this.categories.stream().filter(cat -> !"!".equals(cat)).collect(Collectors.toSet());
   }
 
   /**
@@ -58,7 +57,7 @@ public class CategoryHandler {
     final List<String> lst = new ArrayList<String>();
 
     // When we want items from a specific category
-    if (!category.equals("!")) {
+    if (!"!".equals(category)) {
       this.addListItems(lst, category);
       return (lst != null) ? lst.toArray(new String[0]) : null;
     }

@@ -1,10 +1,15 @@
 package fr.epicanard.globalmarketchest.listeners;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
-
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.utils.*;
+import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
+import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
@@ -21,21 +26,10 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.material.Sign;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
-import fr.epicanard.globalmarketchest.gui.InventoryGUI;
-import fr.epicanard.globalmarketchest.gui.TransactionKey;
-import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
-import fr.epicanard.globalmarketchest.permissions.Permissions;
-import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.LoggerUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.ShopUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
-import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
-import fr.epicanard.globalmarketchest.utils.annotations.Version;
-import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Listener for every world interact like opennin a chest
@@ -49,7 +43,7 @@ public class WorldListener implements Listener {
    * @param block Sign block
    * @return Attached block
    */
-  @Version(name="getAttachedBlock", versions={"1.12"})
+  @Version(name = "getAttachedBlock", versions = {"1.12"})
   public Block gettAttachedBlock_1_12(Block block) {
     final Sign sign = (Sign) block.getState().getData();
     return block.getRelative(sign.getAttachedFace());
@@ -61,12 +55,12 @@ public class WorldListener implements Listener {
    * @param block Sign block
    * @return Attached block
    */
-  @Version(name="getAttachedBlock")
+  @Version(name = "getAttachedBlock")
   public Block getAttachedBlock_latest(Block block) {
-    final BlockData data = (BlockData) ReflectionUtils.invokeMethod(block.getState(), "getBlockData", (Object[])null);
+    final BlockData data = (BlockData) ReflectionUtils.invokeMethod(block.getState(), "getBlockData", (Object[]) null);
 
     if (data instanceof Directional) {
-      return block.getRelative(((Directional)data).getFacing().getOppositeFace());
+      return block.getRelative(((Directional) data).getFacing().getOppositeFace());
     }
     return block.getRelative(BlockFace.DOWN);
   }
@@ -109,7 +103,7 @@ public class WorldListener implements Listener {
     if (ShopUtils.isSign(faceBlock.getType()) && faceBlock.hasMetadata(ShopUtils.META_KEY)) {
       try {
         final Block attached = AnnotationCaller.call("getAttachedBlock", this, faceBlock);
-        return (attached.getLocation().distance(block.getLocation()) == 0);
+        return attached.getLocation().distance(block.getLocation()) == 0;
       } catch (MissingMethodException e) {
         e.printStackTrace();
       }
@@ -131,8 +125,8 @@ public class WorldListener implements Listener {
     List<BlockFace> attached = Utils.filter(faces, face -> isAttachedTo(block, face));
     if (block.hasMetadata(ShopUtils.META_KEY)) {
       ShopInfo shop = ShopUtils.getShop(block);
-      if (!shop.getOwner().equals(PlayerUtils.getUUIDToString(player)) &&
-        !Permissions.ADMIN_DELETESHOP.isSetOn(player)) {
+      if (!shop.getOwner().equals(PlayerUtils.getUUIDToString(player))
+        && !Permissions.ADMIN_DELETESHOP.isSetOn(player)) {
         Permissions.sendMessage(player);
         event.setCancelled(true);
         return;
@@ -140,12 +134,12 @@ public class WorldListener implements Listener {
 
       final Boolean asLinkedShop = attached.stream().anyMatch(face -> {
         ShopInfo s = ShopUtils.getShop(block.getRelative(face));
-        return (s != null && s.getId() != shop.getId());
+        return s != null && s.getId() != shop.getId();
       });
 
       if (!asLinkedShop) {
-        Function<InventoryGUI, Consumer<Boolean>> deleteConsumer = (inv) -> {
-          return (b) -> {
+        Function<InventoryGUI, Consumer<Boolean>> deleteConsumer = inv -> {
+          return b -> {
             if (b) {
               if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
                 PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopDeleted");

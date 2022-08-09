@@ -1,8 +1,8 @@
 package fr.epicanard.globalmarketchest.commands;
 
-import java.util.List;
-
 import org.bukkit.command.CommandSender;
+
+import java.util.List;
 
 @FunctionalInterface
 public interface TabCompleteConsumer {

@@ -55,17 +55,6 @@ public class ShopManager extends DatabaseManager {
   }
 
   /**
-   * Create a shop inside database and add it in list shops
-   *
-   * @param shop Info about a shop
-   * @return Return Shop id created
-   */
-  public Integer createShop(ShopInfo shop) throws ShopAlreadyExistException {
-    return this.createShop(shop.getOwner(), shop.getSignLocation(), shop.getOtherLocation(), shop.getType(), shop.getGroup());
-  }
-
-
-  /**
    * Delete shop at the specific location
    *
    * @param shop Shop to delete
@@ -82,6 +71,16 @@ public class ShopManager extends DatabaseManager {
         .addCondition("id", shop.getId());
 
     return QueryExecutor.of().execute(builder);
+  }
+
+  /**
+   * Create a shop inside database and add it in list shops
+   *
+   * @param shop Info about a shop
+   * @return Return Shop id created
+   */
+  public Integer createShop(ShopInfo shop) throws ShopAlreadyExistException {
+    return this.createShop(shop.getOwner(), shop.getSignLocation(), shop.getOtherLocation(), shop.getType(), shop.getGroup());
   }
 
   /**

@@ -1,12 +1,11 @@
 package fr.epicanard.globalmarketchest.commands.consumers;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.commands.CommandConsumer;
 import fr.epicanard.globalmarketchest.commands.CommandNode;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * Close the shop of a player from command line

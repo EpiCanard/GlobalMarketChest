@@ -1,9 +1,9 @@
 package fr.epicanard.globalmarketchest.gui.actions;
 
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
-
-import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 
 /**
  * Consumer to load the specified interface
@@ -29,7 +29,7 @@ public class NextInterface implements Consumer<InventoryGUI> {
     try {
       if (this.callable == null || this.callable.call())
         t.loadInterface(name);
-    } catch(Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }

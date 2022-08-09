@@ -1,13 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
-import java.util.*;
-import java.util.function.Consumer;
-
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
@@ -19,13 +11,20 @@ import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.*;
+import java.util.function.Consumer;
 
 public abstract class ShopInterface {
-  @Accessors(fluent=true) @Getter
+  @Accessors(fluent = true) @Getter
   protected Boolean isTemp = false;
   @Getter
   protected ItemStack background;
-  protected Paginator paginator = null;
+  protected Paginator paginator;
   protected Map<Integer, Toggler> togglers = new HashMap<>();
   protected InventoryGUI inv;
   protected Map<Integer, Consumer<InventoryGUI>> actions = new HashMap<Integer, Consumer<InventoryGUI>>();
@@ -75,7 +74,7 @@ public abstract class ShopInterface {
   private void updateInventoryName(String interfaceName) {
     String title = LangUtils.getOrElse("InterfacesTitle." + interfaceName, "&2GlobalMarketChest");
     try {
-      AnnotationCaller.call("updateInventoryName", VersionSupportUtils.getInstance(), title, (Player)this.inv.getPlayer());
+      AnnotationCaller.call("updateInventoryName", VersionSupportUtils.getInstance(), title, (Player) this.inv.getPlayer());
     } catch (MissingMethodException e) {
       e.printStackTrace();
     }

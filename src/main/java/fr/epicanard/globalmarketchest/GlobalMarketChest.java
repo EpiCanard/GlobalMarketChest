@@ -1,5 +1,8 @@
 package fr.epicanard.globalmarketchest;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import fr.epicanard.globalmarketchest.commands.CommandHandler;
 import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
 import fr.epicanard.globalmarketchest.configuration.PriceLimit;
@@ -19,13 +22,8 @@ import fr.epicanard.globalmarketchest.listeners.*;
 import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
 import fr.epicanard.globalmarketchest.ranks.RanksLoader;
-import fr.epicanard.globalmarketchest.utils.ConfigUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.LoggerUtils;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import fr.epicanard.globalmarketchest.utils.*;
 import lombok.Getter;
-
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -39,10 +37,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 import java.util.logging.Level;
-
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 
 public class GlobalMarketChest extends JavaPlugin {
@@ -119,7 +113,7 @@ public class GlobalMarketChest extends JavaPlugin {
     this.register(new PlayerListener());
     final Listener moneyExchange = getPlugin("MysqlPlayerDataBridge")
         .filter(DataBridgeListener::canBeEnabled)
-        .map(dataBridge -> (Listener)new DataBridgeListener(dataBridge))
+        .map(dataBridge -> (Listener) new DataBridgeListener(dataBridge))
         .orElseGet(MoneyExchangeListener::new);
     this.register(moneyExchange);
 

@@ -64,7 +64,7 @@ public class ConfigLoader {
    * @throws CantLoadConfigException Throw this exception when the file can't be loaded (InvalidFile or wrong permissions)
    */
   private YamlConfiguration loadOneFile(String fileName, String path, String alternatePath) throws CantLoadConfigException {
-    if (!fileName.substring(fileName.length() - 4).equals(".yml"))
+    if (!".yml".equals(fileName.substring(fileName.length() - 4)))
       fileName += ".yml";
     final String finalFileName = fileName;
 
@@ -74,7 +74,7 @@ public class ConfigLoader {
     try {
       if (!confFile.exists()) {
         confFile.getParentFile().mkdirs();
-        final UnaryOperator<String> processPath = (p) -> (p != null ? p + "/" : "") + finalFileName;
+        final UnaryOperator<String> processPath = p -> (p != null ? p + "/" : "") + finalFileName;
         InputStream stream = GlobalMarketChest.plugin.getResource(processPath.apply(path));
         if (stream == null) {
           if (alternatePath != null) {
@@ -174,6 +174,6 @@ public class ConfigLoader {
           ItemStack item = new ItemStack(mat);
           return ItemStackUtils.getMinecraftKey(item);
         })
-        .filter(mat -> !mat.equals("minecraft:air") && !excludedItems.contains(mat));
+        .filter(mat -> !"minecraft:air".equals(mat) && !excludedItems.contains(mat));
   }
 }

@@ -9,9 +9,13 @@ import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuild
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.io.*;
-import java.sql.SQLException;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class PatchHandler extends DatabaseManager {
@@ -117,7 +121,7 @@ public class PatchHandler extends DatabaseManager {
     final List<String> changelog = readFileLines("_changelog");
     final List<Pair<String, String>>  availablePatches = new ArrayList<>();
 
-    changelog.stream().filter(line -> !line.isEmpty()).forEach((line) -> {
+    changelog.stream().filter(line -> !line.isEmpty()).forEach(line -> {
       final String[] patch = line.split(":");
       if (patch.length > 0) {
         availablePatches.add(Pair.of(patch[0].trim(), (patch.length > 1) ? patch[1].trim() : ""));
@@ -174,7 +178,7 @@ public class PatchHandler extends DatabaseManager {
     try {
       final InputStream stream = GlobalMarketChest.plugin.getResource(path);
       final BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-      while((line = br.readLine()) != null) {
+      while ((line = br.readLine()) != null) {
         if (line.length() > 0) {
           lines.add(line);
         }

@@ -18,7 +18,8 @@ public class PlayerListener implements Listener {
 
   @EventHandler
   public void onPlayerConnect(final PlayerJoinEvent event) {
-    if (ConfigUtils.getBoolean("Options.Broadcast.LoginMessage.SoldAuctions", true) || ConfigUtils.getBoolean("Options.Broadcast.LoginMessage.ExpiredAuctions", true)) {
+    if (ConfigUtils.getBoolean("Options.Broadcast.LoginMessage.SoldAuctions", true)
+        || ConfigUtils.getBoolean("Options.Broadcast.LoginMessage.ExpiredAuctions", true)) {
       Bukkit.getScheduler().runTaskLaterAsynchronously(GlobalMarketChest.plugin, () -> broadcastSoldAndExpiredAuctions(event.getPlayer()), 20L);
     }
     if (ConfigUtils.getBoolean("General.CheckUpdate", true) && Permissions.ADMIN_NEWVERSION.isSetOn(event.getPlayer())) {
@@ -32,7 +33,7 @@ public class PlayerListener implements Listener {
    * @param player Player that connect
    */
   private void broadcastSoldAndExpiredAuctions(final Player player) {
-    GlobalMarketChest.plugin.auctionManager.countSoldAndExpiredAuctions(player, (counts) -> {
+    GlobalMarketChest.plugin.auctionManager.countSoldAndExpiredAuctions(player, counts -> {
       final Integer expiredCount = counts.getOrDefault(StatusAuction.IN_PROGRESS, 0);
       final Integer finishedCount = counts.getOrDefault(StatusAuction.FINISHED, 0);
 

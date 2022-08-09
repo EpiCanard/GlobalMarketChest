@@ -1,17 +1,17 @@
 package fr.epicanard.globalmarketchest.database.connectors;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.SimpleQueryBuilder;
+import fr.epicanard.globalmarketchest.exceptions.ConfigException;
+import lombok.Getter;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
-import fr.epicanard.globalmarketchest.database.querybuilder.builders.SimpleQueryBuilder;
-import fr.epicanard.globalmarketchest.exceptions.ConfigException;
-import lombok.Getter;
 
 public class SQLiteConnector extends SQLConnector {
   @Getter
@@ -53,7 +53,9 @@ public class SQLiteConnector extends SQLConnector {
     try {
       if (!connection.isClosed())
         connection.close();
-    } catch (SQLException e) {}
+    } catch (SQLException e) {
+      return;
+    }
   }
 
   /**

@@ -1,10 +1,9 @@
 package fr.epicanard.globalmarketchest.commands.consumers;
 
-import org.bukkit.command.CommandSender;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.commands.CommandConsumer;
 import fr.epicanard.globalmarketchest.commands.CommandNode;
+import org.bukkit.command.CommandSender;
 
 /**
  * Command that reload the plugin.

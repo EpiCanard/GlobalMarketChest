@@ -1,9 +1,9 @@
 package fr.epicanard.globalmarketchest.database.querybuilder;
 
-import java.util.List;
-
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import lombok.Getter;
+
+import java.util.List;
 
 /**
  * Structure used with MultiConditionMap that store the key de value and the ConditionType
@@ -26,9 +26,9 @@ public class ConditionStructure {
   public String build() {
     String base = "`" + this.key + "` " + this.type.getCharacter();
     if (this.type == ConditionType.IN || this.type == ConditionType.NOTIN)
-      return base + " (" + DatabaseUtils.joinRepeat("?", ",", ((List<String>)this.value).size()) + ")";
+      return base + " (" + DatabaseUtils.joinRepeat("?", ",", ((List<String>) this.value).size()) + ")";
     if (this.value instanceof ColumnType)
-      return base + " `" + ((ColumnType)this.value).getValue() + "`";
+      return base + " `" + ((ColumnType) this.value).getValue() + "`";
     return base + " ?";
   }
 }

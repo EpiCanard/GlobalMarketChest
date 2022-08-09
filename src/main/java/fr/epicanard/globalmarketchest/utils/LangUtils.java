@@ -80,4 +80,6 @@ public class LangUtils {
 
     return result.toString();
   }
+
+  private LangUtils() {}
 }

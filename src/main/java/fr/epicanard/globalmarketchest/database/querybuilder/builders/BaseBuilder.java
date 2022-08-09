@@ -49,9 +49,9 @@ public abstract class BaseBuilder<T extends BaseBuilder<T>> {
     builder
         .append(" " + clause + " ")
         .append(String.join(" " + sep + " ",
-    map.getMap().stream()
-    .map(ConditionStructure::build)
-    .toArray(String[]::new)));
+              map.getMap().stream()
+              .map(ConditionStructure::build)
+              .toArray(String[]::new)));
 
     return builder;
   }

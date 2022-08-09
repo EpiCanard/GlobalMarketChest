@@ -1,13 +1,12 @@
 package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import org.bukkit.inventory.ItemStack;
 
 public abstract class ShopCreationInterface extends ShopInterface {
 

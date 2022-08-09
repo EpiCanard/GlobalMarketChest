@@ -1,7 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
-import java.util.List;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
@@ -16,6 +14,8 @@ import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.ItemUtils;
 import org.bukkit.OfflinePlayer;
 
+import java.util.List;
+
 public abstract class BaseAuctionGlobalView extends DefaultFooter {
   protected class ViewGlobal {
     public StatusAuction state = StatusAuction.IN_PROGRESS;
@@ -29,6 +29,7 @@ public abstract class BaseAuctionGlobalView extends DefaultFooter {
       this.pos = p;
     }
   }
+
   protected ViewGlobal current;
   protected OfflinePlayer playerView;
 

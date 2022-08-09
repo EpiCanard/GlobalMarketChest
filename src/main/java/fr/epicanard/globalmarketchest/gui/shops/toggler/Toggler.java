@@ -1,12 +1,11 @@
 package fr.epicanard.globalmarketchest.gui.shops.toggler;
 
-import java.util.Map;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Map;
 
 public abstract class Toggler {
   @Setter @Getter

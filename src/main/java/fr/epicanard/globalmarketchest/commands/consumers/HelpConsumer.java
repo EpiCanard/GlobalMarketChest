@@ -1,11 +1,10 @@
 package fr.epicanard.globalmarketchest.commands.consumers;
 
-import org.bukkit.command.CommandSender;
-
 import fr.epicanard.globalmarketchest.commands.CommandConsumer;
 import fr.epicanard.globalmarketchest.commands.CommandNode;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import org.bukkit.command.CommandSender;
 
 /**
  * Command that show the help, with only commands available to the player.

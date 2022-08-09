@@ -1,9 +1,9 @@
 package fr.epicanard.globalmarketchest.utils;
 
-import java.util.logging.Level;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import lombok.experimental.UtilityClass;
+
+import java.util.logging.Level;
 
 @UtilityClass
 public class LoggerUtils {

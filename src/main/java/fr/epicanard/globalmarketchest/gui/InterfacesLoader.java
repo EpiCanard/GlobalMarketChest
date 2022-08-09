@@ -1,18 +1,16 @@
 package fr.epicanard.globalmarketchest.gui;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+import fr.epicanard.globalmarketchest.gui.paginator.PaginatorConfig;
+import fr.epicanard.globalmarketchest.gui.shops.toggler.TogglerConfig;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.gui.paginator.PaginatorConfig;
-import fr.epicanard.globalmarketchest.gui.shops.toggler.TogglerConfig;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * SINGLETON
@@ -130,7 +128,7 @@ public class InterfacesLoader {
         .getConfigurationSection("Interfaces.Backgrounds"));
 
     section.ifPresent(sec -> sec.getValues(false).forEach((key, value) -> {
-      final ItemStack itemStack = ItemStackUtils.getItemStack((String)value);
+      final ItemStack itemStack = ItemStackUtils.getItemStack((String) value);
       this.backgrounds.put(key, ItemStackUtils.setItemStackMeta(itemStack, null, null));
     }));
 

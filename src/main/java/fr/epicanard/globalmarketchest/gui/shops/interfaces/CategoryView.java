@@ -1,7 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.util.function.Consumer;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.CategoryHandler;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
@@ -11,6 +9,8 @@ import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.DefaultFooter;
 import fr.epicanard.globalmarketchest.managers.GroupLevels;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+
+import java.util.function.Consumer;
 
 public class CategoryView extends DefaultFooter {
   private Boolean lastAuctionsEnabled;

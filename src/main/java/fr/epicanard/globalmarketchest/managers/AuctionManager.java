@@ -256,6 +256,7 @@ public class AuctionManager extends DatabaseManager {
         try {
           ItemStackUtils.setItemStackLore(it, Utils.toList(String.format("%s : %d", LangUtils.get("Divers.AuctionNumber"), res.getInt("count"))));
         } catch (SQLException e) {
+          // ignored
         }
         lst.add(new ImmutablePair<>(it, new AuctionInfo(res)));
       }
@@ -522,6 +523,7 @@ public class AuctionManager extends DatabaseManager {
         break;
       case IN_PROGRESS:
         builder.addCondition("end", DatabaseUtils.getTimestamp(), ConditionType.SUPERIOR_EQUAL);
+        break;
       default:
         builder.addCondition("status", state.getValue());
     }

@@ -1,17 +1,15 @@
 package fr.epicanard.globalmarketchest.ranks;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
+import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
+import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.permissions.Permissions;
-import lombok.Getter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class RanksLoader {
   private RankProperties defaultRankProperties;
@@ -29,7 +27,7 @@ public class RanksLoader {
     final ConfigurationSection ranksSection = config.getConfigurationSection("Ranking.Ranks");
     if (ranksSection != null) {
       final Set<String> ranksKeys =  ranksSection.getKeys(false);
-      ranksKeys.forEach((rank) -> ranks.put(rank, RankProperties.of(ranksSection.getConfigurationSection(rank))));
+      ranksKeys.forEach(rank -> ranks.put(rank, RankProperties.of(ranksSection.getConfigurationSection(rank))));
     }
     this.defaultRankProperties = RankProperties.of(config.getConfigurationSection("Options"));
     if (this.defaultRankProperties == null) {
@@ -40,7 +38,7 @@ public class RanksLoader {
 
   /**
    * Get final rank properties for player
-   * 
+   *
    * @param player
    * @return
    */

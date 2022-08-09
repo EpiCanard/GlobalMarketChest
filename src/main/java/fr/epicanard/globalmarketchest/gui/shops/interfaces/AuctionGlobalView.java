@@ -114,7 +114,11 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
     final AtomicInteger pos = new AtomicInteger(0);
 
     try {
-      final Boolean ret = PlayerUtils.hasEnoughPlace(i.getPlayer().getInventory(), DatabaseUtils.toItemStacks(this.current.auctions, (item, auction) -> item.setAmount(auction.getAmount())), pos);
+      final Boolean ret = PlayerUtils.hasEnoughPlace(
+          i.getPlayer().getInventory(),
+          DatabaseUtils.toItemStacks(this.current.auctions, (item, auction) -> item.setAmount(auction.getAmount())),
+          pos
+      );
       final List<AuctionInfo> auctions = this.current.auctions.subList(0, pos.get());
 
       if (GlobalMarketChest.plugin.auctionManager.undoGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), Utils.mapList(auctions, act -> act.getId()))) {

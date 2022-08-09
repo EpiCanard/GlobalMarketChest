@@ -1,19 +1,18 @@
 package fr.epicanard.globalmarketchest.commands.consumers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.command.CommandSender;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.commands.CommandConsumer;
 import fr.epicanard.globalmarketchest.commands.CommandNode;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.chat.ChatUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
+import fr.epicanard.globalmarketchest.utils.chat.ChatUtils;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.command.CommandSender;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Command that list all shop group name.

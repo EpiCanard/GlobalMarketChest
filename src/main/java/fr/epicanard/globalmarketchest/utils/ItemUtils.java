@@ -1,12 +1,11 @@
 package fr.epicanard.globalmarketchest.utils;
 
+import lombok.experimental.UtilityClass;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +63,7 @@ public class ItemUtils {
    */
   public void setGlow(Inventory inv, int pos, Boolean toGlow) {
     Optional.ofNullable(inv.getItem(pos)).ifPresent(item -> {
-      item = (toGlow) ? ItemUtils.addGlow(item) : ItemUtils.removeGlow(item);
+      item = toGlow ? ItemUtils.addGlow(item) : ItemUtils.removeGlow(item);
       inv.setItem(pos, item);
     });
   }

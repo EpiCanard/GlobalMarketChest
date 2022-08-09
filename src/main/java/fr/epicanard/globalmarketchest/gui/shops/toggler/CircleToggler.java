@@ -1,13 +1,12 @@
 package fr.epicanard.globalmarketchest.gui.shops.toggler;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.Utils;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CircleToggler extends Toggler {
   public CircleToggler(Inventory inv, TogglerConfig config) {
@@ -26,7 +25,7 @@ public class CircleToggler extends Toggler {
     super(inv, pos, ItemStackUtils.getItemStackFromConfig("Interfaces.Circle.SetItem"), ItemStackUtils.getItemStackFromConfig("Interfaces.Circle.UnsetItem"));
     ItemStackUtils.setItemStackMeta(this.setItem, null, null);
     ItemStackUtils.setItemStackMeta(this.unsetItem, null, null);
- }
+  }
 
   /**
    * Get items with their position to use in interface

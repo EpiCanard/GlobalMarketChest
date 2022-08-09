@@ -1,25 +1,19 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
+import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
+import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopCreationInterface;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.shops.ShopType;
+import fr.epicanard.globalmarketchest.utils.*;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.gui.InventoryGUI;
-import fr.epicanard.globalmarketchest.gui.TransactionKey;
-import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
-import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopCreationInterface;
-import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
-import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.shops.ShopType;
-import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.ItemUtils;
-import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.ShopUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
-import fr.epicanard.globalmarketchest.utils.WorldUtils;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Shop Interface for Creation Process
@@ -76,7 +70,10 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     final List<Block> blocks = Utils.filter(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()), block -> ShopUtils.getShop(block) == null);
     final List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> {
       final ItemStack item = new ItemStack(block.getType());
-      ItemStackUtils.addItemStackLore(item, Arrays.asList(ShopUtils.generateKeyValue(LangUtils.get("Divers.OtherLocation"), WorldUtils.getStringFromLocation(block.getLocation()))));
+      ItemStackUtils.addItemStackLore(
+          item,
+          Arrays.asList(ShopUtils.generateKeyValue(LangUtils.get("Divers.OtherLocation"), WorldUtils.getStringFromLocation(block.getLocation())))
+      );
       return item;
     }).collect(Collectors.toList()));
     pag.getItemstacks().clear();
@@ -97,7 +94,9 @@ public class ShopCreationSelectType extends ShopCreationInterface {
 
       shop.setOtherLocation(block.getLocation());
       this.updateName();
-    } catch(IndexOutOfBoundsException e) {}
+    } catch (IndexOutOfBoundsException e) {
+      return;
+    }
   }
 
   /**

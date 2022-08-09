@@ -1,16 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import fr.epicanard.globalmarketchest.gui.shops.Droppable;
-import fr.epicanard.globalmarketchest.utils.*;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
@@ -18,9 +7,19 @@ import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
+import fr.epicanard.globalmarketchest.gui.shops.Droppable;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.utils.*;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CreateAuctionItem extends ShopInterface implements Droppable {
   private Integer maxAuctions = 0;
@@ -143,7 +142,7 @@ public class CreateAuctionItem extends ShopInterface implements Droppable {
       final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
       GlobalMarketChest.plugin.auctionManager.getLastPrice(auction, auction::setPrice);
     }
-    return (item != null);
+    return item != null;
   }
 
   /**

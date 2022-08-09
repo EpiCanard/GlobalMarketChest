@@ -69,7 +69,7 @@ public class AuctionViewList extends AuctionViewBase {
    * Build the icon with advice price
    */
   private void buildAdvicePrice() {
-    GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auctionRef.getItemMeta(), shopInfo.getGroup(), days,analyze, price -> {
+    GlobalMarketChest.plugin.auctionManager.getAveragePriceItem(auctionRef.getItemMeta(), shopInfo.getGroup(), days, analyze, price -> {
       String adviceMessage;
       if (price != null) {
         adviceMessage = LangUtils.format("Divers.AdvicePriceIcon", "advicePrice", EconomyUtils.format(price));

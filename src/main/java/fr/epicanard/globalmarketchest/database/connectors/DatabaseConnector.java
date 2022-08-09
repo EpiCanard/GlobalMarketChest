@@ -1,17 +1,14 @@
 package fr.epicanard.globalmarketchest.database.connectors;
 
+import fr.epicanard.globalmarketchest.exceptions.ConfigException;
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.Properties;
-
-import fr.epicanard.globalmarketchest.utils.ConfigUtils;
-import lombok.Getter;
-import org.apache.commons.lang3.tuple.Pair;
-
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
 public abstract class DatabaseConnector {
   public final Boolean needConnection;

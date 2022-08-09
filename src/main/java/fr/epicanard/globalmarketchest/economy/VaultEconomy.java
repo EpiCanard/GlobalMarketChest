@@ -1,18 +1,17 @@
 package fr.epicanard.globalmarketchest.economy;
 
-import java.util.UUID;
-
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
+
+import java.util.UUID;
 
 public class VaultEconomy {
   private Economy economy;
@@ -29,12 +28,12 @@ public class VaultEconomy {
       throw new RequiredPluginException("Vault");
 
     RegisteredServiceProvider<Economy> eco = server.getServicesManager().getRegistration(Economy.class);
-    if(eco == null || eco.getProvider() == null)
+    if (eco == null || eco.getProvider() == null)
       throw new RequiredPluginException("An economy plugin to use with Vault");
     this.economy = eco.getProvider();
 
     RegisteredServiceProvider<Permission> perm = server.getServicesManager().getRegistration(Permission.class);
-    if(perm == null || perm.getProvider() == null)
+    if (perm == null || perm.getProvider() == null)
       throw new RequiredPluginException("A permission");
     this.permission = perm.getProvider();
   }

@@ -109,16 +109,23 @@ public class BuyAuction extends UndoAuction {
    * @param item    ItemStack bought
    */
   private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
-    final String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
+    final String langVariable = isOwner ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
     final Map<String, Object> mapping = ImmutableMap.of(
-        "buyer", ConfigUtils.getBoolean("Options.Anonymous.Buyer", false) ? LangUtils.getOrElse("Divers.Anonymous", "Anonymous") : buyer.getName(),
+        "buyer", anonymousPlayer("Buyer").orElseGet(() -> buyer.getName()),
         "quantity", auction.getAmount(),
         "itemName", ItemStackUtils.getItemStackDisplayName(item),
         "price", EconomyUtils.format(auction.getTotalPrice()),
-        "seller", ConfigUtils.getBoolean("Options.Anonymous.Seller", false) ? LangUtils.getOrElse("Divers.Anonymous", "Anonymous") : PlayerUtils.getPlayerName(auction.getPlayerStarter())
+        "seller", anonymousPlayer("Seller").orElseGet(() -> PlayerUtils.getPlayerName(auction.getPlayerStarter()))
     );
 
     return LangUtils.format(langVariable, mapping);
+  }
+
+  private Optional<String> anonymousPlayer(String opt) {
+    if (ConfigUtils.getBoolean("Options.Anonymous." + opt, false))
+      return Optional.of(LangUtils.getOrElse("Divers.Anonymous", "Anonymous"));
+    else
+      return Optional.empty();
   }
 
   /**
@@ -181,9 +188,10 @@ public class BuyAuction extends UndoAuction {
     }
 
     final String displayName = Optional.ofNullable(item.getItemMeta().getDisplayName()).map(String::toLowerCase).orElse("");
-    return ShulkerBoxContent.isShulker(item) && (
-        ConfigUtils.getBoolean("Options.ShulkerBox.SeeContent", true) ^
-        ConfigUtils.getStringList("Options.ShulkerBox.ExceptDisplayNames").stream().anyMatch(except -> displayName.contains(except.toLowerCase()))
-    );
+    return ShulkerBoxContent.isShulker(item)
+      && (
+          ConfigUtils.getBoolean("Options.ShulkerBox.SeeContent", true)
+          ^ ConfigUtils.getStringList("Options.ShulkerBox.ExceptDisplayNames").stream().anyMatch(except -> displayName.contains(except.toLowerCase()))
+      );
   }
 }

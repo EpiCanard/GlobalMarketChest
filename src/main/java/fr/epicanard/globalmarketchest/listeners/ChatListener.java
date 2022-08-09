@@ -1,7 +1,8 @@
 package fr.epicanard.globalmarketchest.listeners;
 
-import java.util.UUID;
-
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,9 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.gui.InventoryGUI;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import java.util.UUID;
 
 public class ChatListener implements Listener {
   /**
@@ -23,7 +22,7 @@ public class ChatListener implements Listener {
   private Boolean isChatEditing(Player player) {
     if (player != null) {
       InventoryGUI inv = GlobalMarketChest.plugin.inventories.getInventory(player.getUniqueId());
-      return (inv != null && inv.getChatEditing());
+      return inv != null && inv.getChatEditing();
     }
     return false;
   }

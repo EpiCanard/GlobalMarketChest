@@ -68,6 +68,59 @@
           </archive>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.1.2</version>
+        <configuration>
+          <configLocation>checkstyle.xml</configLocation>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
+          <linkXRef>false</linkXRef>
+        </configuration>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>10.3.2</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.openrewrite.maven</groupId>
+        <artifactId>rewrite-maven-plugin</artifactId>
+        <version>4.31.1</version>
+        <configuration>
+          <activeRecipes>
+            <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
+            <recipe>org.openrewrite.java.OrderImports</recipe>
+            <recipe>org.openrewrite.java.format.EmptyNewlineAtEndOfFile</recipe>
+            <recipe>org.openrewrite.java.cleanup.DefaultComesLast</recipe>
+            <recipe>org.openrewrite.java.cleanup.EmptyBlock</recipe>
+            <recipe>org.openrewrite.java.cleanup.ForLoopControlVariablePostfixOperators</recipe>
+            <recipe>org.openrewrite.java.cleanup.MethodParamPad</recipe>
+            <recipe>org.openrewrite.java.cleanup.NoWhitespaceAfter</recipe>
+            <recipe>org.openrewrite.java.cleanup.NoWhitespaceBefore</recipe>
+            <recipe>org.openrewrite.java.cleanup.PadEmptyForLoopComponents</recipe>
+            <recipe>org.openrewrite.java.cleanup.TypecastParenPad</recipe>
+            <recipe>org.openrewrite.java.cleanup.EqualsAvoidsNull</recipe>
+            <recipe>org.openrewrite.java.cleanup.ExplicitInitialization</recipe>
+            <recipe>org.openrewrite.java.cleanup.FallThrough</recipe>
+            <recipe>org.openrewrite.java.cleanup.HideUtilityClassConstructor</recipe>
+            <recipe>org.openrewrite.java.cleanup.OperatorWrap</recipe>
+            <recipe>org.openrewrite.java.cleanup.UnnecessaryParentheses</recipe>
+          </activeRecipes>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

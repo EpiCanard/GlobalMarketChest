@@ -49,9 +49,9 @@ public class ShulkerBoxContent extends DefaultFooter {
    * @return Shulker box content
    */
   private ItemStack[] getShulkerBoxContent(final ItemStack item) {
-    if(item.getItemMeta() instanceof BlockStateMeta){
-      final BlockStateMeta itemMeta = (BlockStateMeta)item.getItemMeta();
-      if(itemMeta.getBlockState() instanceof ShulkerBox){
+    if (item.getItemMeta() instanceof BlockStateMeta) {
+      final BlockStateMeta itemMeta = (BlockStateMeta) item.getItemMeta();
+      if (itemMeta.getBlockState() instanceof ShulkerBox) {
         final ShulkerBox shulker = (ShulkerBox) itemMeta.getBlockState();
         return shulker.getInventory().getContents();
       }

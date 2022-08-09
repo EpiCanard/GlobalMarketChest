@@ -1,11 +1,10 @@
 package fr.epicanard.globalmarketchest.commands.consumers;
 
-import org.bukkit.command.CommandSender;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.commands.CommandConsumer;
 import fr.epicanard.globalmarketchest.commands.CommandNode;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import org.bukkit.command.CommandSender;
 
 /**
  * Command that show the version of the plugin.

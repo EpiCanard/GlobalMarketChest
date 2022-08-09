@@ -1,32 +1,23 @@
 package fr.epicanard.globalmarketchest.commands;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.commands.consumers.*;
+import fr.epicanard.globalmarketchest.permissions.Permissions;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-
-import fr.epicanard.globalmarketchest.commands.consumers.CloseConsumer;
-import fr.epicanard.globalmarketchest.commands.consumers.DetailConsumer;
-import fr.epicanard.globalmarketchest.commands.consumers.FixAuctionsConsumer;
-import fr.epicanard.globalmarketchest.commands.consumers.HelpConsumer;
-import fr.epicanard.globalmarketchest.commands.consumers.ListConsumer;
-import fr.epicanard.globalmarketchest.commands.consumers.OpenConsumer;
-import fr.epicanard.globalmarketchest.commands.consumers.ReloadConsumer;
-import fr.epicanard.globalmarketchest.commands.consumers.TPConsumer;
-import fr.epicanard.globalmarketchest.commands.consumers.VersionConsumer;
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.permissions.Permissions;
-import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import org.bukkit.entity.HumanEntity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
@@ -85,7 +76,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         .setCommand(new FixAuctionsConsumer())
         .setTabConsumer((player, args) -> {
           if (args.length == 1)
-            return FixAuctionsConsumer.getFixAuctionsType().stream().filter((type) -> type.startsWith(args[0])).collect(Collectors.toList());
+            return FixAuctionsConsumer.getFixAuctionsType().stream().filter(type -> type.startsWith(args[0])).collect(Collectors.toList());
           return new ArrayList<>();
         });
     fixNode.addSubNode(fixAuctionsNode);
@@ -142,7 +133,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
   private List<String> shopIdTabComplete(CommandSender sender, String[] args) {
     if (args.length == 1 || args.length == 2) {
       final Stream<ShopInfo> shopsStream = GlobalMarketChest.plugin.shopManager.getShops().stream()
-      .filter(ShopInfo::getExists);
+        .filter(ShopInfo::getExists);
 
       if (args.length == 1) {
         return shopsStream

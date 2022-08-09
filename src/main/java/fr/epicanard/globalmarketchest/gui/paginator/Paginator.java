@@ -1,22 +1,21 @@
 package fr.epicanard.globalmarketchest.gui.paginator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.logging.Level;
-
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.logging.Level;
 
 public class Paginator {
   private final Inventory inv;
@@ -45,7 +44,7 @@ public class Paginator {
     this(inv, null);
     try {
       this.config = new PaginatorConfig(1, 9, 1, -1, -1, -1);
-    } catch(InvalidPaginatorParameter e) {
+    } catch (InvalidPaginatorParameter e) {
       GlobalMarketChest.plugin.getLogger().log(Level.WARNING, e.getMessage());
     }
   }
@@ -162,7 +161,7 @@ public class Paginator {
    * @return Boolean
    */
   public Boolean isButton(int pos) {
-    return (pos >= 0 && (pos == this.config.getPreviousPos() || pos == this.config.getNextPos() || pos == this.config.getNumPagePos()));
+    return pos >= 0 && (pos == this.config.getPreviousPos() || pos == this.config.getNextPos() || pos == this.config.getNumPagePos());
   }
 
   /**
@@ -209,9 +208,9 @@ public class Paginator {
    * @return int
    */
   public int getPos(int index) {
-    return this.config.getStartPos() +
-      Utils.getLine(index, this.config.getWidth()) * 9 +
-      Utils.getCol(index, this.config.getWidth());
+    return this.config.getStartPos()
+      + Utils.getLine(index, this.config.getWidth()) * 9
+      + Utils.getCol(index, this.config.getWidth());
   }
 
   /**
@@ -243,7 +242,7 @@ public class Paginator {
    * Get the limit for the paginator
    */
   public Pair<Integer, Integer> getLimit() {
-    return new ImmutablePair<Integer,Integer>(this.config.getStartLimit(), this.config.getLimit());
+    return new ImmutablePair<Integer, Integer>(this.config.getStartLimit(), this.config.getLimit());
   }
 
   public void setItemStacks(List<ItemStack> items) {

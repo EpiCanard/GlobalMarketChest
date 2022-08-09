@@ -1,13 +1,11 @@
 package fr.epicanard.globalmarketchest.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Consumer;
-
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
+import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.shops.ShopInfo;
+import fr.epicanard.globalmarketchest.shops.ShopType;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,11 +13,12 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.gui.TransactionKey;
-import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.shops.ShopType;
-import lombok.experimental.UtilityClass;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Utility Class about Shops
@@ -102,8 +101,8 @@ public class ShopUtils {
    */
   public ShopInfo getShop(Block bl) {
     try {
-      return (ShopInfo)bl.getMetadata(ShopUtils.META_KEY).get(0).value();
-    } catch(IndexOutOfBoundsException | NullPointerException e) {
+      return (ShopInfo) bl.getMetadata(ShopUtils.META_KEY).get(0).value();
+    } catch (IndexOutOfBoundsException | NullPointerException e) {
       return null;
     }
   }
@@ -204,13 +203,11 @@ public class ShopUtils {
   public void lockShop(String shopGroup) {
     lockedShop.add(shopGroup);
     GlobalMarketChest.plugin.inventories.getInventories().forEach((key, value) -> {
-        ShopInfo shop = value.getTransactionValue(TransactionKey.SHOP_INFO);
-        if (shop != null && shop.getGroup().equals(shopGroup)) {
-          Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> {
-            GlobalMarketChest.plugin.inventories.removeInventory(key);
-          });
-          PlayerUtils.sendMessageConfig(Bukkit.getServer().getPlayer(key), "InfoMessages.ShopTemporarilyLocked");
-        }
+      ShopInfo shop = value.getTransactionValue(TransactionKey.SHOP_INFO);
+      if (shop != null && shop.getGroup().equals(shopGroup)) {
+        Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> GlobalMarketChest.plugin.inventories.removeInventory(key));
+        PlayerUtils.sendMessageConfig(Bukkit.getServer().getPlayer(key), "InfoMessages.ShopTemporarilyLocked");
+      }
     });
   }
 
@@ -234,7 +231,7 @@ public class ShopUtils {
   public void openShop(Player player, ShopInfo shop, Consumer<InventoryGUI> success) {
     if (ShopUtils.isLockedShop(shop.getGroup())) {
       PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopTemporarilyLocked");
-      return ;
+      return;
     }
 
     if (GlobalMarketChest.plugin.inventories.hasInventory(player.getUniqueId())) {

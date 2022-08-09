@@ -1,11 +1,10 @@
 package fr.epicanard.globalmarketchest.gui;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import fr.epicanard.globalmarketchest.gui.InventoryGUI;
-import lombok.Getter;
 
 /**
  * Store each opened shop interface by player (uuid)

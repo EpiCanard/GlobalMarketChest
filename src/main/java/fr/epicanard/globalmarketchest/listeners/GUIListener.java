@@ -36,7 +36,11 @@ public class GUIListener implements Listener {
 
     if (inv.inventoryEquals(event.getClickedInventory())) {
       event.setCancelled(true);
-      if (event.getAction() == InventoryAction.PLACE_ALL || event.getAction() == InventoryAction.PLACE_ONE || event.getAction() == InventoryAction.SWAP_WITH_CURSOR) {
+      if (
+          event.getAction() == InventoryAction.PLACE_ALL
+          || event.getAction() == InventoryAction.PLACE_ONE
+          || event.getAction() == InventoryAction.SWAP_WITH_CURSOR
+      ) {
         if (interf instanceof Droppable) {
           ((Droppable) interf).onDrop(event, inv);
         }

@@ -1,16 +1,16 @@
 package fr.epicanard.globalmarketchest.database.connectors;
 
+import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.SimpleQueryBuilder;
+import fr.epicanard.globalmarketchest.exceptions.ConfigException;
+import lombok.Getter;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
-import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
-import fr.epicanard.globalmarketchest.database.querybuilder.builders.SimpleQueryBuilder;
-import fr.epicanard.globalmarketchest.exceptions.ConfigException;
-import lombok.Getter;
 
 public class MySQLConnector extends SQLConnector {
   @Getter

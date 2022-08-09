@@ -36,4 +36,6 @@ public class EconomyUtils {
     final double modulo = (value * 100) % 1;
     return ((value * 100) - modulo) / 100;
   }
+
+  private EconomyUtils() {}
 }

@@ -1,6 +1,5 @@
 package fr.epicanard.globalmarketchest.shops;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
@@ -29,7 +28,7 @@ public enum ShopType {
    * @return
    */
   public Boolean isSetOn(int types) {
-    return ((types & this.shopMask) == this.shopMask);
+    return (types & this.shopMask) == this.shopMask;
   }
 
   /**

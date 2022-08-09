@@ -1,21 +1,18 @@
 package fr.epicanard.globalmarketchest.commands.consumers;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.commands.CommandConsumer;
 import fr.epicanard.globalmarketchest.commands.CommandNode;
-import fr.epicanard.globalmarketchest.gui.InventoryGUI;
-import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Open a shop from command line

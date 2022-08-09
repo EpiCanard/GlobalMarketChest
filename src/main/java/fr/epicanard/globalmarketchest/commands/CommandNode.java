@@ -1,22 +1,20 @@
 package fr.epicanard.globalmarketchest.commands;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import fr.epicanard.globalmarketchest.commands.CommandConsumer;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-@Accessors(chain=true)
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Accessors(chain = true)
 public class CommandNode {
   @Getter
   private List<CommandNode> subNodes = new ArrayList<>();
@@ -138,7 +136,9 @@ public class CommandNode {
     } else if (this.subNodes.size() > 0) {
       return this.getSubNodes()
         .stream()
-        .filter(node -> node.permission != null && node.permission.isSetOn(sender) && node.canExecute(sender) && node.getNodeName().startsWith(args[0].toLowerCase()))
+        .filter(node -> node.permission != null && node.permission.isSetOn(sender) && node.canExecute(sender)
+            && node.getNodeName().startsWith(args[0].toLowerCase())
+        )
         .map(node -> node.getNodeName())
         .collect(Collectors.toList());
     } else if (this.tabConsumer != null) {

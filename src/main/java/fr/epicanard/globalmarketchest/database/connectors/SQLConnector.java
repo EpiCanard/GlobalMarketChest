@@ -1,17 +1,15 @@
 package fr.epicanard.globalmarketchest.database.connectors;
 
+import fr.epicanard.globalmarketchest.exceptions.ConfigException;
+import fr.epicanard.globalmarketchest.utils.ConfigUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import fr.epicanard.globalmarketchest.utils.ConfigUtils;
-import org.apache.commons.lang3.tuple.Pair;
-import org.bukkit.configuration.file.YamlConfiguration;
-
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 
 public abstract class SQLConnector extends DatabaseConnector {
   private final LinkedBlockingQueue<Connection> pool;
@@ -64,7 +62,9 @@ public abstract class SQLConnector extends DatabaseConnector {
     try {
       if (!connection.isClosed())
         connection.close();
-    } catch (SQLException e) {}
+    } catch (SQLException e) {
+      return;
+    }
   }
 
   /**
@@ -97,7 +97,9 @@ public abstract class SQLConnector extends DatabaseConnector {
         this.disconnect(connection);
       else
         this.pool.put(connection);
-    } catch (InterruptedException e) {}
+    } catch (InterruptedException e) {
+      return;
+    }
   }
 
   /**
@@ -131,7 +133,9 @@ public abstract class SQLConnector extends DatabaseConnector {
         res.close();
       if (prepared != null)
         prepared.close();
-    } catch (SQLException e) {}
+    } catch (SQLException e) {
+      return;
+    }
   }
 
   @Override

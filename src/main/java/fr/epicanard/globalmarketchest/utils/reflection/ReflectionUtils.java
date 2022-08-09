@@ -30,10 +30,10 @@ public class ReflectionUtils {
    * @param args all the arguments that must be send to the method
    * @return return the object return by the method
    */
-  public static Object invokeMethod(Object object, String method, Object ...args) {
+  public static Object invokeMethod(Object object, String method, Object... args) {
     try {
       return object.getClass().getMethod(method, fromObjectToClass(args)).invoke(object, args);
-    } catch(InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+    } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
       e.printStackTrace();
     }
     return null;
@@ -47,13 +47,14 @@ public class ReflectionUtils {
    * @param args all the arguments that must be send to the method
    * @return return a boolean
    */
-  public static Boolean hasMethod(Object object, String method, Object ...args) {
+  public static Boolean hasMethod(Object object, String method, Object... args) {
     try {
       object.getClass().getMethod(method, fromObjectToClass(args));
       return true;
-    } catch(NoSuchMethodException e) {
+    } catch (NoSuchMethodException e) {
       return false;
     }
   }
 
+  private ReflectionUtils() {}
 }

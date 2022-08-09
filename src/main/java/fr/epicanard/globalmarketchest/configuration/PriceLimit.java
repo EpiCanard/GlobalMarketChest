@@ -3,23 +3,23 @@ package fr.epicanard.globalmarketchest.configuration;
 import fr.epicanard.duckconfig.annotations.Header;
 
 @Header({
-    "=================================================",
-    "Config that contains all prices range limitation by item",
-    "",
-    "Parameters:",
-    "  Min : Minimum price of item, floating number, the value must be positive",
-    "  Max : Maximum price of item, floating number, ",
-    "        if the value is positive the item can't be sold to a price higher",
-    "        if the value is negative the max price will have no limit",
-    "",
-    "For example:",
-    "  ```",
-    "  minecraft:dirt:",
-    "    Min: 10",
-    "    Max: 1000",
-    "  ```",
-    "  With this config a player must sell the item with a price between 10 and 1000 included",
-    "================================================="
+  "=================================================",
+  "Config that contains all prices range limitation by item",
+  "",
+  "Parameters:",
+  "  Min : Minimum price of item, floating number, the value must be positive",
+  "  Max : Maximum price of item, floating number, ",
+  "        if the value is positive the item can't be sold to a price higher",
+  "        if the value is negative the max price will have no limit",
+  "",
+  "For example:",
+  "  ```",
+  "  minecraft:dirt:",
+  "    Min: 10",
+  "    Max: 1000",
+  "  ```",
+  "  With this config a player must sell the item with a price between 10 and 1000 included",
+  "================================================="
 })
 public class PriceLimit {
   public Double Min = 0.0;

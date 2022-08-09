@@ -5,7 +5,7 @@ import lombok.Getter;
 
 public class PaginatorConfig {
   @Getter
-  private int limit = 0;
+  private int limit;
   @Getter
   private int height;
   @Getter
@@ -13,7 +13,7 @@ public class PaginatorConfig {
   @Getter
   private int startPos;
   @Getter
-  private int page = 0;
+  private int page;
   @Getter
   private int previousPos = -1;
   @Getter
@@ -48,7 +48,7 @@ public class PaginatorConfig {
   public PaginatorConfig duplicate() {
     try {
       return new PaginatorConfig(this.height, this.width, this.startPos, this.previousPos, this.nextPos, this.numPagePos);
-    } catch(InvalidPaginatorParameter e) {
+    } catch (InvalidPaginatorParameter e) {
       return null;
     }
   }
@@ -57,7 +57,7 @@ public class PaginatorConfig {
    * Increment the number of page
    */
   public int nextPage() {
-    this.page +=1;
+    this.page += 1;
     return this.page;
   }
 
@@ -66,7 +66,7 @@ public class PaginatorConfig {
    */
   public int previousPage() {
     if (this.page > 0)
-      this.page -=1;
+      this.page -= 1;
     return this.page;
   }
 

@@ -1,22 +1,20 @@
 package fr.epicanard.globalmarketchest.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.experimental.UtilityClass;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Utility class for ItemStacks
@@ -216,7 +214,7 @@ public class ItemStackUtils {
    * @param item ItemStack to define if it is damaged
    * @return
    */
-  @Version(name="isDamaged", versions={"1.12"})
+  @Version(name = "isDamaged", versions = {"1.12"})
   public Boolean isDamaged_1_12(ItemStack item) {
     final Predicate<String> match = damageable -> item.getType().name().matches(String.format("(.*)%s(.*)", damageable));
     return ItemStackUtils.DAMAGEABLE_1_12.stream().anyMatch(match) && item.getDurability() > 0;
@@ -228,9 +226,9 @@ public class ItemStackUtils {
    * @param item ItemStack to define if it is damaged
    * @return
    */
-  @Version(name="isDamaged")
+  @Version(name = "isDamaged")
   public Boolean isDamaged_latest(ItemStack item) {
-    return ((Damageable)item.getItemMeta()).getDamage() > 0 && item.getType() != Material.getMaterial("PLAYER_HEAD");
+    return ((Damageable) item.getItemMeta()).getDamage() > 0 && item.getType() != Material.getMaterial("PLAYER_HEAD");
   }
 
   /**
@@ -271,7 +269,7 @@ public class ItemStackUtils {
   private Boolean matchLore(final List<String> itemLore, final List<String> blacklistLore) {
     if (itemLore != null && blacklistLore != null) {
       for (String lore : itemLore) {
-        for (String bl: blacklistLore) {
+        for (String bl : blacklistLore) {
           if (lore.contains(bl))
             return true;
         }

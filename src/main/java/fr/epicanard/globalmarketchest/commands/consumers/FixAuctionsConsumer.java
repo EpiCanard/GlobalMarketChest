@@ -71,10 +71,10 @@ public class FixAuctionsConsumer implements CommandConsumer {
    * @param sender Command Sender that executed the command
    */
   private void updateAuctions(Boolean all, CommandSender sender) {
-    PlayerUtils.sendMessageAndConsole(sender, format("InfoMessages.ConversionMode", "mode", (all) ? FIX_ALL : FIX_ACTIVE));
+    PlayerUtils.sendMessageAndConsole(sender, format("InfoMessages.ConversionMode", "mode", all ? FIX_ALL : FIX_ACTIVE));
 
     Bukkit.getScheduler().runTaskAsynchronously(GlobalMarketChest.plugin, () -> {
-      GlobalMarketChest.plugin.auctionManager.getAllAuctions(all, (auctions) -> {
+      GlobalMarketChest.plugin.auctionManager.getAllAuctions(all, auctions -> {
         final Map<String, List<AuctionInfo>> auctionsMap = auctions.stream().collect(Collectors.groupingBy(AuctionInfo::getGroup));
 
         auctionsMap.forEach((group, aucts) -> this.convertShopAuctions(group, aucts, sender));

@@ -1,8 +1,7 @@
 package fr.epicanard.globalmarketchest.exceptions;
 
-import org.bukkit.Location;
-
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
+import org.bukkit.Location;
 
 public class ShopAlreadyExistException extends Exception {
 

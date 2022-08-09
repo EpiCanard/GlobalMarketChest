@@ -36,10 +36,10 @@ public abstract class UndoAuction extends ShopInterface {
         if (getItems) {
           i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
         }
-        PlayerUtils.sendMessageConfig(i.getPlayer(), (remove) ? "InfoMessages.RemoveAuction" : "InfoMessages.UndoAuction");
+        PlayerUtils.sendMessageConfig(i.getPlayer(), remove ? "InfoMessages.RemoveAuction" : "InfoMessages.UndoAuction");
         ReturnBack.execute(null, i);
       } else {
-        throw new WarnException((remove) ? "CantRemoveAuction" : "CantUndoAuction");
+        throw new WarnException(remove ? "CantRemoveAuction" : "CantUndoAuction");
       }
     } catch (WarnException e) {
       i.getWarn().warn(e.getMessage(), 49);

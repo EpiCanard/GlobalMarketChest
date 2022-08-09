@@ -1,16 +1,15 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import java.util.function.Consumer;
-
-import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
-import org.apache.commons.lang3.tuple.Pair;
-import org.bukkit.inventory.ItemStack;
-
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.function.Consumer;
 
 public class ConfirmView extends ShopInterface {
   private Pair<String, Consumer<Boolean>> question;

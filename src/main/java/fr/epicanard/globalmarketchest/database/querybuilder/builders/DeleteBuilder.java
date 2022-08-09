@@ -26,7 +26,7 @@ public class DeleteBuilder extends ConditionBase<DeleteBuilder> {
   }
 
   @Override
-  public void prepare(final ExceptionConsumer consumer) throws TypeNotSupported, SQLException{
+  public void prepare(final ExceptionConsumer consumer) throws TypeNotSupported, SQLException {
     consumer.accept(this.conditions.values());
   }
 

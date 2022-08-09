@@ -1,21 +1,19 @@
 package fr.epicanard.globalmarketchest.commands.consumers;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.bukkit.command.CommandSender;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.commands.CommandConsumer;
 import fr.epicanard.globalmarketchest.commands.CommandNode;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.chat.ChatUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import fr.epicanard.globalmarketchest.utils.WorldUtils;
+import fr.epicanard.globalmarketchest.utils.chat.ChatUtils;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.command.CommandSender;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Command that list all shop linked to a shop group name in paramater.
@@ -27,7 +25,7 @@ public class DetailConsumer implements CommandConsumer {
 
   /**
    * Method called when consumer is executed
-   * 
+   *
    * @param node Command node
    * @param command Command executed
    * @param sender Command's executor (player or console)
@@ -60,9 +58,9 @@ public class DetailConsumer implements CommandConsumer {
 
     for (ShopInfo shop : shops) {
       message.addExtra("\n");
-      TextComponent line = ChatUtils.newComponent(" - " +
-          ChatColor.DARK_GREEN + shop.getServer() + " " +
-          ChatColor.GOLD + shop.getSignLocationString() + " ");
+      TextComponent line = ChatUtils.newComponent(" - "
+          + ChatColor.DARK_GREEN + shop.getServer() + " "
+          + ChatColor.GOLD + shop.getSignLocationString() + " ");
 
       if (Permissions.CMD_LIST_TP.isSetOn(sender, false) && shop.getExists()) {
         TextComponent linkTP = ChatUtils.createLinkWithBracket(LangUtils.get("Commands.Buttons.TeleportText"),

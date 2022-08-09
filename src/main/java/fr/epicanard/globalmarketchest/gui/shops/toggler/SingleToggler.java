@@ -1,10 +1,10 @@
 package fr.epicanard.globalmarketchest.gui.shops.toggler;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SingleToggler extends Toggler {
   public SingleToggler(Inventory inv, TogglerConfig config) {

@@ -1,13 +1,13 @@
 package fr.epicanard.globalmarketchest.gui.actions;
 
-import java.util.function.Consumer;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionType;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
+
+import java.util.function.Consumer;
 
 /**
  * Consumer to create Auction

@@ -8,7 +8,7 @@ import java.util.Arrays;
 public enum StatusAuction {
   EXPIRED(-1, "Expired"),
   IN_PROGRESS(0, "InProgress"),
-  FINISHED(1,"Finished"),
+  FINISHED(1, "Finished"),
   ABANDONED(2, "Abandoned")
   ;
 

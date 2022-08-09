@@ -11,10 +11,10 @@ import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import org.bukkit.inventory.ItemStack;
 
+import static fr.epicanard.globalmarketchest.permissions.Permissions.*;
 import static fr.epicanard.globalmarketchest.utils.EconomyUtils.format;
 import static fr.epicanard.globalmarketchest.utils.EconomyUtils.getMoneyOfPlayer;
 import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
-import static fr.epicanard.globalmarketchest.permissions.Permissions.*;
 
 public class DefaultFooter extends ShopInterface {
 

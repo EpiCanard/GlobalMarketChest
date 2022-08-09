@@ -1,14 +1,12 @@
 package fr.epicanard.globalmarketchest.utils.chat;
 
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.conversations.ConversationContext;
-import org.bukkit.conversations.Prompt;
-import org.bukkit.conversations.StringPrompt;
-
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.conversations.ConversationContext;
+import org.bukkit.conversations.Prompt;
+import org.bukkit.conversations.StringPrompt;
 
 import static fr.epicanard.globalmarketchest.utils.LangUtils.format;
 

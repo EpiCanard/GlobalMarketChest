@@ -1,7 +1,5 @@
 package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
-import org.bukkit.OfflinePlayer;
-
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.auctions.StatusAuction;
@@ -12,6 +10,7 @@ import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
+import org.bukkit.OfflinePlayer;
 
 public class AuctionViewByPlayer extends AuctionViewBase {
   public AuctionViewByPlayer(InventoryGUI inv) {

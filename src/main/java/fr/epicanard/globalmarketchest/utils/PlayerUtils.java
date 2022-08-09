@@ -1,11 +1,9 @@
 package fr.epicanard.globalmarketchest.utils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.exceptions.WarnException;
+import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
+import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -17,10 +15,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.exceptions.WarnException;
-import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
-import lombok.experimental.UtilityClass;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * Utility Class for player action
@@ -31,6 +30,7 @@ public class PlayerUtils {
   private static final String prefix = Utils.toColor(
     String.format("%s&7 ", ConfigUtils.getString("Logs.Prefix", "&a[GlobalMarketChest]"))
   );
+
   /**
    * Get a player from is UUID
    */
@@ -85,6 +85,16 @@ public class PlayerUtils {
     pl.sendMessage(PlayerUtils.getPrefix() + Utils.toColor(message));
   }
 
+  /**
+   * Send a message to a command sender (can be player and console)
+   *
+   * @param pl Target command sender of the message
+   * @param message Message to send
+   */
+  public void sendMessage(CommandSender pl, String message) {
+    pl.sendMessage(PlayerUtils.getPrefix() + Utils.toColor(message));
+  }
+
   public void sendSyncMessage(Player pl, String message) {
     Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> sendMessage(pl, message));
   }
@@ -97,16 +107,6 @@ public class PlayerUtils {
    */
   public void sendMessageConfig(Player pl, String path) {
     pl.sendMessage(PlayerUtils.getPrefix() + LangUtils.get(path));
-  }
-
-  /**
-   * Send a message to a command sender (can be player and console)
-   *
-   * @param pl Target command sender of the message
-   * @param message Message to send
-   */
-  public void sendMessage(CommandSender pl, String message) {
-    pl.sendMessage(PlayerUtils.getPrefix() + Utils.toColor(message));
   }
 
   /**
@@ -130,24 +130,6 @@ public class PlayerUtils {
       PlayerUtils.sendMessage(pl, message);
     }
     PlayerUtils.sendMessage(GlobalMarketChest.plugin.getServer().getConsoleSender(), message);
-  }
-
-  /**
-   * Define if there is enough place to add the item inside player inventory
-   *
-   * @param i Inventory of the player
-   * @param item Itemstack that must be put in
-   * @return
-   */
-  public Boolean hasEnoughPlace(PlayerInventory i, ItemStack item) {
-    ItemStack[] items = i.getStorageContents();
-    return Arrays.asList(items).stream().reduce(0, (res, val) -> {
-      if (val == null)
-        return res + item.getMaxStackSize();
-      if (val.isSimilar(item))
-        return res + (val.getMaxStackSize() - val.getAmount());
-      return res;
-    }, (s1, s2) -> s1 + s2) >= item.getAmount();
   }
 
   /**
@@ -203,6 +185,24 @@ public class PlayerUtils {
       auctionsToAdd.incrementAndGet();
     }
     return true;
+  }
+
+  /**
+   * Define if there is enough place to add the item inside player inventory
+   *
+   * @param i Inventory of the player
+   * @param item Itemstack that must be put in
+   * @return
+   */
+  public Boolean hasEnoughPlace(PlayerInventory i, ItemStack item) {
+    ItemStack[] items = i.getStorageContents();
+    return Arrays.asList(items).stream().reduce(0, (res, val) -> {
+      if (val == null)
+        return res + item.getMaxStackSize();
+      if (val.isSimilar(item))
+        return res + (val.getMaxStackSize() - val.getAmount());
+      return res;
+    }, (s1, s2) -> s1 + s2) >= item.getAmount();
   }
 
   /**

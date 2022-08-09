@@ -1,15 +1,11 @@
 package fr.epicanard.globalmarketchest.utils.annotations;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.utils.Utils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * Class that allow to call method with annotations @Version
@@ -28,7 +24,7 @@ public final class AnnotationCaller {
     final List<Method> methods = Arrays.asList(objectClass.getMethods());
     final Map<String, Method> finalMethods = new HashMap<>();
 
-    methods.stream().forEach((method) -> {
+    methods.stream().forEach(method -> {
       final Version versionAno = method.getDeclaredAnnotation(Version.class);
       if (versionAno != null && versionAno.name().equals(methodName)) {
         final List<String> versions = Arrays.asList(versionAno.versions());
@@ -63,7 +59,7 @@ public final class AnnotationCaller {
    * @return Return what is return by the method called
    * @throws MissingMethodException Throw when method with name (methodName) is missing with the server version and latest
    */
-  public static <T> T call(String methodName, Object object, Object ...args) throws MissingMethodException {
+  public static <T> T call(String methodName, Object object, Object... args) throws MissingMethodException {
     return AnnotationCaller.call(methodName, object.getClass(), object, args);
   }
 
@@ -90,7 +86,7 @@ public final class AnnotationCaller {
    * @throws MissingMethodException Throw when method with name (methodName) is missing with the server version and latest
    */
   @SuppressWarnings("unchecked")
-  public static <T> T call(String methodName, Class<?> objectClass, Object object, Object ...args) throws MissingMethodException {
+  public static <T> T call(String methodName, Class<?> objectClass, Object object, Object... args) throws MissingMethodException {
     final Map<String, Method> methods = AnnotationCaller.getMethods(methodName, objectClass);
     final Method method = Optional.ofNullable(methods.get(Utils.getVersion())).orElse(methods.get("latest"));
 
@@ -104,4 +100,6 @@ public final class AnnotationCaller {
     }
     return null;
   }
+
+  private AnnotationCaller() {}
 }
