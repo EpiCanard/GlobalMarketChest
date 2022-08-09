@@ -426,9 +426,10 @@ public class AuctionManager extends DatabaseManager {
         .addCondition("group", group);
 
     this.defineStateCondition(builder, status);
+    final String sort = (status == StatusAuction.FINISHED) ? "end" : "start";
     builder
-        .addCondition((status == StatusAuction.FINISHED) ? "end" : "start", DatabaseUtils.minusHours(DatabaseUtils.getTimestamp(), hours), ConditionType.SUPERIOR_EQUAL)
-        .setExtension("ORDER BY start DESC");
+        .addCondition(sort, DatabaseUtils.minusHours(DatabaseUtils.getTimestamp(), hours), ConditionType.SUPERIOR_EQUAL)
+        .setExtension("ORDER BY " + sort + " DESC");
 
     executeListingAuctions(builder, limit, consumer);
   }
