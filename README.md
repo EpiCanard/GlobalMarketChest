@@ -83,7 +83,7 @@ If you have any question, you can contact me on discord.
 
 You will find all development build on discord, so don't hesitate to come.
 
-Discord: [https://discord.gg/TndZcuy](https://discord.gg/TndZcuy)
+Discord: [https://discord.gg/Dez7wavrkH](https://discord.gg/Dez7wavrkH)
 
 Source GitHub: [https://github.com/EpiCanard/GlobalMarketChest](https://github.com/EpiCanard/GlobalMarketChest)
 
@@ -91,8 +91,8 @@ Spigot : [https://www.spigotmc.org/resources/globalmarketchest-gui-shop-plugin.6
 
 Metrics : [bstats.org](https://bstats.org/plugin/bukkit/GlobalMarketChest/7557)
 
-If you want to test work in progress features you will find all development builds on Jenkins.
-Jenkins: [https://jenkins.epicanard.com/](https://jenkins.epicanard.com/)
+If you want to test work in progress features you will find all development builds on Github.
+Github Actions: [https://github.com/EpiCanard/GlobalMarketChest/actions/workflows/maven.yml](https://github.com/EpiCanard/GlobalMarketChest/actions/workflows/maven.yml)
 
 ![screenshots](https://user-images.githubusercontent.com/29657498/52745804-4ea31080-2fe0-11e9-8604-8e5081c75605.png)
 
