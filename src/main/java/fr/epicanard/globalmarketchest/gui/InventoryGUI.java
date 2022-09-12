@@ -59,6 +59,14 @@ public class InventoryGUI {
   }
 
   /**
+   * Re-Open current inventory for the specified player
+   */
+  public void reopen() {
+    this.inv = Bukkit.createInventory(null, 54, Utils.toColor("&2GlobalMarketChest"));
+    this.open();
+  }
+
+  /**
    * Open current inventory for the specified player
    */
   public void open() {
@@ -80,8 +88,7 @@ public class InventoryGUI {
    */
   public void setChatReturn(String value) {
     this.chatEditing = false;
-    this.open();
-    this.getInterface().updateInterfaceTitle();
+    this.reopen();
     this.player.removePotionEffect(PotionEffectType.BLINDNESS);
     if (value != null) {
       this.chatConsumer.accept(value);

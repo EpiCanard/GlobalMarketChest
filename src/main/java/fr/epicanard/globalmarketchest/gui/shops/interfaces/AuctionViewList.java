@@ -22,7 +22,6 @@ public class AuctionViewList extends AuctionViewBase {
 
   private final Integer days = ConfigUtils.getInt("Options.AdvicePrice.Days", 30);
   private final String analyze = ConfigUtils.getString("Options.AdvicePrice.Analyze", "all");
-  private final String priceTitle = LangUtils.get("Divers.AdvicePriceIcon");
 
 
   public AuctionViewList(InventoryGUI inv) {

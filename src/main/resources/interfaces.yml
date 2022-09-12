@@ -70,7 +70,7 @@ Interfaces:
       19: SearchItemDrop
       22: SearchItemText
       25: SearchByPlayer
-    
+
   AuctionViewByPlayer:
     Base:
       - DefaultShopInterface
