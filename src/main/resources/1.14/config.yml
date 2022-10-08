@@ -5,7 +5,6 @@
 # This file contains all config for GlobalMarketChest plugin
 #
 # ===================================================================
-
 General:
   # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml, lang-pl_PL.yml, lang-tr_TR.yml, lang-ru_RU.yml, lang-ja_JP.yml, lang-es_PE.yml
   Lang: "lang-en_US.yml"
@@ -78,7 +77,7 @@ Options:
   AdvicePrice:
     # Define the type of analyze to use for advice price. Possible values: all, in_progress, finished
     Analyze: "all"
-    # Define the number of days to analyze for advice price on choice price view and list view
+    # Define the number of days to analyze for average of advice price on choice price view
     Days: 30
   # Config about shulker box
   ShulkerBox:
@@ -159,15 +158,15 @@ ItemsBlacklist:
     - minecraft:chain_command_block
     - minecraft:command_block
     - minecraft:command_block_minecart
-    - minecraft:debug_stick
     - minecraft:knowledge_book
     - minecraft:repeating_command_block
     - minecraft:structure_block
     - minecraft:structure_void
+    - minecraft:debug_stick
     - minecraft:jigsaw
   # Lores of items blacklisted
   Lores:
-    # - "Can't sell"
+  # - "Can't sell"
 Interfaces:
   # Warning interface messages are represented by flashing item alternating Background this item
   Warn: minecraft:red_stained_glass_pane
@@ -240,7 +239,7 @@ Sign:
       # The first line that must write on sign to create shop
       FirstLineToCreate: "globalshop"
     # The text displayed on the sign when shop creation failed
-    NotWorkingShopDisplayName : "&c[DisableShop]"
+    NotWorkingShopDisplayName: "&c[DisableShop]"
 Chat:
   # Define if a timeout must be used when the player is in chat mode (ex: when search auction by name)
   UseTimeout: true

@@ -1,0 +1,57 @@
+# ========================= File diff-1.13.yml =========================
+#
+# Version : 1.13
+#
+# This file contains all config changes for minecraft 1.13
+#
+# ===================================================================
+
+Price:
+  Items:
+    - minecraft:emerald_block
+    - minecraft:emerald
+    - minecraft:diamond_block
+    - minecraft:diamond
+    - minecraft:gold_ingot
+    - minecraft:iron_ingot
+    - minecraft:coal
+    - minecraft:redstone
+    - minecraft:lapis_lazuli
+ItemsBlacklist:
+  Items:
+    - minecraft:barrier
+    - minecraft:chain_command_block
+    - minecraft:command_block
+    - minecraft:command_block_minecart
+    - minecraft:knowledge_book
+    - minecraft:repeating_command_block
+    - minecraft:structure_block
+    - minecraft:structure_void
+    - minecraft:debug_stick
+Interfaces:
+  Warn: minecraft:red_stained_glass_pane
+  Backgrounds:
+    Default: minecraft:black_stained_glass_pane
+    Admin: minecraft:light_blue_stained_glass_pane
+  Buttons:
+    AdminRemoveAuction: minecraft:red_wool
+    AdminSeePlayerAuctions: minecraft:player_head
+    RenewAuction: minecraft:orange_wool
+    UndoAuction: minecraft:red_wool
+    RenewEveryAuction: minecraft:orange_wool
+    UndoEveryAuction: minecraft:red_wool
+    SearchItemDrop: minecraft:grass_block
+    SearchByPlayer: minecraft:player_head
+    AuctionSide: minecraft:blue_stained_glass_pane
+    AuctionMiddle: minecraft:white_stained_glass_pane
+    AuctionShop: minecraft:shulker_box
+    EditGroupName: minecraft:blue_stained_glass_pane
+    MaxInOne: minecraft:orange_stained_glass_pane
+    MaxRepeat: minecraft:orange_stained_glass_pane
+    RepeatIncrease: minecraft:purple_stained_glass_pane
+    RepeatDecrease: minecraft:light_blue_stained_glass_pane
+    FreePrice: minecraft:lime_stained_glass_pane
+    CircleSetItem: minecraft:lime_stained_glass_pane
+    CircleUnsetItem: minecraft:blue_stained_glass_pane
+    YesButton: minecraft:lime_wool
+    NoButton: minecraft:red_wool

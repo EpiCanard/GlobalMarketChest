@@ -56,6 +56,15 @@ public class Utils {
     return y * 9 + x;
   }
 
+
+  public static String getConfigVersion() {
+    final String[] last = lastSupportedVersion.split(".");
+    final String[] current = version.split(".");
+    if (Integer.parseInt(current[0]) > Integer.parseInt(last[0]) || Integer.parseInt(current[1]) > Integer.parseInt(last[1]))
+      return lastSupportedVersion;
+    return version;
+  }
+
   /**
    * Get the line number from position
    *

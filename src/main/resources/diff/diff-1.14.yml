@@ -1,0 +1,20 @@
+# ========================= File config.yml =========================
+#
+# Version : 1.14+
+#
+# This file contains all config changes for minecraft 1.14 and higher
+#
+# ===================================================================
+
+ItemsBlacklist:
+  Items:
+    - minecraft:barrier
+    - minecraft:chain_command_block
+    - minecraft:command_block
+    - minecraft:command_block_minecart
+    - minecraft:knowledge_book
+    - minecraft:repeating_command_block
+    - minecraft:structure_block
+    - minecraft:structure_void
+    - minecraft:debug_stick
+    - minecraft:jigsaw

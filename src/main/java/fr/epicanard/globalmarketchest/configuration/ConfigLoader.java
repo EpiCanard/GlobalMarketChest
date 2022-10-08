@@ -85,24 +85,16 @@ public class ConfigLoader {
         }
 
         this.saveStream(confFile, stream);
+        conf.load(confFile);
+      } else {
+        conf.load(confFile);
+
       }
 
-      conf.load(confFile);
       return conf;
     } catch (IOException | IllegalArgumentException | InvalidConfigurationException e) {
       throw new CantLoadConfigException(fileName);
     }
-  }
-
-  /**
-   * Load one file from plugin folder and save it if it doesn't exist
-   *
-   * @param fileName Name of the file that must be load
-   * @return Return the yamlconfiguration file
-   * @throws CantLoadConfigException Throw this exception when the file can't be loaded (InvalidFile or wrong permissions)
-   */
-  private YamlConfiguration loadOneFile(String fileName) throws CantLoadConfigException {
-    return this.loadOneFile(fileName, null, null);
   }
 
   /**
@@ -134,6 +126,15 @@ public class ConfigLoader {
       final String langFilename = this.config.getString("General.Lang", "lang-en_US.yml");
       this.languages = this.loadOneFile(langFilename, "langs", null);
     }
+  }
+
+  YamlConfiguration loadAndUpdateFile(String userPath, String resource) {
+    //YamlConfiguration config = loadResource(resource);
+    // Load Resource
+    // Load config
+    // If missing save config
+    // Else try to auto update
+    return null;
   }
 
   /**

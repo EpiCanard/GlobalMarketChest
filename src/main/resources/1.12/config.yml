@@ -5,7 +5,6 @@
 # This file contains all config for GlobalMarketChest plugin
 #
 # ===================================================================
-
 General:
   # Possible values : lang-fr_FR.yml, lang-en_US.yml, lang-zh_CN.yml, lang-de_DE.yml, lang-pl_PL.yml, lang-tr_TR.yml, lang-ru_RU.yml, lang-ja_JP.yml, lang-es_PE.yml
   Lang: "lang-en_US.yml"
@@ -78,7 +77,7 @@ Options:
   AdvicePrice:
     # Define the type of analyze to use for advice price. Possible values: all, in_progress, finished
     Analyze: "all"
-    # Define the number of days to analyze for advice price on choice price view and list view
+    # Define the number of days to analyze for average of advice price on choice price view
     Days: 30
   # Config about shulker box
   ShulkerBox:
@@ -165,7 +164,7 @@ ItemsBlacklist:
     - minecraft:structure_void
   # Lores of items blacklisted
   Lores:
-    # - "Can't sell"
+  # - "Can't sell"
 Interfaces:
   # Warning interface messages are represented by flashing item alternating Background this item
   Warn: minecraft:stained_glass_pane/14
@@ -217,11 +216,11 @@ Interfaces:
     BoughtAuction: minecraft:book
     CanceledAuction: minecraft:book
     FreePrice: minecraft:stained_glass_pane/5
-    CircleSetItem: "minecraft:stained_glass_pane/5"
-    CircleUnsetItem: "minecraft:stained_glass_pane/11"
-    YesButton: "minecraft:wool/5"
-    NoButton: "minecraft:wool/14"
-    Question: "minecraft:redstone_torch"
+    CircleSetItem: minecraft:stained_glass_pane/5
+    CircleUnsetItem: minecraft:stained_glass_pane/11
+    YesButton: minecraft:wool/5
+    NoButton: minecraft:wool/14
+    Question: minecraft:redstone_torch
     LastAuctions: minecraft:clock
     LastCreatedAuctions: minecraft:clock
     LastBoughtAuctions: minecraft:compass
@@ -229,6 +228,7 @@ Interfaces:
     SeeShulkerBoxContent: minecraft:shulker_shell
 Sign:
   Appearance:
+    # Config for GobalShop creation
     GlobalShop:
       # The text displayed on the sign when shop creation is successful
       DisplayName: "&a[GlobalShop]"
