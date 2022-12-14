@@ -13,29 +13,28 @@ import java.util.*;
 public final class AnnotationCaller {
 
   /**
-   * Get all methods of a class with the annotation @Version.name = methodName
-   * And @Version.value = server version or "latest"
+   * Get all methods of a class with the annotation <code>@Version.name = methodName</code>
+   * And <code>@Version.value = server version or "latest"</code>
    *
    * @param methodName Name of annotation to search
    * @param objectClass Class on which find the methods
-   * @return Return a map of string and method where string is the version
+   * @return Return the matching method or the latest if missing
    */
-  private static Map<String, Method> getMethods(String methodName, Class<?> objectClass) {
+  private static Method getMethod(String methodName, Class<?> objectClass) {
     final List<Method> methods = Arrays.asList(objectClass.getMethods());
-    final Map<String, Method> finalMethods = new HashMap<>();
+    Method latest = null;
 
-    methods.stream().forEach(method -> {
+    for (Method method : methods) {
       final Version versionAno = method.getDeclaredAnnotation(Version.class);
       if (versionAno != null && versionAno.name().equals(methodName)) {
         final List<String> versions = Arrays.asList(versionAno.versions());
-        if (versions.contains(Utils.getVersion()) || versions.contains("latest")) {
-          versions.forEach(version -> {
-            finalMethods.put(version, method);
-          });
-        }
+        if (versions.contains(Utils.getVersion()) || versions.contains(Utils.getFullVersion()))
+          return method;
+        if (versions.contains("latest"))
+          latest = method;
       }
-    });
-    return finalMethods;
+    }
+    return latest;
   }
 
   /**
@@ -45,10 +44,12 @@ public final class AnnotationCaller {
    * This process allow to have multi version of one method tagged for each version
    *
    * Exemple:
+   * <pre>
    * @Version(name="test", versions={"1.13"})
    * myMethod() {}
    *
    * AnnotationCaller.call("test", my_obj, null)
+   * </pre>
    *
    * See: fr.epicanard.globalmarketchest.utils.annotations.Version
    *
@@ -70,10 +71,12 @@ public final class AnnotationCaller {
    * This process allow to have multi version of one method tagged for each version
    *
    * Exemple:
+   * <pre>
    * @Version(name="test", versions={"1.13"})
    * myMethod() {}
    *
    * AnnotationCaller.call("test", my_obj, null)
+   * </pre>
    *
    * See: fr.epicanard.globalmarketchest.utils.annotations.Version
    *
@@ -87,8 +90,7 @@ public final class AnnotationCaller {
    */
   @SuppressWarnings("unchecked")
   public static <T> T call(String methodName, Class<?> objectClass, Object object, Object... args) throws MissingMethodException {
-    final Map<String, Method> methods = AnnotationCaller.getMethods(methodName, objectClass);
-    final Method method = Optional.ofNullable(methods.get(Utils.getVersion())).orElse(methods.get("latest"));
+    final Method method = AnnotationCaller.getMethod(methodName, objectClass);
 
     if (method == null) {
       throw new MissingMethodException(methodName);

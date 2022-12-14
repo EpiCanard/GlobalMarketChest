@@ -23,10 +23,17 @@ public class Utils {
 
   /**
    * Version of minecraft server
+   */
+  @Getter
+  private static final String fullVersion;
+
+  /**
+   * Version of minecraft server
    * It get only the major version (ex: version 1.13.2 will get 1.13)
    */
   @Getter
   private static final String version;
+
   /**
    * Last Support Version of minecraft for current plugin
    * Prevent loading config issues for versions not fully supported by the plugin
@@ -35,6 +42,7 @@ public class Utils {
   private static final String lastSupportedVersion = "1.18";
 
   static {
+    fullVersion = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 6);
     version = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 4);
   }
 
