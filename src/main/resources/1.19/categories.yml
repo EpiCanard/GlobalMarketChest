@@ -420,6 +420,16 @@ Build:
     - minecraft:reinforced_deepslate
     - minecraft:mud_brick_stairs
     - minecraft:mangrove_stairs
+    - minecraft:bamboo_planks
+    - minecraft:bamboo_mosaic
+    - minecraft:bamboo_block
+    - minecraft:stripped_bamboo_block
+    - minecraft:bamboo_slab
+    - minecraft:bamboo_mosaic_slab
+    - minecraft:chiseled_bookshelf
+    - minecraft:bamboo_fence
+    - minecraft:bamboo_stairs
+    - minecraft:bamboo_mosaic_stairs
 Decoration:
   DisplayName: "Decoration Blocks"
   DisplayItem: minecraft:peony
@@ -740,6 +750,18 @@ Decoration:
     - minecraft:ochre_froglight
     - minecraft:verdant_froglight
     - minecraft:pearlescent_froglight
+    - minecraft:bamboo_sign
+    - minecraft:oak_hanging_sign
+    - minecraft:spruce_hanging_sign
+    - minecraft:birch_hanging_sign
+    - minecraft:jungle_hanging_sign
+    - minecraft:acacia_hanging_sign
+    - minecraft:dark_oak_hanging_sign
+    - minecraft:mangrove_hanging_sign
+    - minecraft:bamboo_hanging_sign
+    - minecraft:crimson_hanging_sign
+    - minecraft:warped_hanging_sign
+    - minecraft:piglin_head
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
@@ -821,6 +843,11 @@ Redstone:
     - minecraft:mangrove_door
     - minecraft:mangrove_trapdoor
     - minecraft:mangrove_fence_gate
+    - minecraft:bamboo_button
+    - minecraft:bamboo_pressure_plate
+    - minecraft:bamboo_door
+    - minecraft:bamboo_trapdoor
+    - minecraft:bamboo_fence_gate
 Transportation:
   DisplayName: "Transportation"
   DisplayItem: minecraft:powered_rail
@@ -854,6 +881,8 @@ Transportation:
     - minecraft:dark_oak_chest_boat
     - minecraft:mangrove_boat
     - minecraft:mangrove_chest_boat
+    - minecraft:bamboo_raft
+    - minecraft:bamboo_chest_raft
 Misc:
   DisplayName: "Miscellaneous"
   DisplayItem: minecraft:lava_bucket
@@ -1063,6 +1092,11 @@ Misc:
     - minecraft:goat_horn
     - minecraft:frogspawn
     - minecraft:echo_shard
+    - minecraft:camel_spawn_egg
+    - minecraft:ender_dragon_spawn_egg
+    - minecraft:iron_golem_spawn_egg
+    - minecraft:snow_golem_spawn_egg
+    - minecraft:wither_spawn_egg
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
