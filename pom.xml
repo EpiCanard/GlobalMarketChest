@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.epicanard</groupId>
   <artifactId>globalmarketchest</artifactId>
-  <version>1.14.0</version>
+  <version>${git.commit.id.describe}</version>
   <name>GlobalMarketChest</name>
   <description>Shop plugin to create economy between user</description>
 
@@ -14,6 +14,7 @@
     <spigot.version>1.19.3-R0.1-SNAPSHOT</spigot.version>
     <duckconfig.version>1.2.0</duckconfig.version>
     <lombok.version>1.18.20</lombok.version>
+    <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
   </properties>
 
   <build>
@@ -26,6 +27,27 @@
       </resource>
     </resources>
     <plugins>
+      <plugin>
+        <groupId>io.github.git-commit-id</groupId>
+        <artifactId>git-commit-id-maven-plugin</artifactId>
+        <version>5.0.0</version>
+        <executions>
+          <execution>
+            <id>get-the-git-infos</id>
+            <goals>
+              <goal>revision</goal>
+            </goals>
+            <phase>initialize</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <injectAllReactorProjects>true</injectAllReactorProjects>
+          <gitDescribe>
+            <tags>true</tags>
+            <dirty>+${maven.build.timestamp}</dirty>
+          </gitDescribe>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
