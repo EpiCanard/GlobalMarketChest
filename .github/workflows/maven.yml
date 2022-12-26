@@ -9,15 +9,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
         java-version: 11
     - name: Build package
-      run: mvn clean install -DskipTests=true
+      run: mvn clean package
+    - name: Set build version
+      run: |
+        build_version=$(mvn initialize help:evaluate -Dexpression=project.version -q -DforceStdout)
+        echo "BUILD_VERSION=$build_version" >> $GITHUB_ENV
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: GlobalMarketChest-${{ github.run_number }}
+        name: GlobalMarketChest-${{ env.BUILD_VERSION }}
         path: target/GlobalMarketChest-*.jar
