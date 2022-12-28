@@ -65,6 +65,8 @@ public class GlobalMarketChest extends JavaPlugin {
     this.shopManager = new ShopManager();
     this.auctionManager = new AuctionManager();
     this.ranksLoader = new RanksLoader();
+
+    Version.initVersion(Utils.getVersion());
   }
 
   @Override
@@ -108,7 +110,7 @@ public class GlobalMarketChest extends JavaPlugin {
     this.register(new ChatListener());
     this.register(new GUIListener());
     this.register(new CloseGUICollector());
-    this.register(new WorldListener());
+    this.register(WorldListener.of());
     this.register(new ShopCreationListener());
     this.register(new PlayerListener());
     final Listener moneyExchange = getPlugin("MysqlPlayerDataBridge")
