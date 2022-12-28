@@ -9,7 +9,6 @@ import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.*;
 import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
-import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
@@ -34,7 +33,7 @@ import java.util.function.Function;
 /**
  * Listener for every world interact like opennin a chest
  */
-public class WorldListener implements Listener {
+public abstract class WorldListener implements Listener {
   final List<BlockFace> faces = Arrays.asList(BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
 
   /**
@@ -43,27 +42,7 @@ public class WorldListener implements Listener {
    * @param block Sign block
    * @return Attached block
    */
-  @Version(name = "getAttachedBlock", versions = {"1.12"})
-  public Block gettAttachedBlock_1_12(Block block) {
-    final Sign sign = (Sign) block.getState().getData();
-    return block.getRelative(sign.getAttachedFace());
-  }
-
-  /**
-   * Get attached block to sign
-   *
-   * @param block Sign block
-   * @return Attached block
-   */
-  @Version(name = "getAttachedBlock")
-  public Block getAttachedBlock_latest(Block block) {
-    final BlockData data = (BlockData) ReflectionUtils.invokeMethod(block.getState(), "getBlockData", (Object[]) null);
-
-    if (data instanceof Directional) {
-      return block.getRelative(((Directional) data).getFacing().getOppositeFace());
-    }
-    return block.getRelative(block.getType().name().contains("HANGING") ? BlockFace.UP : BlockFace.DOWN);
-  }
+  protected abstract Block getAttachedBlock(Block block);
 
   /**
    * Every break of sign by drop is detect to remove the shop and prevent ghost shop (without sign)
@@ -191,4 +170,32 @@ public class WorldListener implements Listener {
       }
     }
   }
+
+  public static WorldListener of() {
+    if (Version.isEqualsTo(Version.V1_12)) {
+      return new V1_12();
+    }
+    return new V1_X();
+  }
+
+  private static class V1_12 extends WorldListener {
+    @Override
+    protected Block getAttachedBlock(Block block) {
+      final Sign sign = (Sign) block.getState().getData();
+      return block.getRelative(sign.getAttachedFace());
+    }
+  }
+
+  private static class V1_X extends WorldListener {
+    @Override
+    protected Block getAttachedBlock(Block block) {
+      final BlockData data = (BlockData) ReflectionUtils.invokeMethod(block.getState(), "getBlockData", (Object[]) null);
+
+      if (data instanceof Directional) {
+        return block.getRelative(((Directional) data).getFacing().getOppositeFace());
+      }
+      return block.getRelative(block.getType().name().contains("HANGING") ? BlockFace.UP : BlockFace.DOWN);
+    }
+  }
+
 }
