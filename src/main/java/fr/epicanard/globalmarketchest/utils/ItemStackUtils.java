@@ -1,8 +1,5 @@
 package fr.epicanard.globalmarketchest.utils;
 
-import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
-import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
-import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
@@ -210,11 +207,10 @@ public class ItemStackUtils {
 
   /**
    * Define if the item is damaged
-   * 
+   *
    * @param item ItemStack to define if it is damaged
    * @return
    */
-  @Version(name = "isDamaged", versions = {"1.12"})
   public Boolean isDamaged_1_12(ItemStack item) {
     final Predicate<String> match = damageable -> item.getType().name().matches(String.format("(.*)%s(.*)", damageable));
     return ItemStackUtils.DAMAGEABLE_1_12.stream().anyMatch(match) && item.getDurability() > 0;
@@ -222,33 +218,27 @@ public class ItemStackUtils {
 
   /**
    * Define if the item is damaged
-   * 
+   *
    * @param item ItemStack to define if it is damaged
    * @return
    */
-  @Version(name = "isDamaged")
-  public Boolean isDamaged_latest(ItemStack item) {
+  public Boolean isDamaged_Latest(ItemStack item) {
     return ((Damageable) item.getItemMeta()).getDamage() > 0 && item.getType() != Material.getMaterial("PLAYER_HEAD");
   }
 
   /**
    * Define if the item is damaged
-   * 
+   *
    * @param item ItemStack to define if it is damaged
    * @return
    */
   public Boolean isDamaged(ItemStack item) {
-    try {
-      return AnnotationCaller.call("isDamaged", ItemStackUtils.class, null, item);
-    } catch (MissingMethodException e) {
-      e.printStackTrace();
-    }
-    return false;
+    return Version.isEqualsTo(Version.V1_12) ? isDamaged_1_12(item) : isDamaged_Latest(item);
   }
 
   /**
    * Define if the block is black listed or not
-   * 
+   *
    * @param item Item to define if blacklisted
    * @return If item is blacklisted
    */
