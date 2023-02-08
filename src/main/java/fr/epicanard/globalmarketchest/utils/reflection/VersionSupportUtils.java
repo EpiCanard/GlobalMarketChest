@@ -482,8 +482,7 @@ public class VersionSupportUtils {
   public void updateInventoryName_1_17(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
-      Object chatMessage = newInstance(Path.MINECRAFT_NETWORK_CHAT.getClass("ChatMessage"), title,
-          new Object[] {});
+      Object chatMessage = newInstance(Path.MINECRAFT_NETWORK_CHAT.getClass("ChatMessage"), title, new Object[] {});
       VersionField activeContainerVF = VersionField.from(entityPlayer).get("bV");
       Object windowId = activeContainerVF.get("j").value();
 
