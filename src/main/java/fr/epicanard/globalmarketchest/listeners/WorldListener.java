@@ -1,14 +1,12 @@
 package fr.epicanard.globalmarketchest.listeners;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
-import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.*;
-import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
 import fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
@@ -54,18 +52,14 @@ public abstract class WorldListener implements Listener {
     final Block block = event.getBlock();
 
     if (ShopUtils.isSign(block.getType())) {
-      try {
-        final Block attached = AnnotationCaller.call("getAttachedBlock", this, block);
+      final Block attached = this.getAttachedBlock(block);
 
-        if (attached.getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
-          final ShopInfo shop = ShopUtils.getShop(block);
-          if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
-            LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event",
-              shop.getGroup(), shop.getSignLocation().toString(), PlayerUtils.getPlayerName(shop.getOwner())));
-          }
+      if (attached.getType() == Material.AIR && block.hasMetadata(ShopUtils.META_KEY)) {
+        final ShopInfo shop = ShopUtils.getShop(block);
+        if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
+          LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event",
+            shop.getGroup(), shop.getSignLocation().toString(), PlayerUtils.getPlayerName(shop.getOwner())));
         }
-      } catch (MissingMethodException e) {
-        e.printStackTrace();
       }
     }
   }
@@ -80,12 +74,8 @@ public abstract class WorldListener implements Listener {
   private Boolean isAttachedTo(Block block, BlockFace face) {
     final Block faceBlock = block.getRelative(face);
     if (ShopUtils.isSign(faceBlock.getType()) && faceBlock.hasMetadata(ShopUtils.META_KEY)) {
-      try {
-        final Block attached = AnnotationCaller.call("getAttachedBlock", this, faceBlock);
-        return attached.getLocation().distance(block.getLocation()) == 0;
-      } catch (MissingMethodException e) {
-        e.printStackTrace();
-      }
+      final Block attached = this.getAttachedBlock(faceBlock);
+      return attached.getLocation().distance(block.getLocation()) == 0;
     }
     return false;
   }
