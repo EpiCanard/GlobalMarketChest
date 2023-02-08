@@ -66,12 +66,12 @@ public class GlobalMarketChest extends JavaPlugin {
     this.auctionManager = new AuctionManager();
     this.ranksLoader = new RanksLoader();
 
-    Version.initVersion(Utils.getVersion());
+    GlobalMarketChest.plugin = this;
+    Version.initVersion(Utils.getFullVersion());
   }
 
   @Override
   public void onEnable() {
-    GlobalMarketChest.plugin = this;
 
     try {
       this.configLoader.loadFiles();
