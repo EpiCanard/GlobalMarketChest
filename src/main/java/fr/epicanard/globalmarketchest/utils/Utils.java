@@ -42,7 +42,7 @@ public class Utils {
   private static final String lastSupportedVersion = "1.19";
 
   static {
-    fullVersion = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 6);
+    fullVersion = GlobalMarketChest.plugin.getServer().getBukkitVersion().split("-")[0];
     version = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 4);
   }
 
