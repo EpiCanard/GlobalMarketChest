@@ -100,11 +100,21 @@ public class WorldUtils {
    * Transform a String into a location
    *
    * @param locatString String location
+   * @return Location
+   */
+  public Location getLocationFromString(String locatString) {
+    return getLocationFromString(locatString, null);
+  }
+
+  /**
+   * Transform a String into a location
+   *
+   * @param locatString String location
    * @param location    if not null set location inside this variable
    * @return Location
    */
   public Location getLocationFromString(String locatString, Location location) {
-    if (locatString == null)
+    if (locatString == null || locatString.isEmpty())
       return null;
     String[] args = locatString.split(",");
 
@@ -139,7 +149,7 @@ public class WorldUtils {
    */
   public String getStringFromLocation(Location loc, String sep, Boolean world) {
     if (loc == null)
-      return "";
+      return null;
     String finalString = "";
     if (world) {
       finalString += loc.getWorld() != null ? loc.getWorld().getName() : "?";

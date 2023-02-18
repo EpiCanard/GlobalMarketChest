@@ -8,11 +8,13 @@ import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopCreationInter
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
 import fr.epicanard.globalmarketchest.utils.*;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -67,7 +69,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
   private void loadNearBlock(Paginator pag) {
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
-    final List<Block> blocks = Utils.filter(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()), block -> ShopUtils.getShop(block) == null);
+    final List<Block> blocks = shop.getSignLocation().map(this::getNearMatchingBlocks).orElse(List.of());
     final List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> {
       final ItemStack item = new ItemStack(block.getType());
       ItemStackUtils.addItemStackLore(
@@ -87,16 +89,20 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    */
   private void setOtherLocation(int pos) {
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
-    final List<Block> blocks = this.paginator.getSubList(WorldUtils.getNearAllowedBlocks(shop.getSignLocation()));
+    final List<Block> blocks = shop.getSignLocation().map(loc -> this.paginator.getSubList(getNearMatchingBlocks(loc))).orElse(List.of());
 
     try {
       final Block block = blocks.get(pos);
 
-      shop.setOtherLocation(block.getLocation());
+      shop.setOtherLocation(Optional.of(block.getLocation()));
       this.updateName();
     } catch (IndexOutOfBoundsException e) {
       return;
     }
+  }
+
+  private List<Block> getNearMatchingBlocks(Location loc) {
+    return Utils.filter(WorldUtils.getNearAllowedBlocks(loc), block -> ShopUtils.getShop(block) == null);
   }
 
   /**

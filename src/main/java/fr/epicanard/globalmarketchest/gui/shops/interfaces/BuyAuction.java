@@ -17,6 +17,7 @@ import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.*;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -141,8 +142,9 @@ public class BuyAuction extends UndoAuction {
     final Player starter = PlayerUtils.getOfflinePlayer(UUID.fromString(auction.getPlayerStarter())).getPlayer();
 
     final String message = formatMessage(false, auction, buyer, item);
+    final World broadcastWorld = shop.getLocation().orElse(buyer.getLocation()).getWorld();
     if (message != null && ConfigUtils.getBoolean("Options.Broadcast.BuyInsideWorld", true)) {
-      WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(starter));
+      WorldUtils.broadcast(broadcastWorld, message, Arrays.asList(starter));
     }
 
     if (starter != null && ConfigUtils.getBoolean("Options.Broadcast.NotifyPlayer", true)) {
