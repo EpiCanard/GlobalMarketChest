@@ -51,7 +51,7 @@ public class ShopCreationLink extends ShopCreationInterface {
 
     } catch (ShopAlreadyExistException e) {
       PlayerUtils.sendMessage(gui.getPlayer(), e.getMessage());
-      shop.getSignLocation().getBlock().breakNaturally();
+      shop.getSignLocation().ifPresent(loc -> loc.getBlock().breakNaturally());
     } finally {
       Consumer<InventoryGUI> exit = new LeaveShop();
       exit.accept(gui);

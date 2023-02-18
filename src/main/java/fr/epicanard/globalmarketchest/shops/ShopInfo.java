@@ -25,9 +25,9 @@ public class ShopInfo {
   @Getter
   private int type;
   @Getter
-  private Location signLocation;
-  @Getter @Setter  @NonNull
-  private Location otherLocation;
+  private Optional<Location> signLocation;
+  @Getter @Setter
+  private Optional<Location> otherLocation;
   @Getter @Setter  @NonNull
   private String group;
   @Getter
@@ -35,10 +35,6 @@ public class ShopInfo {
 
   @Getter @Setter
   private Boolean exists = true;
-  @Getter
-  private String signLocationString;
-  @Getter
-  private String otherLocationString;
 
   public ShopInfo(ResultSet res) throws NullPointerException {
     if (res == null)
@@ -46,10 +42,8 @@ public class ShopInfo {
     try {
       this.id = res.getInt("id");
       this.owner = res.getString("owner");
-      this.signLocationString = res.getString("signLocation");
-      this.otherLocationString = res.getString("otherLocation");
-      this.signLocation = WorldUtils.getLocationFromString(this.signLocationString, null);
-      this.otherLocation = WorldUtils.getLocationFromString(this.otherLocationString, null);
+      this.signLocation = Optional.ofNullable(res.getString("signLocation")).map(WorldUtils::getLocationFromString);
+      this.otherLocation = Optional.ofNullable(res.getString("otherLocation")).map(WorldUtils::getLocationFromString);
       this.type = res.getInt("type");
       this.group = res.getString("group");
       this.server = res.getString("server");
@@ -62,10 +56,8 @@ public class ShopInfo {
     this.id = id;
     this.owner = owner;
     this.type = type;
-    this.signLocation = sign;
-    this.otherLocation = other;
-    this.signLocationString = WorldUtils.getStringFromLocation(sign);
-    this.otherLocationString = WorldUtils.getStringFromLocation(other);
+    this.signLocation = Optional.ofNullable(sign);
+    this.otherLocation = Optional.ofNullable(other);
     this.group = group;
   }
 
@@ -73,8 +65,8 @@ public class ShopInfo {
    * Add shop metadata on the shop location blocks
    */
   public void addMetadata() {
-    Optional.ofNullable(this.signLocation).ifPresent(this::addMetadata);
-    Optional.ofNullable(this.otherLocation).ifPresent(this::addMetadata);
+    this.signLocation.ifPresent(this::addMetadata);
+    this.otherLocation.ifPresent(this::addMetadata);
   }
 
   /**
@@ -90,8 +82,8 @@ public class ShopInfo {
    * Remove shop metadata from the shop location blocks
    */
   public void removeMetadata() {
-    Optional.ofNullable(this.signLocation).ifPresent(this::removeMetadata);
-    Optional.ofNullable(this.otherLocation).ifPresent(this::removeMetadata);
+    this.signLocation.ifPresent(this::removeMetadata);
+    this.otherLocation.ifPresent(this::removeMetadata);
   }
 
   /**
@@ -110,5 +102,33 @@ public class ShopInfo {
    */
   public void toggleType(ShopType type) {
     this.type = type.toggle(this.type);
+  }
+
+  /**
+   * Return sign location or other location if sign location is missing
+   */
+  public Optional<Location> getLocation() {
+    return this.signLocation.or(() -> this.otherLocation);
+  }
+
+  /**
+   * Return sign location formatted
+   */
+  public String getRawSignLocation() {
+    return this.signLocation.map(WorldUtils::getStringFromLocation).orElse("");
+  }
+
+  /**
+   * Return other location formatted
+   */
+  public String getRawOtherLocation() {
+    return this.otherLocation.map(WorldUtils::getStringFromLocation).orElse("");
+  }
+
+  /**
+   * Return sign location or other location if sign location is missing formatted
+   */
+  public String getRawLocation() {
+    return this.signLocation.or(() -> this.otherLocation).map(WorldUtils::getStringFromLocation).orElse("");
   }
 }

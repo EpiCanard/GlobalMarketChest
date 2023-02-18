@@ -69,7 +69,7 @@ public class QueryExecutor {
    * @param builder BaseBuilder that contains the query
    * @param consumer Callback called with the query response
    */
-  public Boolean execute(final BaseBuilder builder, final SqlConsumer<ResultSet> consumer, final Consumer<SQLException> error) {
+  public <T extends BaseBuilder<T>> Boolean execute(final BaseBuilder<T> builder, final SqlConsumer<ResultSet> consumer, final Consumer<SQLException> error) {
     Connection co = GlobalMarketChest.plugin.getSqlConnector().getConnection();
     Boolean ret = false;
     AtomicReference<ResultSet> res = new AtomicReference<>();
@@ -108,11 +108,11 @@ public class QueryExecutor {
     return ret;
   }
 
-  public Boolean execute(final BaseBuilder builder, final SqlConsumer<ResultSet> consumer) {
+  public <T extends BaseBuilder<T>> Boolean execute(final BaseBuilder<T> builder, final SqlConsumer<ResultSet> consumer) {
     return this.execute(builder, consumer, null);
   }
 
-  public Boolean execute(BaseBuilder builder) {
+  public <T extends BaseBuilder<T>> Boolean execute(BaseBuilder<T> builder) {
     return this.execute(builder, null, null);
   }
 
@@ -124,7 +124,6 @@ public class QueryExecutor {
   public Boolean executeBatches(List<String> queries) {
     Connection co = GlobalMarketChest.plugin.getSqlConnector().getConnection();
     boolean ret = false;
-    AtomicReference<ResultSet> res = new AtomicReference<>();
     Statement prepared;
 
     try {

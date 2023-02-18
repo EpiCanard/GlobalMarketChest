@@ -54,7 +54,7 @@ public class ShopUtils {
     }
   }
 
-  public void init()  {
+  public void init() {
     List<String> blocks = ConfigUtils.getStringList("AllowedLinkBlock");
 
     ShopUtils.allowedBlock.clear();
@@ -101,7 +101,7 @@ public class ShopUtils {
   /**
    * Generate a String key/value
    *
-   * @param key Key
+   * @param key   Key
    * @param value Value
    */
   public String generateKeyValue(String key, String value) {
@@ -134,7 +134,8 @@ public class ShopUtils {
   public List<String> generateLore(ShopInfo shop) {
     final List<String> lore = new ArrayList<>();
 
-    lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Location"), WorldUtils.getStringFromLocation(shop.getSignLocation())));
+    shop.getSignLocation().map(WorldUtils::getStringFromLocation)
+        .ifPresent(loc -> lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Location"), loc)));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Server"), shop.getServer()));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Group"), shop.getGroup()));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Type"), ShopUtils.generateShopType(shop)));
@@ -149,8 +150,10 @@ public class ShopUtils {
   public List<String> generateLoreWithOther(ShopInfo shop) {
     final List<String> lore = new ArrayList<>();
 
-    lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Location"), WorldUtils.getStringFromLocation(shop.getSignLocation())));
-    lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.OtherLocation"), WorldUtils.getStringFromLocation(shop.getOtherLocation())));
+    shop.getSignLocation().map(WorldUtils::getStringFromLocation)
+        .ifPresent(loc -> lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Location"), loc)));
+    shop.getOtherLocation().map(WorldUtils::getStringFromLocation)
+        .ifPresent(loc -> lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.OtherLocation"), loc)));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Server"), shop.getServer()));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Group"), shop.getGroup()));
     lore.add(ShopUtils.generateKeyValue(LangUtils.get("Divers.Type"), ShopUtils.generateShopType(shop)));
@@ -196,7 +199,8 @@ public class ShopUtils {
     GlobalMarketChest.plugin.inventories.getInventories().forEach((key, value) -> {
       ShopInfo shop = value.getTransactionValue(TransactionKey.SHOP_INFO);
       if (shop != null && shop.getGroup().equals(shopGroup)) {
-        Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> GlobalMarketChest.plugin.inventories.removeInventory(key));
+        Bukkit.getScheduler().runTask(GlobalMarketChest.plugin,
+            () -> GlobalMarketChest.plugin.inventories.removeInventory(key));
         PlayerUtils.sendMessageConfig(Bukkit.getServer().getPlayer(key), "InfoMessages.ShopTemporarilyLocked");
       }
     });
@@ -211,12 +215,11 @@ public class ShopUtils {
     lockedShop.removeIf(shop -> shop == shopGroup);
   }
 
-
   /**
    * Open a globalshop for a player
    *
-   * @param player Player on which open the shop
-   * @param shop Name of the shop to open
+   * @param player  Player on which open the shop
+   * @param shop    Name of the shop to open
    * @param success Success callback
    */
   public void openShop(Player player, ShopInfo shop, Consumer<InventoryGUI> success) {
