@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.utils.reflection;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class ReflectionUtils {
 
@@ -40,6 +41,23 @@ public class ReflectionUtils {
   }
 
   /**
+   * Invoke the method of an object
+   *
+   * @param object the object on which call the method
+   * @param method the method name to
+   * @param args all the arguments that must be send to the method
+   * @return return the object return by the method
+   */
+  public static Object invokeMethod(Object object, Method method, Object... args) {
+    try {
+      return method.invoke(object, args);
+    } catch (InvocationTargetException | IllegalAccessException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  /**
    * Define if the current object has the specified method
    *
    * @param object the object on which call the method
@@ -54,6 +72,22 @@ public class ReflectionUtils {
     } catch (NoSuchMethodException e) {
       return false;
     }
+  }
+
+  /**
+   * Create a new instance of given class
+   *
+   * @param clazz Class to instanciate
+   * @param args Arguments sent to constructor
+   * @return Return a new instance or null if constructor fail
+   */
+  public static Object newInstance(Class<?> clazz, Object... args) {
+    try {
+      return clazz.getConstructor(fromObjectToClass(args)).newInstance(args);
+    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   private ReflectionUtils() {}

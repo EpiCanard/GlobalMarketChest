@@ -23,6 +23,8 @@ import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
 import fr.epicanard.globalmarketchest.ranks.RanksLoader;
 import fr.epicanard.globalmarketchest.utils.*;
+import fr.epicanard.globalmarketchest.utils.reflection.NmsItemStackUtils;
+import fr.epicanard.globalmarketchest.utils.reflection.Registry;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
@@ -32,6 +34,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Map;
 import java.util.Optional;
@@ -72,6 +75,15 @@ public class GlobalMarketChest extends JavaPlugin {
 
   @Override
   public void onEnable() {
+    try {
+      NmsItemStackUtils.setup();
+      Registry.setup();
+    } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException | NoSuchFieldException e) {
+      e.printStackTrace();
+      this.getLogger().log(Level.SEVERE, "This should not happen. Please report the bug with your current minecraft server setup.");
+      this.disable();
+      return;
+    }
 
     try {
       this.configLoader.loadFiles();

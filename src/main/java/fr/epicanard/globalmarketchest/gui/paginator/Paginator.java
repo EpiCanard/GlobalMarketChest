@@ -3,7 +3,7 @@ package fr.epicanard.globalmarketchest.gui.paginator;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
+import fr.epicanard.globalmarketchest.utils.reflection.NmsItemStackUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -247,7 +247,7 @@ public class Paginator {
 
   public void setItemStacks(List<ItemStack> items) {
     this.itemstacks.clear();
-    items = Utils.mapList(items, itemStack -> VersionSupportUtils.getInstance().setNbtTag(itemStack));
+    items = Utils.mapList(items, itemStack -> NmsItemStackUtils.setNbtTag(itemStack));
     this.itemstacks.addAll(items);
   }
 

@@ -25,7 +25,13 @@ public enum Version {
     this.patch = patch;
   }
 
+
+  public String toStr() {
+    return "Version("+ this.minor + ", " + this.patch + ")";
+  }
+
   private void updateVersion(final String strVersion) {
+    System.out.println("Update " + strVersion);
     final Matcher matcher = versionRegex.matcher(strVersion);
 
     if (matcher.find() && matcher.groupCount() >= 2) {

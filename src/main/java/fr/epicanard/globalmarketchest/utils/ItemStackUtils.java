@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.utils;
 
-import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
+import fr.epicanard.globalmarketchest.utils.reflection.MinecraftKeyUtils;
+import fr.epicanard.globalmarketchest.utils.reflection.NmsItemStackUtils;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +41,7 @@ public class ItemStackUtils {
 
     String[] spec = name.split("/");
 
-    ItemStack item = VersionSupportUtils.getInstance().getItemStack(spec[0]);
+    ItemStack item = NmsItemStackUtils.getItemStack(spec[0]);
 
     if (item != null) {
       if (spec.length > 1)
@@ -69,7 +70,7 @@ public class ItemStackUtils {
    * @return minecraft key in string
    */
   public String getMinecraftKey(ItemStack item) {
-    return VersionSupportUtils.getInstance().getMinecraftKey(item);
+    return MinecraftKeyUtils.getMinecraftKey(item);
   }
 
   /**
@@ -176,7 +177,7 @@ public class ItemStackUtils {
    * @return Item display name
    */
   public String getItemStackDisplayName(ItemStack item) {
-    return VersionSupportUtils.getInstance().getItemStackDisplayName(item);
+    return NmsItemStackUtils.getItemStackDisplayName(item);
   }
 
   /**
