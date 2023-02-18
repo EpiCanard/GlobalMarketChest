@@ -18,8 +18,9 @@ CREATE TABLE IF NOT EXISTS `{table_shops}`
 (
     `id`            INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     `owner`         TEXT                              NOT NULL,
-    `signLocation`  TEXT                              NOT NULL,
-    `otherLocation` TEXT                              NOT NULL,
+    `signLocation`  TEXT,
+    `otherLocation` TEXT,
+    `tpLocation`    TEXT,
     `type`          TINYINT(1)                        NOT NULL,
     `group`         VARCHAR(50)                       NOT NULL,
     `server`        VARCHAR(50)                       NOT NULL      DEFAULT 'default'
