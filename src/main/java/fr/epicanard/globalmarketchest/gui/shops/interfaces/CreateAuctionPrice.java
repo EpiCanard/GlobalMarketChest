@@ -12,6 +12,7 @@ import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.*;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -224,6 +225,7 @@ public class CreateAuctionPrice extends ShopInterface {
 
     final String message = LangUtils.format("InfoMessages.AuctionCreated", mapping);
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
-    WorldUtils.broadcast(shop.getSignLocation().getWorld(), message, Arrays.asList(owner));
+    final World broadcastWorld = shop.getLocation().orElse(owner.getLocation()).getWorld();
+    WorldUtils.broadcast(broadcastWorld, message, Arrays.asList(owner));
   }
 }
