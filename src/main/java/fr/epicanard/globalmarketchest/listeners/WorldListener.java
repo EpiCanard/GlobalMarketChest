@@ -58,7 +58,7 @@ public abstract class WorldListener implements Listener {
         final ShopInfo shop = ShopUtils.getShop(block);
         if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
           LoggerUtils.warn(String.format("Shop [%s:%s:%s] has been force deleted caused by a physics event",
-            shop.getGroup(), shop.getSignLocation().toString(), PlayerUtils.getPlayerName(shop.getOwner())));
+            shop.getGroup(), shop.getRawLocation(), PlayerUtils.getPlayerName(shop.getOwner())));
         }
       }
     }
@@ -114,7 +114,7 @@ public abstract class WorldListener implements Listener {
                 PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopDeleted");
                 String owner = shop.getOwner();
                 LoggerUtils.info(String.format("%s : [%s:%s<%s>]", LangUtils.get("InfoMessages.ShopDeleted"),
-                  shop.getSignLocation().toString(), PlayerUtils.getPlayerName(owner), owner));
+                  shop.getRawLocation(), PlayerUtils.getPlayerName(owner), owner));
                 block.breakNaturally();
               }
             }

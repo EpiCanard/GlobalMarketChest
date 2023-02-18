@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static fr.epicanard.globalmarketchest.utils.Option.exists;
+
 /**
  * Teleport a player to a physical shop
  *
@@ -38,14 +40,13 @@ public class TPConsumer implements CommandConsumer {
     try {
       List<ShopInfo> shops = GlobalMarketChest.plugin.shopManager.getShops().stream()
         .filter(shop -> shop.getGroup().equals(args[0]) && shop.getExists()
-            && WorldUtils.compareLocations(shop.getSignLocation(), WorldUtils.getLocationFromString(args[1], null))
-        )
+           && exists(shop.getLocation(), loc -> WorldUtils.compareLocations(loc, WorldUtils.getLocationFromString(args[1], null))))
         .collect(Collectors.toList());
       if (shops.size() == 0) {
         PlayerUtils.sendMessage(sender, String.format("%s%s %s", LangUtils.get("ErrorMessages.UnknownShop"), args[0], args[1]));
         return false;
       }
-      Location loc = shops.get(0).getSignLocation().clone().add(0.5, 0, 0.5);
+      Location loc = shops.get(0).getLocation().get().clone().add(0.5, 0, 0.5);
       ((Player) sender).teleport(loc);
     } catch (NumberFormatException e) {
       return node.invalidCommand(sender, command);
