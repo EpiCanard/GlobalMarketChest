@@ -18,7 +18,10 @@ import org.bukkit.Location;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static fr.epicanard.globalmarketchest.utils.Option.exists;
 
 /**
  * Class that handle all shops and communication with database
@@ -93,14 +96,17 @@ public class ShopManager extends DatabaseManager {
    * @param group Group of shop to link auctions
    * @return Return shop id created
    */
-  private Integer createShop(String owner, Location sign, Location other, int mask, String group) throws ShopAlreadyExistException {
-    if (this.shops.stream().anyMatch(shop -> WorldUtils.compareLocations(shop.getSignLocation(), sign)))
-      throw new ShopAlreadyExistException(sign);
+  private Integer createShop(String owner, Optional<Location> sign, Optional<Location> other, int mask, String group) throws ShopAlreadyExistException {
+
+    Boolean shopAlreadyExists = checkAlreadyExist(sign, true) || checkAlreadyExist(other, false);
+
+    if (shopAlreadyExists)
+      throw new ShopAlreadyExistException(sign.get());
 
     final InsertBuilder builder = insert()
         .addValue("owner", owner)
-        .addValue("signLocation", WorldUtils.getStringFromLocation(sign))
-        .addValue("otherLocation", WorldUtils.getStringFromLocation(other))
+        .addValue("signLocation", sign.map(WorldUtils::getStringFromLocation).get())
+        .addValue("otherLocation", other.map(WorldUtils::getStringFromLocation).get())
         .addValue("type", mask)
         .addValue("group", group)
         .addValue("server", this.serverName);
@@ -112,6 +118,15 @@ public class ShopManager extends DatabaseManager {
     if (QueryExecutor.of().execute(builder, cs))
       this.updateShops();
     return id.get();
+  }
+
+  /**
+   * Check if the location exists in the shop list
+   */
+  private Boolean checkAlreadyExist(Optional<Location> location, Boolean sign) {
+    return exists(location, loc -> this.shops.stream().anyMatch(shop ->
+        exists((sign) ? shop.getSignLocation() : shop.getOtherLocation(), shopLoc -> WorldUtils.compareLocations(shopLoc, loc))
+      ));
   }
 
 
@@ -133,7 +148,7 @@ public class ShopManager extends DatabaseManager {
     QueryExecutor.of().execute(builder, res -> {
       while (res.next()) {
         final ShopInfo shop = new ShopInfo(res);
-        if (shop.getSignLocation() != null && shop.getSignLocation().getWorld() != null && shop.getServer().equals(this.serverName)) {
+        if (exists(shop.getLocation(), sign -> sign.getWorld() != null) && shop.getServer().equals(this.serverName)) {
           shop.addMetadata();
         } else {
           shop.setExists(false);
