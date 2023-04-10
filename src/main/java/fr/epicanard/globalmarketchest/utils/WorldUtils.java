@@ -11,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -155,7 +156,8 @@ public class WorldUtils {
       finalString += loc.getWorld() != null ? loc.getWorld().getName() : "?";
       finalString += sep;
     }
-    return finalString + loc.getX() + sep + loc.getY() + sep + loc.getZ();
+    final DecimalFormat f = new DecimalFormat("#.##");
+    return finalString + f.format(loc.getX()) + sep + f.format(loc.getY()) + sep + f.format(loc.getZ());
   }
 
   /**
