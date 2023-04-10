@@ -228,6 +228,7 @@ ErrorMessages:
   BlacklistedItem: "Vous ne pouvez pas vendre un item blacklisté"
   CommandInChat: "&cVous n'êtes pas autorisé à exécuter des commandes dans le mode tchat"
   MaxGlobalShop: "&cVous avez atteint le nombre maximum de GlobalShop que vous pouvez créer ({maxGlobalShop} GlobalShop)"
+  WorldNotAllowed: "&cVous ne pouvez pas créer un Shop dans ce monde"
 InfoMessages:
   UndoAuction: "&2Enchère supprimée avec succès"
   RemoveAuction: "&2Enchère supprimée avec succès"

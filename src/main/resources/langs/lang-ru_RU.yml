@@ -227,6 +227,7 @@ ErrorMessages:
   BlacklistedItem: "Вы не можете продавать предметы которые находятся в ЧС"
   CommandInChat: "&cВы не можете выполнять команды в &4режиме чата"
   MaxGlobalShop: "&cВы достигли макс. кол-ва GlobalShop, которое вы могли создать ({maxGlobalShop} GlobalShop)"
+  WorldNotAllowed: "&cYou can't create a shop in this world"
 InfoMessages:
   UndoAuction: "&2Аукцион успешно удален"
   RemoveAuction: "&2Аукцион успешно удален"
