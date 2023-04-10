@@ -77,11 +77,14 @@ permissions:
     children:
       globalmarketchest.commands.reload: true
       globalmarketchest.commands.open: true
+      globalmarketchest.commands.create: true
       globalmarketchest.commands.list.*: true
   globalmarketchest.commands.reload:
     description: Can reload the plugin
   globalmarketchest.commands.open:
     description: Can open a shop with command
+  globalmarketchest.commands.create:
+    description: Can create a shop with command
   globalmarketchest.commands.list.*:
     description: Can list all shops with command
     children:

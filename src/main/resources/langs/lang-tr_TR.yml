@@ -227,6 +227,7 @@ ErrorMessages:
   BlacklistedItem: "Kara listeye alınmış bir ürünü satamazsın"
   CommandInChat: "&cSohbet modunda komut çalıştırmanıza izin verilmiyor"
   MaxGlobalShop: "&cOluşturabileceğiniz maksimum Global Mağaza sayısına ulaştınız ({maxGlobalShop} GlobalShop)"
+  WorldNotAllowed: "&cYou can't create a shop in this world"
 InfoMessages:
   UndoAuction: "&2Açık artırma başarıyla silindi"
   RemoveAuction: "&2Açık arttırma başarılı bir şekilde silindi"

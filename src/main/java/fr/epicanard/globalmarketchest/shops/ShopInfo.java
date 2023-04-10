@@ -129,6 +129,12 @@ public class ShopInfo {
   public String getRawOtherLocation() {
     return this.otherLocation.map(WorldUtils::getStringFromLocation).orElse("");
   }
+  /**
+   * Return other location formatted
+   */
+  public String getRawTpLocation() {
+    return this.tpLocation.map(WorldUtils::getStringFromLocation).orElse("");
+  }
 
   /**
    * Return sign location or other location if sign location is missing formatted
