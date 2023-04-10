@@ -60,6 +60,7 @@ public class ShopCreationListener implements Listener {
         ShopType.GLOBALSHOP.setOn(0),
         event.getBlock().getLocation(),
         null,
+        event.getBlock().getLocation().add(0.5, 0, 0.5),
         ShopUtils.generateName()
     );
     final InventoryGUI inv = new InventoryGUI(player);

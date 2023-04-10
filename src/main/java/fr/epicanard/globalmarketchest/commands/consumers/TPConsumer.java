@@ -7,7 +7,6 @@ import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -40,14 +39,13 @@ public class TPConsumer implements CommandConsumer {
     try {
       List<ShopInfo> shops = GlobalMarketChest.plugin.shopManager.getShops().stream()
         .filter(shop -> shop.getGroup().equals(args[0]) && shop.getExists()
-           && exists(shop.getLocation(), loc -> WorldUtils.compareLocations(loc, WorldUtils.getLocationFromString(args[1], null))))
+           && exists(shop.getTpLocation(), loc -> WorldUtils.compareLocations(loc, WorldUtils.getLocationFromString(args[1], null))))
         .collect(Collectors.toList());
       if (shops.size() == 0) {
         PlayerUtils.sendMessage(sender, String.format("%s%s %s", LangUtils.get("ErrorMessages.UnknownShop"), args[0], args[1]));
         return false;
       }
-      Location loc = shops.get(0).getLocation().get().clone().add(0.5, 0, 0.5);
-      ((Player) sender).teleport(loc);
+      shops.get(0).getTpLocation().ifPresent(loc -> ((Player) sender).teleport(loc));
     } catch (NumberFormatException e) {
       return node.invalidCommand(sender, command);
     }

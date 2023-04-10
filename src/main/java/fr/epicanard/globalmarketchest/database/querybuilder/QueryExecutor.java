@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
@@ -22,45 +23,56 @@ public class QueryExecutor {
    * ======================================
    */
 
-  @SuppressWarnings("unchecked")
   private void setPrepared(PreparedStatement prepared, List<Object> vals, AtomicInteger inc) throws SQLException, TypeNotSupported {
     for (int i = 0; i < vals.size(); i++) {
-      final Object value = vals.get(i);
-      switch (value.getClass().getSimpleName()) {
-        case "ColumnType":
-          continue;
-        case "String":
-          prepared.setString(inc.get(), (String) value);
-          break;
-        case "Boolean":
-          prepared.setBoolean(inc.get(), (Boolean) value);
-          break;
-        case "Timestamp":
-          prepared.setString(inc.get(), value.toString());
-          break;
-        case "Integer":
-          prepared.setInt(inc.get(), (Integer) value);
-          break;
-        case "Short":
-          prepared.setShort(inc.get(), (Short) value);
-          break;
-        case "Double":
-          prepared.setDouble(inc.get(), (Double) value);
-          break;
-        case "ArrayList":
-          inc.decrementAndGet();
-          for (Object val : (List<Object>) value) {
-            if (val instanceof String)
-              prepared.setString(inc.incrementAndGet(), (String) val);
-            if (val instanceof Integer)
-              prepared.setInt(inc.incrementAndGet(), (Integer) val);
-          }
-          break;
-        default:
-          throw new TypeNotSupported(value.getClass().getSimpleName());
-      }
-      inc.incrementAndGet();
+      if (setPreparedOneField(prepared, vals.get(i), inc))
+        inc.incrementAndGet();
     }
+  }
+
+  @SuppressWarnings("unchecked")
+  private Boolean setPreparedOneField(PreparedStatement prepared, Object value, AtomicInteger inc) throws SQLException, TypeNotSupported {
+    switch (value.getClass().getSimpleName()) {
+      case "Optional":
+        Optional opt = (Optional)value;
+        if (opt.isPresent())
+          setPreparedOneField(prepared, opt.get(), inc);
+        else
+          prepared.setNull(inc.get(), 0);
+        break;
+      case "ColumnType":
+        return false;
+      case "String":
+        prepared.setString(inc.get(), (String) value);
+        break;
+      case "Boolean":
+        prepared.setBoolean(inc.get(), (Boolean) value);
+        break;
+      case "Timestamp":
+        prepared.setString(inc.get(), value.toString());
+        break;
+      case "Integer":
+        prepared.setInt(inc.get(), (Integer) value);
+        break;
+      case "Short":
+        prepared.setShort(inc.get(), (Short) value);
+        break;
+      case "Double":
+        prepared.setDouble(inc.get(), (Double) value);
+        break;
+      case "ArrayList":
+        inc.decrementAndGet();
+        for (Object val : (List<Object>) value) {
+          if (val instanceof String)
+            prepared.setString(inc.incrementAndGet(), (String) val);
+          if (val instanceof Integer)
+            prepared.setInt(inc.incrementAndGet(), (Integer) val);
+        }
+        break;
+      default:
+        throw new TypeNotSupported(value.getClass().getSimpleName());
+    }
+    return true;
   }
 
   /**

@@ -28,6 +28,8 @@ public class ShopInfo {
   private Optional<Location> signLocation;
   @Getter @Setter
   private Optional<Location> otherLocation;
+  @Getter @Setter
+  private Optional<Location> tpLocation;
   @Getter @Setter  @NonNull
   private String group;
   @Getter
@@ -44,6 +46,7 @@ public class ShopInfo {
       this.owner = res.getString("owner");
       this.signLocation = Optional.ofNullable(res.getString("signLocation")).map(WorldUtils::getLocationFromString);
       this.otherLocation = Optional.ofNullable(res.getString("otherLocation")).map(WorldUtils::getLocationFromString);
+      this.tpLocation = Optional.ofNullable(res.getString("tpLocation")).map(WorldUtils::getLocationFromString);
       this.type = res.getInt("type");
       this.group = res.getString("group");
       this.server = res.getString("server");
@@ -52,13 +55,15 @@ public class ShopInfo {
     }
   }
 
-  public ShopInfo(int id, String owner, int type, Location sign, Location other, String group) {
+  public ShopInfo(int id, String owner, int type, Location sign, Location other, Location tp, String group) {
     this.id = id;
     this.owner = owner;
     this.type = type;
     this.signLocation = Optional.ofNullable(sign);
     this.otherLocation = Optional.ofNullable(other);
+    this.tpLocation = Optional.ofNullable(tp);
     this.group = group;
+    this.server = GlobalMarketChest.plugin.getServerName();
   }
 
   /**

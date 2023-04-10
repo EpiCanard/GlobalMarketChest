@@ -56,6 +56,8 @@ public class GlobalMarketChest extends JavaPlugin {
   private CategoryHandler catHandler;
   @Getter
   private Map<String, PriceLimit> priceLimits;
+  @Getter
+  private String serverName;
 
   public GlobalMarketChest() {
     // Initialization of loader
@@ -80,6 +82,7 @@ public class GlobalMarketChest extends JavaPlugin {
       this.disable();
       return;
     }
+    this.serverName = ConfigUtils.getString("MultiServer.ServerName", "default");
 
     this.catHandler = new CategoryHandler(GlobalMarketChest.plugin.getConfigLoader().getCategories());
     ShopUtils.init();

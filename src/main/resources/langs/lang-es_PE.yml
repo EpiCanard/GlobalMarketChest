@@ -234,6 +234,7 @@ InfoMessages:
   CreateAuction: "&2Subasta creada correctamente"
   RenewEveryAuction: "&2Subastas renovadas correctamente"
   UndoEveryAuction: "&2Subastas eliminadas correctamente"
+  ShopCreated: "Shop successfully created"
   ShopDeleted: "Tienda eliminada correctamente"
   AcquireAuction: "&3{buyer} &6compró &2{itemName}|{quantity} &6por &2{price}&6 a &3{seller}&6."
   AcquireAuctionOwner: "&3{buyer} &6compró tu subasta &2{itemName} | {quantity}  &6por &2{price}&6."

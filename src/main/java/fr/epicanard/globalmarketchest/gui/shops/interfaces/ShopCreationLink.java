@@ -48,6 +48,7 @@ public class ShopCreationLink extends ShopCreationInterface {
       Utils.editSign(this.inv.getTransactionValue(TransactionKey.SIGN_LOCATION), new String[]{
         ShopType.GLOBALSHOP.getDisplayName()
       });
+      PlayerUtils.sendMessageConfig(gui.getPlayer(), "InfoMessages.ShopCreated");
 
     } catch (ShopAlreadyExistException e) {
       PlayerUtils.sendMessage(gui.getPlayer(), e.getMessage());
