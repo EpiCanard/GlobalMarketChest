@@ -235,6 +235,7 @@ InfoMessages:
   CreateAuction: "&2Enchère créée avec succès"
   RenewEveryAuction: "&2Toutes les enchères ont été renouvelées avec succès"
   UndoEveryAuction: "&2Toutes les enchères ont été supprimées avec succès"
+  ShopCreated: "Shop créé avec succès"
   ShopDeleted: "Shop supprimé avec succès"
   AcquireAuction: "&3{buyer} &6a acheté &2{quantity} {itemName} &6pour &2{price}&6 à &3{seller}&6."
   AcquireAuctionOwner: "&3{buyer} &6a acheté votre enchère &2{quantity} {itemName} &6pour &2{price}&6."

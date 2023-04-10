@@ -234,6 +234,7 @@ InfoMessages:
   CreateAuction: "&2创建成功"
   RenewEveryAuction: "&2所有物品已经成功续期"
   UndoEveryAuction: "&2所有物品已经成功删除"
+  ShopCreated: "Shop successfully created"
   ShopDeleted: "商店已经移除..."
   AcquireAuction: "&c[&e&l养老商城&c]&3{buyer} &6购买了 &2{quantity}个 {itemName} &6价格: &2{price}&6 卖家: &3{seller}&6."
   AcquireAuctionOwner: "&c[&e&l养老商城&c]&3{buyer} &6成功购买你的物品 &2{quantity}个 {itemName} &6价格: &2{price}&6."

@@ -67,9 +67,9 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * @param pag Paginator used
    */
   private void loadNearBlock(Paginator pag) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
+    final Location searchLocation = this.inv.getTransactionValue(TransactionKey.SIGN_LOCATION);
 
-    final List<Block> blocks = shop.getSignLocation().map(this::getNearMatchingBlocks).orElse(List.of());
+    final List<Block> blocks = this.getNearMatchingBlocks(searchLocation);
     final List<ItemStack> items = pag.getSubList(blocks.stream().map(block -> {
       final ItemStack item = new ItemStack(block.getType());
       ItemStackUtils.addItemStackLore(
@@ -89,7 +89,8 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    */
   private void setOtherLocation(int pos) {
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
-    final List<Block> blocks = shop.getSignLocation().map(loc -> this.paginator.getSubList(getNearMatchingBlocks(loc))).orElse(List.of());
+    final Location searchLocation = this.inv.getTransactionValue(TransactionKey.SIGN_LOCATION);
+    final List<Block> blocks = this.paginator.getSubList(getNearMatchingBlocks(searchLocation));
 
     try {
       final Block block = blocks.get(pos);

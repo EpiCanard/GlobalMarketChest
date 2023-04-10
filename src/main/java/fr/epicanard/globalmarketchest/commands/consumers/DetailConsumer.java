@@ -62,7 +62,7 @@ public class DetailConsumer implements CommandConsumer {
           + ChatColor.DARK_GREEN + shop.getServer() + " "
           + ChatColor.GOLD + shop.getRawLocation() + " ");
 
-      if (Permissions.CMD_LIST_TP.isSetOn(sender, false) && shop.getExists() && shop.getLocation().isPresent()) {
+      if (Permissions.CMD_LIST_TP.isSetOn(sender, false) && shop.getExists() && shop.getTpLocation().isPresent()) {
         TextComponent linkTP = ChatUtils.createLinkWithBracket(LangUtils.get("Commands.Buttons.TeleportText"),
           LangUtils.get("Commands.Buttons.TeleportHover"), ChatColor.DARK_AQUA,
           String.format("/globalmarketchest list tp %s %s", shop.getGroup(),
