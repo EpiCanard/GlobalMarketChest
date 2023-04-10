@@ -142,8 +142,8 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
           .collect(Collectors.toList());
       }
       return shopsStream
-        .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]) && shop.getLocation().isPresent())
-        .map(shop -> WorldUtils.getStringFromLocation(shop.getLocation().get(), ",", true))
+        .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]) && shop.getTpLocation().isPresent())
+        .map(shop -> WorldUtils.getStringFromLocation(shop.getTpLocation().get(), ",", true))
         .collect(Collectors.toList());
     }
     return new ArrayList<>();

@@ -234,6 +234,7 @@ InfoMessages:
   CreateAuction: "&2オークションが正常に作成されました"
   RenewEveryAuction: "&2すべてのオークションは正常に更新されました"
   UndoEveryAuction: "&2すべてのオークションは正常に削除されました"
+  ShopCreated: "Shop successfully created"
   ShopDeleted: "ショップが正常に削除されました"
   AcquireAuction: "&3{buyer} &6買った &2{quantity} {itemName} &6にとって &2{price}&6 に &3{seller}&6."
   AcquireAuctionOwner: "&3{buyer} &6オークションを購入しました &2{quantity} {itemName} &6にとって &2{price}&6."
