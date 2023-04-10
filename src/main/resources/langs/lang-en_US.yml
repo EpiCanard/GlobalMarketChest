@@ -227,6 +227,7 @@ ErrorMessages:
   BlacklistedItem: "You can't sell a blacklisted item"
   CommandInChat: "&cYou are not allowed to execute commands in chat mode"
   MaxGlobalShop: "&cYou have reached the maximum number of GlobalShop you can create ({maxGlobalShop} GlobalShop)"
+  WorldNotAllowed: "&cYou can't create a shop in this world"
 InfoMessages:
   UndoAuction: "&2Auction successfully deleted"
   RemoveAuction: "&2Auction successfully removed"
