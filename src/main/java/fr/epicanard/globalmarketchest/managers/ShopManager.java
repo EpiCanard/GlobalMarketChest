@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.managers;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.database.DatabaseManager;
 import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
@@ -7,9 +8,9 @@ import fr.epicanard.globalmarketchest.database.querybuilder.SqlConsumer;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
+import fr.epicanard.globalmarketchest.database.querybuilder.builders.UpdateBuilder;
 import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static fr.epicanard.globalmarketchest.utils.Option.exists;
 
@@ -29,7 +31,6 @@ import static fr.epicanard.globalmarketchest.utils.Option.exists;
 public class ShopManager extends DatabaseManager {
   @Getter
   private List<ShopInfo> shops = new ArrayList<>();
-  private String serverName;
 
   public ShopManager() {
     super(DatabaseConnector.tableShops);
@@ -39,8 +40,17 @@ public class ShopManager extends DatabaseManager {
    * Load the list of shops
    */
   public void loadShops() {
-    this.serverName = ConfigUtils.getString("MultiServer.ServerName", "default");
     this.updateShops();
+    this.shops = this.shops.stream().map(shop -> {
+      if (shop.getExists() && shop.getTpLocation().isEmpty() && shop.getSignLocation().isPresent()) {
+        shop.getSignLocation().ifPresent(loc -> {
+          Location tp = loc.clone().add(0.5, 0, 0.5);
+          updateTpLocation(shop.getId(), tp);
+          shop.setTpLocation(Optional.of(tp));
+        });
+      }
+      return shop;
+    }).collect(Collectors.toList());
   }
 
   /**
@@ -83,33 +93,19 @@ public class ShopManager extends DatabaseManager {
    * @return Return Shop id created
    */
   public Integer createShop(ShopInfo shop) throws ShopAlreadyExistException {
-    return this.createShop(shop.getOwner(), shop.getSignLocation(), shop.getOtherLocation(), shop.getType(), shop.getGroup());
-  }
-
-  /**
-   * Create a shop inside database and add it in list shops
-   *
-   * @param owner Owner of the shop
-   * @param sign  Location of sign placed
-   * @param other Linked location to sign
-   * @param mask  Shop type
-   * @param group Group of shop to link auctions
-   * @return Return shop id created
-   */
-  private Integer createShop(String owner, Optional<Location> sign, Optional<Location> other, int mask, String group) throws ShopAlreadyExistException {
-
-    Boolean shopAlreadyExists = checkAlreadyExist(sign, true) || checkAlreadyExist(other, false);
+    Boolean shopAlreadyExists = checkAlreadyExist(shop.getSignLocation(), true) || checkAlreadyExist(shop.getOtherLocation(), false);
 
     if (shopAlreadyExists)
-      throw new ShopAlreadyExistException(sign.get());
+      throw new ShopAlreadyExistException(shop.getSignLocation().get());
 
     final InsertBuilder builder = insert()
-        .addValue("owner", owner)
-        .addValue("signLocation", sign.map(WorldUtils::getStringFromLocation).get())
-        .addValue("otherLocation", other.map(WorldUtils::getStringFromLocation).get())
-        .addValue("type", mask)
-        .addValue("group", group)
-        .addValue("server", this.serverName);
+        .addValue("owner", shop.getOwner())
+        .addValue("signLocation", shop.getSignLocation().map(WorldUtils::getStringFromLocation))
+        .addValue("otherLocation", shop.getOtherLocation().map(WorldUtils::getStringFromLocation))
+        .addValue("tpLocation", shop.getTpLocation().map(WorldUtils::getStringFromLocation))
+        .addValue("type", shop.getType())
+        .addValue("group", shop.getGroup())
+        .addValue("server", shop.getServer());
 
     final AtomicInteger id = new AtomicInteger(-1);
     final SqlConsumer<ResultSet> cs = res -> {
@@ -148,7 +144,7 @@ public class ShopManager extends DatabaseManager {
     QueryExecutor.of().execute(builder, res -> {
       while (res.next()) {
         final ShopInfo shop = new ShopInfo(res);
-        if (exists(shop.getLocation(), sign -> sign.getWorld() != null) && shop.getServer().equals(this.serverName)) {
+        if (exists(shop.getLocation(), sign -> sign.getWorld() != null) && shop.getServer().equals(GlobalMarketChest.plugin.getServerName())) {
           shop.addMetadata();
         } else {
           shop.setExists(false);
@@ -156,5 +152,15 @@ public class ShopManager extends DatabaseManager {
         this.shops.add(shop);
       }
     }, Exception::printStackTrace);
+  }
+
+  /**
+   * Update the value of tpLocation for a specific shop
+   */
+  private void updateTpLocation(int id, Location tpLocation) {
+    final UpdateBuilder builder = update()
+      .addValue("tpLocation", WorldUtils.getStringFromLocation(tpLocation, ",", true))
+      .addCondition("id", id);
+    QueryExecutor.of().execute(builder, null, Exception::printStackTrace);
   }
 }
