@@ -227,6 +227,7 @@ ErrorMessages:
   BlacklistedItem: "你不能卖黑名单的商品"
   CommandInChat: "&c不允许在此模式下执行命令"
   MaxGlobalShop: "&c你已经达到创建商店的最大值了 ({maxGlobalShop} GlobalShop)"
+  WorldNotAllowed: "&cYou can't create a shop in this world"
 InfoMessages:
   UndoAuction: "&2删除成功"
   RemoveAuction: "&2成功删除该拍卖"

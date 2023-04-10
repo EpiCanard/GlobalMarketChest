@@ -66,7 +66,7 @@ public class DetailConsumer implements CommandConsumer {
         TextComponent linkTP = ChatUtils.createLinkWithBracket(LangUtils.get("Commands.Buttons.TeleportText"),
           LangUtils.get("Commands.Buttons.TeleportHover"), ChatColor.DARK_AQUA,
           String.format("/globalmarketchest list tp %s %s", shop.getGroup(),
-          shop.getRawLocation()));
+          shop.getRawTpLocation()));
         line.addExtra(linkTP);
       }
       message.addExtra(line);

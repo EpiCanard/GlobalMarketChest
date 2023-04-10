@@ -159,7 +159,7 @@ public class ShopManager extends DatabaseManager {
    */
   private void updateTpLocation(int id, Location tpLocation) {
     final UpdateBuilder builder = update()
-      .addValue("tpLocation", WorldUtils.getStringFromLocation(tpLocation, ",", true))
+      .addValue("tpLocation", WorldUtils.getStringFromLocation(tpLocation))
       .addCondition("id", id);
     QueryExecutor.of().execute(builder, null, Exception::printStackTrace);
   }

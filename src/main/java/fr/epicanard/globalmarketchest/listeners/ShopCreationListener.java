@@ -39,7 +39,7 @@ public class ShopCreationListener implements Listener {
     if (event.getLine(0).equals(ShopType.GLOBALSHOP.getFirstLineToCreate())) {
       event.setLine(0, ShopType.GLOBALSHOP.getErrorDisplayName());
       final RankProperties playerRankProperties = GlobalMarketChest.plugin.getRanksLoader().getPlayerProperties(player);
-      if (this.canCreateShop(player, playerRankProperties)) {
+      if (playerRankProperties.canCreateShop(player)) {
         this.openCreationShopInterface(player, event);
       } else {
         PlayerUtils.sendMessage(player, format("ErrorMessages.MaxGlobalShop", "maxGlobalShop", playerRankProperties.getMaxGlobalShopByPlayer()));
@@ -70,20 +70,5 @@ public class ShopCreationListener implements Listener {
     GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
     inv.open();
     inv.loadInterface("ShopCreationSelectType");
-  }
-
-  /**
-   * Define if the player can create GlobalShop
-   *
-   * @param player Player that try to create a shop
-   * @return
-   */
-  private Boolean canCreateShop(Player player, RankProperties playerRankProperties) {
-    if (playerRankProperties.getLimitGlobalShopByPlayer()) {
-      final String playerUuid = player.getUniqueId().toString();
-      final Long numberOfShops = GlobalMarketChest.plugin.shopManager.getShops().stream().filter(shop -> shop.getOwner().equals(playerUuid)).count();
-      return numberOfShops < playerRankProperties.getMaxGlobalShopByPlayer();
-    }
-    return true;
   }
 }
