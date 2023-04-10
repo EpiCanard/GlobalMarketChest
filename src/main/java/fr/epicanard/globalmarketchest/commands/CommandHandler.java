@@ -44,6 +44,13 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
       .setCommand(new OpenConsumer())
       .setTabConsumer(this::shopsPlayerTabComplete));
 
+    // Open - /globalmarketchest open <shop> [player]
+    final CreateConsumer createConsumer = new CreateConsumer();
+    this.command.addSubNode(
+      new CommandNode("create", Permissions.CMD_CREATE, true, false)
+      .setCommand(createConsumer)
+      .setTabConsumer(this::shopsTabComplete));
+
     // Close - /globalmarketchest close <player>
     this.command.addSubNode(
       new CommandNode("close", Permissions.CMD_ADMIN_CLOSE, true, false)
@@ -143,7 +150,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
       }
       return shopsStream
         .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]) && shop.getTpLocation().isPresent())
-        .map(shop -> WorldUtils.getStringFromLocation(shop.getTpLocation().get(), ",", true))
+        .map(shop -> WorldUtils.getStringFromLocation(shop.getTpLocation().get()))
         .collect(Collectors.toList());
     }
     return new ArrayList<>();
