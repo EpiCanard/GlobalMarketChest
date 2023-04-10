@@ -155,7 +155,7 @@ public class WorldUtils {
       finalString += loc.getWorld() != null ? loc.getWorld().getName() : "?";
       finalString += sep;
     }
-    return finalString + loc.getBlockX() + sep + loc.getBlockY() + sep + loc.getBlockZ();
+    return finalString + loc.getX() + sep + loc.getY() + sep + loc.getZ();
   }
 
   /**
