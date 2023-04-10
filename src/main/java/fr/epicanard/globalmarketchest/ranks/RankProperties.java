@@ -1,8 +1,10 @@
 package fr.epicanard.globalmarketchest.ranks;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
 import java.util.function.BiConsumer;
 
@@ -83,5 +85,20 @@ public class RankProperties {
     append.accept("NumberDaysExpiration", this.numberDaysExpiration.toString());
 
     return sb.toString();
+  }
+
+  /**
+   * Define if the player can create GlobalShop
+   *
+   * @param player Player that try to create a shop
+   * @return
+   */
+  public Boolean canCreateShop(Player player) {
+    if (this.limitGlobalShopByPlayer) {
+      final String playerUuid = player.getUniqueId().toString();
+      final Long numberOfShops = GlobalMarketChest.plugin.shopManager.getShops().stream().filter(shop -> shop.getOwner().equals(playerUuid)).count();
+      return numberOfShops < this.maxGlobalShopByPlayer;
+    }
+    return true;
   }
 }

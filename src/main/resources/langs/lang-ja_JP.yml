@@ -227,6 +227,7 @@ ErrorMessages:
   BlacklistedItem: "ブラックリストに載っている商品は販売できません"
   CommandInChat: "&cチャットモードでコマンドを実行することは許可されていません"
   MaxGlobalShop: "&c作成できるグローバルショップの最大数に達しました({maxGlobalShop} グローバルショップ)"
+  WorldNotAllowed: "&cYou can't create a shop in this world"
 InfoMessages:
   UndoAuction: "&2オークションは正常に削除されました"
   RemoveAuction: "&2オークションは正常に削除されました"
