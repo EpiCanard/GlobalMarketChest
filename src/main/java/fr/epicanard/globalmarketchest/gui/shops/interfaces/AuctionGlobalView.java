@@ -7,6 +7,7 @@ import fr.epicanard.globalmarketchest.exceptions.WarnException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.BaseAuctionGlobalView;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
@@ -70,7 +71,7 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
     final AuctionInfo auction = this.current.auctions.get(pos);
     if (auction != null) {
       this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, auction);
-      this.inv.loadInterface("EditAuction");
+      this.inv.loadInterface(InterfaceType.EDIT_AUCTION);
     }
   }
 
@@ -142,7 +143,7 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
   private void openPlayerGlobalView(String playerName) {
     final OfflinePlayer offlinePlayer = GlobalMarketChest.plugin.getServer().getOfflinePlayer(playerName);
     this.inv.getTransaction().put(TransactionKey.PLAYER, offlinePlayer);
-    this.inv.loadInterface("AdminAuctionGlobalView");
+    this.inv.loadInterface(InterfaceType.ADMIN_AUCTION_GLOBAL_VIEW);
   }
 
   @Override

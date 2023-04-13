@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.actions.NewAuction;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
@@ -29,7 +30,7 @@ public class DefaultFooter extends ShopInterface {
       this.actions.put(53, new NewAuction());
       this.togglers.get(53).set();
     }
-    this.actions.put(46, new NextInterface("AuctionGlobalView"));
+    this.actions.put(46, new NextInterface(InterfaceType.AUCTION_GLOBAL_VIEW));
   }
 
   private void updateBalance() {

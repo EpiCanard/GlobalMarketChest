@@ -4,6 +4,7 @@ import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.StatusAuction;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.BaseAuctionGlobalView;
 import fr.epicanard.globalmarketchest.utils.*;
 import org.bukkit.OfflinePlayer;
@@ -37,7 +38,7 @@ public class AdminAuctionGlobalView extends BaseAuctionGlobalView {
     final AuctionInfo auction = this.current.auctions.get(pos);
     if (auction != null) {
       this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, auction);
-      this.inv.loadInterface("BuyAuction");
+      this.inv.loadInterface(InterfaceType.BUY_AUCTION);
     }
   }
 
