@@ -7,20 +7,21 @@ import java.util.function.Consumer;
 
 /**
  * Consumer to load the specified interface
- * 
+ *
  * Can be build with a Callable<Boolean> to make blocking verification before loading the interface
  */
 public class NextInterface implements Consumer<InventoryGUI> {
-  private String name;
+  private InterfaceType interfaceType;
   private Callable<Boolean> callable;
 
-  public NextInterface(String name) {
-    this.name = name;
+  public NextInterface(InterfaceType interfaceType) {
+    this.interfaceType = interfaceType;
     this.callable = () -> true;
   }
 
-  public NextInterface(String name, Callable<Boolean> callable) {
-    this.name = name;
+  // TODO Use Enum as name and store class reference in enum
+  public NextInterface(InterfaceType interfaceType, Callable<Boolean> callable) {
+    this.interfaceType = interfaceType;
     this.callable = callable;
   }
 
@@ -28,7 +29,7 @@ public class NextInterface implements Consumer<InventoryGUI> {
   public void accept(InventoryGUI t) {
     try {
       if (this.callable == null || this.callable.call())
-        t.loadInterface(name);
+        t.loadInterface(interfaceType);
     } catch (Exception e) {
       e.printStackTrace();
     }

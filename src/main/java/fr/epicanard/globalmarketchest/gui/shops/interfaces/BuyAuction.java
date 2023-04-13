@@ -7,6 +7,7 @@ import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
@@ -46,7 +47,7 @@ public class BuyAuction extends UndoAuction {
     }
     if (canSeeShulkerBoxContent(item)) {
       this.togglers.get(34).set();
-      this.actions.put(34, new NextInterface("ShulkerBoxContent"));
+      this.actions.put(34, new NextInterface(InterfaceType.SHULKER_BOX_CONTENT));
     }
   }
 
@@ -162,7 +163,7 @@ public class BuyAuction extends UndoAuction {
   private void adminRemoveAuction(InventoryGUI i) {
     final Consumer<Boolean> removeAuction = this::removeAuction;
     inv.getTransaction().put(TransactionKey.QUESTION, Pair.of("Are you sure to delete this auction ?", removeAuction));
-    inv.loadInterface("ConfirmView");
+    inv.loadInterface(InterfaceType.CONFIRM_VIEW);
   }
 
   /**

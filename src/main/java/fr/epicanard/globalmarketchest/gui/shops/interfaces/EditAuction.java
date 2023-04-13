@@ -6,6 +6,7 @@ import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.auctions.StatusAuction;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.actions.ReturnBack;
@@ -31,7 +32,7 @@ public class EditAuction extends UndoAuction {
     final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
     if (ShulkerBoxContent.isShulker(item)) {
       this.togglers.get(49).set();
-      this.actions.put(49, new NextInterface("ShulkerBoxContent"));
+      this.actions.put(49, new NextInterface(InterfaceType.SHULKER_BOX_CONTENT));
     }
   }
 

@@ -2,6 +2,7 @@ package fr.epicanard.globalmarketchest.gui;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InterfaceLoadException;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.shops.Warning;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.ranks.RankProperties;
@@ -165,18 +166,16 @@ public class InventoryGUI {
    *
    * @param name Interface name
    */
-  public void loadInterface(String name) {
+  public void loadInterface(InterfaceType type) {
     Optional<ShopInterface> lastInterface = Optional.empty();
     try {
-      ShopInterface shop = (ShopInterface) Class.forName("fr.epicanard.globalmarketchest.gui.shops.interfaces." + name)
-          .getDeclaredConstructor(InventoryGUI.class).newInstance(this);
+      ShopInterface shop = (ShopInterface) type.getClazz().getDeclaredConstructor(InventoryGUI.class).newInstance(this);
       lastInterface = Optional.ofNullable(this.shopStack.peek());
       lastInterface.ifPresent(ShopInterface::unload);
 
       shop.load();
       this.shopStack.push(shop);
-    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
-        | InvocationTargetException e) {
+    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
       e.printStackTrace();
     } catch (InterfaceLoadException e) {
       LoggerUtils.warn(e.getMessage());
