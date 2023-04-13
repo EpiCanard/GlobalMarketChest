@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.listeners;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
@@ -124,7 +125,7 @@ public abstract class WorldListener implements Listener {
         ShopUtils.openShop(player, shop, inv -> {
           inv.getTransaction().put(TransactionKey.QUESTION, Pair.of(LangUtils.get("InfoMessages.DeleteShopQuestion"), deleteConsumer.apply(inv)));
           inv.getTransaction().put(TransactionKey.HAS_RETURN, false);
-          inv.loadInterface("ConfirmView");
+          inv.loadInterface(InterfaceType.CONFIRM_VIEW);
           event.setCancelled(true);
         });
         return;
@@ -154,7 +155,7 @@ public abstract class WorldListener implements Listener {
         return;
       event.setCancelled(true);
       if (Permissions.GS_OPENSHOP.isSetOn(player) || Permissions.GS_SHOP_OPENSHOP.isSetOnWithShop(player, shop.getGroup())) {
-        ShopUtils.openShop(player, shop, inv -> inv.loadInterface("CategoryView"));
+        ShopUtils.openShop(player, shop, inv -> inv.loadInterface(InterfaceType.CATEGORY_VIEW));
       } else {
         Permissions.sendMessage(player);
       }
