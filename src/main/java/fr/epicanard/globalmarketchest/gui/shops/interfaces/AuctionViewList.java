@@ -5,6 +5,7 @@ import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.auctions.AuctionLoreConfig;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.AuctionViewBase;
 import fr.epicanard.globalmarketchest.managers.GroupLevels;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
@@ -102,7 +103,7 @@ public class AuctionViewList extends AuctionViewBase {
       this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, auction);
       this.inv.getTransaction().put(TransactionKey.GROUP_LEVEL, this.level.getNextLevel(category));
       this.inv.getTransaction().put(TransactionKey.AUCTION_ITEM, DatabaseUtils.deserialize(auction.getItemMeta()));
-      this.inv.loadInterface("AuctionViewList");
+      this.inv.loadInterface(InterfaceType.AUCTION_VIEW_LIST);
     }
   }
 

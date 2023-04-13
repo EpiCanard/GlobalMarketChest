@@ -6,6 +6,7 @@ import fr.epicanard.globalmarketchest.commands.CommandNode;
 import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.ranks.RankProperties;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
@@ -85,6 +86,6 @@ public class CreateConsumer implements CommandConsumer {
     inv.getTransaction().put(TransactionKey.SIGN_LOCATION, player.getLocation());
     GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
     inv.open();
-    inv.loadInterface("ShopCreationSelectType");
+    inv.loadInterface(InterfaceType.SHOP_CREATION_SELECT_TYPE);
   }
 }

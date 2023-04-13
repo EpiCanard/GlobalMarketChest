@@ -5,6 +5,7 @@ import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.shops.Droppable;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.DefaultFooter;
@@ -63,7 +64,7 @@ public class SearchView extends DefaultFooter implements Droppable {
     this.inv.getTransaction().put(TransactionKey.AUCTION_ITEM, item);
     this.inv.getTransaction().put(TransactionKey.AUCTION_INFO, new AuctionInfo(item));
 
-    this.inv.loadInterface("AuctionViewList");
+    this.inv.loadInterface(InterfaceType.AUCTION_VIEW_LIST);
   }
 
   /**
@@ -80,12 +81,12 @@ public class SearchView extends DefaultFooter implements Droppable {
 
   private void searchItem(String itemName) {
     this.inv.getTransaction().put(TransactionKey.ITEM_SEARCH, itemName);
-    this.inv.loadInterface("AuctionViewItem");
+    this.inv.loadInterface(InterfaceType.AUCTION_VIEW_ITEM);
   }
 
   private void searchPlayer(String player) {
     final OfflinePlayer offlinePlayer = GlobalMarketChest.plugin.getServer().getOfflinePlayer(player);
     this.inv.getTransaction().put(TransactionKey.PLAYER, offlinePlayer);
-    this.inv.loadInterface("AuctionViewByPlayer");
+    this.inv.loadInterface(InterfaceType.AUCTION_VIEW_BY_PLAYER);
   }
 }
