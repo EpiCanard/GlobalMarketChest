@@ -92,6 +92,8 @@ public class InventoryGUI {
     this.player.removePotionEffect(PotionEffectType.BLINDNESS);
     if (value != null) {
       this.chatConsumer.accept(value);
+    } else {
+      this.reloadLastInterface();
     }
     this.chatConsumer = null;
   }
@@ -135,6 +137,16 @@ public class InventoryGUI {
     this.shopStack.peek().unload();
     this.shopStack.pop().destroy();
     Optional.ofNullable(this.shopStack.peek()).ifPresent(ShopInterface::load);
+  }
+
+
+  /**
+   * Unload last loaded Interface and load the previous one
+   */
+  public void reloadLastInterface() {
+    if (this.shopStack.isEmpty())
+      return;
+    this.shopStack.peek().load();
   }
 
   /**
