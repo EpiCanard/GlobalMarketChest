@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.commands.consumers;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.commands.CommandConsumer;
 import fr.epicanard.globalmarketchest.commands.CommandNode;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
@@ -63,7 +64,7 @@ public class OpenConsumer implements CommandConsumer {
       return false;
     }
 
-    ShopUtils.openShop(player, match.get(0), inv -> inv.loadInterface("CategoryView"));
+    ShopUtils.openShop(player, match.get(0), inv -> inv.loadInterface(InterfaceType.CATEGORY_VIEW));
     return true;
   }
 }

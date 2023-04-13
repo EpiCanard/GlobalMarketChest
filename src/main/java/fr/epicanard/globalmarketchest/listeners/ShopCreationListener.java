@@ -4,6 +4,7 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.ranks.RankProperties;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
@@ -69,6 +70,6 @@ public class ShopCreationListener implements Listener {
     inv.getTransaction().put(TransactionKey.SIGN_LOCATION, event.getBlock().getLocation());
     GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
     inv.open();
-    inv.loadInterface("ShopCreationSelectType");
+    inv.loadInterface(InterfaceType.SHOP_CREATION_SELECT_TYPE);
   }
 }
