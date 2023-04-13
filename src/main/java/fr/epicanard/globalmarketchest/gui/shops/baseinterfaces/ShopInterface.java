@@ -34,7 +34,7 @@ public abstract class ShopInterface {
     this.inv = inv;
     String className = this.getClass().getSimpleName();
     InterfacesLoader.getInstance().getPaginatorConfig(className)
-        .ifPresent(conf -> this.paginator = new Paginator(this.inv.getInv(), conf));
+        .ifPresent(conf -> this.paginator = new Paginator(this.inv, conf));
     InterfacesLoader.getInstance().getTogglers(className).ifPresent(togglersConfig -> {
       togglersConfig.forEach(config -> {
         this.togglers.put(config.getPosition(), config.instanceToggler(inv.getInv()));

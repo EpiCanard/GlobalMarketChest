@@ -2,6 +2,7 @@ package fr.epicanard.globalmarketchest.gui.paginator;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
+import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import java.util.function.Consumer;
 import java.util.logging.Level;
 
 public class Paginator {
-  private final Inventory inv;
+  private final InventoryGUI inv;
   private ItemStack previous;
   private ItemStack next;
   private ItemStack numPage;
@@ -32,7 +33,7 @@ public class Paginator {
   private List<ItemStack> itemstacks = new ArrayList<ItemStack>();
 
 
-  public Paginator(Inventory inv, PaginatorConfig config) {
+  public Paginator(InventoryGUI inv, PaginatorConfig config) {
     this.inv = inv;
     this.previous = Utils.getButton("PreviousPage");
     this.next = Utils.getButton("NextPage");
@@ -40,7 +41,7 @@ public class Paginator {
     this.config = config;
   }
 
-  public Paginator(Inventory inv) {
+  public Paginator(InventoryGUI inv) {
     this(inv, null);
     try {
       this.config = new PaginatorConfig(1, 9, 1, -1, -1, -1);
@@ -53,20 +54,20 @@ public class Paginator {
    * Add item to inventory and check that param are valid
    */
   private void addItem(int pos, ItemStack item) {
-    if (pos < 0 || pos >= this.inv.getSize() || item == null)
+    if (pos < 0 || pos >= this.inv.getInv().getSize() || item == null)
       return;
-    this.inv.setItem(pos, item);
+    this.inv.getInv().setItem(pos, item);
   }
 
   /**
    * Update page counter
    */
   private void updateCounter() {
-    if (this.config.getNumPagePos() < 0 || this.config.getNumPagePos() >= this.inv.getSize())
+    if (this.config.getNumPagePos() < 0 || this.config.getNumPagePos() >= this.inv.getInv().getSize())
       return;
-    ItemStack item = inv.getItem(this.config.getNumPagePos());
+    ItemStack item = inv.getInv().getItem(this.config.getNumPagePos());
     item.setAmount(this.config.getPage() + 1);
-    this.inv.setItem(this.config.getNumPagePos(), item);
+    this.inv.getInv().setItem(this.config.getNumPagePos(), item);
   }
 
   /**
@@ -120,9 +121,9 @@ public class Paginator {
   private void loadItems() {
     for (int i = 0; i < this.config.getLimit(); i++) {
       if (i < this.itemstacks.size())
-        this.inv.setItem(this.getPos(i), this.itemstacks.get(i));
+        this.inv.getInv().setItem(this.getPos(i), this.itemstacks.get(i));
       else
-        this.inv.clear(this.getPos(i));
+        this.inv.getInv().clear(this.getPos(i));
     }
   }
 
@@ -151,7 +152,7 @@ public class Paginator {
    */
   public void clear() {
     for (int i = 0; i < this.config.getLimit(); i++) {
-      this.inv.clear(this.getPos(i));
+      this.inv.getInv().clear(this.getPos(i));
     }
   }
 
