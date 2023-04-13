@@ -25,7 +25,7 @@ public class NewAuction implements Consumer<InventoryGUI> {
       } else {
         AuctionInfo info = new AuctionInfo(AuctionType.SELL, inv.getPlayer(), shop.getGroup());
         inv.getTransaction().put(TransactionKey.AUCTION_INFO, info);
-        inv.loadInterface("CreateAuctionItem");
+        inv.loadInterface(InterfaceType.CREATE_AUCTION_ITEM);
       }
     });
   }
