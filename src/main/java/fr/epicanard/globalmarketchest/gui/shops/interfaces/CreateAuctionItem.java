@@ -5,6 +5,7 @@ import fr.epicanard.globalmarketchest.auctions.AuctionInfo;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.shops.Droppable;
@@ -55,7 +56,7 @@ public class CreateAuctionItem extends ShopInterface implements Droppable {
       this.togglers.get(34).set();
     }
 
-    this.actions.put(53, new NextInterface("CreateAuctionPrice", this::checkItem));
+    this.actions.put(53, new NextInterface(InterfaceType.CREATE_AUCTION_PRICE, this::checkItem));
   }
 
   @Override

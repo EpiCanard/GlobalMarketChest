@@ -2,6 +2,7 @@ package fr.epicanard.globalmarketchest.gui.shops.interfaces;
 
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.actions.NextInterface;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopCreationInterface;
@@ -28,7 +29,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
     // this.actions.put(11, i -> this.toggleShop(11, ShopType.GLOBALSHOP));
     // this.actions.put(13, i -> this.toggleShop(13, ShopType.AUCTIONSHOP));
     // this.actions.put(15, i -> this.toggleShop(15, ShopType.ADMINSHOP));
-    this.actions.put(53, new NextInterface("ShopCreationLink", this::checkCreation));
+    this.actions.put(53, new NextInterface(InterfaceType.SHOP_CREATION_LINK, this::checkCreation));
     if (this.paginator != null) {
       this.paginator.setLoadConsumer(this::loadNearBlock);
       this.paginator.setClickConsumer(this::setOtherLocation);
