@@ -5,6 +5,7 @@ import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
+import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
@@ -30,7 +31,10 @@ public class ShopCreationLink extends ShopCreationInterface {
       this.paginator.setClickConsumer(this::changeName);
     }
     this.actions.put(0, new PreviousInterface());
-    this.actions.put(40, new ChatInput("InfoMessages.WriteGroupName", this::changeName));
+    this.actions.put(40, new ChatInput("InfoMessages.WriteGroupName", name -> {
+      this.changeName(name, false);
+      this.inv.reloadLastInterface();
+    }));
     this.actions.put(53, this::createShop);
   }
 
@@ -88,7 +92,7 @@ public class ShopCreationLink extends ShopCreationInterface {
     final List<ShopInfo> subShops = this.paginator.getSubList(GlobalMarketChest.plugin.shopManager.getShops());
 
     if (pos < subShops.size()) {
-      this.changeName(subShops.get(pos).getGroup());
+      this.changeName(subShops.get(pos).getGroup(), true);
     }
   }
 
@@ -97,12 +101,13 @@ public class ShopCreationLink extends ShopCreationInterface {
    *
    * @param name Name of the group
    */
-  public void changeName(String name) {
+  public void changeName(String name, Boolean update) {
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
     this.load();
 
     if (shop != null)
       shop.setGroup(name);
-    this.updateName();
+    if (update)
+      this.updateName();
   }
 }
