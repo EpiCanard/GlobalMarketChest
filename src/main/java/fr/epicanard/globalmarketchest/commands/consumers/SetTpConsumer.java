@@ -7,7 +7,6 @@ import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
-
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,7 +19,7 @@ import static fr.epicanard.globalmarketchest.utils.Option.exists;
 /**
  * Set the teleport position of a specific physical shop with current player position
  *
- * Command : /globalmarketchest settp <groupName> <coord>
+ * Command : /globalmarketchest settp <groupName> [coord]
  * Permission: globalmarketchest.commands.list.detail.settp
  */
 public class SetTpConsumer implements CommandConsumer {
@@ -34,17 +33,22 @@ public class SetTpConsumer implements CommandConsumer {
    * @param args Arguments of command
    */
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
-    if (!(sender instanceof Player) || args.length < 2) {
+    if (!(sender instanceof Player) || args.length < 1) {
       return node.invalidCommand(sender, command);
     }
 
     try {
-      Location argLoc = WorldUtils.getLocationFromString(args[1], null);
+      Location argLoc = (args.length > 1) ? WorldUtils.getLocationFromString(args[1], null) : null;
       List<ShopInfo> shops = GlobalMarketChest.plugin.shopManager.getShops().stream()
-        .filter(shop -> shop.getGroup().equals(args[0]) && shop.getExists() && exists(shop.getTpLocation(), loc -> WorldUtils.compareLocations(loc, argLoc)))
+        .filter(shop -> shop.getGroup().equals(args[0]) && shop.getExists()
+            && exists(shop.getTpLocation(), loc -> args.length < 2 || WorldUtils.compareLocations(loc, argLoc)))
         .collect(Collectors.toList());
       if (shops.size() == 0) {
         PlayerUtils.sendMessage(sender, String.format("%s%s %s", LangUtils.get("ErrorMessages.UnknownShop"), args[0], args[1]));
+        return false;
+      }
+      if (shops.size() > 1 && args.length < 2) {
+        PlayerUtils.sendMessage(sender, LangUtils.format("ErrorMessages.TooManyShopMatching", "shopName", args[0]));
         return false;
       }
       GlobalMarketChest.plugin.shopManager.setTpLocation(shops.get(0), ((Player)sender).getLocation());
