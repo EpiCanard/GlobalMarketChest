@@ -222,6 +222,7 @@ ErrorMessages:
   InvalidCommand: "&cこのコマンドは無効です : "
   PlayerOnly: "&cこのコマンドはプレイヤーのみが実行できます"
   UnknownShop: "&c不明なショップ : "
+  TooManyShopMatching: "&cThere is too many shop matching {shopName}. Please specify the location"
   CantRemoveBlock: "&cショップが併設されているため、このブロックを削除することはできません。"
   DamagedItem: "破損した商品は販売できません"
   BlacklistedItem: "ブラックリストに載っている商品は販売できません"
