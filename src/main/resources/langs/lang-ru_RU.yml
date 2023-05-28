@@ -222,6 +222,7 @@ ErrorMessages:
   InvalidCommand: "&cЭта команда недопустима : "
   PlayerOnly: "&cЭта команда может быть выполнена только игроком"
   UnknownShop: "&cНеизвестный магазин : "
+  TooManyShopMatching: "&cThere is too many shop matching {shopName}. Please specify the location"
   CantRemoveBlock: "&cВы не можете убрать этот блок, потому что к нему прикреплен магазин"
   DamagedItem: "Вы не можете продать поврежденный товар"
   BlacklistedItem: "Вы не можете продавать предметы которые находятся в ЧС"

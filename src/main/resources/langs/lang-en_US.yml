@@ -222,6 +222,7 @@ ErrorMessages:
   InvalidCommand: "&cThis command is not valid : "
   PlayerOnly: "&cThis command can only be executed by a player"
   UnknownShop: "&cUnknown Shop : "
+  TooManyShopMatching: "&cThere is too many shop matching {shopName}. Please specify the location"
   CantRemoveBlock: "&cYou can't remove this block because a shop is attached to it"
   DamagedItem: "You can't sell a damaged item"
   BlacklistedItem: "You can't sell a blacklisted item"
