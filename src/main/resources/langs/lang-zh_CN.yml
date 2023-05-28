@@ -255,6 +255,7 @@ InfoMessages:
   ShopTemporarilyLocked: "这个商店暂时上锁了"
   ConversionMode: "转换模式 : &6{mode}&7"
   NewVersionAvailable: "&6GlobalMarketChest的最新版本:&3{lastVersion}&6 已经在spigot更新,地址: &7(current : {currentVersion})"
+  TeleportLocationUpdated: "&2Teleport location updated"
 Commands:
   Buttons:
     OpenText: "打开"

@@ -117,6 +117,17 @@ public class ShopManager extends DatabaseManager {
   }
 
   /**
+   * Set the teleport location of a shop
+   *
+   * @param shop Shop to update
+   * @param newLocation New teleport location to save in db
+   */
+  public void setTpLocation(ShopInfo shop, Location newLocation) {
+    updateTpLocation(shop.getId(), newLocation);
+    shop.setTpLocation(Optional.ofNullable(newLocation));
+  }
+
+  /**
    * Check if the location exists in the shop list
    */
   private Boolean checkAlreadyExist(Optional<Location> location, Boolean sign) {
