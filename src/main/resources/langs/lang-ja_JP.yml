@@ -255,6 +255,7 @@ InfoMessages:
   ShopTemporarilyLocked: "このお店は一時的に施錠されています"
   ConversionMode: "変換モード : &6{mode}&7"
   NewVersionAvailable: "&6新しいバージョン &3{lastVersion}&6 GlobalMarketChestのがスピゴットで利用可能になりました！ &7(現在 : {currentVersion})"
+  TeleportLocationUpdated: "&2Teleport location updated"
 Commands:
   Buttons:
     OpenText: "開ける"
