@@ -222,6 +222,7 @@ ErrorMessages:
   InvalidCommand: "&cBu komut geçerli değil : "
   PlayerOnly: "&cBu komut sadece bir oyuncu tarafından çalıştırılabilir"
   UnknownShop: "&cBilinmeyen mağaza: "
+  TooManyShopMatching: "&cThere is too many shop matching {shopName}. Please specify the location"
   CantRemoveBlock: "&cbir dükkan ona bağlı olduğu için bu bloğu kaldıramazsınız"
   DamagedItem: "Hasar görmüş bir ürünü satamazsın"
   BlacklistedItem: "Kara listeye alınmış bir ürünü satamazsın"
