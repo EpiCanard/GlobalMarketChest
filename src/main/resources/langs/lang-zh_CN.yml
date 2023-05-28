@@ -222,6 +222,7 @@ ErrorMessages:
   InvalidCommand: "&c此命令无效 : "
   PlayerOnly: "&c这个指令只能玩家使用"
   UnknownShop: "&c未知商店 : "
+  TooManyShopMatching: "&cThere is too many shop matching {shopName}. Please specify the location"
   CantRemoveBlock: "&c您不能删除此块，因为它附加了一个商店"
   DamagedItem: "你不能卖损坏的东西"
   BlacklistedItem: "你不能卖黑名单的商品"

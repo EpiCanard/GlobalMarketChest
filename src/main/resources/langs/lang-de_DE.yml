@@ -222,6 +222,7 @@ ErrorMessages:
   InvalidCommand: "&cBefehl nicht erkannt: "
   PlayerOnly: "&cDieser Befehl kann nur als Spieler ausgeführt werden"
   UnknownShop: "&cUnbekannter Shop: "
+  TooManyShopMatching: "&cThere is too many shop matching {shopName}. Please specify the location"
   CantRemoveBlock: "&cDu kannst diesen Block nicht entfernen da ein Shop daran gebunden ist."
   DamagedItem: "Du kannst keine beschädigte Gegenstände verkaufen!"
   BlacklistedItem: "Du kannst keine verbotenen Gegenstände verkaufen!"
