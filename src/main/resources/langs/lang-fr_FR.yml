@@ -256,6 +256,7 @@ InfoMessages:
   ShopTemporarilyLocked: "Ce shop est temporairement verouillé"
   ConversionMode: "Mode de conversion : &6{mode}&7"
   NewVersionAvailable: "&6La nouvelle version &3{lastVersion}&6 de GlobalMarketChest est désormais disponible sur spigot ! &7(actuel : {currentVersion})"
+  TeleportLocationUpdated: "&2Localisation de téléportation mit à jour"
 Commands:
   Buttons:
     OpenText: "Ouvrir"

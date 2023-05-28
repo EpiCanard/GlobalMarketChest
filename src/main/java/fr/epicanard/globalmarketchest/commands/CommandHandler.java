@@ -74,6 +74,12 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
       .setTabConsumer(this::shopIdTabComplete);
     listNode.addSubNode(tpNode);
 
+    // List.SetTp - /globalmarketchest list settp <shop> <position>
+    CommandNode setTpNode = new CommandNode("settp", Permissions.CMD_LIST_SET_TP, true, true)
+      .setCommand(new SetTpConsumer())
+      .setTabConsumer(this::shopIdTabComplete);
+    listNode.addSubNode(setTpNode);
+
     // Fix - /globalmarketchest fix
     CommandNode fixNode = new CommandNode("fix", Permissions.CMD_ADMIN_FIX, false, false);
     this.command.addSubNode(fixNode);
