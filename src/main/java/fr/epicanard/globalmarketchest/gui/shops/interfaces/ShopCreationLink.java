@@ -5,7 +5,6 @@ import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
-import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.actions.PreviousInterface;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
