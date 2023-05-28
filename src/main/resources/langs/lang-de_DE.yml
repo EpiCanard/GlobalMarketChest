@@ -255,6 +255,7 @@ InfoMessages:
   ShopTemporarilyLocked: "Dieser Shop ist vorübergehend gesperrt"
   ConversionMode: "Konvertierungs Modus : &6{mode}&7"
   NewVersionAvailable: "&6Die neue Version &3{lastVersion}&6 von GlobalMarketChest ist ist jetzt auf Spigot verfügbar ! &7(Aktuelle Version : {currentVersion})"
+  TeleportLocationUpdated: "&2Teleport location updated"
 Commands:
   Buttons:
     OpenText: "Öffnen"
