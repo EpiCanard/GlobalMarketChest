@@ -94,3 +94,5 @@ permissions:
     description: Can see all shop position for a group of shop
   globalmarketchest.commands.list.tp:
     description: Can be teleport to a specific shop
+  globalmarketchest.commands.list.settp:
+    description: Can set the teleport location of a specific shop
