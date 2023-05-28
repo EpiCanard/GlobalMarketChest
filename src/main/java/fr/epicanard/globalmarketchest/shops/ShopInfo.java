@@ -129,6 +129,7 @@ public class ShopInfo {
   public String getRawOtherLocation() {
     return this.otherLocation.map(WorldUtils::getStringFromLocation).orElse("");
   }
+
   /**
    * Return other location formatted
    */

@@ -12,8 +12,10 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -157,6 +159,7 @@ public class WorldUtils {
       finalString += sep;
     }
     final DecimalFormat f = new DecimalFormat("#.##");
+    f.setDecimalFormatSymbols(DecimalFormatSymbols.getInstance(Locale.ENGLISH));
     return finalString + f.format(loc.getX()) + sep + f.format(loc.getY()) + sep + f.format(loc.getZ());
   }
 
