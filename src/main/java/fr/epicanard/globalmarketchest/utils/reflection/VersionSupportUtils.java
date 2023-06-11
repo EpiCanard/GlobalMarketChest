@@ -120,7 +120,6 @@ public class VersionSupportUtils {
     return getClassFromPath(Path.MINECRAFT_CORE, "IRegistry").getField("Z").get(null);
   }
 
-
   @Version(name = "getRegistry", versions = { "1.18", "1.19.1", "1.19.2" })
   public Object getRegistry_1_18_19() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
     final Class<?> registryBlockClass = getClassFromPath(Path.MINECRAFT_CORE, "RegistryBlocks");
@@ -186,16 +185,22 @@ public class VersionSupportUtils {
   }
 
   @Version(name = "getMinecraftKey", versions = { "1.13", "1.14", "1.15", "1.16", "1.17" })
-  public Object getMinecraftKey_old(Object registry, Object nmsItemStack)
+  public Object getMinecraftKey_1_13(Object registry, Object nmsItemStack)
       throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
     return registry.getClass().getMethod("getKey", Object.class).invoke(registry,
         invokeMethod(nmsItemStack, "getItem"));
   }
 
+  @Version(name = "getMinecraftKey", versions = { "1.18", "1.19" })
+  public Object getMinecraftKey_1_18(Object registry, Object nmsItemStack)
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "c"));
+  }
+
   @Version(name = "getMinecraftKey")
   public Object getMinecraftKey_latest(Object registry, Object nmsItemStack)
       throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "c"));
+    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "d"));
   }
 
   @Version(name = "getNamespace", versions = { "1.14", "1.15", "1.16", "1.17" })
@@ -500,6 +505,32 @@ public class VersionSupportUtils {
     }
   }
 
+  @Version(name = "updateInventoryName", versions = { "1.19" })
+  public void updateInventoryName_1_19(String title, Player player) {
+    try {
+      Object entityPlayer = invokeMethod(player, "getHandle");
+      Object chatMessage = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent")
+          .getMethod("b", String.class).invoke(null, title);
+      Class<?> containerClass = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Container");
+      VersionField activeContainerVF = VersionField.from(entityPlayer).getWithType(containerClass);
+      Object windowId = activeContainerVF.get("j").value();
+
+      Class<?> ichat = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
+      Class<?> containers = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Containers");
+
+      Object packet = getClassFromPath(Path.MINECRAFT_NETWORK_GAME, "PacketPlayOutOpenWindow")
+          .getConstructor(Integer.TYPE, containers, ichat)
+          .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
+
+      Object playerConnection = entityPlayer.getClass().getDeclaredField("b").get(entityPlayer);
+
+      playerConnection.getClass().getMethod("a", getClassFromPath(Path.MINECRAFT_NETWORK_PROTOCOL, "Packet"))
+          .invoke(playerConnection, packet);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   @Version(name = "updateInventoryName")
   public void updateInventoryName_latest(String title, Player player) {
     try {
@@ -517,7 +548,7 @@ public class VersionSupportUtils {
           .getConstructor(Integer.TYPE, containers, ichat)
           .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
 
-      Object playerConnection = entityPlayer.getClass().getDeclaredField("b").get(entityPlayer);
+      Object playerConnection = entityPlayer.getClass().getDeclaredField("c").get(entityPlayer);
 
       playerConnection.getClass().getMethod("a", getClassFromPath(Path.MINECRAFT_NETWORK_PROTOCOL, "Packet"))
           .invoke(playerConnection, packet);
