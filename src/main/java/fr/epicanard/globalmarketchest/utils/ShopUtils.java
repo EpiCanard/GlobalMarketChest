@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Utility Class about Shops
@@ -46,20 +47,10 @@ public class ShopUtils {
         ));
         break;
       default:
-        SIGN_MATERIALS = new HashSet<>(Arrays.asList(
-          "OAK_SIGN",
-          "OAK_WALL_SIGN",
-          "SPRUCE_SIGN",
-          "SPRUCE_WALL_SIGN",
-          "BIRCH_SIGN",
-          "BIRCH_WALL_SIGN",
-          "JUNGLE_SIGN",
-          "JUNGLE_WALL_SIGN",
-          "ACACIA_SIGN",
-          "ACACIA_WALL_SIGN",
-          "DARK_OAK_SIGN",
-          "DARK_OAK_WALL_SIGN"
-        ));
+        SIGN_MATERIALS =  Arrays.stream(Material.values())
+          .filter(m -> m.name().endsWith("_SIGN") && !m.name().contains("LEGACY"))
+          .map(Material::name)
+          .collect(Collectors.toSet());
     }
   }
 

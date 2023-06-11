@@ -35,7 +35,7 @@ import java.util.function.Function;
  * Listener for every world interact like opennin a chest
  */
 public class WorldListener implements Listener {
-  final List<BlockFace> faces = Arrays.asList(BlockFace.UP, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
+  final List<BlockFace> faces = Arrays.asList(BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST);
 
   /**
    * Get attached block to sign
@@ -62,7 +62,7 @@ public class WorldListener implements Listener {
     if (data instanceof Directional) {
       return block.getRelative(((Directional) data).getFacing().getOppositeFace());
     }
-    return block.getRelative(BlockFace.DOWN);
+    return block.getRelative(block.getType().name().contains("HANGING") ? BlockFace.UP : BlockFace.DOWN);
   }
 
   /**
