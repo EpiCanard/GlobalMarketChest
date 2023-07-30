@@ -343,11 +343,13 @@ public class VersionSupportUtils {
       Method asNMSCopy = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack")
           .getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
+      Object item = invokeMethod(nmsItemStack, "getItem");
+      Class<?> entryClass = Class.forName("net.minecraftforge.registries.IForgeRegistryEntry");
 
-      Object registry = getRegistry();
-      Object minecraftKey = call("getMinecraftKey", this, registry, nmsItemStack);
+      Object registry = Class.forName("net.minecraftforge.registries.ForgeRegistries").getDeclaredField("ITEMS").get(null);
+      Object resoureLocation = registry.getClass().getMethod("getKey", entryClass).invoke(registry, item);
 
-      return call("getNamespace", this, minecraftKey) + ":" + call("getKey", this, minecraftKey);
+      return resoureLocation.toString();
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -426,7 +428,7 @@ public class VersionSupportUtils {
       Object chatMessage = newInstance(getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "ChatMessage"), title,
           new Object[] {});
       VersionField activeContainerVF = VersionField.from(entityPlayer).get("activeContainer");
-      Object windowId = activeContainerVF.get("windowId").value();
+      Object windowId = activeContainerVF.get("field_75152_c").value();
 
       Class<?> ichat = getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "IChatBaseComponent");
       Class<?> containers = getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Containers");
