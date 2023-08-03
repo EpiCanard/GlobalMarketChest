@@ -4,6 +4,10 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.shops.Droppable;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
+import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +17,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Listener for each interaction done inside a chest
@@ -63,8 +68,23 @@ public class GUIListener implements Listener {
     if (event.getWhoClicked() instanceof Player) {
       final Player p = (Player) event.getWhoClicked();
       final InventoryGUI inv = GlobalMarketChest.plugin.inventories.getInventory(p.getUniqueId());
-      if (inv != null && inv.inventoryEquals(event.getInventory()))
-        event.setCancelled(true);
+      if (inv != null && inv.inventoryEquals(event.getInventory())){
+
+        Bukkit.getScheduler().runTaskAsynchronously(GlobalMarketChest.plugin, new Runnable() {
+          public void run() {
+            ItemStack[] contents = event.getInventory().getContents();
+            for(int i = 0; i < contents.length; i++) {
+              ItemStack item = contents[i];
+              if(item != null && item.getType() != Material.AIR && !VersionSupportUtils.getInstance().hasNbtTag(item)) {
+
+                event.getInventory().setItem(i, null);
+                p.getInventory().addItem(item);
+              }
+            }
+          }
+        });
+
+      }
     }
   }
 
