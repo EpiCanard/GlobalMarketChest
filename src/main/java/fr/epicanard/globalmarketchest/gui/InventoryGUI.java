@@ -107,13 +107,16 @@ public class InventoryGUI {
    * @param consumer Consumer called when leave the chat
    */
   public void openChat(String path, Consumer<String> consumer) {
-    PlayerUtils.sendMessage(player, "&c暂时不支持该功能");
-    /*this.chatEditing = true;
-    this.close();
-    this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1), true);
-    this.chatConsumer = consumer;
-    this.currentConv = ChatUtils.newConversation(this.player, LangUtils.get(path));
-    this.currentConv.begin();*/
+    if (GlobalMarketChest.plugin.isFolia()) {
+      PlayerUtils.sendMessage(player, "not supported yet");
+    } else {;
+      this.chatEditing = true;
+      this.close();
+      this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1), true);
+      this.chatConsumer = consumer;
+      this.currentConv = ChatUtils.newConversation(this.player, LangUtils.get(path));
+      this.currentConv.begin();
+    }
   }
 
   /**
