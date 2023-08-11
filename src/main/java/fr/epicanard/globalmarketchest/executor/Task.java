@@ -13,22 +13,11 @@ public class Task implements Runnable {
 
     private final Runnable runnable;
 
-    /**
-     * 同步任务
-     *
-     * @return {@link Task}
-     */
     public Task synchronously() {
         this.async = false;
         return this;
     }
 
-    /**
-     * 延迟
-     *
-     * @param mills 毫秒
-     * @return {@link Task}
-     */
     public Task delayed(long mills) {
         this.delayed = mills;
         return this;

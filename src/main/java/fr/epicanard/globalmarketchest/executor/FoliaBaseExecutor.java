@@ -18,9 +18,7 @@ import java.util.function.Consumer;
 
 @NoArgsConstructor
 public class FoliaBaseExecutor implements BaseExecutor {
-    /**
-     * 终止所有任务
-     */
+
     private static boolean terminated = false;
 
     private final AtomicInteger counter = new AtomicInteger(0);
@@ -34,22 +32,11 @@ public class FoliaBaseExecutor implements BaseExecutor {
         return counter.get();
     }
 
-    /**
-     * 新线程
-     *
-     * @param runnable 任务
-     * @return {@link CallableThread}
-     */
     @Override
     public CallableThread newThread(Runnable runnable) {
         return new CallableThread(runnable);
     }
 
-    /**
-     * 新任务
-     *
-     * @param task 运行任务
-     */
     @Override
     public void task(Task task) {
         if (terminated) {
@@ -171,9 +158,6 @@ public class FoliaBaseExecutor implements BaseExecutor {
         }
     }
 
-    /**
-     * 关闭
-     */
     @Override
     public void shutdown() {
         terminated = true;

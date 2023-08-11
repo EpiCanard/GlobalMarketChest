@@ -14,7 +14,7 @@ public class CallableThread extends Thread {
     public void threadName(String name) {
         long id = getId();
         name = name == null ? "" : (" [" + name + "]");
-        setName("Ranmc" + name + " thread" + id);
+        setName("GlobalMarketChest" + name + " thread" + id);
     }
 
     @Override
