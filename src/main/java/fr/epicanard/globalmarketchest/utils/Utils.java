@@ -2,6 +2,9 @@ package fr.epicanard.globalmarketchest.utils;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.configuration.ConfigLoader;
+import fr.epicanard.globalmarketchest.executor.BaseExecutor;
+import fr.epicanard.globalmarketchest.executor.BukkitBaseExecutor;
+import fr.epicanard.globalmarketchest.executor.FoliaBaseExecutor;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -232,6 +235,24 @@ public class Utils {
       signBlock.update();
     }
   }
+
+  public static boolean isFolia() {
+    try {
+      Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+      return true;
+    } catch (ClassNotFoundException ignored) {
+      return false;
+    }
+  }
+
+  public static BaseExecutor getExecutor() {
+    if (isFolia()) {
+      return new FoliaBaseExecutor();
+    } else {
+      return new BukkitBaseExecutor();
+    }
+  }
+
 
   private Utils() {}
 }

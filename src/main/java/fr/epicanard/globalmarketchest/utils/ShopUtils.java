@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.utils;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.executor.Task;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
@@ -199,8 +200,8 @@ public class ShopUtils {
     GlobalMarketChest.plugin.inventories.getInventories().forEach((key, value) -> {
       ShopInfo shop = value.getTransactionValue(TransactionKey.SHOP_INFO);
       if (shop != null && shop.getGroup().equals(shopGroup)) {
-        Bukkit.getScheduler().runTask(GlobalMarketChest.plugin,
-            () -> GlobalMarketChest.plugin.inventories.removeInventory(key));
+        GlobalMarketChest.plugin.getExecutor().task(new Task(() ->
+                GlobalMarketChest.plugin.inventories.removeInventory(key)).synchronously());
         PlayerUtils.sendMessageConfig(Bukkit.getServer().getPlayer(key), "InfoMessages.ShopTemporarilyLocked");
       }
     });

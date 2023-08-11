@@ -1,21 +1,20 @@
 package fr.epicanard.globalmarketchest.gui.shops;
 
-import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.executor.BaseExecutor;
+import fr.epicanard.globalmarketchest.executor.Task;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitTask;
 
 /**
  * Warning class used to make blinking item inside Inventory
  */
 public class Warning {
+  private BaseExecutor executor;
   private Inventory inv;
   private int pos = -1;
-  private BukkitTask task;
   private Boolean bool = false;
   private ItemStack[] warningItems = {null, null};
   private ItemStack old;
@@ -51,15 +50,16 @@ public class Warning {
     this.old = this.inv.getItem(pos);
     this.setWarn(msg, this.warningItems[0]);
     this.warningItems[1] = this.setWarn(msg, this.old.clone());
-    this.task = Bukkit.getScheduler().runTaskTimer(GlobalMarketChest.plugin, this::run, 0, 10);
+    executor = Utils.getExecutor();
+    executor.task(new Task(this::run), 10, 10);
   }
 
   /**
    * Stop the blinking task
    */
   public void stopWarn() {
-    if (this.task != null && !this.task.isCancelled())
-      this.task.cancel();
+    if (this.executor != null)
+      this.executor.shutdown();
     this.bool = false;
     if (this.pos >= 0)
       this.inv.setItem(this.pos, this.old);

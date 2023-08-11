@@ -15,6 +15,7 @@ import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
 import fr.epicanard.globalmarketchest.exceptions.ConfigException;
 import fr.epicanard.globalmarketchest.exceptions.FailedInitException;
 import fr.epicanard.globalmarketchest.exceptions.RequiredPluginException;
+import fr.epicanard.globalmarketchest.executor.BaseExecutor;
 import fr.epicanard.globalmarketchest.gui.CategoryHandler;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoriesHandler;
@@ -25,6 +26,7 @@ import fr.epicanard.globalmarketchest.ranks.RanksLoader;
 import fr.epicanard.globalmarketchest.utils.*;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
@@ -58,6 +60,10 @@ public class GlobalMarketChest extends JavaPlugin {
   private Map<String, PriceLimit> priceLimits;
   @Getter
   private String serverName;
+  @Getter
+  private final boolean folia;
+  @Getter
+  private final BaseExecutor executor;
 
   public GlobalMarketChest() {
     // Initialization of loader
@@ -67,8 +73,9 @@ public class GlobalMarketChest extends JavaPlugin {
     this.shopManager = new ShopManager();
     this.auctionManager = new AuctionManager();
     this.ranksLoader = new RanksLoader();
-
     GlobalMarketChest.plugin = this;
+    folia = Utils.isFolia();
+    executor = Utils.getExecutor();
     Version.initVersion(Utils.getFullVersion());
   }
 
@@ -134,6 +141,7 @@ public class GlobalMarketChest extends JavaPlugin {
 
   @Override
   public void onDisable() {
+    executor.shutdown();
     if (this.sqlConnector != null)
       this.sqlConnector.cleanPool();
     if (this.inventories != null)

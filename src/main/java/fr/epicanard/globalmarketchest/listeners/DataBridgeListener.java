@@ -1,6 +1,7 @@
 package fr.epicanard.globalmarketchest.listeners;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.executor.Task;
 import fr.epicanard.globalmarketchest.listeners.events.MoneyExchangeEvent;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
@@ -36,19 +37,19 @@ public class DataBridgeListener implements Listener {
    * @param price  Price to remove from player account
    */
   private void takeMoney(final UUID player, final Double price) {
-    Bukkit.getScheduler().runTaskAsynchronously(GlobalMarketChest.plugin, new Runnable() {
-      public void run() {
-        final Object economyHandler = getEconomyStorageHandler();
-        if (hasAccount(economyHandler, player)) {
-          final Double balance = getOfflineBalance(economyHandler, player);
-          setOfflineMoney(economyHandler, player, balance - price);
-          if (debugEnabled()) {
-            LoggerUtils.info("Economy Debug - GlobalMarketChest - removing offline money | " + player);
-            LoggerUtils.info("Economy Debug - GlobalMarketChest - data snapshot | offline balance: " + balance + " | remove money: " + price + " | " + player);
-          }
+
+    GlobalMarketChest.plugin.getExecutor().task(new Task(() -> {
+      final Object economyHandler = getEconomyStorageHandler();
+      if (hasAccount(economyHandler, player)) {
+        final Double balance = getOfflineBalance(economyHandler, player);
+        setOfflineMoney(economyHandler, player, balance - price);
+        if (debugEnabled()) {
+          LoggerUtils.info("Economy Debug - GlobalMarketChest - removing offline money | " + player);
+          LoggerUtils.info("Economy Debug - GlobalMarketChest - data snapshot | offline balance: " + balance + " | remove money: " + price + " | " + player);
         }
       }
-    });
+    }));
+
   }
 
   /**
@@ -58,8 +59,7 @@ public class DataBridgeListener implements Listener {
    * @param price  Price to remove from player account
    */
   private void addMoney(final UUID player, final Double price) {
-    Bukkit.getScheduler().runTaskAsynchronously(GlobalMarketChest.plugin, new Runnable() {
-      public void run() {
+    GlobalMarketChest.plugin.getExecutor().task(new Task(() -> {
         final Object economyHandler = getEconomyStorageHandler();
         if (hasAccount(economyHandler, player)) {
           final Double balance = getOfflineBalance(economyHandler, player);
@@ -69,8 +69,7 @@ public class DataBridgeListener implements Listener {
             LoggerUtils.info("Economy Debug - GlobalMarketChest - data snapshot | offline balance: " + balance + " | add money: " + price + " | " + player);
           }
         }
-      }
-    });
+    }));
   }
 
   /* =============================== */
@@ -105,7 +104,7 @@ public class DataBridgeListener implements Listener {
    */
   public static Boolean canBeEnabled(final Plugin dataBridgePlugin) {
     if (dataBridgePlugin == null || dataBridgePlugin.isEnabled()
-        || !ConfigUtils.getBoolean("MultiServer.MysqlPlayerDataBridgeSupport", false)) {
+            || !ConfigUtils.getBoolean("MultiServer.MysqlPlayerDataBridgeSupport", false)) {
       return false;
     }
     if (!DataBridgeListener.shareEconomy(dataBridgePlugin)) {

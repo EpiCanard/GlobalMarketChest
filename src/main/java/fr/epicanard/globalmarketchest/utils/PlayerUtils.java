@@ -2,6 +2,7 @@ package fr.epicanard.globalmarketchest.utils;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
+import fr.epicanard.globalmarketchest.executor.Task;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
@@ -96,7 +97,7 @@ public class PlayerUtils {
   }
 
   public void sendSyncMessage(Player pl, String message) {
-    Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> sendMessage(pl, message));
+    GlobalMarketChest.plugin.getExecutor().task(new Task(() -> sendMessage(pl, message)).synchronously());
   }
 
   /**

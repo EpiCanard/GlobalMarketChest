@@ -9,9 +9,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <spigot.version>1.19.3-R0.1-SNAPSHOT</spigot.version>
+    <maven.compiler.source>20</maven.compiler.source>
+    <maven.compiler.target>20</maven.compiler.target>
     <duckconfig.version>1.2.0</duckconfig.version>
     <lombok.version>1.18.24</lombok.version>
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
@@ -169,11 +168,10 @@
       <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
-    <!--Spigot API -->
     <dependency>
-      <groupId>org.spigotmc</groupId>
-      <artifactId>spigot-api</artifactId>
-      <version>${spigot.version}</version>
+      <groupId>dev.folia</groupId>
+      <artifactId>folia-api</artifactId>
+      <version>1.20.1-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

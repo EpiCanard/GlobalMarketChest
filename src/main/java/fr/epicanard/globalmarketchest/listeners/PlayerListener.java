@@ -2,11 +2,11 @@ package fr.epicanard.globalmarketchest.listeners;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.auctions.StatusAuction;
+import fr.epicanard.globalmarketchest.executor.Task;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,7 +20,8 @@ public class PlayerListener implements Listener {
   public void onPlayerConnect(final PlayerJoinEvent event) {
     if (ConfigUtils.getBoolean("Options.Broadcast.LoginMessage.SoldAuctions", true)
         || ConfigUtils.getBoolean("Options.Broadcast.LoginMessage.ExpiredAuctions", true)) {
-      Bukkit.getScheduler().runTaskLaterAsynchronously(GlobalMarketChest.plugin, () -> broadcastSoldAndExpiredAuctions(event.getPlayer()), 20L);
+      GlobalMarketChest.plugin.getExecutor().task(new Task(() ->
+              broadcastSoldAndExpiredAuctions(event.getPlayer())).delayed(20L));
     }
     if (ConfigUtils.getBoolean("General.CheckUpdate", true) && Permissions.ADMIN_NEWVERSION.isSetOn(event.getPlayer())) {
       GlobalMarketChest.checkNewVersion(event.getPlayer());

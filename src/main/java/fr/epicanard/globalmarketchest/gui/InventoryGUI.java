@@ -8,6 +8,7 @@ import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.ranks.RankProperties;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
+import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.chat.ChatUtils;
 import lombok.Getter;
@@ -106,12 +107,13 @@ public class InventoryGUI {
    * @param consumer Consumer called when leave the chat
    */
   public void openChat(String path, Consumer<String> consumer) {
-    this.chatEditing = true;
+    PlayerUtils.sendMessage(player, "&c暂时不支持该功能");
+    /*this.chatEditing = true;
     this.close();
     this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1), true);
     this.chatConsumer = consumer;
     this.currentConv = ChatUtils.newConversation(this.player, LangUtils.get(path));
-    this.currentConv.begin();
+    this.currentConv.begin();*/
   }
 
   /**
@@ -210,7 +212,8 @@ public class InventoryGUI {
     this.close();
     if (this.chatEditing) {
       this.player.removePotionEffect(PotionEffectType.BLINDNESS);
-      this.currentConv.abandon();
+      if (currentConv != null)
+        this.currentConv.abandon();
     }
   }
 }

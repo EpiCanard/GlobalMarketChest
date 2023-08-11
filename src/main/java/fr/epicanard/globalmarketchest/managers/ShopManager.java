@@ -56,7 +56,8 @@ public class ShopManager extends DatabaseManager {
   /**
    * Get a shop with his ID
    *
-   * @param id id of the shop
+   * @param id id of the shopplugins
+   *
    * @return Return the shop with this id
    */
   public ShopInfo getShop(int id) {

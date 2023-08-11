@@ -2,6 +2,7 @@ name: GlobalMarketChest
 version: ${project.version}
 author: EpiCanard
 api-version: 1.13
+folia-supported: true
 softdepend: [Multiverse-Core, MysqlPlayerDataBridge]
 depend: [Vault]
 description: Shop plugin to create economy between user
