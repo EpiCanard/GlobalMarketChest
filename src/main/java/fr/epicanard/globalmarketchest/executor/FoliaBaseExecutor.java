@@ -94,7 +94,6 @@ public class FoliaBaseExecutor implements BaseExecutor {
         counter.incrementAndGet();
         boolean async = task.isAsync();
         long delayed = task.getDelayed();
-        // 构建任务
         Consumer<ScheduledTask> taskConsumer = scheduledTask -> {
             try {
                 task.run();
@@ -102,7 +101,6 @@ public class FoliaBaseExecutor implements BaseExecutor {
                 counter.decrementAndGet();
             }
         };
-        // 是否为延迟任务
         if (delayed != 0) {
             regionScheduler.runDelayed(GlobalMarketChest.plugin, world, 0, 0, taskConsumer, delayed);
         } else {
@@ -118,7 +116,6 @@ public class FoliaBaseExecutor implements BaseExecutor {
         counter.incrementAndGet();
         boolean async = task.isAsync();
         long delayed = task.getDelayed();
-        // 构建任务
         Consumer<ScheduledTask> taskConsumer = scheduledTask -> {
             try {
                 task.run();
@@ -126,7 +123,6 @@ public class FoliaBaseExecutor implements BaseExecutor {
                 counter.decrementAndGet();
             }
         };
-        // 是否为延迟任务
         if (delayed != 0) {
             regionScheduler.runDelayed(GlobalMarketChest.plugin, chunk.getWorld(), chunk.getX(), chunk.getZ(), taskConsumer, delayed);
         } else {
@@ -150,7 +146,6 @@ public class FoliaBaseExecutor implements BaseExecutor {
                 counter.decrementAndGet();
             }
         };
-        // 是否为延迟任务
         if (delayed != 0) {
             regionScheduler.runDelayed(GlobalMarketChest.plugin, location, taskConsumer, delayed);
         } else {
