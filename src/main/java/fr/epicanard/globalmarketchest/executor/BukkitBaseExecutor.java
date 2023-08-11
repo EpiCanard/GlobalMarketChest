@@ -38,7 +38,6 @@ public class BukkitBaseExecutor implements BaseExecutor {
         counter.incrementAndGet();
         long delayed = task.getDelayed();
         boolean async = task.isAsync();
-        // 构建任务
         BukkitRunnable bukkitRunnable = new BukkitRunnable() {
             @Override
             public void run() {
@@ -49,9 +48,7 @@ public class BukkitBaseExecutor implements BaseExecutor {
                 }
             }
         };
-        // 是否为延迟任务
         if (delayed != 0) {
-            // 是否为异步
             if (async) {
                 bukkitRunnable.runTaskLaterAsynchronously(GlobalMarketChest.plugin, delayed);
             } else {
