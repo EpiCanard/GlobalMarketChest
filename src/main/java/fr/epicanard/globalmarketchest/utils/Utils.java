@@ -233,5 +233,14 @@ public class Utils {
     }
   }
 
+  public static Boolean isFolia() {
+    try {
+      Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+      return true;
+    } catch (ClassNotFoundException e) {
+      return false;
+    }
+  }
+
   private Utils() {}
 }

@@ -6,6 +6,7 @@ softdepend: [Multiverse-Core, MysqlPlayerDataBridge]
 depend: [Vault]
 description: Shop plugin to create economy between user
 main: fr.epicanard.globalmarketchest.GlobalMarketChest
+folia-supported: true
 commands:
   globalmarketchest:
     description: Open or handle GlobalMarketChest interfaces

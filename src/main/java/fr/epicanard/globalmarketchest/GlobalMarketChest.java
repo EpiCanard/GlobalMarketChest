@@ -56,6 +56,7 @@ public class GlobalMarketChest extends JavaPlugin {
   private CategoryHandler catHandler;
   @Getter
   private Map<String, PriceLimit> priceLimits;
+  private final Boolean folia;
 
   public GlobalMarketChest() {
     // Initialization of loader
@@ -65,6 +66,7 @@ public class GlobalMarketChest extends JavaPlugin {
     this.shopManager = new ShopManager();
     this.auctionManager = new AuctionManager();
     this.ranksLoader = new RanksLoader();
+    this.folia = Utils.isFolia();
   }
 
   @Override
@@ -248,5 +250,9 @@ public class GlobalMarketChest extends JavaPlugin {
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
+  }
+
+  public static Boolean isFolia() {
+    return GlobalMarketChest.plugin.folia;
   }
 }

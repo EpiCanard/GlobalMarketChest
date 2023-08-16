@@ -11,7 +11,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <spigot.version>1.19.3-R0.1-SNAPSHOT</spigot.version>
+    <folia.version>1.20.1-R0.1-SNAPSHOT</folia.version>
     <duckconfig.version>1.2.0</duckconfig.version>
     <lombok.version>1.18.20</lombok.version>
   </properties>
@@ -126,8 +126,8 @@
 
   <repositories>
     <repository>
-      <id>spigot-repo</id>
-      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+      <id>papermc</id>
+      <url>https://repo.papermc.io/repository/maven-public/</url>
     </repository>
     <repository>
       <id>jitpack.io</id>
@@ -147,11 +147,11 @@
       <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
-    <!--Spigot API -->
+    <!-- Folia API -->
     <dependency>
-      <groupId>org.spigotmc</groupId>
-      <artifactId>spigot-api</artifactId>
-      <version>${spigot.version}</version>
+      <groupId>dev.folia</groupId>
+      <artifactId>folia-api</artifactId>
+      <version>${folia.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

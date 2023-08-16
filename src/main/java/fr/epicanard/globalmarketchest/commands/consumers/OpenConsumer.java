@@ -28,10 +28,10 @@ public class OpenConsumer implements CommandConsumer {
   /**
    * Method called when consumer is executed
    *
-   * @param node Command node
+   * @param node    Command node
    * @param command Command executed
-   * @param sender Command's executor (player or console)
-   * @param args Arguments of command
+   * @param sender  Command's executor (player or console)
+   * @param args    Arguments of command
    */
   public Boolean accept(CommandNode node, String command, CommandSender sender, String[] args) {
     if (args.length < 1) {
