@@ -5,7 +5,6 @@ import fr.epicanard.globalmarketchest.listeners.events.MoneyExchangeEvent;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.LoggerUtils;
 import lombok.AllArgsConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -36,16 +35,14 @@ public class DataBridgeListener implements Listener {
    * @param price  Price to remove from player account
    */
   private void takeMoney(final UUID player, final Double price) {
-    Bukkit.getScheduler().runTaskAsynchronously(GlobalMarketChest.plugin, new Runnable() {
-      public void run() {
-        final Object economyHandler = getEconomyStorageHandler();
-        if (hasAccount(economyHandler, player)) {
-          final Double balance = getOfflineBalance(economyHandler, player);
-          setOfflineMoney(economyHandler, player, balance - price);
-          if (debugEnabled()) {
-            LoggerUtils.info("Economy Debug - GlobalMarketChest - removing offline money | " + player);
-            LoggerUtils.info("Economy Debug - GlobalMarketChest - data snapshot | offline balance: " + balance + " | remove money: " + price + " | " + player);
-          }
+    GlobalMarketChest.getScheduler().runTaskAsync(() -> {
+      final Object economyHandler = getEconomyStorageHandler();
+      if (hasAccount(economyHandler, player)) {
+        final Double balance = getOfflineBalance(economyHandler, player);
+        setOfflineMoney(economyHandler, player, balance - price);
+        if (debugEnabled()) {
+          LoggerUtils.info("Economy Debug - GlobalMarketChest - removing offline money | " + player);
+          LoggerUtils.info("Economy Debug - GlobalMarketChest - data snapshot | offline balance: " + balance + " | remove money: " + price + " | " + player);
         }
       }
     });
@@ -58,16 +55,14 @@ public class DataBridgeListener implements Listener {
    * @param price  Price to remove from player account
    */
   private void addMoney(final UUID player, final Double price) {
-    Bukkit.getScheduler().runTaskAsynchronously(GlobalMarketChest.plugin, new Runnable() {
-      public void run() {
-        final Object economyHandler = getEconomyStorageHandler();
-        if (hasAccount(economyHandler, player)) {
-          final Double balance = getOfflineBalance(economyHandler, player);
-          setOfflineMoney(economyHandler, player, balance + price);
-          if (debugEnabled()) {
-            LoggerUtils.info("Economy Debug - GlobalMarketChest - adding offline money | " + player);
-            LoggerUtils.info("Economy Debug - GlobalMarketChest - data snapshot | offline balance: " + balance + " | add money: " + price + " | " + player);
-          }
+    GlobalMarketChest.getScheduler().runTaskAsync(() -> {
+      final Object economyHandler = getEconomyStorageHandler();
+      if (hasAccount(economyHandler, player)) {
+        final Double balance = getOfflineBalance(economyHandler, player);
+        setOfflineMoney(economyHandler, player, balance + price);
+        if (debugEnabled()) {
+          LoggerUtils.info("Economy Debug - GlobalMarketChest - adding offline money | " + player);
+          LoggerUtils.info("Economy Debug - GlobalMarketChest - data snapshot | offline balance: " + balance + " | add money: " + price + " | " + player);
         }
       }
     });

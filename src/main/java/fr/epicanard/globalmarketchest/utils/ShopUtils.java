@@ -196,7 +196,7 @@ public class ShopUtils {
     GlobalMarketChest.plugin.inventories.getInventories().forEach((key, value) -> {
       ShopInfo shop = value.getTransactionValue(TransactionKey.SHOP_INFO);
       if (shop != null && shop.getGroup().equals(shopGroup)) {
-        Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> GlobalMarketChest.plugin.inventories.removeInventory(key));
+        GlobalMarketChest.getScheduler().runTask(() -> GlobalMarketChest.plugin.inventories.removeInventory(key));
         PlayerUtils.sendMessageConfig(Bukkit.getServer().getPlayer(key), "InfoMessages.ShopTemporarilyLocked");
       }
     });

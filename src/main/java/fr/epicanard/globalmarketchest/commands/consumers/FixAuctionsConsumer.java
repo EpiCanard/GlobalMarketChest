@@ -8,7 +8,6 @@ import fr.epicanard.globalmarketchest.commands.CommandNode;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.ShopUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ItemStack;
 
@@ -73,7 +72,7 @@ public class FixAuctionsConsumer implements CommandConsumer {
   private void updateAuctions(Boolean all, CommandSender sender) {
     PlayerUtils.sendMessageAndConsole(sender, format("InfoMessages.ConversionMode", "mode", all ? FIX_ALL : FIX_ACTIVE));
 
-    Bukkit.getScheduler().runTaskAsynchronously(GlobalMarketChest.plugin, () -> {
+    GlobalMarketChest.getScheduler().runTaskAsync(() -> {
       GlobalMarketChest.plugin.auctionManager.getAllAuctions(all, auctions -> {
         final Map<String, List<AuctionInfo>> auctionsMap = auctions.stream().collect(Collectors.groupingBy(AuctionInfo::getGroup));
 

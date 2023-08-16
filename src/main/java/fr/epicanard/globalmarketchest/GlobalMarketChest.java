@@ -22,6 +22,9 @@ import fr.epicanard.globalmarketchest.listeners.*;
 import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
 import fr.epicanard.globalmarketchest.ranks.RanksLoader;
+import fr.epicanard.globalmarketchest.schedulers.BaseScheduler;
+import fr.epicanard.globalmarketchest.schedulers.FoliaScheduler;
+import fr.epicanard.globalmarketchest.schedulers.SpigotScheduler;
 import fr.epicanard.globalmarketchest.utils.*;
 import lombok.Getter;
 import org.bstats.bukkit.Metrics;
@@ -57,6 +60,7 @@ public class GlobalMarketChest extends JavaPlugin {
   @Getter
   private Map<String, PriceLimit> priceLimits;
   private final Boolean folia;
+  private final BaseScheduler scheduler;
 
   public GlobalMarketChest() {
     // Initialization of loader
@@ -67,6 +71,12 @@ public class GlobalMarketChest extends JavaPlugin {
     this.auctionManager = new AuctionManager();
     this.ranksLoader = new RanksLoader();
     this.folia = Utils.isFolia();
+
+    if (this.folia) {
+      this.scheduler = new FoliaScheduler();
+    } else {
+      this.scheduler = new SpigotScheduler();
+    }
   }
 
   @Override
@@ -250,6 +260,10 @@ public class GlobalMarketChest extends JavaPlugin {
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
+  }
+
+  public static BaseScheduler getScheduler() {
+    return GlobalMarketChest.plugin.scheduler;
   }
 
   public static Boolean isFolia() {

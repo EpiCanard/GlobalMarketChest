@@ -4,7 +4,6 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.experimental.UtilityClass;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.SkullType;
@@ -96,7 +95,7 @@ public class PlayerUtils {
   }
 
   public void sendSyncMessage(Player pl, String message) {
-    Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> sendMessage(pl, message));
+    GlobalMarketChest.getScheduler().runTask(() -> sendMessage(pl, message));
   }
 
   /**

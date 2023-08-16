@@ -1,13 +1,12 @@
 package fr.epicanard.globalmarketchest.gui.shops;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
+import fr.epicanard.globalmarketchest.schedulers.Task;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitTask;
 
 /**
  * Warning class used to make blinking item inside Inventory
@@ -15,7 +14,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class Warning {
   private Inventory inv;
   private int pos = -1;
-  private BukkitTask task;
+  private Task task;
   private Boolean bool = false;
   private ItemStack[] warningItems = {null, null};
   private ItemStack old;
@@ -51,7 +50,7 @@ public class Warning {
     this.old = this.inv.getItem(pos);
     this.setWarn(msg, this.warningItems[0]);
     this.warningItems[1] = this.setWarn(msg, this.old.clone());
-    this.task = Bukkit.getScheduler().runTaskTimer(GlobalMarketChest.plugin, this::run, 0, 10);
+    this.task = GlobalMarketChest.getScheduler().runTaskTimer(this::run, 10);
   }
 
   /**
