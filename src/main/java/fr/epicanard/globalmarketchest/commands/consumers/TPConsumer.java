@@ -9,6 +9,7 @@ import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -46,7 +47,10 @@ public class TPConsumer implements CommandConsumer {
         return false;
       }
       Location loc = shops.get(0).getSignLocation().clone().add(0.5, 0, 0.5);
-      ((Player) sender).teleport(loc);
+      if (GlobalMarketChest.isFolia())
+        ((Entity) sender).teleportAsync(loc);
+      else
+        ((Player) sender).teleport(loc);
     } catch (NumberFormatException e) {
       return node.invalidCommand(sender, command);
     }
