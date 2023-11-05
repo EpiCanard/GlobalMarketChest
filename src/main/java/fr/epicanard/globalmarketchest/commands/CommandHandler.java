@@ -44,12 +44,19 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
       .setCommand(new OpenConsumer())
       .setTabConsumer(this::shopsPlayerTabComplete));
 
-    // Open - /globalmarketchest open <shop> [player]
+    // Create - /globalmarketchest create <shop>
     final CreateConsumer createConsumer = new CreateConsumer();
     this.command.addSubNode(
       new CommandNode("create", Permissions.CMD_CREATE, true, false)
       .setCommand(createConsumer)
       .setTabConsumer(this::shopsTabComplete));
+
+    // Delete - /globalmarketchest delete <shop> [coord]
+    final DeleteConsumer deleteConsumer = new DeleteConsumer();
+    this.command.addSubNode(
+      new CommandNode("delete", Permissions.CMD_DELETE, true, false)
+      .setCommand(deleteConsumer)
+      .setTabConsumer((sender, args) -> shopLocationTabComplete(sender, args, true)));
 
     // Close - /globalmarketchest close <player>
     this.command.addSubNode(
@@ -71,13 +78,13 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     // List.TP - /globalmarketchest list tp <shop> <position>
     CommandNode tpNode = new CommandNode("tp", Permissions.CMD_LIST_TP, true, true)
       .setCommand(new TPConsumer())
-      .setTabConsumer(this::shopIdTabComplete);
+      .setTabConsumer((sender, args) -> shopLocationTabComplete(sender, args, false));
     listNode.addSubNode(tpNode);
 
     // List.SetTp - /globalmarketchest list settp <shop> <position>
     CommandNode setTpNode = new CommandNode("settp", Permissions.CMD_LIST_SET_TP, true, true)
       .setCommand(new SetTpConsumer())
-      .setTabConsumer(this::shopIdTabComplete);
+      .setTabConsumer((sender, args) -> shopLocationTabComplete(sender, args, false));
     listNode.addSubNode(setTpNode);
 
     // Fix - /globalmarketchest fix
@@ -143,21 +150,18 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
    * @param args Command arguments
    * @return List of shops matching
    */
-  private List<String> shopIdTabComplete(CommandSender sender, String[] args) {
-    if (args.length == 1 || args.length == 2) {
-      final Stream<ShopInfo> shopsStream = GlobalMarketChest.plugin.shopManager.getShops().stream()
-        .filter(ShopInfo::getExists);
-
-      if (args.length == 1) {
-        return shopsStream
-          .filter(shop ->  shop.getGroup().startsWith(args[0]))
-          .map(ShopInfo::getGroup)
-          .collect(Collectors.toList());
-      }
-      return shopsStream
-        .filter(shop -> shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]) && shop.getTpLocation().isPresent())
-        .map(shop -> WorldUtils.getStringFromLocation(shop.getTpLocation().get()))
+  private List<String> shopLocationTabComplete(CommandSender sender, String[] args, Boolean skipExists) {
+    if (args.length == 1) {
+      return GlobalMarketChest.plugin.shopManager.getShops().stream()
+        .filter(shop ->  (skipExists || shop.getExists()) && shop.getGroup().startsWith(args[0]))
+        .map(ShopInfo::getGroup)
         .collect(Collectors.toList());
+    }
+    if (args.length == 2) {
+      return GlobalMarketChest.plugin.shopManager.getShops().stream()
+      .filter(shop -> shop.getExists() && shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]) && shop.getTpLocation().isPresent())
+      .map(shop -> WorldUtils.getStringFromLocation(shop.getTpLocation().get()))
+      .collect(Collectors.toList());
     }
     return new ArrayList<>();
   }
