@@ -61,11 +61,14 @@ permissions:
     children:
       globalmarketchest.admin.commands.open: true
       globalmarketchest.admin.commands.close: true
+      globalmarketchest.admin.commands.delete: true
       globalmarketchest.admin.commands.fix: true
   globalmarketchest.admin.commands.open:
     description: Can open a shop for another player
   globalmarketchest.admin.commands.close:
     description: Can close the shop of a player
+  globalmarketchest.admin.commands.delete:
+    description: Can delete the shop of anyone
   globalmarketchest.admin.commands.fix:
     description: Can use fix command
   # ==== COMMANDS ====
@@ -85,6 +88,8 @@ permissions:
     description: Can open a shop with command
   globalmarketchest.commands.create:
     description: Can create a shop with command
+  globalmarketchest.commands.delete:
+    description: Can delete a shop the player own with command
   globalmarketchest.commands.list.*:
     description: Can list all shops with command
     children:
