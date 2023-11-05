@@ -24,12 +24,14 @@ public enum Permissions {
   CMD_RELOAD("globalmarketchest.commands.reload"),
   CMD_OPEN("globalmarketchest.commands.open"),
   CMD_CREATE("globalmarketchest.commands.create"),
+  CMD_DELETE("globalmarketchest.commands.delete"),
   CMD_LIST("globalmarketchest.commands.list"),
   CMD_LIST_DETAIL("globalmarketchest.commands.list.detail"),
   CMD_LIST_TP("globalmarketchest.commands.list.tp"),
   CMD_LIST_SET_TP("globalmarketchest.commands.list.settp"),
   CMD_ADMIN_OPEN("globalmarketchest.admin.commands.open"),
   CMD_ADMIN_CLOSE("globalmarketchest.admin.commands.close"),
+  CMD_ADMIN_DELETE("globalmarketchest.admin.commands.delete"),
   CMD_ADMIN_FIX("globalmarketchest.admin.commands.fix");
 
   private String perm;

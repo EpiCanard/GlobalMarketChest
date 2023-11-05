@@ -37,6 +37,9 @@ public class HelpConsumer implements CommandConsumer {
       if (Permissions.CMD_LIST_TP.isSetOn(sender, false)) {
         PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.TP");
       }
+      if (Permissions.CMD_LIST_SET_TP.isSetOn(sender, false)) {
+        PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.SetTP");
+      }
     }
     if (Permissions.CMD_ADMIN_OPEN.isSetOn(sender)) {
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.AdminOpen");
@@ -45,6 +48,12 @@ public class HelpConsumer implements CommandConsumer {
     }
     if (Permissions.CMD_ADMIN_CLOSE.isSetOn(sender)) {
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Close");
+    }
+    if (Permissions.CMD_CREATE.isSetOn(sender, false)) {
+      PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Create");
+    }
+    if (Permissions.CMD_DELETE.isSetOn(sender, false)) {
+      PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.Delete");
     }
     if (Permissions.CMD_ADMIN_FIX.isSetOn(sender)) {
       PlayerUtils.sendMessageConfig(sender, "Commands.HelpCommand.FixAuctions");
