@@ -38,13 +38,14 @@ public class SetTpConsumer implements CommandConsumer {
     }
 
     try {
+      Boolean isConsole = !(sender instanceof Player);
       Location argLoc = (args.length > 1) ? WorldUtils.getLocationFromString(args[1], null) : null;
       List<ShopInfo> shops = GlobalMarketChest.plugin.shopManager.getShops().stream()
-        .filter(shop -> shop.getGroup().equals(args[0]) && shop.getExists()
+        .filter(shop -> (isConsole || shop.getOwner().equals(((Player)sender).getUniqueId().toString())) && shop.getGroup().equals(args[0]) && shop.getExists()
             && exists(shop.getTpLocation(), loc -> args.length < 2 || WorldUtils.compareLocations(loc, argLoc)))
         .collect(Collectors.toList());
       if (shops.size() == 0) {
-        PlayerUtils.sendMessage(sender, String.format("%s%s %s", LangUtils.get("ErrorMessages.UnknownShop"), args[0], args[1]));
+        PlayerUtils.sendMessage(sender, String.format("%s%s %s", LangUtils.get("ErrorMessages.UnknownShop"), args[0], (args.length > 1) ? args[1]: ""));
         return false;
       }
       if (shops.size() > 1 && args.length < 2) {
