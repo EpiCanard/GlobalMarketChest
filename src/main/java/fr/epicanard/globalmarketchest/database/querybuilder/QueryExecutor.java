@@ -79,16 +79,16 @@ public class QueryExecutor {
    * Prepare and execute the query
    *
    * @param builder BaseBuilder that contains the query
-   * @param consumer Callback called with the query response
+   * @param onSuccess Callback called with the query response
    */
-  public <T extends BaseBuilder<T>> Boolean execute(final BaseBuilder<T> builder, final SqlConsumer<ResultSet> consumer, final Consumer<SQLException> error) {
+  public <T extends BaseBuilder<T>> Boolean execute(final BaseBuilder<T> builder, final SqlConsumer<ResultSet> onSuccess, final Consumer<SQLException> onError) {
     Connection co = GlobalMarketChest.plugin.getSqlConnector().getConnection();
     Boolean ret = false;
     AtomicReference<ResultSet> res = new AtomicReference<>();
     PreparedStatement prepared = null;
 
     try {
-      prepared = co.prepareStatement(builder.build(), Statement.RETURN_GENERATED_KEYS);
+      prepared = co.prepareStatement(builder.build());
       final PreparedStatement preparedCopy = prepared;
       AtomicInteger atomint = new AtomicInteger(1);
 
@@ -98,12 +98,12 @@ public class QueryExecutor {
 
       ret = builder.execute(prepared, res);
 
-      if (consumer != null && res.get() != null) {
+      if (onSuccess != null && res.get() != null) {
         try {
-          consumer.accept(res.get());
+          onSuccess.accept(res.get());
         } catch (SQLException exception) {
-          if (error != null) {
-            error.accept(exception);
+          if (onError != null) {
+            onError.accept(exception);
           }
         }
 
@@ -120,8 +120,8 @@ public class QueryExecutor {
     return ret;
   }
 
-  public <T extends BaseBuilder<T>> Boolean execute(final BaseBuilder<T> builder, final SqlConsumer<ResultSet> consumer) {
-    return this.execute(builder, consumer, null);
+  public <T extends BaseBuilder<T>> Boolean execute(final BaseBuilder<T> builder, final SqlConsumer<ResultSet> onSuccess) {
+    return this.execute(builder, onSuccess, null);
   }
 
   public <T extends BaseBuilder<T>> Boolean execute(BaseBuilder<T> builder) {
