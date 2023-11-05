@@ -4,23 +4,19 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.database.DatabaseManager;
 import fr.epicanard.globalmarketchest.database.connectors.DatabaseConnector;
 import fr.epicanard.globalmarketchest.database.querybuilder.QueryExecutor;
-import fr.epicanard.globalmarketchest.database.querybuilder.SqlConsumer;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.DeleteBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.InsertBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.SelectBuilder;
 import fr.epicanard.globalmarketchest.database.querybuilder.builders.UpdateBuilder;
 import fr.epicanard.globalmarketchest.exceptions.ShopAlreadyExistException;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
-import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
 import lombok.Getter;
 import org.bukkit.Location;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static fr.epicanard.globalmarketchest.utils.Option.exists;
@@ -42,7 +38,7 @@ public class ShopManager extends DatabaseManager {
   public void loadShops() {
     this.updateShops();
     this.shops = this.shops.stream().map(shop -> {
-      if (shop.getExists() && shop.getTpLocation().isEmpty() && shop.getSignLocation().isPresent()) {
+      if (shop.getExists() && !shop.getTpLocation().isPresent() && shop.getSignLocation().isPresent()) {
         shop.getSignLocation().ifPresent(loc -> {
           Location tp = loc.clone().add(0.5, 0, 0.5);
           updateTpLocation(shop.getId(), tp);
@@ -90,9 +86,8 @@ public class ShopManager extends DatabaseManager {
    * Create a shop inside database and add it in list shops
    *
    * @param shop Info about a shop
-   * @return Return Shop id created
    */
-  public Integer createShop(ShopInfo shop) throws ShopAlreadyExistException {
+  public void createShop(ShopInfo shop) throws ShopAlreadyExistException {
     Boolean shopAlreadyExists = checkAlreadyExist(shop.getSignLocation(), true) || checkAlreadyExist(shop.getOtherLocation(), false);
 
     if (shopAlreadyExists)
@@ -107,13 +102,8 @@ public class ShopManager extends DatabaseManager {
         .addValue("group", shop.getGroup())
         .addValue("server", shop.getServer());
 
-    final AtomicInteger id = new AtomicInteger(-1);
-    final SqlConsumer<ResultSet> cs = res -> {
-      id.set(DatabaseUtils.getId(res));
-    };
-    if (QueryExecutor.of().execute(builder, cs))
+    if (QueryExecutor.of().execute(builder))
       this.updateShops();
-    return id.get();
   }
 
   /**
