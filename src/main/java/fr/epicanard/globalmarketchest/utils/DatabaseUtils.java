@@ -6,7 +6,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -124,23 +123,6 @@ public class DatabaseUtils {
     if (ago)
       return formatString(getOrElse("Divers.PastDate", "{date}"), singletonMap("date", sb.toString()));
     return sb.toString();
-  }
-
-  /**
-   * Get an id from resultSet
-   *
-   * @param res ResultSet
-   * @return Return the id or -1
-   */
-  public static Integer getId(ResultSet res) {
-    Integer id = -1;
-    try {
-      res.next();
-      id = res.getInt(1);
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return id;
   }
 
   /**
