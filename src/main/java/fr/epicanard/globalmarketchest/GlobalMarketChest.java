@@ -57,6 +57,8 @@ public class GlobalMarketChest extends JavaPlugin {
   @Getter
   private Map<String, PriceLimit> priceLimits;
   @Getter
+  private Double tax;
+  @Getter
   private String serverName;
 
   public GlobalMarketChest() {
@@ -107,6 +109,14 @@ public class GlobalMarketChest extends JavaPlugin {
     this.shopManager.loadShops();
 
     this.priceLimits = this.configLoader.loadPriceLimitConfig();
+
+    Double taxMultiplier = ConfigUtils.getDouble("Options.Tax", 0);
+    if (taxMultiplier < 0 || taxMultiplier > 100) {
+      LoggerUtils.warn(String.format("Options.Tax must be between 0 and 100. Actual value: %f", taxMultiplier));
+      this.disable();
+      return;
+    }
+    this.tax = taxMultiplier;
 
     getCommand("GlobalMarketChest").setExecutor(new CommandHandler());
 

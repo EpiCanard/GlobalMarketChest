@@ -45,7 +45,7 @@ public class AuctionViewList extends AuctionViewBase {
               int max = inv.getInv().getMaxStackSize();
               if (this.level.getNextLevel(this.category) == null) {
                 it.setAmount(auction.getRight().getAmount() > max ? max : auction.getRight().getAmount());
-                ItemStackUtils.addItemStackLore(it, auction.getRight().getLore(AuctionLoreConfig.TOSELL));
+                ItemStackUtils.addItemStackLore(it, auction.getRight().getLore(AuctionLoreConfig.TOSELL, this.inv.getPlayer()));
               }
               return it;
             }));
