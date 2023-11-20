@@ -38,6 +38,8 @@ Divers:
   Quantity: "数量"
   UnitPrice: "单价"
   TotalPrice: "总价"
+  Tax: "Tax"
+  PriceWithoutTax: "Price without tax"
   AuctionNumber: "拍卖编号"
   Seller: "卖家"
   Buyer: "买家"
@@ -240,6 +242,7 @@ InfoMessages:
   ShopDeleted: "商店已经移除..."
   AcquireAuction: "&c[&e&l养老商城&c]&3{buyer} &6购买了 &2{quantity}个 {itemName} &6价格: &2{price}&6 卖家: &3{seller}&6."
   AcquireAuctionOwner: "&c[&e&l养老商城&c]&3{buyer} &6成功购买你的物品 &2{quantity}个 {itemName} &6价格: &2{price}&6."
+  AcquireAuctionOwnerTax: "&3{buyer} &6bought your auction &2{quantity} {itemName} &6for &2{priceWithoutTax} ({price} - {tax} in taxes)&6."
   AuctionCreated: "&3{seller} &6创建了 &3{auctionNumber}&6 号拍卖 &2数量:{quantity} 物品名称:{itemName} &6价格: &2{price}&6."
   LoginMessage:
     BaseMessage: "&6自从你上次上线以来 :"

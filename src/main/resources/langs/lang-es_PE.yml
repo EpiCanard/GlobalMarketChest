@@ -38,6 +38,8 @@ Divers:
   Quantity: "Cantidad"
   UnitPrice: "PrecioxUnidad"
   TotalPrice: "PrecioTotal"
+  Tax: "Tax"
+  PriceWithoutTax: "Price without tax"
   AuctionNumber: "Número de subasta"
   Seller: "Vendedor"
   Buyer: "Comprador"
@@ -240,6 +242,7 @@ InfoMessages:
   ShopDeleted: "Tienda eliminada correctamente"
   AcquireAuction: "&3{buyer} &6compró &2{itemName}|{quantity} &6por &2{price}&6 a &3{seller}&6."
   AcquireAuctionOwner: "&3{buyer} &6compró tu subasta &2{itemName} | {quantity}  &6por &2{price}&6."
+  AcquireAuctionOwnerTax: "&3{buyer} &6bought your auction &2{quantity} {itemName} &6for &2{priceWithoutTax} ({price} - {tax} in taxes)&6."
   AuctionCreated: "&3{seller} &6creó &3{auctionNumber}&6 subastas de &2{itemName} | {quantity} &6por &2{price}&6."
   LoginMessage:
     BaseMessage: "&6Desde tu última conexión:"

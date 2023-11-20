@@ -40,7 +40,9 @@ public class EditAuction extends UndoAuction {
   public void load() {
     super.load();
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
-    this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(AuctionLoreConfig.OWN)));
+    this.setIcon(ItemStackUtils.addItemStackLore(
+        DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(AuctionLoreConfig.OWN, this.inv.getPlayer())
+    ));
   }
 
   /**
