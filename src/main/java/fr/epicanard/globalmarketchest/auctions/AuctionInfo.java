@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public class AuctionInfo {
    *
    * @return Final total price after tax
    */
-  public Double getTaxedPrice() {
+  public Double getPriceWithoutTax() {
     return BigDecimal.valueOf(getTotalPrice()).subtract(BigDecimal.valueOf(getTaxAmount())).doubleValue();
   }
 
@@ -101,11 +102,10 @@ public class AuctionInfo {
    */
   public Double getTaxAmount() {
     //Check if the tax is a valid multiplier or bad things may happen if configured outside the propper bounds
-    double taxMultiplier = ConfigUtils.getDouble("Options.ServerTax", 0);
-    if (taxMultiplier < 0 || taxMultiplier > 1) {
-      taxMultiplier = 0.0;
-    }
-    return BigDecimal.valueOf(getTotalPrice()).multiply(BigDecimal.valueOf(taxMultiplier)).doubleValue();
+    return BigDecimal.valueOf(getTotalPrice())
+      .multiply(BigDecimal.valueOf(GlobalMarketChest.plugin.getTax()))
+      .divide(BigDecimal.valueOf(100))
+      .doubleValue();
   }
 
   /**
@@ -145,10 +145,11 @@ public class AuctionInfo {
    * Build and return lore for current auction
    *
    * @param config Config used to define which infos must be displayed
+   * @param player Current player
    * @return the lore
    */
-  public List<String> getLore(final AuctionLoreConfig config) {
-    final List<String> lore = this.buildBaseLore(config);
+  public List<String> getLore(final AuctionLoreConfig config, final Player player) {
+    final List<String> lore = this.buildBaseLore(config, player);
     lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(this.itemStack));
     return lore;
   }
@@ -159,8 +160,8 @@ public class AuctionInfo {
    * @param config Config used to define which infos must be displayed
    * @return the lore
    */
-  public List<String> getLore(final AuctionLoreConfig config, final PriceLimit priceLimit) {
-    final List<String> lore = this.buildBaseLore(config);
+  public List<String> getLore(final AuctionLoreConfig config, final Player player, final PriceLimit priceLimit) {
+    final List<String> lore = this.buildBaseLore(config, player);
     if (priceLimit != null) {
       if (priceLimit.Min > 0) {
         this.addLore(lore, "MinPrice", "&6", format(priceLimit.Min));
@@ -179,10 +180,9 @@ public class AuctionInfo {
    * @param config Config used to define which infos must be displayed
    * @return the lore
    */
-  private List<String> buildBaseLore(final AuctionLoreConfig config) {
+  private List<String> buildBaseLore(final AuctionLoreConfig config, final Player player) {
     final List<String> lore = new ArrayList<>();
 
-    double totalPrice = BigDecimal.valueOf(this.price).multiply(BigDecimal.valueOf(this.amount)).doubleValue();
     if (config.frame())
       lore.add("&6--------------");
     if (config.state())
@@ -191,8 +191,13 @@ public class AuctionInfo {
       this.addLore(lore, "Quantity", "&6", this.amount.toString());
     if (config.unitPrice())
       this.addLore(lore, "UnitPrice", "&c", this.checkPrice(this.price));
-    if (config.totalPrice())
-      this.addLore(lore, "TotalPrice", "&c", this.checkPrice(totalPrice));
+    if (config.totalPrice()) {
+      this.addLore(lore, "TotalPrice", "&c", this.checkPrice(this.getTotalPrice()));
+    }
+    if (config.tax() && GlobalMarketChest.plugin.getTax() > 0.0 && this.playerStarter.equals(player.getUniqueId().toString())) {
+      this.addLore(lore, "Tax", "&c", new DecimalFormat().format(GlobalMarketChest.plugin.getTax()) + "%");
+      this.addLore(lore, "PriceWithoutTax", "&c", this.checkPrice(this.getPriceWithoutTax()));
+    }
     if (config.starter() && !ConfigUtils.getBoolean("Options.Anonymous.Seller", false))
       this.addLore(lore, "Seller", "&9", PlayerUtils.getPlayerName(this.playerStarter));
     if (config.ender() && !ConfigUtils.getBoolean("Options.Anonymous.Buyer", false))

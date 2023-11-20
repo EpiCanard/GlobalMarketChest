@@ -80,6 +80,8 @@ Options:
     Analyze: "all"
     # Define the number of days to analyze for advice price on choice price view and list view
     Days: 30
+  # Tax (decimal, between 0 and 100) to be withheld after someone makes a purchase. Use 0.0 to disable.
+  Tax: 0.0
   # Config about shulker box
   ShulkerBox:
     # Allow to see the content of a shulker box when a player want to buy it

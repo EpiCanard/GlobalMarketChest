@@ -1,15 +1,19 @@
 package fr.epicanard.globalmarketchest.auctions;
 
 public enum AuctionLoreConfig {
-  ALL         ((short) 0b11111111101),
-  TOSELL      ((short) 0b01111010101),
-  OWN         ((short) 0b11110010101),
-  SOLD        ((short) 0b11110111001),
-  BOUGHT      ((short) 0b11111011001),
-  BOUGHT_SOON ((short) 0b01111111001),
-  OWNENDED    ((short) 0b11110011011),
-  SELECTPRICE ((short) 0b01110000000)
+  ALL         ((short) 0b111111111101),
+  TOSELL      ((short) 0b101111010101),
+  OWN         ((short) 0b111110010101),
+  SOLD        ((short) 0b111110111001),
+  BOUGHT      ((short) 0b011111011001),
+  BOUGHT_SOON ((short) 0b101111111001),
+  OWNENDED    ((short) 0b111110011011),
+  SELECTPRICE ((short) 0b101110000000)
   ;
+
+  public Boolean tax() {
+    return (this.value & 2048) != 0;
+  }
 
   public Boolean state() {
     return (this.value & 1024) != 0;

@@ -80,7 +80,7 @@ public abstract class BaseAuctionGlobalView extends DefaultFooter {
           if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
             this.current.auctions = auctions;
           pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-            ItemStackUtils.addItemStackLore(itemstack, auction.getLore(this.current.config));
+            ItemStackUtils.addItemStackLore(itemstack, auction.getLore(this.current.config, this.inv.getPlayer()));
           }));
         });
   }
