@@ -39,7 +39,7 @@ public class ShulkerBoxContent extends DefaultFooter {
       ));
     }
     final AuctionLoreConfig loreConfig = this.inv.getTransactionValue(TransactionKey.AUCTION_LORE_CONFIG);
-    this.setIcon(ItemStackUtils.addItemStackLore(item, auction.getLore(loreConfig)));
+    this.setIcon(ItemStackUtils.addItemStackLore(item, auction.getLore(loreConfig, this.inv.getPlayer())));
   }
 
   /**

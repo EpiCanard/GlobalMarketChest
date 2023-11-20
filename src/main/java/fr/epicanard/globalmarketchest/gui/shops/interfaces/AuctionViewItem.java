@@ -26,7 +26,7 @@ public class AuctionViewItem extends AuctionViewBase {
             if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
               this.auctions = auctions;
             pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(AuctionLoreConfig.TOSELL));
+              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(AuctionLoreConfig.TOSELL, this.inv.getPlayer()));
             }));
           });
     });

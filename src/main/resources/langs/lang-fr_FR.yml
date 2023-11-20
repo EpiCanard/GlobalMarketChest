@@ -38,6 +38,8 @@ Divers:
   Quantity: "Quantité"
   UnitPrice: "Prix unitaire"
   TotalPrice: "Prix total"
+  Tax: "Taxe"
+  PriceWithoutTax: "Prix hors taxe"
   AuctionNumber: "Nombre d'enchères"
   Seller: "Vendeur"
   Buyer: "Acheteur"
@@ -241,6 +243,7 @@ InfoMessages:
   ShopDeleted: "Shop supprimé avec succès"
   AcquireAuction: "&3{buyer} &6a acheté &2{quantity} {itemName} &6pour &2{price}&6 à &3{seller}&6."
   AcquireAuctionOwner: "&3{buyer} &6a acheté votre enchère &2{quantity} {itemName} &6pour &2{price}&6."
+  AcquireAuctionOwnerTax: "&3{buyer} &6a acheté votre enchère &2{quantity} {itemName} &6pour &2{priceWithoutTax} ({price} - {tax} de taxes)&6."
   AuctionCreated: "&3{seller} &6a créé &3{auctionNumber}&6 enchères de &2{quantity} {itemName} &6pour &2{price}&6."
   LoginMessage:
     BaseMessage: "&6Depuis votre dernière connexion :"
