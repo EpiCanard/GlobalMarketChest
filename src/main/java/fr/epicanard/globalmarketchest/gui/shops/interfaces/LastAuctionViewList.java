@@ -32,7 +32,7 @@ public class LastAuctionViewList extends AuctionViewBase {
             if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
               this.auctions = auctions;
             pag.setItemStacks(DatabaseUtils.toItemStacks(auctions, (itemstack, auction) -> {
-              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(this.mode.loreConfig));
+              ItemStackUtils.addItemStackLore(itemstack, auction.getLore(this.mode.loreConfig, this.inv.getPlayer()));
             }));
           }
       );
