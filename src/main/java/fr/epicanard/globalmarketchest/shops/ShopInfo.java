@@ -113,7 +113,7 @@ public class ShopInfo {
    * Return sign location or other location if sign location is missing
    */
   public Optional<Location> getLocation() {
-    return this.signLocation.or(() -> this.otherLocation);
+    return this.signLocation.isPresent() ? this.signLocation : this.otherLocation;
   }
 
   /**
@@ -141,6 +141,6 @@ public class ShopInfo {
    * Return sign location or other location if sign location is missing formatted
    */
   public String getRawLocation() {
-    return this.signLocation.or(() -> this.otherLocation).map(WorldUtils::getStringFromLocation).orElse("");
+    return this.getLocation().map(WorldUtils::getStringFromLocation).orElse("");
   }
 }
