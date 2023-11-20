@@ -22,8 +22,8 @@ public class ShopInfo {
   private int id;
   @Getter
   private String owner;
-  @Getter
-  private int type;
+  @Getter @Setter
+  private ShopType type;
   @Getter
   private Optional<Location> signLocation;
   @Getter @Setter
@@ -47,7 +47,7 @@ public class ShopInfo {
       this.signLocation = Optional.ofNullable(res.getString("signLocation")).map(WorldUtils::getLocationFromString);
       this.otherLocation = Optional.ofNullable(res.getString("otherLocation")).map(WorldUtils::getLocationFromString);
       this.tpLocation = Optional.ofNullable(res.getString("tpLocation")).map(WorldUtils::getLocationFromString);
-      this.type = res.getInt("type");
+      this.type = ShopType.fromId(res.getInt("type"));
       this.group = res.getString("group");
       this.server = res.getString("server");
     } catch (SQLException e) {
@@ -55,7 +55,7 @@ public class ShopInfo {
     }
   }
 
-  public ShopInfo(int id, String owner, int type, Location sign, Location other, Location tp, String group) {
+  public ShopInfo(int id, String owner, ShopType type, Location sign, Location other, Location tp, String group) {
     this.id = id;
     this.owner = owner;
     this.type = type;
@@ -98,15 +98,6 @@ public class ShopInfo {
    */
   public void removeMetadata(Location loc) {
     loc.getBlock().removeMetadata(ShopUtils.META_KEY, GlobalMarketChest.plugin);
-  }
-
-  /**
-   * Toggle the type in parameter to the shop mask type
-   *
-   * @param type Type to toggle
-   */
-  public void toggleType(ShopType type) {
-    this.type = type.toggle(this.type);
   }
 
   /**

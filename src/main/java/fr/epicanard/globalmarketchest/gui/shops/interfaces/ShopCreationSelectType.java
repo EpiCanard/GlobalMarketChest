@@ -26,9 +26,6 @@ public class ShopCreationSelectType extends ShopCreationInterface {
 
   public ShopCreationSelectType(InventoryGUI inv) {
     super(inv);
-    // this.actions.put(11, i -> this.toggleShop(11, ShopType.GLOBALSHOP));
-    // this.actions.put(13, i -> this.toggleShop(13, ShopType.AUCTIONSHOP));
-    // this.actions.put(15, i -> this.toggleShop(15, ShopType.ADMINSHOP));
     this.actions.put(53, new NextInterface(InterfaceType.SHOP_CREATION_LINK, this::checkCreation));
     if (this.paginator != null) {
       this.paginator.setLoadConsumer(this::loadNearBlock);
@@ -40,26 +37,10 @@ public class ShopCreationSelectType extends ShopCreationInterface {
    * Set or unset glow on item below specific position (if type is set on mask or not)
    *
    * @param pos   Position of the item
-   * @param mask  shop mask
    * @param type  Type of shop
    */
-  private void setGlow(int pos, int mask, ShopType type) {
-    ItemUtils.setGlow(this.inv.getInv(), pos + 9, type.isSetOn(mask));
-  }
-
-  /**
-   * Toggle the ShopType in the specific shop
-   *
-   * @param pos   Position in the inventory of the type
-   * @param type  Type to toggle
-   */
-  private void toggleShop(int pos, ShopType type) {
-    final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
-    shop.toggleType(type);
-
-    this.setGlow(pos, shop.getType(), type);
-    this.updateName();
-    this.inv.getWarn().stopWarn();
+  private void setGlow(int pos,  ShopType type) {
+    ItemUtils.setGlow(this.inv.getInv(), pos + 9, true);
   }
 
   /**
@@ -115,7 +96,7 @@ public class ShopCreationSelectType extends ShopCreationInterface {
   private Boolean checkCreation() {
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
-    if (shop != null && shop.getType() > 0) {
+    if (shop != null) {
       this.inv.getWarn().stopWarn();
       return true;
     }
@@ -130,10 +111,6 @@ public class ShopCreationSelectType extends ShopCreationInterface {
   public void load() {
     super.load();
 
-    ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
-    this.setGlow(13, shop.getType(), ShopType.GLOBALSHOP);
-    // this.setGlow(11, shop.getType(), ShopType.GLOBALSHOP);
-    // this.setGlow(13, shop.getType(), ShopType.AUCTIONSHOP);
-    // this.setGlow(15, shop.getType(), ShopType.ADMINSHOP);
+    this.setGlow(13, ShopType.GLOBALSHOP);
   }
 }

@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.shops;
 
+
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
 
@@ -8,57 +9,16 @@ import fr.epicanard.globalmarketchest.utils.Utils;
  */
 public enum ShopType {
   GLOBALSHOP(1, "GlobalShop"),
-  AUCTIONSHOP(2, "AuctionShop"),
-  ADMINSHOP(4, "AdminShop"),
-  LOCALSHOP(8, "LocalShop")
-  ;
+  ADMINSHOP(2, "AdminShop");
+  // AUCTIONSHOP(3, "AuctionShop"),
+  // LOCALSHOP(4, "LocalShop")
 
-  private int shopMask;
+  private int shopId;
   private String confName;
 
   ShopType(int id, String confName) {
-    this.shopMask = id;
+    this.shopId = id;
     this.confName = confName;
-  }
-
-  /**
-   * Define if this ShopType is set on this mask
-   *
-   * @param types the mask
-   * @return
-   */
-  public Boolean isSetOn(int types) {
-    return (types & this.shopMask) == this.shopMask;
-  }
-
-  /**
-   * Add this ShopType to the mask
-   *
-   * @param types the mask
-   * @return the mask
-   */
-  public int setOn(int types) {
-    return types | this.shopMask;
-  }
-
-  /**
-   * Remove this ShopType from the mask
-   *
-   * @param type the mask
-   * @return the mask
-   */
-  public int unsetOn(int types) {
-    return types & ~this.shopMask;
-  }
-
-  /**
-   * Toggle this ShopType from the mask
-   *
-   * @param type the mask
-   * @return the mask
-   */
-  public int toggle(int types) {
-    return (this.isSetOn(types)) ? this.unsetOn(types) : this.setOn(types);
   }
 
   /**
@@ -88,5 +48,13 @@ public enum ShopType {
    */
   public String getErrorDisplayName() {
     return Utils.toColor(ConfigUtils.getString("Sign.Appearance.NotWorkingShopDisplayName"));
+  }
+
+  public static ShopType fromId(int id) {
+    for (ShopType type : ShopType.values()) {
+      if (type.shopId == id)
+        return type;
+    }
+    return ShopType.GLOBALSHOP;
   }
 }

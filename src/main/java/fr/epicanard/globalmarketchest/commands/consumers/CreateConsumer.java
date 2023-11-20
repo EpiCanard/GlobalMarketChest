@@ -74,7 +74,7 @@ public class CreateConsumer implements CommandConsumer {
     final ShopInfo shop = new ShopInfo(
         -1,
         player.getUniqueId().toString(),
-        shopType.setOn(0),
+        shopType,
         null,
         null,
         player.getLocation(),

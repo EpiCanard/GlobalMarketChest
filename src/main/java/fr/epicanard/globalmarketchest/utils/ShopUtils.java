@@ -117,11 +117,9 @@ public class ShopUtils {
   private String generateShopType(ShopInfo shop) {
     String ret = "";
 
-    if (ShopType.GLOBALSHOP.isSetOn(shop.getType()))
+    if (ShopType.GLOBALSHOP.equals(shop.getType()))
       ret += "&9G";
-    if (ShopType.AUCTIONSHOP.isSetOn(shop.getType()))
-      ret += "&bA";
-    if (ShopType.ADMINSHOP.isSetOn(shop.getType()))
+    if (ShopType.ADMINSHOP.equals(shop.getType()))
       ret += "&cD";
     return ret;
   }
