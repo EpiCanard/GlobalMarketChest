@@ -55,7 +55,9 @@ public class BuyAuction extends UndoAuction {
   public void load() {
     super.load();
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
-    this.setIcon(ItemStackUtils.addItemStackLore(DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(AuctionLoreConfig.TOSELL)));
+    this.setIcon(ItemStackUtils.addItemStackLore(
+        DatabaseUtils.deserialize(auction.getItemMeta()), auction.getLore(AuctionLoreConfig.TOSELL, this.inv.getPlayer())
+    ));
   }
 
   @Override
@@ -89,7 +91,12 @@ public class BuyAuction extends UndoAuction {
       if (!GlobalMarketChest.plugin.auctionManager.buyAuction(auction.getId(), i.getPlayer()))
         throw new WarnException("CantBuyAuction");
 
-      final MoneyExchangeEvent event = new MoneyExchangeEvent(i.getPlayer().getUniqueId(), playerStarter, auction.getTotalPrice(), auction.getTaxedPrice());
+      final MoneyExchangeEvent event = new MoneyExchangeEvent(
+          i.getPlayer().getUniqueId(),
+          playerStarter,
+          auction.getTotalPrice(),
+          auction.getPriceWithoutTax()
+      );
       Bukkit.getServer().getPluginManager().callEvent(event);
 
       i.getPlayer().getInventory().addItem(ItemStackUtils.splitStack(item, auction.getAmount()));
@@ -111,18 +118,20 @@ public class BuyAuction extends UndoAuction {
    * @param item    ItemStack bought
    */
   private String formatMessage(Boolean isOwner, AuctionInfo auction, Player buyer, ItemStack item) {
-    final String langVariable = (isOwner) ? "InfoMessages.AcquireAuctionOwner" : "InfoMessages.AcquireAuction";
-    final Map<String, Object> mapping = ImmutableMap.<String, Object>builder()
-            .put("buyer", anonymousPlayer("Buyer").orElseGet(() -> buyer.getName()))
-            .put("quantity", auction.getAmount())
-            .put("itemName", ItemStackUtils.getItemStackDisplayName(item))
-            .put("price", EconomyUtils.format(auction.getTotalPrice()))
-            .put("finalPrice", EconomyUtils.format(auction.getTaxedPrice()))
-            .put("seller", anonymousPlayer("Seller").orElseGet(() -> PlayerUtils.getPlayerName(auction.getPlayerStarter())))
-            .put("tax", auction.getTaxAmount())
-            .build();
+    final String ownerLang = (GlobalMarketChest.plugin.getTax() > 0) ? "InfoMessages.AcquireAuctionOwnerTax" : "InfoMessages.AcquireAuctionOwner";
+    final String langPath = (isOwner) ? ownerLang : "InfoMessages.AcquireAuction";
 
-    return LangUtils.format(langVariable, mapping);
+    final Map<String, Object> mapping = ImmutableMap.<String, Object>builder()
+      .put("buyer", anonymousPlayer("Buyer").orElseGet(() -> buyer.getName()))
+      .put("quantity", auction.getAmount())
+      .put("itemName", ItemStackUtils.getItemStackDisplayName(item))
+      .put("price", EconomyUtils.format(auction.getTotalPrice()))
+      .put("priceWithoutTax", EconomyUtils.format(auction.getPriceWithoutTax()))
+      .put("seller", anonymousPlayer("Seller").orElseGet(() -> PlayerUtils.getPlayerName(auction.getPlayerStarter())))
+      .put("tax", EconomyUtils.format(auction.getTaxAmount()))
+      .build();
+
+    return LangUtils.format(langPath, mapping);
   }
 
   private Optional<String> anonymousPlayer(String opt) {

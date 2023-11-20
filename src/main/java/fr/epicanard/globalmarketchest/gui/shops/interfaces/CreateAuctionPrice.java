@@ -128,7 +128,7 @@ public class CreateAuctionPrice extends ShopInterface {
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     final Integer auctionNumber = this.inv.getTransactionValue(TransactionKey.AUCTION_NUMBER);
 
-    final List<String> lore = auction.getLore(AuctionLoreConfig.SELECTPRICE, this.itemPriceLimit);
+    final List<String> lore = auction.getLore(AuctionLoreConfig.SELECTPRICE, this.inv.getPlayer(), this.itemPriceLimit);
     if (auctionNumber > 1)
       lore.set(0, String.format("%s &ax&9%s", lore.get(0), auctionNumber));
     return lore;
