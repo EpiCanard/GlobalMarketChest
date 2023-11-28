@@ -20,7 +20,7 @@ public class InterfaceConfig {
   private ItemStack background;
   private ItemStack[] itemStacks = new ItemStack[54];
   private PaginatorConfig paginator;
-  private List<TogglerConfig> togglers = new ArrayList<>();
+  private Map<Integer, TogglerConfig> togglers = new HashMap<>();
 
   InterfaceConfig(ConfigurationSection config, String interfaceName, List<InterfaceConfig> baseInterfaces) {
     this.loadBackground(config, interfaceName, baseInterfaces);
@@ -86,20 +86,20 @@ public class InterfaceConfig {
    */
   private void loadTogglers(ConfigurationSection config, String name, List<InterfaceConfig> baseInterfaces) {
     this.togglers = baseInterfaces.stream().map(InterfaceConfig::getTogglers)
-        .reduce(new ArrayList<>(), (acc, value) -> {
-          value.forEach(toggler -> acc.add(new TogglerConfig(toggler)));
+        .reduce(new HashMap<>(), (acc, value) -> {
+          value.forEach((pos, toggler) -> acc.put(pos, new TogglerConfig(toggler)));
           return acc;
         });
 
-    List<Map<?, ?>> togglers = config.getMapList(name + ".Togglers");
+    ConfigurationSection sec = config.getConfigurationSection(name + ".Togglers");
 
-    if (togglers.isEmpty())
+    if (sec == null)
       return;
 
-    for (Map<?, ?> toggler : togglers) {
-      TogglerConfig conf = new TogglerConfig(toggler);
-      this.togglers.removeIf(e -> e.getPosition() == conf.getPosition());
-      this.togglers.add(conf);
+    for (String key : sec.getKeys(false)) {
+      Integer pos = Integer.parseInt(key);
+      TogglerConfig conf = new TogglerConfig(pos, sec.getConfigurationSection(key));
+      this.togglers.put(pos, conf);
     }
   }
 
@@ -160,7 +160,7 @@ public class InterfaceConfig {
         this.itemStacks[i] = this.background;
     }
 
-    this.togglers.forEach(toggler -> {
+    this.togglers.values().forEach(toggler -> {
       if (toggler.getUnsetItem() == null)
         toggler.setUnsetItem(this.background);
     });

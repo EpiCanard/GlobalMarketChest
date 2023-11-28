@@ -25,13 +25,6 @@ public abstract class Toggler {
     this.pos = config.getPosition();
   }
 
-  public Toggler(Inventory inv, int pos, ItemStack setItem, ItemStack unsetItem) {
-    this.inv = inv;
-    this.pos = pos;
-    this.setItem = setItem;
-    this.unsetItem = unsetItem;
-  }
-
   /**
    * Load the toggler, Set or unset the element
    */

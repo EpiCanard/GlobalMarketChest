@@ -68,7 +68,7 @@ public class InterfacesLoader {
    * @param interfaceName Name of the interface
    * @return Togglers of interface sent in param
    */
-  public Optional<List<TogglerConfig>> getTogglers(final String interfaceName) {
+  public Optional<Map<Integer, TogglerConfig>> getTogglers(final String interfaceName) {
     return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getTogglers);
   }
 

@@ -15,18 +15,6 @@ public class CircleToggler extends Toggler {
     ItemStackUtils.setItemStackMeta(this.unsetItem, null, null);
   }
 
-  public CircleToggler(Inventory inv, Integer pos, ItemStack setItem, ItemStack unsetItem) {
-    super(inv, pos, setItem, unsetItem);
-    ItemStackUtils.setItemStackMeta(this.setItem, null, null);
-    ItemStackUtils.setItemStackMeta(this.unsetItem, null, null);
-  }
-
-  public CircleToggler(Inventory inv, Integer pos) {
-    super(inv, pos, ItemStackUtils.getItemStackFromConfig("Interfaces.Circle.SetItem"), ItemStackUtils.getItemStackFromConfig("Interfaces.Circle.UnsetItem"));
-    ItemStackUtils.setItemStackMeta(this.setItem, null, null);
-    ItemStackUtils.setItemStackMeta(this.unsetItem, null, null);
-  }
-
   /**
    * Get items with their position to use in interface
    *

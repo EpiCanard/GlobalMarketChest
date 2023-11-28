@@ -3,10 +3,10 @@ package fr.epicanard.globalmarketchest.gui.shops.toggler;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
+
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.Map;
 
 public class TogglerConfig {
   @Getter
@@ -20,13 +20,12 @@ public class TogglerConfig {
   @Getter @Setter
   private ItemStack unsetItem;
 
-  public TogglerConfig(Map<?, ?> config) {
-    this.position = Utils.getOrElse((Integer) config.get("Pos"), 1);
-    this.set = Utils.getOrElse((Boolean) config.get("Set"), true);
-    this.type = Utils.getOrElse((String) config.get("Type"), "single");
-    this.setItem = Utils.getButton(Utils.getOrElse((String) config.get("SetItem"), "CircleSetItem"));
-    this.unsetItem = Utils.getButton(Utils.getOrElse((String) config.get("UnsetItem"),
-        "circle".equals(this.type) ? "CircleUnsetItem" : null));
+  public TogglerConfig(Integer pos, ConfigurationSection config) {
+    this.position = pos;
+    this.set = config.getBoolean("Set", true);
+    this.type = config.getString("Type", "single");
+    this.setItem = Utils.getButton(config.getString("SetItem", "CircleSetItem"));
+    this.unsetItem = Utils.getButton(config.getString("UnsetItem", "circle".equals(this.type) ? "CircleUnsetItem" : null));
   }
 
   public TogglerConfig(TogglerConfig config) {

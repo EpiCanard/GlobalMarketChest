@@ -14,7 +14,7 @@ BaseInterfaces:
       53: NewAuction
   DefaultFooter:
     Togglers:
-      - Pos: 53
+      53:
         Set: false
         SetItem: NewAuction
     Items:
@@ -97,7 +97,7 @@ Interfaces:
       - DefaultFooter
       - WithGlobalView
     Togglers:
-      - Pos: 7
+      7:
         SetItem: LastBoughtAuctions
         UnsetItem: LastCreatedAuctions
 
@@ -116,13 +116,13 @@ Interfaces:
       - Return
       - Exit
     Togglers:
-      - Pos: 31
+      31:
         Type: "circle"
         Set: false
-      - Pos: 28
+      28:
         Set: false
         SetItem: "AdminRemoveAuction"
-      - Pos: 34
+      34:
         Set: false
         SetItem: "SeeShulkerBoxContent"
     Items:
@@ -133,13 +133,13 @@ Interfaces:
       - Return
       - Exit
     Togglers:
-      - Pos: 29
+      29:
         Type: "circle"
         Set: false
-      - Pos: 33
+      33:
         Type: "circle"
         Set: true
-      - Pos: 49
+      49:
         Set: false
         SetItem: "SeeShulkerBoxContent"
     Items:
@@ -157,22 +157,22 @@ Interfaces:
       - Exit
       - Validate
     Togglers:
-      - Pos: 22
+      22:
         Type: "circle"
         Set: false
-      - Pos: 25
+      25:
         Set: false
         SetItem: RepeatIncrease
-      - Pos: 34
+      34:
         Set: false
         SetItem: RepeatDecrease
-      - Pos: 48
+      48:
         Set: false
         SetItem: MaxInOne
-      - Pos: 50
+      50:
         Set: false
         SetItem: MaxRepeat
-      - Pos: 53
+      53:
         Set: false
         SetItem: CreateAuction
     Items:
@@ -237,14 +237,13 @@ Interfaces:
       - DefaultFooter
       - GlobalViewButtons
     Togglers:
-      - Pos: 10
+      10:
         SetItem: UndoEveryAuction
-      - Pos: 11
+      11:
         SetItem: RenewEveryAuction
-      - Pos: 6
+      6:
         Set: false
         SetItem: AdminSeePlayerAuctions
-
   AdminAuctionGlobalView:
     Base:
       - AdminInterface
@@ -261,13 +260,13 @@ Interfaces:
     Base:
       - Exit
     Togglers:
-      - Pos: 0
+      0:
         Set: false
         SetItem: Return
-      - Pos: 29
+      29:
         Type: "circle"
         Set: true
-      - Pos: 33
+      33:
         Type: "circle"
         Set: false
     Items:

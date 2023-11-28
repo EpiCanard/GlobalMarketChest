@@ -11,15 +11,6 @@ public class SingleToggler extends Toggler {
     super(inv, config);
   }
 
-  public SingleToggler(Inventory inv, int pos, ItemStack setItem, ItemStack unsetItem) {
-    super(inv, pos, setItem, unsetItem);
-  }
-
-  public SingleToggler(Inventory inv, int pos, ItemStack setItem, ItemStack unsetItem, Boolean set) {
-    super(inv, pos, setItem, unsetItem);
-    this.setIsSet(set);
-  }
-
   /**
    * Get items with their position to use in interface
    *
