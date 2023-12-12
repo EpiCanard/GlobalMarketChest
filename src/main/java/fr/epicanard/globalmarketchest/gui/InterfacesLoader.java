@@ -69,7 +69,7 @@ public class InterfacesLoader {
    * @return Togglers of interface sent in param
    */
   public Optional<Map<Integer, TogglerConfig>> getTogglers(final String interfaceName) {
-    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getTogglers);
+    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getTogglersConfig);
   }
 
   /**
@@ -80,6 +80,10 @@ public class InterfacesLoader {
    */
   public ItemStack getBackground(String backgroundName) {
     return this.backgrounds.getOrDefault(backgroundName, this.backgrounds.get("Default"));
+  }
+
+  public Integer getDynamicRow(String interfaceName) {
+    return this.getInterfaceConfig(interfaceName).map(InterfaceConfig::getDynamicRow).orElse(-1);
   }
 
   /**

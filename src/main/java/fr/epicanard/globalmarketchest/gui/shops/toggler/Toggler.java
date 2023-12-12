@@ -12,13 +12,12 @@ public abstract class Toggler {
   protected ItemStack setItem;
   @Setter @Getter
   protected ItemStack unsetItem;
-  @Setter
+  @Setter @Getter
   protected Boolean isSet = false;
-  protected Inventory inv;
+  @Getter
   protected int pos;
 
-  public Toggler(Inventory inv, TogglerConfig config) {
-    this.inv = inv;
+  public Toggler(TogglerConfig config) {
     this.setItem = config.getSetItem();
     this.unsetItem = config.getUnsetItem();
     this.isSet = config.getSet();
@@ -28,47 +27,52 @@ public abstract class Toggler {
   /**
    * Load the toggler, Set or unset the element
    */
-  public void load() {
-    this.setItemsView();
+  public void load(Inventory inv) {
+    this.setItemsView(inv);
   }
 
   /**
    * Change set boolean and load item in view
    */
-  public void set() {
+  public void set(Inventory inv) {
     this.isSet = true;
-    this.setItemsView();
+    this.setItemsView(inv);
+  }
+
+  public void setAtPos(Inventory inv, Integer newPos) {
+    this.pos = newPos;
+    this.set(inv);
   }
 
   /**
    * Change unset boolean and load/unload item in view
    */
-  public void unset() {
+  public void unset(Inventory inv) {
     this.isSet = false;
-    this.setItemsView();
+    this.setItemsView(inv);
   }
 
   /**
    * Toggle the toggler, change from setItem to unsetItem or reverse
    */
-  public void toggle() {
+  public void toggle(Inventory inv) {
     if (this.isSet)
-      this.unset();
+      this.unset(inv);
     else
-      this.set();
+      this.set(inv);
   }
 
   /**
    * Set items in loaded view
    */
-  public void setItemsView() {
-    Map<Integer, ItemStack> items = this.getItems();
+  public void setItemsView(Inventory inv) {
+    Map<Integer, ItemStack> items = this.getItems(inv.getSize());
     items.forEach((position, itemstack) -> {
-      this.inv.setItem(position, itemstack);
+      inv.setItem(position, itemstack);
     });
   }
 
-  public abstract Map<Integer, ItemStack> getItems();
+  public abstract Map<Integer, ItemStack> getItems(int inventorySize);
 
   public ItemStack getCurrentItem() {
     return (this.isSet) ? this.getSetItem() : this.getUnsetItem();

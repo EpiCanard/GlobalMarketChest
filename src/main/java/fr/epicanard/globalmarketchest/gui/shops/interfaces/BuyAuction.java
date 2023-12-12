@@ -41,14 +41,10 @@ public class BuyAuction extends UndoAuction {
     this.actions.put(0, new PreviousInterface());
     this.actions.put(31, this::buyAuction);
 
-    if (Permissions.ADMIN_REMOVEAUCTION.isSetOn(inv.getPlayer())) {
-      this.togglers.get(28).set();
-      this.actions.put(28, this::adminRemoveAuction);
-    }
-    if (canSeeShulkerBoxContent(item)) {
-      this.togglers.get(34).set();
-      this.actions.put(34, new NextInterface(InterfaceType.SHULKER_BOX_CONTENT));
-    }
+    if (Permissions.ADMIN_REMOVEAUCTION.isSetOn(inv.getPlayer()))
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 28, this.actions, this::adminRemoveAuction);
+    if (canSeeShulkerBoxContent(item))
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 34, this.actions, new NextInterface(InterfaceType.SHULKER_BOX_CONTENT));
   }
 
   @Override

@@ -1,14 +1,13 @@
 package fr.epicanard.globalmarketchest.gui.shops.toggler;
 
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SingleToggler extends Toggler {
-  public SingleToggler(Inventory inv, TogglerConfig config) {
-    super(inv, config);
+  public SingleToggler(TogglerConfig config) {
+    super(config);
   }
 
   /**
@@ -16,7 +15,7 @@ public class SingleToggler extends Toggler {
    *
    * @return map of itemstack with their position
    */
-  public Map<Integer, ItemStack> getItems() {
+  public Map<Integer, ItemStack> getItems(int inventorySize) {
     Map<Integer, ItemStack> items = new HashMap<>();
     items.put(this.pos, (this.isSet) ? this.setItem : this.unsetItem);
     return items;

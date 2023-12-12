@@ -3,9 +3,7 @@ package fr.epicanard.globalmarketchest.gui.shops.toggler;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import lombok.Getter;
 import lombok.Setter;
-
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class TogglerConfig {
@@ -42,17 +40,10 @@ public class TogglerConfig {
    * @param inv Inventory to use for instanciation
    * @return New instance of Toggler (SingleToggler or CircleToggler)
    */
-  public Toggler instanceToggler(Inventory inv) {
-    Toggler ret = null;
-    switch (this.type) {
-      case "circle":
-        ret = new CircleToggler(inv, this);
-        break;
-      case "single":
-      default:
-        ret = new SingleToggler(inv, this);
-        break;
-    }
-    return ret;
+  public Toggler instanceToggler() {
+    if (this.type == "circle")
+      return new CircleToggler(this);
+    return new SingleToggler(this);
+
   }
 }

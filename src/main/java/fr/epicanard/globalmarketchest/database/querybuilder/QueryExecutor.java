@@ -81,7 +81,7 @@ public class QueryExecutor {
    * @param builder BaseBuilder that contains the query
    * @param onSuccess Callback called with the query response
    */
-  public <T extends BaseBuilder<T>> Boolean execute(final BaseBuilder<T> builder, final SqlConsumer<ResultSet> onSuccess, final Consumer<SQLException> onError) {
+  public <T extends BaseBuilder<T>> Boolean execute(BaseBuilder<T> builder, final SqlConsumer<ResultSet> onSuccess, final Consumer<SQLException> onError) {
     Connection co = GlobalMarketChest.plugin.getSqlConnector().getConnection();
     Boolean ret = false;
     AtomicReference<ResultSet> res = new AtomicReference<>();

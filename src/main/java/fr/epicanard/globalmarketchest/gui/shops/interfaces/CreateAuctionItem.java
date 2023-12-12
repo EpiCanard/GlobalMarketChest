@@ -41,19 +41,13 @@ public class CreateAuctionItem extends ShopInterface implements Droppable {
     final boolean one = config.getBoolean("Options.EnableMaxInOne", true);
     this.oneByOne = config.getBoolean("Options.EnableRepeatOneByOne", true);
 
-    if (one) {
-      this.actions.put(48, i -> this.defineMaxInOne());
-      this.togglers.get(48).set();
-    }
-    if (max) {
-      this.actions.put(50, i -> this.defineMaxRepeat());
-      this.togglers.get(50).set();
-    }
+    if (one)
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 48, this.actions, i -> this.defineMaxInOne());
+    if (max)
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 50, this.actions, i -> this.defineMaxRepeat());
     if (this.oneByOne) {
-      this.actions.put(25, i -> this.defineAuctionNumber(true));
-      this.togglers.get(25).set();
-      this.actions.put(34, i -> this.defineAuctionNumber(false));
-      this.togglers.get(34).set();
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 25, this.actions, i -> this.defineAuctionNumber(true));
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 34, this.actions, i -> this.defineAuctionNumber(false));
     }
 
     this.actions.put(53, new NextInterface(InterfaceType.CREATE_AUCTION_PRICE, this::checkItem));
@@ -98,10 +92,7 @@ public class CreateAuctionItem extends ShopInterface implements Droppable {
     this.inv.getTransaction().put(TransactionKey.TEMP_ITEM, item.clone());
     this.inv.getTransaction().put(TransactionKey.AUCTION_AMOUNT, item.getAmount());
     this.updateItem();
-    this.togglers.forEach((k, v) -> {
-      if (k == 22 || k == 53)
-        v.set();
-    });
+    this.togglerManager.setTogglers(this.inv.getInv(), 22, 53);
   }
 
   /**
@@ -123,10 +114,7 @@ public class CreateAuctionItem extends ShopInterface implements Droppable {
     this.inv.getTransaction().remove(TransactionKey.AUCTION_AMOUNT);
     InterfacesLoader.getInstance().getInterface("CreateAuctionItem")
         .ifPresent(items -> this.inv.getInv().setItem(22, items[22]));
-    this.togglers.forEach((k, v) -> {
-      if (k == 22 || k == 53)
-        v.unset();
-    });
+    this.togglerManager.unsetTogglers(inv.getInv(), 22, 53);
     if (this.oneByOne) {
       this.updateRepeatLore(Collections.emptyList());
     }

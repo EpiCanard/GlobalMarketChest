@@ -9,6 +9,7 @@ import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.ChatInput;
 import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.BaseAuctionGlobalView;
+import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
@@ -31,10 +32,8 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
     this.actions.put(10, this::undoEveryAuction);
     this.actions.put(11, this::renewEveryAuction);
 
-    if (Permissions.ADMIN_SEEAUCTIONS.isSetOn(inv.getPlayer())) {
-      this.togglers.get(6).set();
-      this.actions.put(6, new ChatInput("InfoMessages.WritePlayerName", this::openPlayerGlobalView));
-    }
+    if (Permissions.ADMIN_SEEAUCTIONS.isSetOn(inv.getPlayer()))
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 6, this.actions, new ChatInput("InfoMessages.WritePlayerName", this::openPlayerGlobalView));
   }
 
   @Override
@@ -48,19 +47,15 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
    */
   @Override
   protected void loadTogglers() {
-    if (this.current.state == StatusAuction.IN_PROGRESS || this.current.state == StatusAuction.EXPIRED)
-      this.togglers.forEach((key, toggler) -> {
-        if (key != 10 && key != 11)
-          return;
-        final String lore = format("Divers.WithStatus", "status", this.current.state.getLang());
+    if (this.current.state == StatusAuction.IN_PROGRESS || this.current.state == StatusAuction.EXPIRED) {
+      final String lore = format("Divers.WithStatus", "status", this.current.state.getLang());
+      for (Integer pos: new Integer[]{10, 11}) {
+        Toggler toggler = this.togglerManager.get(pos);
         ItemStackUtils.setItemStackLore(toggler.getSetItem(), Utils.toList(lore));
-        toggler.set();
-      });
-    else
-      this.togglers.forEach((key, toggler) -> {
-        if (key == 10 || key == 11)
-          toggler.unset();
-      });
+        toggler.set(this.inv.getInv());
+      }
+    } else
+      this.togglerManager.unsetTogglers(this.inv.getInv(), 10, 11);
   }
 
   private void editAuction(Integer pos) {

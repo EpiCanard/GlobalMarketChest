@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
@@ -159,7 +158,8 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     }
     if (args.length == 2) {
       return GlobalMarketChest.plugin.shopManager.getShops().stream()
-      .filter(shop -> shop.getExists() && shop.getGroup().equals(args[0]) && Integer.toString(shop.getId()).startsWith(args[1]) && shop.getTpLocation().isPresent())
+      .filter(shop -> shop.getExists() && shop.getGroup().equals(args[0])
+          && Integer.toString(shop.getId()).startsWith(args[1]) && shop.getTpLocation().isPresent())
       .map(shop -> WorldUtils.getStringFromLocation(shop.getTpLocation().get()))
       .collect(Collectors.toList());
     }

@@ -27,8 +27,7 @@ public class DefaultFooter extends ShopInterface {
     this.shopInfo = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
 
     if (GS_CREATEAUCTION.isSetOn(this.inv.getPlayer()) || GS_SHOP_CREATEAUCTION.isSetOnWithShop(this.inv.getPlayer(), this.shopInfo.getGroup())) {
-      this.actions.put(53, new NewAuction());
-      this.togglers.get(53).set();
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 53, this.actions, new NewAuction());
     }
     this.actions.put(46, new NextInterface(InterfaceType.AUCTION_GLOBAL_VIEW));
   }

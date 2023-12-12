@@ -30,10 +30,9 @@ public class EditAuction extends UndoAuction {
 
     final AuctionInfo auction = this.inv.getTransactionValue(TransactionKey.AUCTION_INFO);
     final ItemStack item = DatabaseUtils.deserialize(auction.getItemMeta());
-    if (ShulkerBoxContent.isShulker(item)) {
-      this.togglers.get(49).set();
-      this.actions.put(49, new NextInterface(InterfaceType.SHULKER_BOX_CONTENT));
-    }
+
+    if (ShulkerBoxContent.isShulker(item))
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 49, this.actions, new NextInterface(InterfaceType.SHULKER_BOX_CONTENT));
   }
 
   @Override

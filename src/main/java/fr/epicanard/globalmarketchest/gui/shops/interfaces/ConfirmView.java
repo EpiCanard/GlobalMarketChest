@@ -21,10 +21,8 @@ public class ConfirmView extends ShopInterface {
     this.actions.put(33, i -> this.leave(i, false));
 
     final Boolean hasReturn = inv.getTransactionValue(TransactionKey.HAS_RETURN);
-    if (hasReturn == null || hasReturn) {
-      this.togglers.get(0).set();
-      this.actions.put(0, new PreviousInterface());
-    }
+    if (hasReturn == null || hasReturn)
+      this.togglerManager.setTogglerWithAction(inv.getInv(), 0, this.actions, new PreviousInterface());
   }
 
   /**

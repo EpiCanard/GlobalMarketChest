@@ -20,13 +20,15 @@ public class InterfaceConfig {
   private ItemStack background;
   private ItemStack[] itemStacks = new ItemStack[54];
   private PaginatorConfig paginator;
-  private Map<Integer, TogglerConfig> togglers = new HashMap<>();
+  private Integer dynamicRow;
+  private Map<Integer, TogglerConfig> togglersConfig = new HashMap<>();
 
   InterfaceConfig(ConfigurationSection config, String interfaceName, List<InterfaceConfig> baseInterfaces) {
     this.loadBackground(config, interfaceName, baseInterfaces);
     this.loadPaginator(config, interfaceName, baseInterfaces);
     this.loadTogglers(config, interfaceName, baseInterfaces);
     this.loadInterface(config, interfaceName, baseInterfaces);
+    this.dynamicRow = config.getInt(interfaceName + ".DynamicRow", -1);
   }
 
   /**
@@ -85,7 +87,7 @@ public class InterfaceConfig {
    * @param baseInterfaces List of base InterfaceConfig
    */
   private void loadTogglers(ConfigurationSection config, String name, List<InterfaceConfig> baseInterfaces) {
-    this.togglers = baseInterfaces.stream().map(InterfaceConfig::getTogglers)
+    this.togglersConfig = baseInterfaces.stream().map(InterfaceConfig::getTogglersConfig)
         .reduce(new HashMap<>(), (acc, value) -> {
           value.forEach((pos, toggler) -> acc.put(pos, new TogglerConfig(toggler)));
           return acc;
@@ -99,7 +101,7 @@ public class InterfaceConfig {
     for (String key : sec.getKeys(false)) {
       Integer pos = Integer.parseInt(key);
       TogglerConfig conf = new TogglerConfig(pos, sec.getConfigurationSection(key));
-      this.togglers.put(pos, conf);
+      this.togglersConfig.put(pos, conf);
     }
   }
 
@@ -160,7 +162,7 @@ public class InterfaceConfig {
         this.itemStacks[i] = this.background;
     }
 
-    this.togglers.values().forEach(toggler -> {
+    this.togglersConfig.values().forEach(toggler -> {
       if (toggler.getUnsetItem() == null)
         toggler.setUnsetItem(this.background);
     });

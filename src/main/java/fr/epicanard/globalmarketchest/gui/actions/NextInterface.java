@@ -19,7 +19,6 @@ public class NextInterface implements Consumer<InventoryGUI> {
     this.callable = () -> true;
   }
 
-  // TODO Use Enum as name and store class reference in enum
   public NextInterface(InterfaceType interfaceType, Callable<Boolean> callable) {
     this.interfaceType = interfaceType;
     this.callable = callable;

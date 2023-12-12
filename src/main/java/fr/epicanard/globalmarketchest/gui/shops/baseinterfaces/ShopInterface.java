@@ -5,7 +5,8 @@ import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
-import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
+import fr.epicanard.globalmarketchest.gui.shops.toggler.TogglerConfig;
+import fr.epicanard.globalmarketchest.gui.shops.toggler.TogglerManager;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
@@ -25,7 +26,7 @@ public abstract class ShopInterface {
   @Getter
   protected ItemStack background;
   protected Paginator paginator;
-  protected Map<Integer, Toggler> togglers = new HashMap<>();
+  protected TogglerManager togglerManager;
   protected InventoryGUI inv;
   protected Map<Integer, Consumer<InventoryGUI>> actions = new HashMap<Integer, Consumer<InventoryGUI>>();
   private ItemStack icon;
@@ -33,13 +34,9 @@ public abstract class ShopInterface {
   public ShopInterface(InventoryGUI inv) {
     this.inv = inv;
     String className = this.getClass().getSimpleName();
-    InterfacesLoader.getInstance().getPaginatorConfig(className)
-        .ifPresent(conf -> this.paginator = new Paginator(this.inv, conf));
-    InterfacesLoader.getInstance().getTogglers(className).ifPresent(togglersConfig -> {
-      togglersConfig.forEach((pos, config) -> {
-        this.togglers.put(pos, config.instanceToggler(inv.getInv()));
-      });
-    });
+    InterfacesLoader.getInstance().getPaginatorConfig(className).ifPresent(conf -> this.paginator = new Paginator(this.inv, conf));
+    Map<Integer, TogglerConfig> configs = InterfacesLoader.getInstance().getTogglers(className).orElse(new HashMap<>());
+    this.togglerManager = new TogglerManager(configs, InterfacesLoader.getInstance().getDynamicRow(className));
     this.background = InterfacesLoader.getInstance().getBackground(className);
     this.icon = this.background;
     this.actions.put(8, new LeaveShop());
@@ -51,13 +48,9 @@ public abstract class ShopInterface {
   public void load() {
     String className = this.getClass().getSimpleName();
     InterfacesLoader.getInstance().getInterface(className).map(ItemStack[]::clone).ifPresent(items -> {
-      this.togglers.forEach((k, v) -> {
-        v.getItems().forEach((pos, item) -> {
-          items[pos] = item;
-        });
-      });
       for (int i = 0; i < 54; i++)
         this.inv.getInv().setItem(i, items[i]);
+      this.togglerManager.loadTogglers(this.inv.getInv());
     });
 
     if (this.paginator != null)

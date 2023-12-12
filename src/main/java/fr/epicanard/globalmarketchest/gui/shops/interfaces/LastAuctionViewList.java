@@ -12,6 +12,7 @@ import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.DatabaseUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
 import fr.epicanard.globalmarketchest.utils.Utils;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Consumer;
@@ -49,10 +50,10 @@ public class LastAuctionViewList extends AuctionViewBase {
   public void load() {
     this.lastHours = LastAuctionViewList.getLastHours();
 
-    this.togglers.get(7).setSetItem(Utils.getButton("LastBoughtAuctions", "hours", this.lastHours));
-    this.togglers.get(7).setUnsetItem(Utils.getButton("LastCreatedAuctions", "hours", this.lastHours));
+    this.togglerManager.get(7).setSetItem(Utils.getButton("LastBoughtAuctions", "hours", this.lastHours));
+    this.togglerManager.get(7).setUnsetItem(Utils.getButton("LastCreatedAuctions", "hours", this.lastHours));
     super.load();
-    this.setIcon(this.togglers.get(7).getOppositeItem());
+    this.setIcon(this.togglerManager.get(7).getOppositeItem());
   }
 
   /**
@@ -65,7 +66,7 @@ public class LastAuctionViewList extends AuctionViewBase {
   }
 
   private void toggleLastAuctionMode(final InventoryGUI gui) {
-    this.mode = this.mode.toggle(this.togglers.get(7), this::setIcon);
+    this.mode = this.mode.toggle(this.togglerManager.get(7), this.inv.getInv(), this::setIcon);
     this.paginator.resetPage();
     this.paginator.reload();
   }
@@ -83,9 +84,9 @@ public class LastAuctionViewList extends AuctionViewBase {
       this.loreConfig = loreConfig;
     }
 
-    LastAuctionMode toggle(final Toggler toggler, final Consumer<ItemStack> setIcon) {
+    LastAuctionMode toggle(final Toggler toggler, final Inventory inv, final Consumer<ItemStack> setIcon) {
       setIcon.accept(toggler.getCurrentItem());
-      toggler.toggle();
+      toggler.toggle(inv);
       return this == LAST_CREATED ? LAST_BOUGHT : LAST_CREATED;
     }
   }
