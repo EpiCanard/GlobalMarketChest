@@ -201,10 +201,10 @@ Interfaces:
     ViewByLastCreated: minecraft:apple
     AuctionSide: minecraft:stained_glass_pane/11
     AuctionMiddle: minecraft:stained_glass_pane
-    GlobalShop: minecraft:ender_chest
+    GlobalShop: minecraft:chest
     AuctionShop: minecraft:purple_shulker_box
-    AdminShop: minecraft:chest
-    ShopIcon: minecraft:ender_chest
+    AdminShop: minecraft:ender_chest
+    ShopIcon: minecraft:name_tag
     EditGroupName: minecraft:stained_glass_pane/11
     PreviousPage: minecraft:arrow
     NextPage: minecraft:arrow
@@ -229,15 +229,21 @@ Interfaces:
     LastBoughtAuctions: minecraft:compass
     AdvicePriceInfo: minecraft:name_tag
     SeeShulkerBoxContent: minecraft:shulker_shell
+    ChooseShopType: minecraft:paper
 Sign:
   Appearance:
+    # Config for GlobalShop creation
     GlobalShop:
       # The text displayed on the sign when shop creation is successful
       DisplayName: "&a[GlobalShop]"
-      # The item used inside the shop as icon
-      DisplayItem: minecraft:compass
       # The first line that must write on sign to create shop
       FirstLineToCreate: "globalshop"
+    # Config for AdminShop creation
+    AdminShop:
+      # The text displayed on the sign when shop creation is successful
+      DisplayName: "&a[AdminShop]"
+      # The first line that must write on sign to create shop
+      FirstLineToCreate: "adminshop"
     # The text displayed on the sign when shop creation failed
     NotWorkingShopDisplayName : "&c[DisableShop]"
 Chat:

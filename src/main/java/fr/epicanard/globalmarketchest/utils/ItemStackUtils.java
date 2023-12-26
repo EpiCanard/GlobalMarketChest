@@ -93,6 +93,26 @@ public class ItemStackUtils {
   }
 
   /**
+   * Set display name of item
+   *
+   * @param item        ItemStack used
+   * @param displayName Name displayed on the item
+   *
+   * @return return the itemstack in param
+   */
+  public ItemStack setItemStackDisplayName(ItemStack item, String displayName) {
+    if (item == null)
+      return null;
+
+    ItemMeta met = item.getItemMeta();
+    if (met != null) {
+      met.setDisplayName((displayName == null) ? " " : Utils.toColor(displayName));
+      item.setItemMeta(met);
+    }
+    return item;
+  }
+
+  /**
    * Set lore on item meta
    *
    * @param meta

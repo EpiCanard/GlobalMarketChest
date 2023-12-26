@@ -118,9 +118,9 @@ public class ShopUtils {
     String ret = "";
 
     if (ShopType.GLOBALSHOP.equals(shop.getType()))
-      ret += "&9G";
+      ret += "&9GlobalShop";
     if (ShopType.ADMINSHOP.equals(shop.getType()))
-      ret += "&cD";
+      ret += "&cAdminShop";
     return ret;
   }
 

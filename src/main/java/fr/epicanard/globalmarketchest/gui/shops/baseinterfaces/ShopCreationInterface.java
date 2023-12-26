@@ -15,15 +15,15 @@ public abstract class ShopCreationInterface extends ShopInterface {
   }
 
   /**
-   * Update the lore of the current shop
+   * Update the item with the name of the current shop
    */
   protected void updateName() {
     ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
-    ItemStack item = this.inv.getInv().getItem(49);
-
     if (shop == null)
       return;
-    item = ItemStackUtils.setItemStackMeta(item, LangUtils.get("Shops.CurrentShop"), ShopUtils.generateLoreWithOther(shop));
+
+    ItemStack item = this.inv.getInv().getItem(49);
+    item = ItemStackUtils.setItemStackDisplayName(item, ShopUtils.generateKeyValue(LangUtils.get("Divers.Name"), shop.getGroup()));
     this.inv.getInv().setItem(49, item);
   }
 

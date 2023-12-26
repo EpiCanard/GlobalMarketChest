@@ -95,8 +95,7 @@ public abstract class WorldListener implements Listener {
     List<BlockFace> attached = Utils.filter(faces, face -> isAttachedTo(block, face));
     if (block.hasMetadata(ShopUtils.META_KEY)) {
       ShopInfo shop = ShopUtils.getShop(block);
-      if (!shop.getOwner().equals(PlayerUtils.getUUIDToString(player))
-        && !Permissions.ADMIN_DELETESHOP.isSetOn(player)) {
+      if (!shop.getOwner().equals(PlayerUtils.getUUIDToString(player)) && !Permissions.ADMIN_DELETESHOP.isSetOn(player)) {
         Permissions.sendMessage(player);
         event.setCancelled(true);
         return;
@@ -110,14 +109,12 @@ public abstract class WorldListener implements Listener {
       if (!asLinkedShop) {
         Function<InventoryGUI, Consumer<Boolean>> deleteConsumer = inv -> {
           return b -> {
-            if (b) {
-              if (GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
-                PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopDeleted");
-                String owner = shop.getOwner();
-                LoggerUtils.info(String.format("%s : [%s:%s<%s>]", LangUtils.get("InfoMessages.ShopDeleted"),
-                  shop.getRawLocation(), PlayerUtils.getPlayerName(owner), owner));
-                block.breakNaturally();
-              }
+            if (b && GlobalMarketChest.plugin.shopManager.deleteShop(shop)) {
+              PlayerUtils.sendMessageConfig(player, "InfoMessages.ShopDeleted");
+              String owner = shop.getOwner();
+              LoggerUtils.info(String.format("%s : [%s:%s<%s>]", LangUtils.get("InfoMessages.ShopDeleted"),
+                    shop.getRawLocation(), PlayerUtils.getPlayerName(owner), owner));
+              block.breakNaturally();
             }
             new LeaveShop().accept(inv);
           };
@@ -154,18 +151,29 @@ public abstract class WorldListener implements Listener {
       if (shop == null)
         return;
       event.setCancelled(true);
-      if (Permissions.GS_OPENSHOP.isSetOn(player) || Permissions.GS_SHOP_OPENSHOP.isSetOnWithShop(player, shop.getGroup())) {
-        ShopUtils.openShop(player, shop, inv -> inv.loadInterface(InterfaceType.CATEGORY_VIEW));
-      } else {
-        Permissions.sendMessage(player);
+
+      Boolean canOpenShop = false;
+      switch (shop.getType()) {
+        case GLOBALSHOP:
+          canOpenShop = Permissions.GS_OPENSHOP.isSetOn(player) || Permissions.GS_SHOP_OPENSHOP.isSetOnWithShop(player, shop.getGroup());
+          break;
+        case ADMINSHOP:
+          canOpenShop = Permissions.AS_OPENSHOP.isSetOn(player) || Permissions.AS_SHOP_OPENSHOP.isSetOnWithShop(player, shop.getGroup());
+          break;
+        default:
       }
+
+      if (canOpenShop)
+        ShopUtils.openShop(player, shop, inv -> inv.loadInterface(InterfaceType.CATEGORY_VIEW));
+      else
+        Permissions.sendMessage(player);
+
     }
   }
 
   public static WorldListener of() {
-    if (Version.isEqualsTo(Version.V1_12)) {
+    if (Version.isEqualsTo(Version.V1_12))
       return new V1_12();
-    }
     return new V1_X();
   }
 
@@ -182,9 +190,8 @@ public abstract class WorldListener implements Listener {
     protected Block getAttachedBlock(Block block) {
       final BlockData data = (BlockData) ReflectionUtils.invokeMethod(block.getState(), "getBlockData", (Object[]) null);
 
-      if (data instanceof Directional) {
+      if (data instanceof Directional)
         return block.getRelative(((Directional) data).getFacing().getOppositeFace());
-      }
       return block.getRelative(block.getType().name().contains("HANGING") ? BlockFace.UP : BlockFace.DOWN);
     }
   }

@@ -204,9 +204,6 @@ Interfaces:
       NextPos: 35
     Items:
       13: GlobalShop
-      # 11: GlobalShop
-      # 13: AuctionShop
-      # 15: AdminShop
       27-35: None
       49: ShopIcon
 
@@ -226,6 +223,21 @@ Interfaces:
       40: EditGroupName
       49: ShopIcon
       53: CreateShop
+
+  ShopCreationType:
+    Base:
+      - Exit
+    DynamicRow: 3
+    Togglers:
+      29:
+        Set: false
+        SetItem: AdminShop
+      33:
+        Set: false
+        SetItem: GlobalShop
+    Items:
+      13: ChooseShopType
+      49: ShopIcon
 
   # ===================
   # AUCTION GLOBAL VIEW

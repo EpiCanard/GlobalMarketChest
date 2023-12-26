@@ -33,6 +33,7 @@ InterfacesTitle:
   # Shop Creation
   ShopCreationSelectType: "&2ショップタイプとリンクブロックを選択"
   ShopCreationLink: "&2グループ名/リンクショップを設定する"
+  ShopCreationType: "&2Select shop Type"
 Divers:
   State: "状態"
   Quantity: "額"
@@ -70,6 +71,7 @@ Divers:
   MinPrice: "最低価格"
   MaxPrice: "最高価格"
   Anonymous: "匿名"
+  Name: "Name"
 States:
   InProgress: "進行中"
   Expired: "期限切れ"
@@ -136,13 +138,15 @@ Buttons:
     Name: "最後に作成されたもので表示"
     Description: "プレイヤーは最後に作成されたオークションを見ることができますか？"
   GlobalShop:
-    Name: "グローバルショップ"
+    Name: "&eグローバルショップ"
+    Description: "&7Sell and buy items between players"
   AuctionShop:
     Name: "オークションショップ"
   LocalShop:
     Name: "地元の店"
   AdminShop:
-    Name: "管理店"
+    Name: "&c管理店"
+    Description: "&7Items to buy with unlimited quantity"
   EditGroupName:
     Name: "&fグループ名の編集"
   PreviousPage:
@@ -205,6 +209,10 @@ Buttons:
     Description: "&3{advicePrice};&7クリックしてアドバイス価格を使用"
   SeeShulkerBoxContent:
     Name: "このシュルカーボックスの内容を見る"
+  ChooseShopType:
+    Name: "&3Choose the type of your shop"
+  ShopIcon:
+    Description: "&7Click to change the shop name"
 ErrorMessages:
   UnknownWorld: "ショップの未知の世界"
   ShopTypeNotSet: "ショップタイプが設定されていません;＆2少なくとも1つのタイプを選択してください"

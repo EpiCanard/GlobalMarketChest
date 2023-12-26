@@ -33,6 +33,7 @@ InterfacesTitle:
   # Shop Creation
   ShopCreationSelectType: "&2Mağaza tipi ve bağlantı bloğu seçin"
   ShopCreationLink: "&2Grup adı/bağlantı dükkanını ayarla"
+  ShopCreationType: "&2Select shop Type"
 Divers:
   State: "Durum"
   Quantity: "Tutar"
@@ -70,6 +71,7 @@ Divers:
   MinPrice: "Minimum fiyat"
   MaxPrice: "Maximum fiyat"
   Anonymous: "Bilinmeyen"
+  Name: "Name"
 States:
   InProgress: "Devam ediyor"
   Expired: "Süresi dolmuş"
@@ -136,13 +138,15 @@ Buttons:
     Name: "Son oluşturulana göre görüntüle"
     Description: "Oyuncu, en son oluşturulan açık artırmaları görebilir mi?"
   GlobalShop:
-    Name: "GlobalShop"
+    Name: "&eGlobalShop"
+    Description: "&7Sell and buy items between players"
   AuctionShop:
     Name: "AuctionShop"
   LocalShop:
     Name: "LocalShop"
   AdminShop:
-    Name: "AdminShop"
+    Name: "&cAdminShop"
+    Description: "&7Items to buy with unlimited quantity"
   EditGroupName:
     Name: "&fGrup adını Düzenle"
   PreviousPage:
@@ -205,6 +209,10 @@ Buttons:
     Description: "&3{advicePrice};&7Tavsiye fiyatı kullanmak için tıkla"
   SeeShulkerBoxContent:
     Name: "Shulker kutusunun içeriğine bakın"
+  ChooseShopType:
+    Name: "&3Choose the type of your shop"
+  ShopIcon:
+    Description: "&7Click to change the shop name"
 ErrorMessages:
   UnknownWorld: "Dükkan için bilinmeyen dünya"
   ShopTypeNotSet: "Mağaza türü ayarlanmadı;&2 Lütfen en az bir tür seçin"

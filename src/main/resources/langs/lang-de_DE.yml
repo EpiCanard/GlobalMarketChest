@@ -33,6 +33,7 @@ InterfacesTitle:
   # Shop Creation
   ShopCreationSelectType: "&2Wähle Shop Typ und Block"
   ShopCreationLink: "&2Gruppen Name / verlinke Shop"
+  ShopCreationType: "&2Select shop Type"
 Divers:
   State: "Status"
   Quantity: "Menge"
@@ -70,6 +71,7 @@ Divers:
   MinPrice: "Minimum Preis"
   MaxPrice: "Maximum Preis"
   Anonymous: "Anonym"
+  Name: "Name"
 States:
   InProgress: "In Bearbeitung"
   Expired: "Abgelaufen"
@@ -136,13 +138,15 @@ Buttons:
     Name: "Neuste Auktionen"
     Description: "kann der Spieler die neusten Auktionen sehen?"
   GlobalShop:
-    Name: "GlobalShop"
+    Name: "&eGlobalShop"
+    Description: "&7Sell and buy items between players"
   AuctionShop:
     Name: "AuktionShop"
   LocalShop:
     Name: "LokalerShop"
   AdminShop:
-    Name: "AdminShop"
+    Name: "&cAdminShop"
+    Description: "&7Items to buy with unlimited quantity"
   EditGroupName:
     Name: "&fBearbeite Gruppen Name"
   PreviousPage:
@@ -205,6 +209,10 @@ Buttons:
     Description: "&3{advicePrice};&7Klicken um den vorgeschlagenen Preis zu benutzen"
   SeeShulkerBoxContent:
     Name: "Siehe den Inhalt dieser Shulker Box"
+  ChooseShopType:
+    Name: "&3Choose the type of your shop"
+  ShopIcon:
+    Description: "&7Click to change the shop name"
 ErrorMessages:
   UnknownWorld: "Unbekannte Shop Welt"
   ShopTypeNotSet: "Der Shop typ ist nicht gesetzt;&2Bitte wähle mindestens einen Typ"

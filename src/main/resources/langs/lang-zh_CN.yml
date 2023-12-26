@@ -33,6 +33,7 @@ InterfacesTitle:
   # 创建商店
   ShopCreationSelectType: "&2选择商店类型与连接方块"
   ShopCreationLink: "&2设置组名称 / 连接商店"
+  ShopCreationType: "&2Select shop Type"
 Divers:
   State: "状态"
   Quantity: "数量"
@@ -70,6 +71,7 @@ Divers:
   MinPrice: "最低价"
   MaxPrice: "最高价"
   Anonymous: "匿名"
+  Name: "Name"
 States:
   InProgress: "进行中"
   Expired: "已过期"
@@ -136,13 +138,16 @@ Buttons:
     Name: "按时间浏览"
     Description: "玩家是否可以通过创建时间先后浏览拍卖?"
   GlobalShop:
-    Name: "全球商店"
+    Name: "&e全球商店"
+    Description: "&7Sell and buy items between players"
+
   AuctionShop:
     Name: "拍卖商店"
   LocalShop:
     Name: "本地商店"
   AdminShop:
-    Name: "管理员商店"
+    Name: "&c管理员商店"
+    Description: "&7Items to buy with unlimited quantity"
   EditGroupName:
     Name: "&f编辑组名"
   PreviousPage:
@@ -205,6 +210,10 @@ Buttons:
     Description: "&3{advicePrice};&7点击将价格设置为建议售价"
   SeeShulkerBoxContent:
     Name: "查看潜影盒内容"
+  ChooseShopType:
+    Name: "&3Choose the type of your shop"
+  ShopIcon:
+    Description: "&7Click to change the shop name"
 ErrorMessages:
   UnknownWorld: "商店所在世界未知"
   ShopTypeNotSet: "商店类型未设置;&2请选择至少一种"

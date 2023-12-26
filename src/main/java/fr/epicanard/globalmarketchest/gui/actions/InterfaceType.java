@@ -20,6 +20,7 @@ public enum InterfaceType {
   SEARCH_VIEW(SearchView.class),
   SHOP_CREATION_LINK(ShopCreationLink.class),
   SHOP_CREATION_SELECT_TYPE(ShopCreationSelectType.class),
+  SHOP_CREATION_TYPE(ShopCreationType.class),
   SHULKER_BOX_CONTENT(ShulkerBoxContent.class);
 
   @Getter

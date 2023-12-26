@@ -86,6 +86,6 @@ public class CreateConsumer implements CommandConsumer {
     inv.getTransaction().put(TransactionKey.SIGN_LOCATION, player.getLocation());
     GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
     inv.open();
-    inv.loadInterface(InterfaceType.SHOP_CREATION_SELECT_TYPE);
+    inv.loadInterface(InterfaceType.SHOP_CREATION_TYPE);
   }
 }

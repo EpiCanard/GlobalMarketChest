@@ -34,6 +34,7 @@ InterfacesTitle:
   # Создание магазина
   ShopCreationSelectType: "&2Выбор типа магазина / ссылки блока"
   ShopCreationLink: "&2Установка имени группы / ссылки магазина"
+  ShopCreationType: "&2Select shop Type"
 Divers:
   State: "Статус"
   Quantity: "Кол-во"
@@ -71,6 +72,7 @@ Divers:
   MinPrice: "Мин. цена"
   MaxPrice: "Макс. цена"
   Anonymous: "Anonymous"
+  Name: "Name"
 States:
   InProgress: "В процессе"
   Expired: "Просрочен"
@@ -136,13 +138,15 @@ Buttons:
     Name: "Просмотр по последним созданным"
     Description: "Может ли игрок просматривать аукционы по последним созданным ?"
   GlobalShop:
-    Name: "GlobalShop"
+    Name: "&eGlobalShop"
+    Description: "&7Sell and buy items between players"
   AuctionShop:
     Name: "AuctionShop"
   LocalShop:
     Name: "LocalShop"
   AdminShop:
-    Name: "AdminShop"
+    Name: "&cAdminShop"
+    Description: "&7Items to buy with unlimited quantity"
   EditGroupName:
     Name: "&fРедактировать Имя Группы"
   PreviousPage:
@@ -205,6 +209,10 @@ Buttons:
     Description: "&3{advicePrice};&7Кликните, чтобы использов. рекоменд. цену"
   SeeShulkerBoxContent:
     Name: "См. содержимое сундука Шалкера"
+  ChooseShopType:
+    Name: "&3Choose the type of your shop"
+  ShopIcon:
+    Description: "&7Click to change the shop name"
 ErrorMessages:
   UnknownWorld: "Неизвестный мир для магазина"
   ShopTypeNotSet: "Тип магазина не задан;&2Пожалуйста выберите хотя бы один тип"
