@@ -149,17 +149,23 @@ public class AuctionManager extends DatabaseManager {
    * @param group    Shop group name target
    * @param auctions List of auctions to undo
    */
-  public Boolean undoGroupOfPlayerAuctions(final Player player, final String group, final List<Integer> auctions) {
+  public List<Integer> undoGroupOfPlayerAuctions(final Player player, final String group, final List<Integer> auctions) {
     final String playerUuid = PlayerUtils.getUUIDToString(player);
+    final QueryExecutor executor = QueryExecutor.of();
 
-    final UpdateBuilder builder = update()
-        .addCondition("id", auctions, ConditionType.IN)
-        .addCondition("playerStarter", playerUuid)
-        .addCondition("group", group)
-        .addValue("status", StatusAuction.ABANDONED.getValue())
-        .addValue("playerEnder", playerUuid)
-        .addValue("end", DatabaseUtils.getTimestamp().toString());
-    return QueryExecutor.of().execute(builder);
+    final List<Integer> finalAuctions = getEditableAuctions(executor, auctions);
+
+    if (!finalAuctions.isEmpty()) {
+      final UpdateBuilder builder = update()
+          .addCondition("id", finalAuctions, ConditionType.IN)
+          .addCondition("playerStarter", playerUuid)
+          .addCondition("group", group)
+          .addValue("status", StatusAuction.ABANDONED.getValue())
+          .addValue("playerEnder", playerUuid)
+          .addValue("end", DatabaseUtils.getTimestamp().toString());
+      executor.execute(builder);
+    }
+    return finalAuctions;
   }
 
   /**
@@ -548,6 +554,26 @@ public class AuctionManager extends DatabaseManager {
         end.set(false);
     }, Exception::printStackTrace);
     return end.get();
+  }
+
+  /**
+   * Request the database to know if the auctions specified are ended or not
+   *
+   * @param executor instance of QueryExecutor to us
+   * @param id       list of ids to verify
+   */
+  private List<Integer> getEditableAuctions(final QueryExecutor executor, final List<Integer> ids) {
+    final SelectBuilder select = select()
+        .addField("id")
+        .addCondition("id", ids, ConditionType.IN)
+        .addCondition("status", StatusAuction.IN_PROGRESS.getValue(), ConditionType.EQUAL);
+    List<Integer> finalIds = new ArrayList<>();
+
+    executor.execute(select, res -> {
+      while (res.next())
+        finalIds.add(res.getInt(1));
+    }, Exception::printStackTrace);
+    return finalIds;
   }
 
   /**

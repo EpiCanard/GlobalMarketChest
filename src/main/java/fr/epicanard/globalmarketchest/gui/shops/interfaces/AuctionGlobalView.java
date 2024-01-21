@@ -121,12 +121,18 @@ public class AuctionGlobalView extends BaseAuctionGlobalView {
       );
       final List<AuctionInfo> auctions = this.current.auctions.subList(0, pos.get());
 
-      if (GlobalMarketChest.plugin.auctionManager.undoGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), Utils.mapList(auctions, act -> act.getId()))) {
-        for (AuctionInfo auction : auctions)
-          i.getPlayer().getInventory().addItem(auction.getRealItemStack());
-        PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoEveryAuction");
-      } else
-        throw new WarnException("CantUndoEveryAuction");
+      if (auctions.size() > 0) {
+        List<Integer> ids = GlobalMarketChest.plugin.auctionManager
+            .undoGroupOfPlayerAuctions(i.getPlayer(), shop.getGroup(), Utils.mapList(auctions, AuctionInfo::getId));
+
+        if (ids.size() > 0) {
+          for (AuctionInfo auction : auctions)
+            if (ids.contains(auction.getId()))
+              i.getPlayer().getInventory().addItem(auction.getRealItemStack());
+          PlayerUtils.sendMessageConfig(i.getPlayer(), "InfoMessages.UndoEveryAuction");
+        } else
+          throw new WarnException("CantUndoEveryAuction");
+      }
 
       if (!ret)
         throw new WarnException("NotEnoughSpace");
