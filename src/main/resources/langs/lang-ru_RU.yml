@@ -48,6 +48,7 @@ Divers:
   Start: "Начатый"
   Location: "Местность"
   OtherLocation: "Другая местность"
+  AttachedBlock: "Attached Block"
   Server: "Сервер"
   Group: "Группа"
   Type: "Тип"
@@ -213,6 +214,10 @@ Buttons:
     Name: "&3Choose the type of your shop"
   ShopIcon:
     Description: "&7Click to change the shop name"
+  ChooseAttachBlock:
+    Name: "&3Choose the block you want to attach to the shop"
+  SetAttachBlock:
+    Description: "&7Click to attach a block"
 ErrorMessages:
   UnknownWorld: "Неизвестный мир для магазина"
   ShopTypeNotSet: "Тип магазина не задан;&2Пожалуйста выберите хотя бы один тип"

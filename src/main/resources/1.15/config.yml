@@ -232,6 +232,8 @@ Interfaces:
     AdvicePriceInfo: minecraft:name_tag
     SeeShulkerBoxContent: minecraft:shulker_shell
     ChooseShopType: minecraft:paper
+    ChooseAttachBlock: minecraft:paper
+    SetAttachBlock: minecraft:grass_block
 Sign:
   Appearance:
     # Config for GlobalShop creation

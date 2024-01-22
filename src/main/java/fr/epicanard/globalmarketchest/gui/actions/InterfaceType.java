@@ -18,6 +18,7 @@ public enum InterfaceType {
   EDIT_AUCTION(EditAuction.class),
   LAST_AUCTION_VIEW_LIST(LastAuctionViewList.class),
   SEARCH_VIEW(SearchView.class),
+  SHOP_CREATION_ATTACH_BLOCK(ShopCreationAttachBlock.class),
   SHOP_CREATION_LINK(ShopCreationLink.class),
   SHOP_CREATION_SELECT_TYPE(ShopCreationSelectType.class),
   SHOP_CREATION_TYPE(ShopCreationType.class),

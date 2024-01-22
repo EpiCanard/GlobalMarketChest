@@ -45,6 +45,7 @@ Divers:
   Start: "开始时间"
   Location: "位置"
   OtherLocation: "其他位置"
+  AttachedBlock: "Attached Block"
   Server: "服务器"
   Group: "组"
   Type: "类型"
@@ -214,6 +215,10 @@ Buttons:
     Name: "&3Choose the type of your shop"
   ShopIcon:
     Description: "&7Click to change the shop name"
+  ChooseAttachBlock:
+    Name: "&3Choose the block you want to attach to the shop"
+  SetAttachBlock:
+    Description: "&7Click to attach a block"
 ErrorMessages:
   UnknownWorld: "商店所在世界未知"
   ShopTypeNotSet: "商店类型未设置;&2请选择至少一种"

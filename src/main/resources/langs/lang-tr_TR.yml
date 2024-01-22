@@ -47,6 +47,7 @@ Divers:
   Start: "Başladı"
   Location: "Konum"
   OtherLocation: "Diğer konum"
+  AttachedBlock: "Attached Block"
   Server: "Sunucu"
   Group: "Grup"
   Type: "Tip"
@@ -213,6 +214,10 @@ Buttons:
     Name: "&3Choose the type of your shop"
   ShopIcon:
     Description: "&7Click to change the shop name"
+  ChooseAttachBlock:
+    Name: "&3Choose the block you want to attach to the shop"
+  SetAttachBlock:
+    Description: "&7Click to attach a block"
 ErrorMessages:
   UnknownWorld: "Dükkan için bilinmeyen dünya"
   ShopTypeNotSet: "Mağaza türü ayarlanmadı;&2 Lütfen en az bir tür seçin"

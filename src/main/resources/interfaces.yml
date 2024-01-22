@@ -237,7 +237,21 @@ Interfaces:
         SetItem: GlobalShop
     Items:
       13: ChooseShopType
-      49: ShopIcon
+      48: SetAttachBlock
+      50: ShopIcon
+
+  ShopCreationAttachBlock:
+    Base:
+      - Return
+      - Exit
+    Paginator:
+      Height: 1
+      Width: 7
+      StartPos: 28
+      PreviousPos: 27
+      NextPos: 35
+    Items:
+      13: ChooseAttachBlock
 
   # ===================
   # AUCTION GLOBAL VIEW

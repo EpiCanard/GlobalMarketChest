@@ -47,6 +47,7 @@ Divers:
   Start: "Started"
   Location: "Location"
   OtherLocation: "Other location"
+  AttachedBlock: "Attached Block"
   Server: "Server"
   Group: "Group"
   Type: "Type"
@@ -213,6 +214,10 @@ Buttons:
     Name: "&3Choose the type of your shop"
   ShopIcon:
     Description: "&7Click to change the shop name"
+  ChooseAttachBlock:
+    Name: "&3Choose the block you want to attach to the shop"
+  SetAttachBlock:
+    Description: "&7Click to attach a block"
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
   ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"

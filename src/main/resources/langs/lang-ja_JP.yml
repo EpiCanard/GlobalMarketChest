@@ -47,6 +47,7 @@ Divers:
   Start: "開始"
   Location: "位置"
   OtherLocation: "他の場所"
+  AttachedBlock: "Attached Block"
   Server: "サーバ"
   Group: "グループ"
   Type: "タイプ"
@@ -213,6 +214,10 @@ Buttons:
     Name: "&3Choose the type of your shop"
   ShopIcon:
     Description: "&7Click to change the shop name"
+  ChooseAttachBlock:
+    Name: "&3Choose the block you want to attach to the shop"
+  SetAttachBlock:
+    Description: "&7Click to attach a block"
 ErrorMessages:
   UnknownWorld: "ショップの未知の世界"
   ShopTypeNotSet: "ショップタイプが設定されていません;＆2少なくとも1つのタイプを選択してください"
