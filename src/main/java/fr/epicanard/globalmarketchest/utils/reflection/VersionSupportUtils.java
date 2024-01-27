@@ -137,17 +137,7 @@ public class VersionSupportUtils {
 
   @Version(name = "getRegistry")
   public Object getRegistry_latest() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
-    final Class<?> registryBlockClass = getClassFromPath(Path.MINECRAFT_CORE, "RegistryBlocks");
-    final Class<?> itemClass = getItemClass_latest();
-    final Optional<Field> maybeRegistryField = Arrays
-        .stream(getClassFromPath(Path.MINECRAFT_CORE_REGISTRIES, "BuiltInRegistries").getFields())
-        .filter(f -> f.getType().isAssignableFrom(registryBlockClass)
-            && ((ParameterizedType) f.getGenericType()).getActualTypeArguments()[0].equals(itemClass))
-        .findFirst();
-    if (!maybeRegistryField.isPresent()) {
-      throw new NoSuchFieldException("Can't find item Registry.");
-    }
-    return maybeRegistryField.get().get(null);
+    return Class.forName("net.minecraftforge.registries.ForgeRegistries").getDeclaredField("ITEMS").get(null);
   }
 
   @Version(name = "getRegistryItem", versions = { "1.12" })
@@ -165,7 +155,7 @@ public class VersionSupportUtils {
   @Version(name = "getRegistryItem")
   public Object getRegistryItem(Object registry, Object minecraftKey)
       throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-    return registry.getClass().getMethod("a", minecraftKey.getClass()).invoke(registry, minecraftKey);
+    return registry.getClass().getMethod("getValue", minecraftKey.getClass()).invoke(registry, minecraftKey);
   }
 
   @Version(name = "getMinecraftKeyClass", versions = { "1.12", "1.13", "1.14", "1.15", "1.16" })
@@ -343,11 +333,11 @@ public class VersionSupportUtils {
       Method asNMSCopy = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack")
           .getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
-      Object item = invokeMethod(nmsItemStack, "getItem");
-      Class<?> entryClass = Class.forName("net.minecraftforge.registries.IForgeRegistryEntry");
+      Class<?> itemClass = Class.forName("net.minecraft.world.item.Item");
+      Object item = VersionField.from(nmsItemStack).invokeMethodWithType(itemClass);
 
       Object registry = Class.forName("net.minecraftforge.registries.ForgeRegistries").getDeclaredField("ITEMS").get(null);
-      Object resoureLocation = registry.getClass().getMethod("getKey", entryClass).invoke(registry, item);
+      Object resoureLocation = registry.getClass().getMethod("getKey", Object.class).invoke(registry, item);
 
       return resoureLocation.toString();
 
