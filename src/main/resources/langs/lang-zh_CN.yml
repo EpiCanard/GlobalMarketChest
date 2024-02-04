@@ -1,144 +1,144 @@
-# ========================= File lang-zh_CN.yml =============================
+# ========================= 语言文件 lang-zh_CN.yml =============================
 #
-# Language :        Chinese
-# Translation by :  Coby_Cola and XiangZi_
+# 语言名称:        简体中文 (Simplified Chinese)
+# 翻译作者:        SnowCutieOwO, Coby_Cola (旧译作者) 与 XiangZi_ (旧译作者)
 #
-# This file contains all text displayed by the plugin GlobalMarketChest
+# 该文件包含了 GlobalMarketChest 的所有消息文本
 #
 # Information:
-#   In some texts, there are variables like this: {shopName}.
-#   DO NOT TRANSLATE THEM !
-#   These variables are replaced inside the plugin to display dynamic text.
-#   The order of the variables can be changed.
-#   If you remove a variable, this will not create an error.
+# 提示:
+#   请不要翻译文本中的变量, 如 {shopName}.
+#   这些变量在游戏中用于显示非固定数字.
+#   但你可以修改它们所在的位置.
+#   删除变量不会导致报错.
 #
 # ===========================================================================
 
 InterfacesTitle:
   EditAuction: "&2编辑拍卖"
-  BuyAuction: "&2购买拍卖"
-  CategoryView: "&2拍卖类别"
-  AuctionViewList: "&2拍卖列表"
-  AuctionViewByPlayer: "&2拍卖列表"
-  AuctionViewItem: "&2拍卖列表"
-  ConfigShop : "&2商店设置"
-  AuctionGlobalView: "&2查看你上架中的商品"
+  BuyAuction: "&2参与竞拍"
+  CategoryView: "&2分类浏览"
+  AuctionViewList: "&2竞拍列表"
+  AuctionViewByPlayer: "&2竞拍列表"
+  AuctionViewItem: "&2竞拍列表"
+  ConfigShop : "&2商店配置"
+  AuctionGlobalView: "&2竞拍历史"
   SearchView: "&2搜索拍卖"
-  ConfirmView: "&2确认"
-  LastAuctionViewList: "&2上次拍卖"
+  ConfirmView: "&2确认操作"
+  LastAuctionViewList: "&2最近拍卖"
   ShulkerBoxContent: "&2潜影盒内容"
-  # Auction Creation
-  CreateAuctionItem: "&2选择拍卖物品 "
-  CreateAuctionPrice: "&2设定拍卖价格"
-  # Shop Creation
-  ShopCreationSelectType: "&2设定拍卖品及其对应方块"
-  ShopCreationLink: "&2设定组名/对应商店"
+  # 创建拍卖
+  CreateAuctionItem: "&2选择拍卖物品"
+  CreateAuctionPrice: "&2调整竞拍价格"
+  # 创建商店
+  ShopCreationSelectType: "&2选择商店类型与连接方块"
+  ShopCreationLink: "&2设置组名称 / 连接商店"
 Divers:
   State: "状态"
   Quantity: "数量"
   UnitPrice: "单价"
   TotalPrice: "总价"
-  Tax: "Tax"
-  PriceWithoutTax: "Price without tax"
-  AuctionNumber: "拍卖编号"
+  AuctionNumber: "竞拍数"
   Seller: "卖家"
   Buyer: "买家"
-  Start: "开始!"
+  Start: "开始时间"
   Location: "位置"
   OtherLocation: "其他位置"
   Server: "服务器"
   Group: "组"
-  Type: "种类"
+  Type: "类型"
+  Tax: "税收"
+  PriceWithoutTax: "税前价"
   Warning: "警告"
-  ExpireIn: "剩余时间"
-  Expired: "已过期"
+  ExpireIn: "过期时间"
+  Expired: "已超时"
   Started: "已开始"
-  Ended: "已经结束"
-  CanceledBy: "取消"
+  Ended: "已结束"
+  CanceledBy: "被取消, 操作者"
   Free: "免费"
-  WithStatus: "&f当前状态 : &2{status}"
+  WithStatus: "&f状态: &2{status}"
   Days: "天"
   Hours: "时"
   Minutes: "分"
   Seconds: "秒"
-  PastDate: "{date}"
-  UnknownPlayer: "未知"
+  PastDate: "{date} 前"
+  UnknownPlayer: "未知玩家"
   SearchItemTextIcon: "&7搜索: &3{search}"
-  ExitChatMode: "&7 - (输入 &9{exit}&7 离开此模式)"
-  AdvicePriceIcon: "&7建议价格 : &3{advicePrice}"
-  NoAdvicePrice: "&3当前没有建议价格"
-  MinPrice: "最低价格"
-  MaxPrice: "最高价格"
-  Anonymous: "匿名的"
+  ExitChatMode: "&7 - (输入 &9{exit}&7 退出)"
+  AdvicePriceIcon: "&7建议价格: &3{advicePrice}"
+  NoAdvicePrice: "&3尚无建议价"
+  MinPrice: "最低价"
+  MaxPrice: "最高价"
+  Anonymous: "匿名"
 States:
   InProgress: "进行中"
-  Expired: "已过期 "
-  Abandoned: "已取消/放弃"
+  Expired: "已过期"
+  Abandoned: "已取消"
   Finished: "已完成"
 Shops:
-  ClickChangeGroup: "&c请单击以改变商店组名"
+  ClickChangeGroup: "&c点击切换商店组名称"
   CurrentShop: "当前商店"
 Buttons:
   Background:
     Name: " "
   Money:
-    Name: "&6当前金币"
+    Name: "&6你的资产"
   PreviousButton:
     Name: "返回"
-    Description: "&f返回至上个菜单"
+    Description: "&f返回上一界面"
   ExitButton:
     Name: "&4退出"
-    Description: "&f退出菜单"
+    Description: "&f关闭该界面"
   Validate:
-    Name: "&2点击验证身份"
-    Description: "&f点击以进行下一步操作"
+    Name: "&2确认"
+    Description: "&f进入下一步"
   Return:
-    Name: "&4后退"
-    Description: "&f后退至上一步操作"
+    Name: "&4返回"
+    Description: "&f返回上一步"
   CreateShop:
     Name: "&2创建商店"
   NewAuction:
-    Name: "&2创建新的拍卖"
-    Description: "&7拍卖编号 ({auctionNumber}/{maxAuctionNumber});&7点击以出售你的商品"
+    Name: "&2创建竞拍"
+    Description: "&7竞拍场数 ({auctionNumber}/{maxAuctionNumber});&7点此出售你的物品"
   CreateAuction:
-    Name: "&2创建拍卖"
+    Name: "&2创建竞拍"
   BuyAuction:
-    Name: "&2购买该拍卖品"
+    Name: "&2拍下该商品"
   AdminRemoveAuction:
-    Name: "&c删除此拍卖"
+    Name: "&c移除竞拍"
   AdminSeePlayerAuctions:
-    Name: "&c查看玩家的拍卖"
+    Name: "&c浏览玩家竞拍"
   RenewAuction:
-    Name: "&6延长该拍卖品出售时间"
+    Name: "&6刷新竞拍"
   UndoAuction:
-    Name: "&c删除该拍卖品"
+    Name: "&c删除竞拍"
   RenewEveryAuction:
-    Name: "&6延长全部拍卖品出售时间"
+    Name: "&6刷新所有竞拍"
   UndoEveryAuction:
-    Name: "&c删除全部拍卖品"
+    Name: "&c删除所有竞拍"
   GlobalView:
-    Name: "&f购买记录"
-    Description: "&5查看你上架中的商品"
+    Name: "&f概览"
+    Description: "&5竞拍历史"
   Search:
-    Name: "&3点击以搜索需要的物品..."
+    Name: "&3搜索竞拍"
   DragItem:
-    Name: "&a将一个物品拖动至此"
-    Description: ""
+    Name: "&a将物品拖放至此"
+    Description: "&a或按下 Shift+鼠标左键"
   CancelAuction:
-    Name: "&4取消本次购买"
+    Name: "&4取消拍卖"
   ViewByCategory:
-    Name: "排序方法:类别"
-    Description: "设定是否可以通过类别查看物品"
+    Name: "按分类浏览"
+    Description: "玩家是否可以通过分类浏览拍卖?"
   ViewByPlayer:
-    Name: "排序方法:玩家"
-    Description: "设定是否可以通过玩家查看物品"
+    Name: "按玩家浏览"
+    Description: "玩家是否可以通过玩家名称浏览拍卖?"
   ViewByLastCreated:
-    Name: "按上次创建时间查看"
-    Description: "玩家可以查看最后创建的拍卖品嘛？"
+    Name: "按时间浏览"
+    Description: "玩家是否可以通过创建时间先后浏览拍卖?"
   GlobalShop:
-    Name: "全球市场"
+    Name: "全球商店"
   AuctionShop:
-    Name: "拍卖市场"
+    Name: "拍卖商店"
   LocalShop:
     Name: "本地商店"
   AdminShop:
@@ -150,135 +150,130 @@ Buttons:
   NextPage:
     Name: "下一页"
   NumPage:
-    Name: "页数"
+    Name: "页码"
   AuctionSide:
     Name: " "
   AuctionMiddle:
-    Name: "&2将物品脱至此处"
-    Description: "&2或者使用shift+点击"
+    Name: "&2将物品拖放至此"
+    Description: "&2或按下 Shift+鼠标左键"
   MaxInOne:
-    Name: "&f最大数量"
+    Name: "&f单场拍卖最大物品数量"
   MaxRepeat:
-    Name: "&f重置数量"
+    Name: "&f尽可能发出相同的多场拍卖"
   RepeatIncrease:
     Name: "&2+"
   RepeatDecrease:
     Name: "&4-"
   InProgressAuction:
-    Name: "&a进行中拍卖"
+    Name: "&a正在进行的拍卖"
   ExpiredAuction:
-    Name: "&c过期的拍卖"
+    Name: "&c已超时的拍卖"
   SoldAuction:
-    Name: "&b历史记录"
+    Name: "&b已售出的拍卖"
   BoughtAuction:
-    Name: "&9B购买记录"
+    Name: "&9已买下的拍卖"
   CanceledAuction:
-    Name: "&6删除历史"
+    Name: "&6已取消的拍卖"
   FreePrice:
     Name: "&a免费"
-    Description: "&7将价格设为零"
+    Description: "&7将价格设置为零"
   CircleSetItem:
     Name: " "
   CircleUnsetItem:
     Name: " "
   YesButton:
-    Name: "确定"
+    Name: "是"
   NoButton:
-    Name: "取消"
+    Name: "否"
   Question:
     Name: " "
   SearchItemDrop:
-    Name: "&f查找类似物品"
-    Description: "&7使用 SHIFT+左键;&7点击你想要的物品"
+    Name: "&f寻找相似物品"
+    Description: "&7将待搜寻物品放入此处;&7或使用 Shift+鼠标左键"
   SearchItemText:
-    Name: "&f根据物品名字查找"
+    Name: "&f按名称寻找拍卖"
   SearchByPlayer:
-    Name: "&f根据玩家名字查找"
+    Name: "&f按玩家寻找拍卖"
   LastAuctions:
-    Name: "&3最近 {hours} 小时的拍卖"
+    Name: "&3{hours} 小时内发起的拍卖"
   LastCreatedAuctions:
-    Name: "&3 近{hours} 小时内创建的拍卖"
+    Name: "&3{hours} 小时内发起的拍卖"
   LastBoughtAuctions:
-    Name: "&3 近{hours} 小时内购买的拍卖品"
+    Name: "&3{hours} 小时内发起的拍卖"
   AdvicePriceInfo:
-    Name: "建议价格"
-    Description: "&3{advicePrice};&7点击使用建议价格"
+    Name: "建议售价"
+    Description: "&3{advicePrice};&7点击将价格设置为建议售价"
   SeeShulkerBoxContent:
-    Name: "查看该潜影盒的内容"
+    Name: "查看潜影盒内容"
 ErrorMessages:
-  UnknownWorld: "未知商店"
-  ShopTypeNotSet: "未设置商店类型；&2请至少选择一种类型"
-  MissingItems: "物品数量错误"
+  UnknownWorld: "商店所在世界未知"
+  ShopTypeNotSet: "商店类型未设置;&2请选择至少一种"
+  MissingItems: "物品数量不正确, 部分物品缺失"
   FailCreateAuction: "在数据库中创建拍卖失败"
-  NotEnoughSpace: "你的背包满了，请清理背包后重试"
-  NotEnoughMoney: "你没有足够的钱购买"
-  CantBuyAuction: "未能购买拍卖品（过期或已售出)"
-  CantRenewAuction: "拍卖续约失败"
-  CantUndoAuction: "未能撤消拍卖"
-  CantRenewEveryAuction: "延长时间错误"
-  CantRemoveAuction: "未能成功删除该拍卖"
-  CantUndoEveryAuction: "拍卖失败"
-  PlayerDoesntExist: "这个玩家不存在"
-  MaxAuctionByPlayer: "无法创建更多拍卖；&7您已达到最大拍卖数量"
-  PermissionNotAllowed: "&c不允许执行此操作"
-  InvalidCommand: "&c此命令无效 : "
-  PlayerOnly: "&c这个指令只能玩家使用"
-  UnknownShop: "&c未知商店 : "
-  TooManyShopMatching: "&cThere is too many shop matching {shopName}. Please specify the location"
-  CantRemoveBlock: "&c您不能删除此块，因为它附加了一个商店"
-  DamagedItem: "你不能卖损坏的东西"
-  BlacklistedItem: "你不能卖黑名单的商品"
-  CommandInChat: "&c不允许在此模式下执行命令"
-  MaxGlobalShop: "&c你已经达到创建商店的最大值了 ({maxGlobalShop} GlobalShop)"
-  WorldNotAllowed: "&cYou can't create a shop in this world"
+  NotEnoughSpace: "添加物品失败, 玩家背包空间不足"
+  NotEnoughMoney: "你没有足够的钱参与此次拍卖"
+  CantBuyAuction: "购买物品失败 (拍卖物品已过期或已售出)"
+  CantRenewAuction: "刷新拍卖失败"
+  CantUndoAuction: "删除拍卖失败"
+  CantRemoveAuction: "移除拍卖失败"
+  CantRenewEveryAuction: "刷新所有拍卖失败"
+  CantUndoEveryAuction: "删除所有拍卖失败"
+  PlayerDoesntExist: "该玩家不存在"
+  MaxAuctionByPlayer: "你不能再创建更多拍卖了;&7你已达到可发起拍卖场次的数量上限"
+  PermissionNotAllowed: "&c你不能这么做"
+  InvalidCommand: "&c命令无效: "
+  PlayerOnly: "&c该命令只能被玩家执行"
+  UnknownShop: "&c未知商店: "
+  CantRemoveBlock: "&c你不能破坏绑定了商店的方块"
+  DamagedItem: "你不能出售带耐久的物品"
+  BlacklistedItem: "你不能出售黑名单物品"
+  CommandInChat: "&c该状态下不能执行命令"
+  MaxGlobalShop: "&c你不能再创建更多全球商店了 (最多 {maxGlobalShop} 个)"
 InfoMessages:
-  UndoAuction: "&2删除成功"
-  RemoveAuction: "&2成功删除该拍卖"
-  RenewAuction: "&2物品已经成功续期"
-  CreateAuction: "&2创建成功"
-  RenewEveryAuction: "&2所有物品已经成功续期"
-  UndoEveryAuction: "&2所有物品已经成功删除"
-  ShopCreated: "Shop successfully created"
-  ShopDeleted: "商店已经移除..."
-  AcquireAuction: "&c[&e&l养老商城&c]&3{buyer} &6购买了 &2{quantity}个 {itemName} &6价格: &2{price}&6 卖家: &3{seller}&6."
-  AcquireAuctionOwner: "&c[&e&l养老商城&c]&3{buyer} &6成功购买你的物品 &2{quantity}个 {itemName} &6价格: &2{price}&6."
-  AcquireAuctionOwnerTax: "&3{buyer} &6bought your auction &2{quantity} {itemName} &6for &2{priceWithoutTax} ({price} - {tax} in taxes)&6."
-  AuctionCreated: "&3{seller} &6创建了 &3{auctionNumber}&6 号拍卖 &2数量:{quantity} 物品名称:{itemName} &6价格: &2{price}&6."
+  UndoAuction: "&2拍卖删除成功"
+  RemoveAuction: "&2拍卖移除成功"
+  RenewAuction: "&2拍卖刷新成功"
+  CreateAuction: "&2拍卖创建成功"
+  RenewEveryAuction: "&2刷新所有拍卖成功"
+  UndoEveryAuction: "&2删除所有拍卖成功"
+  ShopDeleted: "商店删除成功"
+  AcquireAuction: "&6玩家 &3{buyer} &6在 &3{seller}&6 处花费 &2{price}&6 购买了 &2{quantity} &6个 &2{itemName}&6."
+  AcquireAuctionOwner: "&6玩家&3 {buyer} &6以 &2{price}&6 的价格拍下了你 &2{quantity} &6个 &2{itemName} &6的拍卖."
+  AuctionCreated: "^6玩家 &3{seller} &6以 &2{price}&6 的起拍价发起了第 &3{auctionNumber}&6 号 &2{quantity} &6个&2 {itemName} &6的拍卖."
   LoginMessage:
-    BaseMessage: "&6自从你上次上线以来 :"
-    SoldAuctions: "&6- 你一共卖出 &3{count}&6 件拍卖品"
-    ExpiredAuctions: "&6- &3{count}&6 拍卖已经过期"
-  PluginReloading: "插件重载中...."
-  PluginReloaded: "插件重载成功"
-  WriteGroupName: "写下你想要的组名"
-  WriteItemName: "输入你要找的物品的名称"
-  WritePlayerName: "输入你要找的玩家名称"
-  DeleteShopQuestion: "确定删除此商店?"
-  ConvertingShopAuctions: "转换店铺拍卖 : &6{shopName}&7"
-  ShopAuctionsConverted: "商店 &6{shopName}&7 : &3{updated}&9/{total}&7 店铺转换"
-  ShopTemporarilyLocked: "这个商店暂时上锁了"
-  ConversionMode: "转换模式 : &6{mode}&7"
-  NewVersionAvailable: "&6GlobalMarketChest的最新版本:&3{lastVersion}&6 已经在spigot更新,地址: &7(current : {currentVersion})"
-  TeleportLocationUpdated: "&2Teleport location updated"
+    BaseMessage: "&6自你上次离线以来:"
+    SoldAuctions: "&6- 你成功卖出了 &3{count}&6 个物品"
+    ExpiredAuctions:  "&6- &3{count}&6 场拍卖已过期"
+  PluginReloading: "正在重载插件..."
+  PluginReloaded: "插件重载成功."
+  WriteGroupName: "输入你想要的组名称"
+  WriteItemName: "输入你要寻找的物品名称"
+  WritePlayerName: "输入你要寻找的玩家名称"
+  DeleteShopQuestion: "你真的要删除这个商店吗?"
+  ConvertingShopAuctions: "正在将商店中的物品转化为竞拍: &6{shopName}&7"
+  ShopAuctionsConverted: "商店 &6{shopName}&7 : &3{updated}&9/{total}&7 个已被转化"
+  ShopTemporarilyLocked: "商店已临时锁定"
+  ConversionMode: "转化模式: &6{mode}&7"
+  NewVersionAvailable: "&6GlobalMarketChest 的新版本 &3{lastVersion}&6 在 SpigotMC 上可用! &7(当前版本: {currentVersion})"
 Commands:
   Buttons:
-    OpenText: "打开"
-    OpenHover: "点击打开此商店"
+    OpenText: "开启"
+    OpenHover: "点击打开商店"
     DetailText: "详细信息"
-    DetailHover: "单击查看详细信息"
+    DetailHover: "点击浏览详细信息"
     TeleportText: "传送"
-    TeleportHover: "点击传送到此商店"
-  ListShop: "商店列表 : "
-  SeeHelp: "&6查看帮助 : &c/globalmarketchest help"
+    TeleportHover: "点击传送至商店"
+  ListShop: "商店列表: "
+  SeeHelp: "&6查询帮助: &c/globalmarketchest help"
   HelpCommand:
-    Usage: "&6语法 :"
-    Help: "&c/globalmarketchest [help]&6 - 查看帮助"
-    Version: "&c/globalmarketchest version&6 - 查看插件版本"
+    Usage: "&6命令用法:"
+    Help: "&c/globalmarketchest [help]&6 - 显示帮助"
+    Version: "&c/globalmarketchest version&6 - 显示插件版本"
     Reload: "&c/globalmarketchest reload&6 - 重载插件"
-    List: "&c/globalmarketchest list&6 - 查看所有商店"
-    Detail: "&c/globalmarketchest list detail <shop>&6 - 列出所有商店的详细信息"
-    TP: "&c/globalmarketchest list tp <shop> <position>&6 - 传送到某个商店"
-    Open: "&c/globalmarketchest open <shop>&6 - 打开商店菜单"
-    AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - 打开商店菜单"
-    Close: "&c/globalmarketchest close <player>&6 - 关闭某个玩家的商店"
-    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - 将旧版本的商店数据转换成新版本的商店数据"
+    List: "&c/globalmarketchest list&6 - 列出所有商店"
+    Detail: "&c/globalmarketchest list detail <商店>&6 - 列出所有实体商店"
+    TP: "&c/globalmarketchest list tp <商店> <位置>&6 - 将玩家传送至指定商店"
+    Open: "&c/globalmarketchest open <商店>&6 - 打开指定商店"
+    AdminOpen: "&c/globalmarketchest open <商店> [玩家名称]&6 - 打开指定商店"
+    Close: "&c/globalmarketchest close <商店>&6 - 关闭指定玩家的商店"
+    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - 将旧版 Minecraft 的 itemMeta 数据转化为新版本数据"
