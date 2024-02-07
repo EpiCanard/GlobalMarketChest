@@ -244,10 +244,6 @@ InfoMessages:
   AcquireAuctionOwner: "&6玩家&3 {buyer} &6以 &2{price}&6 的价格拍下了你 &2{quantity} &6个 &2{itemName} &6的拍卖."
   AuctionCreated: "&6玩家 &3{seller} &6以 &2{price}&6 的起拍价发起了第 &3{auctionNumber}&6 号 &2{quantity} &6个&2 {itemName} &6的拍卖."
   AcquireAuctionOwnerTax: "&6玩家 &3{buyer} &6花费了 &2{priceWithoutTax} ({price} - {tax} 税费)&6 买下了你的 &2{quantity} &6个&2 {itemName} &6."
-  ShopDeleted: "商店删除成功"
-  AcquireAuction: "&6玩家 &3{buyer} &6在 &3{seller}&6 处花费 &2{price}&6 购买了 &2{quantity} &6个 &2{itemName}&6."
-  AcquireAuctionOwner: "&6玩家&3 {buyer} &6以 &2{price}&6 的价格拍下了你 &2{quantity} &6个 &2{itemName} &6的拍卖."
-  AuctionCreated: "^6玩家 &3{seller} &6以 &2{price}&6 的起拍价发起了第 &3{auctionNumber}&6 号 &2{quantity} &6个&2 {itemName} &6的拍卖."
   LoginMessage:
     BaseMessage: "&6自你上次离线以来:"
     SoldAuctions: "&6- 你成功卖出了 &3{count}&6 个物品"
