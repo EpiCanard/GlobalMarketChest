@@ -41,7 +41,7 @@ public class TogglerConfig {
    * @return New instance of Toggler (SingleToggler or CircleToggler)
    */
   public Toggler instanceToggler() {
-    if (this.type == "circle")
+    if ("circle".equals(this.type))
       return new CircleToggler(this);
     return new SingleToggler(this);
 
