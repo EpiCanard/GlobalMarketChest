@@ -46,7 +46,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     // Create - /globalmarketchest create <shop>
     final CreateConsumer createConsumer = new CreateConsumer();
     this.command.addSubNode(
-      new CommandNode("create", Permissions.CMD_CREATE, true, false)
+      new CommandNode("create", Permissions.CMD_CREATE, true, true)
       .setCommand(createConsumer)
       .setTabConsumer(this::shopsTabComplete));
 
