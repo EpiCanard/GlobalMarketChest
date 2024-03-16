@@ -191,7 +191,6 @@ Interfaces:
     ExitButton: minecraft:barrier
     Validate: minecraft:spectral_arrow
     Return: minecraft:tipped_arrow
-    CreateShop: minecraft:nether_star
     Money: minecraft:gold_ingot
     GlobalView: minecraft:enchanted_book
     Search: minecraft:hopper
@@ -207,7 +206,6 @@ Interfaces:
     AuctionShop: minecraft:shulker_box
     AdminShop: minecraft:ender_chest
     ShopIcon: minecraft:name_tag
-    EditGroupName: minecraft:blue_stained_glass_pane
     PreviousPage: minecraft:arrow
     NextPage: minecraft:arrow
     NumPage: minecraft:book

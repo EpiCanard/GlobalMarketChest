@@ -79,7 +79,6 @@ States:
   Abandoned: "Terk edilmiş"
   Finished: "Bitmiş"
 Shops:
-  ClickChangeGroup: "&cMağaza grubu adını değiştirmek için tıklayın"
   CurrentShop: "Mevcut dükkan"
 Buttons:
   Background:
@@ -98,8 +97,6 @@ Buttons:
   Return:
     Name: "&4Geri"
     Description: "&fÖnceki adıma dön"
-  CreateShop:
-    Name: "&2Mağaza oluştur"
   NewAuction:
     Name: "&2Yeni açık artırma oluştur"
     Description: "&7Açık artırma numarası ({auctionNumber}/{maxAuctionNumber});&7Öğelerinizi satmak için buraya tıklayın"
@@ -148,8 +145,6 @@ Buttons:
   AdminShop:
     Name: "&cAdminShop"
     Description: "&7Items to buy with unlimited quantity"
-  EditGroupName:
-    Name: "&fGrup adını Düzenle"
   PreviousPage:
     Name: "Önçeki sayfa"
   NextPage:
@@ -231,7 +226,6 @@ Buttons:
     Description: "&7Item are displayed by category like creative menu"
 ErrorMessages:
   UnknownWorld: "Dükkan için bilinmeyen dünya"
-  ShopTypeNotSet: "Mağaza türü ayarlanmadı;&2 Lütfen en az bir tür seçin"
   MissingItems: "Yanlış öğe sayısı, bazı öğeler eksik"
   FailCreateAuction: "Veritabanında açık artırma oluşturulamadı"
   NotEnoughSpace: "Tüm öğeleri eklemek için alan yok;&7oyuncu envanteri"

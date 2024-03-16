@@ -79,7 +79,6 @@ States:
   Abandoned: "Abandonado"
   Finished: "Terminado"
 Shops:
-  ClickChangeGroup: "&cClick para cambiar el nombre de grupo de la tienda"
   CurrentShop: "Tienda actual"
 Buttons:
   Background:
@@ -98,8 +97,6 @@ Buttons:
   Return:
     Name: "&4Vuelve"
     Description: "&fVuelve al menú anterior"
-  CreateShop:
-    Name: "&2Crear tienda"
   NewAuction:
     Name: "&2Crea una nueva subasta"
     Description: "&7Número de subastas ({auctionNumber}/{maxAuctionNumber});&7Click aquí para vender tus ítems"
@@ -148,8 +145,6 @@ Buttons:
   AdminShop:
     Name: "&cTiendaAdmin"
     Description: "&7Items to buy with unlimited quantity"
-  EditGroupName:
-    Name: "&fEdita el nombre de grupo"
   PreviousPage:
     Name: "Página anterior"
   NextPage:
@@ -231,7 +226,6 @@ Buttons:
     Description: "&7Item are displayed by category like creative menu"
 ErrorMessages:
   UnknownWorld: "Mundo desconocido para la tienda"
-  ShopTypeNotSet: "El tipo de tienda no ha sido seleccionado;&2Por favor selecciona como mínimo un tipo"
   MissingItems: "Número incorrecto de ítems, algunos ítems estan faltando"
   FailCreateAuction: "Error para crear la subasta en la base de datos"
   NotEnoughSpace: "No hay suficiente espacio para añadir todos los ítem;&7En el inventario del jugador"

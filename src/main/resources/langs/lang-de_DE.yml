@@ -79,7 +79,6 @@ States:
   Abandoned: "Abgebrochen"
   Finished: "Beendet"
 Shops:
-  ClickChangeGroup: "&cklicken um den Gruppennamen zu ändern"
   CurrentShop: "Aktueller shop"
 Buttons:
   Background:
@@ -98,8 +97,6 @@ Buttons:
   Return:
     Name: "&4Zurück"
     Description: "&fZurück zum letzten Schritt"
-  CreateShop:
-    Name: "&2Erstelle Shop"
   NewAuction:
     Name: "&2Erstelle neue Auktion"
     Description: "&7Auktion Nummer ({auctionNumber}/{maxAuctionNumber});&7Klick hier um deine Items zu verkaufen"
@@ -148,8 +145,6 @@ Buttons:
   AdminShop:
     Name: "&cAdminShop"
     Description: "&7Items to buy with unlimited quantity"
-  EditGroupName:
-    Name: "&fBearbeite Gruppen Name"
   PreviousPage:
     Name: "vorherige Seite"
   NextPage:
@@ -231,7 +226,6 @@ Buttons:
     Description: "&7Item are displayed by category like creative menu"
 ErrorMessages:
   UnknownWorld: "Unbekannte Shop Welt"
-  ShopTypeNotSet: "Der Shop typ ist nicht gesetzt;&2Bitte wähle mindestens einen Typ"
   MissingItems: "Falsche Anzahl an Gegenstände, einige Gegenstände fehlen"
   FailCreateAuction: "Der Eintrag in die Datenbank ist fehlgeschlagen"
   NotEnoughSpace: "Nicht genug Platz im Inventar;&7um alle Gegenstände aufzunehmen"

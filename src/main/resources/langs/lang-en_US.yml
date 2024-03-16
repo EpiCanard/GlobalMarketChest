@@ -79,7 +79,6 @@ States:
   Abandoned: "Abandoned"
   Finished: "Finished"
 Shops:
-  ClickChangeGroup: "&cClick to change shop group name"
   CurrentShop: "Current shop"
 Buttons:
   Background:
@@ -98,8 +97,6 @@ Buttons:
   Return:
     Name: "&4Return"
     Description: "&fReturn to previous step"
-  CreateShop:
-    Name: "&2Create Shop"
   NewAuction:
     Name: "&2Create new auction"
     Description: "&7Auctions number ({auctionNumber}/{maxAuctionNumber});&7Click here to sell your items"
@@ -148,8 +145,6 @@ Buttons:
   AdminShop:
     Name: "&cAdminShop"
     Description: "&7Items to buy with unlimited quantity"
-  EditGroupName:
-    Name: "&fEdit Group Name"
   PreviousPage:
     Name: "Previous page"
   NextPage:
@@ -231,7 +226,6 @@ Buttons:
     Description: "&7Item are displayed by category like creative menu"
 ErrorMessages:
   UnknownWorld: "Unknown world for shop"
-  ShopTypeNotSet: "The shop type is not set;&2Please select at least one type"
   MissingItems: "Wrong number of items, some items are missing"
   FailCreateAuction: "Fail to create auction in database"
   NotEnoughSpace: "Not enough space to add all items;&7in player inventory"

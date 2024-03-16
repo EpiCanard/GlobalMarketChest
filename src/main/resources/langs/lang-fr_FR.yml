@@ -79,7 +79,6 @@ States:
   Abandoned: "Abandonné"
   Finished: "Fini"
 Shops:
-  ClickChangeGroup: "&cClique pour changer;&cle nom de groupe du shop"
   CurrentShop: "Shop actuel"
 Buttons:
   Background:
@@ -98,8 +97,6 @@ Buttons:
   Return:
     Name: "&4Revenir"
     Description: "&fRevenir à l'étape précédente"
-  CreateShop:
-    Name: "&2Créer le Shop"
   NewAuction:
     Name: "&2Créer une nouvelle enchère"
     Description: "&7Nombre d'enchères ({auctionNumber}/{maxAuctionNumber});&7Cliquer ici pour vendre vos objets"
@@ -148,8 +145,6 @@ Buttons:
   AdminShop:
     Name: "&cAdminShop"
     Description: "&7Items à acheter avec une quantité illimitée"
-  EditGroupName:
-    Name: "&fModifier le nom du groupe"
   PreviousPage:
     Name: "Page précédente"
   NextPage:
@@ -232,7 +227,6 @@ Buttons:
     Description: "&7Les item sont affichés par catégorie comme le menu créatif"
 ErrorMessages:
   UnknownWorld: "Monde inconnu pour la boutique"
-  ShopTypeNotSet: "Le type de shop n'est pas défini;&2Veuillez en sélectionner au moins un"
   MissingItems: "Mauvais nombre d'items, certains items sont manquants"
   FailCreationAuction: "Impossible de créer l'enchère en base de données"
   NotEnoughSpace: "Pas assez de place pour ajouter;&7les items dans l'inventaire du joueur"

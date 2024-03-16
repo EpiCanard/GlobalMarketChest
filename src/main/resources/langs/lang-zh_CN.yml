@@ -79,7 +79,6 @@ States:
   Abandoned: "已取消"
   Finished: "已完成"
 Shops:
-  ClickChangeGroup: "&c点击切换商店组名称"
   CurrentShop: "当前商店"
 Buttons:
   Background:
@@ -98,8 +97,6 @@ Buttons:
   Return:
     Name: "&4返回"
     Description: "&f返回上一步"
-  CreateShop:
-    Name: "&2创建商店"
   NewAuction:
     Name: "&2创建竞拍"
     Description: "&7竞拍场数 ({auctionNumber}/{maxAuctionNumber});&7点此出售你的物品"
@@ -149,8 +146,6 @@ Buttons:
   AdminShop:
     Name: "&c管理员商店"
     Description: "&7Items to buy with unlimited quantity"
-  EditGroupName:
-    Name: "&f编辑组名"
   PreviousPage:
     Name: "上一页"
   NextPage:
@@ -232,7 +227,6 @@ Buttons:
     Description: "&7Item are displayed by category like creative menu"
 ErrorMessages:
   UnknownWorld: "商店所在世界未知"
-  ShopTypeNotSet: "商店类型未设置;&2请选择至少一种"
   MissingItems: "物品数量不正确, 部分物品缺失"
   FailCreateAuction: "在数据库中创建拍卖失败"
   NotEnoughSpace: "添加物品失败, 玩家背包空间不足"

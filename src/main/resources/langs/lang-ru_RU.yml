@@ -80,7 +80,6 @@ States:
   Abandoned: "Отказаный"
   Finished: "Завершен"
 Shops:
-  ClickChangeGroup: "&cКликните для изменения группы имени магазина"
   CurrentShop: "Текущий магазин"
 Buttons:
   Background:
@@ -98,8 +97,6 @@ Buttons:
   Return:
     Name: "&4Вернуться"
     Description: "&fВернуться к предыдущему шагу"
-  CreateShop:
-    Name: "&2Создать магазин"
   NewAuction:
     Name: "&2Создать новый аукцион"
     Description: "&7Имя аукциона ({auctionNumber}/{maxAuctionNumber});&7Кликните сюда, чтобы выбрать предмет"
@@ -148,8 +145,6 @@ Buttons:
   AdminShop:
     Name: "&cAdminShop"
     Description: "&7Items to buy with unlimited quantity"
-  EditGroupName:
-    Name: "&fРедактировать Имя Группы"
   PreviousPage:
     Name: "Пред. страница"
   NextPage:
@@ -231,7 +226,6 @@ Buttons:
     Description: "&7Item are displayed by category like creative menu"
 ErrorMessages:
   UnknownWorld: "Неизвестный мир для магазина"
-  ShopTypeNotSet: "Тип магазина не задан;&2Пожалуйста выберите хотя бы один тип"
   MissingItems: "Неправильное кол-во предметов, некоторые предметы отсутсвуют"
   FailCreateAuction: "Не удалось создать аукцион в БазеДанных"
   NotEnoughSpace: "Недосточно места для добавления всех предметов;&7в инвентарь игрока"

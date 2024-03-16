@@ -79,7 +79,6 @@ States:
   Abandoned: "放棄された"
   Finished: "終了した"
 Shops:
-  ClickChangeGroup: "&cクリックしてショップグループ名を変更"
   CurrentShop: "現在のお店"
 Buttons:
   Background:
@@ -98,8 +97,6 @@ Buttons:
   Return:
     Name: "&4戻る"
     Description: "&f前の手順に戻る"
-  CreateShop:
-    Name: "&2ショップを作成する"
   NewAuction:
     Name: "&2新しいオークションを作成する"
     Description: "&7オークション番号 ({auctionNumber}/{maxAuctionNumber});&7ここをクリックしてアイテムを販売してください"
@@ -148,8 +145,6 @@ Buttons:
   AdminShop:
     Name: "&c管理店"
     Description: "&7Items to buy with unlimited quantity"
-  EditGroupName:
-    Name: "&fグループ名の編集"
   PreviousPage:
     Name: "前のページ"
   NextPage:
@@ -231,7 +226,6 @@ Buttons:
     Description: "&7Item are displayed by category like creative menu"
 ErrorMessages:
   UnknownWorld: "ショップの未知の世界"
-  ShopTypeNotSet: "ショップタイプが設定されていません;＆2少なくとも1つのタイプを選択してください"
   MissingItems: "アイテムの数が間違っています、いくつかのアイテムが欠落しています"
   FailCreateAuction: "データベースにオークションを作成できない"
   NotEnoughSpace: "すべてのアイテムを追加するのに十分なスペースがありません;＆7inプレーヤーインベントリ"
