@@ -99,6 +99,7 @@ public class ShopManager extends DatabaseManager {
         .addValue("otherLocation", shop.getOtherLocation().map(WorldUtils::getStringFromLocation))
         .addValue("tpLocation", shop.getTpLocation().map(WorldUtils::getStringFromLocation))
         .addValue("type", shop.getType().getShopId())
+        .addValue("mode", shop.getMode().ordinal())
         .addValue("group", shop.getGroup())
         .addValue("server", shop.getServer());
 

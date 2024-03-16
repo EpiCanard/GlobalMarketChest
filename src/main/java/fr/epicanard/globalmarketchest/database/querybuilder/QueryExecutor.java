@@ -136,11 +136,9 @@ public class QueryExecutor {
   public Boolean executeBatches(List<String> queries) {
     Connection co = GlobalMarketChest.plugin.getSqlConnector().getConnection();
     boolean ret = false;
-    Statement prepared;
 
     try {
-      prepared = co.createStatement();
-      Statement finalPrepared = prepared;
+      Statement finalPrepared = co.createStatement();
       queries.forEach(query -> {
         try {
           finalPrepared.addBatch(query);
@@ -148,7 +146,7 @@ public class QueryExecutor {
           e.printStackTrace();
         }
       });
-      prepared.executeBatch();
+      finalPrepared.executeBatch();
       ret = true;
     } catch (SQLException e) {
       e.printStackTrace();

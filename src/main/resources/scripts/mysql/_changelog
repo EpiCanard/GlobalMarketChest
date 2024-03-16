@@ -1,3 +1,4 @@
 patch-1.5.0 : Replace column ended with column status
 patch-1.8.0 : Add column server on shop
 patch-1.15.0 : Make sign and other location nullable and add tp location
+patch-2.0.0 : Add column mode on shop

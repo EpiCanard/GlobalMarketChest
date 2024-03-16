@@ -218,6 +218,17 @@ Buttons:
     Name: "&3Choose the block you want to attach to the shop"
   SetAttachBlock:
     Description: "&7Click to attach a block"
+  ChooseShopMode:
+    Name: "&3Choose the mode of your shop"
+  ShopSingleItem:
+    Name: "&cUnique Item"
+    Description: "&7Only one item can be sold"
+  ShopMultipleItem:
+    Name: "&cMultiple Item"
+    Description: "&7Multiple items can be sold in one interface"
+  ShopCategory:
+    Name: "&cCategory"
+    Description: "&7Item are displayed by category like creative menu"
 ErrorMessages:
   UnknownWorld: "Nieodpowiedni świat"
   ShopTypeNotSet: "Typ sklepu nie jest ustawiony;&2Wybierz przynajmniej jeden typ"

@@ -24,7 +24,6 @@ public class AuctionViewList extends AuctionViewBase {
   private final Integer days = ConfigUtils.getInt("Options.AdvicePrice.Days", 30);
   private final String analyze = ConfigUtils.getString("Options.AdvicePrice.Analyze", "all");
 
-
   public AuctionViewList(InventoryGUI inv) {
     super(inv);
 
@@ -37,19 +36,19 @@ public class AuctionViewList extends AuctionViewBase {
 
     this.paginator.setLoadConsumer(pag -> {
       GlobalMarketChest.plugin.auctionManager.getAuctions(this.level, this.shopInfo.getGroup(), this.category, this.auctionRef, this.paginator.getLimit(),
-          auctions -> {
-            if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
-              this.auctions = Utils.mapList(auctions, auction -> auction.getRight());
-            pag.setItemStacks(Utils.mapList(auctions, auction -> {
-              ItemStack it = auction.getLeft();
-              int max = inv.getInv().getMaxStackSize();
-              if (this.level.getNextLevel(this.category) == null) {
-                it.setAmount(auction.getRight().getAmount() > max ? max : auction.getRight().getAmount());
-                ItemStackUtils.addItemStackLore(it, auction.getRight().getLore(AuctionLoreConfig.TOSELL, this.inv.getPlayer()));
-              }
-              return it;
-            }));
-          });
+        auctions -> {
+          if (pag.getLimit().getLeft() == 0 || auctions.size() > 0)
+            this.auctions = Utils.mapList(auctions, auction -> auction.getRight());
+          pag.setItemStacks(Utils.mapList(auctions, auction -> {
+            ItemStack it = auction.getLeft();
+            int max = inv.getInv().getMaxStackSize();
+            if (this.level.getNextLevel(this.category) == null) {
+              it.setAmount(auction.getRight().getAmount() > max ? max : auction.getRight().getAmount());
+              ItemStackUtils.addItemStackLore(it, auction.getRight().getLore(AuctionLoreConfig.TOSELL, this.inv.getPlayer()));
+            }
+            return it;
+          }));
+        });
     });
 
     this.paginator.setClickConsumer(this::selectAuction);
@@ -77,7 +76,8 @@ public class AuctionViewList extends AuctionViewBase {
         adviceMessage = LangUtils.get("Divers.NoAdvicePrice");
       }
 
-      final ItemStack iconItem = ItemStackUtils.addItemStackLore(this.item.clone(), Utils.toList("&6--------------", adviceMessage));
+      final ItemStack iconItem = ItemStackUtils.addItemStackLore(this.item.clone(),
+          Utils.toList("&6--------------", adviceMessage));
       this.setIcon(iconItem);
     });
 

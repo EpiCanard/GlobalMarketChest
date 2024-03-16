@@ -22,6 +22,7 @@ public enum InterfaceType {
   SHOP_CREATION_LINK(ShopCreationLink.class),
   SHOP_CREATION_SELECT_TYPE(ShopCreationSelectType.class),
   SHOP_CREATION_TYPE(ShopCreationType.class),
+  SHOP_CREATION_MODE(ShopCreationMode.class),
   SHULKER_BOX_CONTENT(ShulkerBoxContent.class);
 
   @Getter

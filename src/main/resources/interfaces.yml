@@ -43,6 +43,10 @@ BaseInterfaces:
       17: CanceledAuction
   AdminInterface:
     Background: Admin
+  ShopCreation:
+    Items:
+      48: SetAttachBlock
+      50: ShopIcon
 
 # Real interface implemented
 Interfaces:
@@ -192,6 +196,7 @@ Interfaces:
   # =============
 
   # View to select type and linked block with shop
+  # TO DELETE
   ShopCreationSelectType:
     Base:
       - Exit
@@ -208,6 +213,7 @@ Interfaces:
       49: ShopIcon
 
   # View to edit shop group or select another shop to set his group name on current
+  # TO DELETE
   ShopCreationLink:
     Base:
       - Return
@@ -227,6 +233,7 @@ Interfaces:
   ShopCreationType:
     Base:
       - Exit
+      - ShopCreation
     DynamicRow: 3
     Togglers:
       29:
@@ -237,8 +244,27 @@ Interfaces:
         SetItem: GlobalShop
     Items:
       13: ChooseShopType
-      48: SetAttachBlock
-      50: ShopIcon
+
+  ShopCreationMode:
+    Base:
+      - ShopCreation
+      - Exit
+    DynamicRow: 3
+    Togglers:
+      0:
+        Set: false
+        SetItem: Return
+      29:
+        Set: false
+        SetItem: ShopSingleItem
+      31:
+        Set: false
+        SetItem: ShopMultipleItem
+      33:
+        Set: false
+        SetItem: ShopCategory
+    Items:
+      13: ChooseShopMode
 
   ShopCreationAttachBlock:
     Base:

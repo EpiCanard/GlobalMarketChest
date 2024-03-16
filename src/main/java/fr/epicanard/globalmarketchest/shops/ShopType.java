@@ -59,4 +59,12 @@ public enum ShopType {
     }
     return ShopType.GLOBALSHOP;
   }
+
+  public static ShopType fromLineToCreate(String confName) {
+    for (ShopType type : ShopType.values()) {
+      if (type.getFirstLineToCreate().equals(confName))
+        return type;
+    }
+    return null;
+  }
 }

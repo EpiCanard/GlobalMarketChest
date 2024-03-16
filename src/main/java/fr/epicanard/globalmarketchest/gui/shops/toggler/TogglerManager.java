@@ -104,10 +104,9 @@ public final class TogglerManager {
       final Toggler toggler = toUpdate.get(i);
       final Integer newPos = start + index.get(i);
       final Consumer<InventoryGUI> action = actions.remove(toggler.getPos());
-      actions.put(newPos, toggler.getPos() == pos ? togglerAction : action);
+      actions.put(newPos, toggler.getPos() == pos && !toggler.isSet ? togglerAction : action);
       toggler.setAtPos(inv, newPos);
     }
-
   }
 
   private List<Integer> getDynamicIndex(final Integer size) {

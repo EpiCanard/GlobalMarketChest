@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `{table_shops}`
     `otherLocation` TEXT,
     `tpLocation`    TEXT,
     `type`          TINYINT(1)      NOT NULL,
+    `mode`          TINYINT(1)      NOT NULL    DEFAULT 2,
     `group`         VARCHAR(50)     NOT NULL,
     `server`        VARCHAR(50)     NOT NULL    DEFAULT 'default'
 );

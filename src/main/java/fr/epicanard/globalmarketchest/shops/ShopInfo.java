@@ -24,6 +24,8 @@ public class ShopInfo {
   private String owner;
   @Getter @Setter
   private ShopType type;
+  @Getter @Setter
+  private ShopMode mode;
   @Getter
   private Optional<Location> signLocation;
   @Getter @Setter
@@ -48,6 +50,7 @@ public class ShopInfo {
       this.otherLocation = Optional.ofNullable(res.getString("otherLocation")).map(WorldUtils::getLocationFromString);
       this.tpLocation = Optional.ofNullable(res.getString("tpLocation")).map(WorldUtils::getLocationFromString);
       this.type = ShopType.fromId(res.getInt("type"));
+      this.mode = ShopMode.values()[res.getInt("mode")];
       this.group = res.getString("group");
       this.server = res.getString("server");
     } catch (SQLException e) {
@@ -55,12 +58,13 @@ public class ShopInfo {
     }
   }
 
-  public ShopInfo(int id, String owner, ShopType type, Location sign, Location other, Location tp, String group) {
-    this.id = id;
+  public ShopInfo(String owner, ShopType type, Location sign, Location tp, String group) {
+    this.id = -1;
     this.owner = owner;
     this.type = type;
+    this.mode = ShopMode.CATEGORY;
     this.signLocation = Optional.ofNullable(sign);
-    this.otherLocation = Optional.ofNullable(other);
+    this.otherLocation = Optional.empty();
     this.tpLocation = Optional.ofNullable(tp);
     this.group = group;
     this.server = GlobalMarketChest.plugin.getServerName();

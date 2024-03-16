@@ -5,7 +5,6 @@ import fr.epicanard.globalmarketchest.exceptions.WorldDoesntExist;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.TransactionKey;
 import fr.epicanard.globalmarketchest.gui.actions.InterfaceType;
-import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.ranks.RankProperties;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.shops.ShopType;
@@ -27,40 +26,51 @@ public class ShopCreationListener implements Listener {
 
   @EventHandler
   public void onChangeSign(SignChangeEvent event) {
+    final ShopType type = ShopType.fromLineToCreate(event.getLine(0));
+
+    if (type == null)
+      return;
+
     final Player player = event.getPlayer();
 
     try {
-      if (!Permissions.GS_CREATESHOP.isSetOn(player) || !WorldUtils.isAllowedWorld(event.getBlock().getWorld().getName()))
+      if (!WorldUtils.isAllowedWorld(event.getBlock().getWorld().getName()))
         return;
     } catch (WorldDoesntExist e) {
       LoggerUtils.warn(e.getMessage());
       return;
     }
 
-    if (event.getLine(0).equals(ShopType.GLOBALSHOP.getFirstLineToCreate())) {
-      event.setLine(0, ShopType.GLOBALSHOP.getErrorDisplayName());
+    event.setLine(0, type.getErrorDisplayName());
+
+    if (canCreateShop(type, player))
+      this.openCreationShopInterface(type, player, event);
+  }
+
+  private Boolean canCreateShop(ShopType type, Player player) {
+    if (type == ShopType.GLOBALSHOP) {
       final RankProperties playerRankProperties = GlobalMarketChest.plugin.getRanksLoader().getPlayerProperties(player);
-      if (playerRankProperties.canCreateShop(player)) {
-        this.openCreationShopInterface(player, event);
-      } else {
+      final Boolean canCreate = playerRankProperties.canCreateShop(player);
+      if (!canCreate)
         PlayerUtils.sendMessage(player, format("ErrorMessages.MaxGlobalShop", "maxGlobalShop", playerRankProperties.getMaxGlobalShopByPlayer()));
-      }
+      return canCreate;
     }
+
+    return true;
   }
 
   /**
    * Open shop interface to create it
    *
+   * @param type Type of shop
    * @param player Player that create the shop
    * @param event  Sign event
    */
-  private void openCreationShopInterface(Player player, SignChangeEvent event) {
+  private void openCreationShopInterface(ShopType type, Player player, SignChangeEvent event) {
     final ShopInfo shop = new ShopInfo(
-        -1,
         player.getUniqueId().toString(),
-        ShopType.GLOBALSHOP,
+        type,
         event.getBlock().getLocation(),
-        null,
         event.getBlock().getLocation().add(0.5, 0, 0.5),
         ShopUtils.generateName()
     );
@@ -70,6 +80,7 @@ public class ShopCreationListener implements Listener {
     inv.getTransaction().put(TransactionKey.SIGN_LOCATION, event.getBlock().getLocation());
     GlobalMarketChest.plugin.inventories.addInventory(player.getUniqueId(), inv);
     inv.open();
-    inv.loadInterface(InterfaceType.SHOP_CREATION_SELECT_TYPE);
+    inv.getTransaction().put(TransactionKey.HAS_RETURN, false);
+    inv.loadInterface(InterfaceType.SHOP_CREATION_MODE);
   }
 }

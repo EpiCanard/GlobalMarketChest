@@ -72,10 +72,8 @@ public class CreateConsumer implements CommandConsumer {
    */
   private void openCreationShopInterface(Player player, ShopType shopType, String shopName) {
     final ShopInfo shop = new ShopInfo(
-        -1,
         player.getUniqueId().toString(),
         shopType,
-        null,
         null,
         player.getLocation(),
         (shopName != null) ? shopName : ShopUtils.generateName()

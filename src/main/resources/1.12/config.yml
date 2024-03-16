@@ -232,6 +232,10 @@ Interfaces:
     ChooseShopType: minecraft:paper
     ChooseAttachBlock: minecraft:paper
     SetAttachBlock: minecraft:grass_block
+    ChooseShopMode: minecraft:paper
+    ShopSingleItem: minecraft:stick
+    ShopMultipleItem: minecraft:chest
+    ShopCategory: minecraft:crafting_table
 Sign:
   Appearance:
     # Config for GlobalShop creation
