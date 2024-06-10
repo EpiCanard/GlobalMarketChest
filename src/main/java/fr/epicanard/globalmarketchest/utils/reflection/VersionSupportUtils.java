@@ -2,7 +2,6 @@ package fr.epicanard.globalmarketchest.utils.reflection;
 
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -17,34 +16,12 @@ public class VersionSupportUtils {
 
   private final String NBTTAG = "GMCItem";
 
-  enum Path {
-    BUKKIT("org.bukkit.craftbukkit"),
-    MINECRAFT_SERVER("net.minecraft.server"),
-    MINECRAFT_RESOURCES("net.minecraft.resources"),
-    MINECRAFT_WORLD_ITEM("net.minecraft.world.item"),
-    MINECRAFT_NETWORK_CHAT("net.minecraft.network.chat"),
-    MINECRAFT_NETWORK_GAME("net.minecraft.network.protocol.game"),
-    MINECRAFT_NETWORK_PROTOCOL("net.minecraft.network.protocol"),
-    MINECRAFT_WORLD_INVENTORY("net.minecraft.world.inventory"),
-    MINECRAFT_NBT("net.minecraft.nbt"),
-    MINECRAFT_CORE_REGISTRIES("net.minecraft.core.registries"),
-    MINECRAFT_CORE("net.minecraft.core");
-
-    String path;
-
-    Path(String path) {
-      this.path = path;
-    }
-  }
-
-  private String version;
   private static VersionSupportUtils INSTANCE;
 
   /**
    * Private constructor VersionSupportUtils
    */
   private VersionSupportUtils() {
-    this.version = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
   }
 
   /**
@@ -68,30 +45,6 @@ public class VersionSupportUtils {
   // ======== TOOLS ============
 
   /**
-   * Get a class from his path
-   *
-   * @param basePath Base of the pathe to define if it is a bukkit ou minecraft
-   * @param path     Name of the classe
-   * @return return the class with the path
-   * @throws ClassNotFoundException
-   */
-  private Class<?> getClassFromPathWithVersion(Path basePath, String path) throws ClassNotFoundException {
-    return Class.forName(String.format("%s.%s.%s", basePath.path, this.version, path));
-  }
-
-  /**
-   * Get a class from his path
-   *
-   * @param basePath Base of the pathe to define if it is a bukkit ou minecraft
-   * @param path     Name of the classe
-   * @return return the class with the path
-   * @throws ClassNotFoundException
-   */
-  private Class<?> getClassFromPath(Path basePath, String path) throws ClassNotFoundException {
-    return Class.forName(String.format("%s.%s", basePath.path, path));
-  }
-
-  /**
    * Get the static object Item.REGISTRY
    *
    * @return return the static object
@@ -107,28 +60,26 @@ public class VersionSupportUtils {
 
   @Version(name = "getRegistry", versions = { "1.12" })
   public Object getRegistry_1_12() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
-    return getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Item").getField("REGISTRY").get(null);
+    return Path.MINECRAFT_SERVER.getClass("Item").getField("REGISTRY").get(null);
   }
 
   @Version(name = "getRegistry", versions = { "1.13", "1.14", "1.15", "1.16" })
   public Object getRegistry_1_13() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
-    return getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "IRegistry").getField("ITEM").get(null);
+    return Path.MINECRAFT_SERVER.getClass("IRegistry").getField("ITEM").get(null);
   }
 
   @Version(name = "getRegistry", versions = { "1.17" })
   public Object getRegistry_1_17() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
-    return getClassFromPath(Path.MINECRAFT_CORE, "IRegistry").getField("Z").get(null);
+    return Path.MINECRAFT_CORE.getClass("IRegistry").getField("Z").get(null);
   }
 
   @Version(name = "getRegistry", versions = { "1.18", "1.19.1", "1.19.2" })
   public Object getRegistry_1_18_19() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
-    final Class<?> registryBlockClass = getClassFromPath(Path.MINECRAFT_CORE, "RegistryBlocks");
+    final Class<?> registryBlockClass = Path.MINECRAFT_CORE.getClass("RegistryBlocks");
     final Class<?> itemClass = getItemClass_latest();
-    final Optional<Field> maybeRegistryField = Arrays
-        .stream(getClassFromPath(Path.MINECRAFT_CORE, "IRegistry").getFields())
-        .filter(f -> f.getType().isAssignableFrom(registryBlockClass)
-            && ((ParameterizedType) f.getGenericType()).getActualTypeArguments()[0].equals(itemClass))
-        .findFirst();
+    final Class<?> registryClass = Path.MINECRAFT_CORE.getClass("IRegistry");
+    final Optional<Field> maybeRegistryField = findParametrizedField(registryClass, registryBlockClass, itemClass);
+
     if (!maybeRegistryField.isPresent()) {
       throw new NoSuchFieldException("Can't find item Registry.");
     }
@@ -137,13 +88,11 @@ public class VersionSupportUtils {
 
   @Version(name = "getRegistry")
   public Object getRegistry_latest() throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {
-    final Class<?> registryBlockClass = getClassFromPath(Path.MINECRAFT_CORE, "RegistryBlocks");
+    final Class<?> registryBlockClass = Path.MINECRAFT_CORE.getClass("RegistryBlocks");
     final Class<?> itemClass = getItemClass_latest();
-    final Optional<Field> maybeRegistryField = Arrays
-        .stream(getClassFromPath(Path.MINECRAFT_CORE_REGISTRIES, "BuiltInRegistries").getFields())
-        .filter(f -> f.getType().isAssignableFrom(registryBlockClass)
-            && ((ParameterizedType) f.getGenericType()).getActualTypeArguments()[0].equals(itemClass))
-        .findFirst();
+    final Class<?> registryClass = Path.MINECRAFT_CORE_REGISTRIES.getClass("BuiltInRegistries");
+    final Optional<Field> maybeRegistryField = findParametrizedField(registryClass, registryBlockClass, itemClass);
+
     if (!maybeRegistryField.isPresent()) {
       throw new NoSuchFieldException("Can't find item Registry.");
     }
@@ -170,12 +119,12 @@ public class VersionSupportUtils {
 
   @Version(name = "getMinecraftKeyClass", versions = { "1.12", "1.13", "1.14", "1.15", "1.16" })
   public Class<?> getMinecraftKeyClass_old() throws ClassNotFoundException {
-    return getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "MinecraftKey");
+    return Path.MINECRAFT_SERVER.getClass("MinecraftKey");
   }
 
   @Version(name = "getMinecraftKeyClass")
   public Class<?> getMinecraftKeyClass_latest() throws ClassNotFoundException {
-    return getClassFromPath(Path.MINECRAFT_RESOURCES, "MinecraftKey");
+    return Path.MINECRAFT_RESOURCES.getClass("MinecraftKey");
   }
 
   @Version(name = "getMinecraftKey", versions = { "1.12" })
@@ -225,22 +174,22 @@ public class VersionSupportUtils {
 
   @Version(name = "newNBTTagCompound", versions = { "1.12", "1.13", "1.14", "1.15", "1.16" })
   public Object newNBTTagCompound_old() throws ClassNotFoundException {
-    return newInstance(getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "NBTTagCompound"));
+    return newInstance(Path.MINECRAFT_SERVER.getClass("NBTTagCompound"));
   }
 
   @Version(name = "newNBTTagCompound")
   public Object newNBTTagCompound_latest() throws ClassNotFoundException {
-    return newInstance(getClassFromPath(Path.MINECRAFT_NBT, "NBTTagCompound"));
+    return newInstance(Path.MINECRAFT_NBT.getClass("NBTTagCompound"));
   }
 
   @Version(name = "getItemClass", versions = { "1.12", "1.13", "1.14", "1.15", "1.16" })
   public Class<?> getItemClass_old() throws ClassNotFoundException {
-    return getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Item");
+    return Path.MINECRAFT_SERVER.getClass("Item");
   }
 
   @Version(name = "getItemClass")
   public Class<?> getItemClass_latest() throws ClassNotFoundException {
-    return getClassFromPath(Path.MINECRAFT_WORLD_ITEM, "Item");
+    return Path.MINECRAFT_WORLD_ITEM.getClass("Item");
   }
 
   @Version(name = "getName", versions = { "1.12", "1.13", "1.14", "1.15", "1.16", "1.17" })
@@ -251,7 +200,7 @@ public class VersionSupportUtils {
   @Version(name = "getName")
   public Object getName_latest(Object nmsItemStack)
       throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-    final Class<?> chatBaseComponent = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
+    final Class<?> chatBaseComponent = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
     return VersionField.from(nmsItemStack).invokeMethodWithType(chatBaseComponent);
   }
 
@@ -277,7 +226,7 @@ public class VersionSupportUtils {
   @Version(name = "getTag")
   public Object getTag(Object itemStack)
       throws ClassNotFoundException, InvocationTargetException, IllegalAccessException {
-    final Class<?> nbtTagCompound = getClassFromPath(Path.MINECRAFT_NBT, "NBTTagCompound");
+    final Class<?> nbtTagCompound = Path.MINECRAFT_NBT.getClass("NBTTagCompound");
     final Optional<Method> maybeMethod = Arrays.stream(itemStack.getClass().getMethods())
         .filter(m -> m.getReturnType().isAssignableFrom(nbtTagCompound) && m.getParameters().length == 0)
         .findFirst();
@@ -318,7 +267,7 @@ public class VersionSupportUtils {
 
       Class<?> itemCLass = call("getItemClass", this);
 
-      Method asNewCraftStack = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack")
+      Method asNewCraftStack = Path.BUKKIT.getClass("inventory.CraftItemStack")
           .getDeclaredMethod("asNewCraftStack", itemCLass);
       ItemStack itemStack = (ItemStack) asNewCraftStack.invoke(null, item);
 
@@ -340,9 +289,7 @@ public class VersionSupportUtils {
    */
   public String getMinecraftKey(ItemStack itemStack) {
     try {
-      Method asNMSCopy = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack")
-          .getDeclaredMethod("asNMSCopy", ItemStack.class);
-      Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
+      Object nmsItemStack = NMSUtils.toNmsItemstack(itemStack);
 
       Object registry = getRegistry();
       Object minecraftKey = call("getMinecraftKey", this, registry, nmsItemStack);
@@ -363,7 +310,7 @@ public class VersionSupportUtils {
    */
   public String getItemStackDisplayName(ItemStack itemStack) {
     try {
-      Method asNMSCopy = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack")
+      Method asNMSCopy = Path.BUKKIT.getClass("inventory.CraftItemStack")
           .getDeclaredMethod("asNMSCopy", ItemStack.class);
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
       Object name = call("getName", this, nmsItemStack);
@@ -388,24 +335,24 @@ public class VersionSupportUtils {
   public void updateInventoryName_1_13(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
-      Object chatMessage = newInstance(getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "ChatMessage"), title,
+      Object chatMessage = newInstance(Path.MINECRAFT_SERVER.getClass("ChatMessage"), title,
           new Object[] {});
       VersionField activeContainerVF = VersionField.from(entityPlayer).get("activeContainer");
       Object windowId = activeContainerVF.get("windowId").value();
 
-      Class<?> ichat = getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "IChatBaseComponent");
+      Class<?> ichat = Path.MINECRAFT_SERVER.getClass("IChatBaseComponent");
 
-      Object packet = getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "PacketPlayOutOpenWindow")
+      Object packet = Path.MINECRAFT_SERVER.getClass("PacketPlayOutOpenWindow")
           .getConstructor(Integer.TYPE, String.class, ichat, Integer.TYPE)
           .newInstance(windowId, "minecraft:chest", ichat.cast(chatMessage),
               player.getOpenInventory().getTopInventory().getSize());
 
       Object playerConnection = entityPlayer.getClass().getDeclaredField("playerConnection").get(entityPlayer);
 
-      playerConnection.getClass().getMethod("sendPacket", getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Packet"))
+      playerConnection.getClass().getMethod("sendPacket", Path.MINECRAFT_SERVER.getClass("Packet"))
           .invoke(playerConnection, packet);
       entityPlayer.getClass()
-          .getMethod("updateInventory", getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Container"))
+          .getMethod("updateInventory", Path.MINECRAFT_SERVER.getClass("Container"))
           .invoke(entityPlayer, activeContainerVF.value());
 
     } catch (Exception e) {
@@ -423,24 +370,24 @@ public class VersionSupportUtils {
   public void updateInventoryName_old(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
-      Object chatMessage = newInstance(getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "ChatMessage"), title,
+      Object chatMessage = newInstance(Path.MINECRAFT_SERVER.getClass("ChatMessage"), title,
           new Object[] {});
       VersionField activeContainerVF = VersionField.from(entityPlayer).get("activeContainer");
       Object windowId = activeContainerVF.get("windowId").value();
 
-      Class<?> ichat = getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "IChatBaseComponent");
-      Class<?> containers = getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Containers");
+      Class<?> ichat = Path.MINECRAFT_SERVER.getClass("IChatBaseComponent");
+      Class<?> containers = Path.MINECRAFT_SERVER.getClass("Containers");
 
-      Object packet = getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "PacketPlayOutOpenWindow")
+      Object packet = Path.MINECRAFT_SERVER.getClass("PacketPlayOutOpenWindow")
           .getConstructor(Integer.TYPE, containers, ichat)
           .newInstance(windowId, containers.getField("GENERIC_9X6").get(null), ichat.cast(chatMessage));
 
       Object playerConnection = entityPlayer.getClass().getDeclaredField("playerConnection").get(entityPlayer);
 
-      playerConnection.getClass().getMethod("sendPacket", getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Packet"))
+      playerConnection.getClass().getMethod("sendPacket", Path.MINECRAFT_SERVER.getClass("Packet"))
           .invoke(playerConnection, packet);
       entityPlayer.getClass()
-          .getMethod("updateInventory", getClassFromPathWithVersion(Path.MINECRAFT_SERVER, "Container"))
+          .getMethod("updateInventory", Path.MINECRAFT_SERVER.getClass("Container"))
           .invoke(entityPlayer, activeContainerVF.value());
 
     } catch (Exception e) {
@@ -458,21 +405,21 @@ public class VersionSupportUtils {
   public void updateInventoryName_1_17(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
-      Object chatMessage = newInstance(getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "ChatMessage"), title,
+      Object chatMessage = newInstance(Path.MINECRAFT_NETWORK_CHAT.getClass("ChatMessage"), title,
           new Object[] {});
       VersionField activeContainerVF = VersionField.from(entityPlayer).get("bV");
       Object windowId = activeContainerVF.get("j").value();
 
-      Class<?> ichat = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
-      Class<?> containers = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Containers");
+      Class<?> ichat = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
+      Class<?> containers = Path.MINECRAFT_WORLD_INVENTORY.getClass("Containers");
 
-      Object packet = getClassFromPath(Path.MINECRAFT_NETWORK_GAME, "PacketPlayOutOpenWindow")
+      Object packet = Path.MINECRAFT_NETWORK_GAME.getClass("PacketPlayOutOpenWindow")
           .getConstructor(Integer.TYPE, containers, ichat)
           .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
 
       Object playerConnection = entityPlayer.getClass().getDeclaredField("b").get(entityPlayer);
 
-      playerConnection.getClass().getMethod("sendPacket", getClassFromPath(Path.MINECRAFT_NETWORK_PROTOCOL, "Packet"))
+      playerConnection.getClass().getMethod("sendPacket", Path.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet"))
           .invoke(playerConnection, packet);
     } catch (Exception e) {
       e.printStackTrace();
@@ -483,22 +430,22 @@ public class VersionSupportUtils {
   public void updateInventoryName_1_18(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
-      Object chatMessage = newInstance(getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "ChatMessage"), title,
+      Object chatMessage = newInstance(Path.MINECRAFT_NETWORK_CHAT.getClass("ChatMessage"), title,
           new Object[] {});
-      Class<?> containerClass = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Container");
+      Class<?> containerClass = Path.MINECRAFT_WORLD_INVENTORY.getClass("Container");
       VersionField activeContainerVF = VersionField.from(entityPlayer).getWithType(containerClass);
       Object windowId = activeContainerVF.get("j").value();
 
-      Class<?> ichat = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
-      Class<?> containers = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Containers");
+      Class<?> ichat = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
+      Class<?> containers = Path.MINECRAFT_WORLD_INVENTORY.getClass("Containers");
 
-      Object packet = getClassFromPath(Path.MINECRAFT_NETWORK_GAME, "PacketPlayOutOpenWindow")
+      Object packet = Path.MINECRAFT_NETWORK_GAME.getClass("PacketPlayOutOpenWindow")
           .getConstructor(Integer.TYPE, containers, ichat)
           .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
 
       Object playerConnection = entityPlayer.getClass().getDeclaredField("b").get(entityPlayer);
 
-      playerConnection.getClass().getMethod("a", getClassFromPath(Path.MINECRAFT_NETWORK_PROTOCOL, "Packet"))
+      playerConnection.getClass().getMethod("a", Path.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet"))
           .invoke(playerConnection, packet);
     } catch (Exception e) {
       e.printStackTrace();
@@ -509,22 +456,22 @@ public class VersionSupportUtils {
   public void updateInventoryName_1_19(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
-      Object chatMessage = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent")
+      Object chatMessage = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent")
           .getMethod("b", String.class).invoke(null, title);
-      Class<?> containerClass = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Container");
+      Class<?> containerClass = Path.MINECRAFT_WORLD_INVENTORY.getClass("Container");
       VersionField activeContainerVF = VersionField.from(entityPlayer).getWithType(containerClass);
       Object windowId = activeContainerVF.get("j").value();
 
-      Class<?> ichat = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
-      Class<?> containers = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Containers");
+      Class<?> ichat = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
+      Class<?> containers = Path.MINECRAFT_WORLD_INVENTORY.getClass("Containers");
 
-      Object packet = getClassFromPath(Path.MINECRAFT_NETWORK_GAME, "PacketPlayOutOpenWindow")
+      Object packet = Path.MINECRAFT_NETWORK_GAME.getClass("PacketPlayOutOpenWindow")
           .getConstructor(Integer.TYPE, containers, ichat)
           .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
 
       Object playerConnection = entityPlayer.getClass().getDeclaredField("b").get(entityPlayer);
 
-      playerConnection.getClass().getMethod("a", getClassFromPath(Path.MINECRAFT_NETWORK_PROTOCOL, "Packet"))
+      playerConnection.getClass().getMethod("a", Path.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet"))
           .invoke(playerConnection, packet);
     } catch (Exception e) {
       e.printStackTrace();
@@ -532,25 +479,25 @@ public class VersionSupportUtils {
   }
 
   @Version(name = "updateInventoryName")
-  public void updateInventoryName_latest(String title, Player player) {
+  public void updateInventoryName_latest_1_20(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
-      Object chatMessage = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent")
+      Object chatMessage = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent")
           .getMethod("b", String.class).invoke(null, title);
-      Class<?> containerClass = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Container");
+      Class<?> containerClass = Path.MINECRAFT_WORLD_INVENTORY.getClass("Container");
       VersionField activeContainerVF = VersionField.from(entityPlayer).getWithType(containerClass);
       Object windowId = activeContainerVF.get("j").value();
 
-      Class<?> ichat = getClassFromPath(Path.MINECRAFT_NETWORK_CHAT, "IChatBaseComponent");
-      Class<?> containers = getClassFromPath(Path.MINECRAFT_WORLD_INVENTORY, "Containers");
+      Class<?> ichat = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
+      Class<?> containers = Path.MINECRAFT_WORLD_INVENTORY.getClass("Containers");
 
-      Object packet = getClassFromPath(Path.MINECRAFT_NETWORK_GAME, "PacketPlayOutOpenWindow")
+      Object packet = Path.MINECRAFT_NETWORK_GAME.getClass("PacketPlayOutOpenWindow")
           .getConstructor(Integer.TYPE, containers, ichat)
           .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
 
       Object playerConnection = entityPlayer.getClass().getDeclaredField("c").get(entityPlayer);
 
-      playerConnection.getClass().getMethod("a", getClassFromPath(Path.MINECRAFT_NETWORK_PROTOCOL, "Packet"))
+      playerConnection.getClass().getMethod("a", Path.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet"))
           .invoke(playerConnection, packet);
     } catch (Exception e) {
       e.printStackTrace();
@@ -565,9 +512,7 @@ public class VersionSupportUtils {
    */
   public boolean hasNbtTag(ItemStack itemStack) {
     try {
-      Method asNMSCopy = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack")
-          .getDeclaredMethod("asNMSCopy", ItemStack.class);
-      Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
+      Object nmsItemStack = NMSUtils.toNmsItemstack(itemStack);
 
       Object tagCompound = call("getTag", this, nmsItemStack);
 
@@ -591,27 +536,31 @@ public class VersionSupportUtils {
       return itemStack;
 
     try {
-      Class<?> craftItemStack = getClassFromPathWithVersion(Path.BUKKIT, "inventory.CraftItemStack");
-      Method asNMSCopy = craftItemStack.getDeclaredMethod("asNMSCopy", ItemStack.class);
-      Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
+      Object nmsItemStack = NMSUtils.toNmsItemstack(itemStack);
 
       Object tagCompound = call("getTag", this, nmsItemStack);
 
-      if (tagCompound == null) {
+      if (tagCompound == null)
         tagCompound = call("newNBTTagCompound", this);
-      }
 
-      tagCompound.getClass().getMethod(setBooleanName(), String.class, boolean.class).invoke(tagCompound, this.NBTTAG,
-          true);
+      tagCompound.getClass().getMethod(setBooleanName(), String.class, boolean.class).invoke(tagCompound, this.NBTTAG, true);
 
-      invokeMethod(nmsItemStack, setTagName(), tagCompound);
-      return (ItemStack) craftItemStack.getDeclaredMethod("asBukkitCopy", nmsItemStack.getClass()).invoke(null,
-          nmsItemStack);
+      call("setTag", this, nmsItemStack, tagCompound);
 
+      return NMSUtils.toItemstack(nmsItemStack);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return itemStack;
+  }
+
+  private Optional<Field> findParametrizedField(Class<?> main, Class<?> type, Class<?> generic) {
+    return Arrays
+      .stream(main.getFields())
+      .filter(f -> f.getType().isAssignableFrom(type)
+          && ((ParameterizedType) f.getGenericType()).getActualTypeArguments()[0].equals(generic))
+      .findFirst();
+
   }
 
 }
