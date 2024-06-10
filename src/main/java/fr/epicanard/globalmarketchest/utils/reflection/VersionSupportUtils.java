@@ -146,10 +146,16 @@ public class VersionSupportUtils {
     return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "c"));
   }
 
+  @Version(name = "getMinecraftKey", versions = {"1.20.0, 1.20.1", "1.20.2", "1.20.3", "1.20.4"})
+  public Object getMinecraftKey_1_20(Object registry, Object nmsItemStack)
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "d"));
+  }
+
   @Version(name = "getMinecraftKey")
   public Object getMinecraftKey_latest(Object registry, Object nmsItemStack)
       throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "d"));
+    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "g"));
   }
 
   @Version(name = "getNamespace", versions = { "1.14", "1.15", "1.16", "1.17" })
