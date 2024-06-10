@@ -229,7 +229,7 @@ public class VersionSupportUtils {
     return invokeMethod(itemStack, "getTag");
   }
 
-  @Version(name = "getTag")
+  @Version(name = "getTag", versions = { "1.18", "1.19", "1.20.0", "1.20.1", "1.20.2", "1.20.3", "1.20.4" })
   public Object getTag(Object itemStack)
       throws ClassNotFoundException, InvocationTargetException, IllegalAccessException {
     final Class<?> nbtTagCompound = Path.MINECRAFT_NBT.getClass("NBTTagCompound");
@@ -241,16 +241,75 @@ public class VersionSupportUtils {
     return null;
   }
 
-  public String hasTagName() {
-    return before1_18("hasKey", "e");
+  @Version(name = "getTag")
+  public Object getTagLatest(Object itemStack)
+    throws ClassNotFoundException, InvocationTargetException, IllegalAccessException {
+    // net.minecraft.core.component.DataComponents.CUSTOM_DATA => DataComponents.b ?
+    final Class<?> dataComponentTypeClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponentType");
+    final Class<?> dataComponentHolderClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponentHolder");
+    final Class<?> customDataClass = Path.MINECRAFT_WORLD_ITEM_COMPONENT.getClass("CustomData");
+    final Class<?> dataComponentsClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponents");
+    // Get DataComponents.CUSTOM_DATA: DataComponentType<CustomData>
+    final Optional<Field> customDataComponent = findParametrizedField(dataComponentsClass, dataComponentTypeClass, customDataClass);
+
+    if (!customDataComponent.isPresent())
+      return null;
+
+    // Get Method <T> T get(DataComponentType<CustomData>)
+    final Optional<Method> maybeMethod = Arrays.stream(dataComponentHolderClass.getMethods())
+      .filter(m -> {
+        return m.getGenericReturnType().getTypeName().equals("T") && m.getParameters().length == 1
+          && m.getParameters()[0].getType().isAssignableFrom(dataComponentTypeClass);
+      })
+      .findFirst();
+    if (maybeMethod.isPresent())
+      return maybeMethod.get().invoke(itemStack, customDataComponent.get().get(null));
+    return null;
+  }
+
+  @Version(name = "hasTagName", versions = { "1.12", "1.13", "1.14", "1.15", "1.17" })
+  public String hasTagNameBefore1_18() {
+    return "hasKey"; // NBTTagCompound.hasKey
+  }
+  @Version(name = "hasTagName", versions = { "1.18", "1.19", "1.20.0", "1.20.1", "1.20.2", "1.20.3", "1.20.4" })
+  public String hasTagNameAfter1_19_20() {
+    return "e"; // NBTTagCompound.e
+  }
+  @Version(name = "hasTagName")
+  public String hasTagNameLatest() {
+    return "a"; // CustomData.a
   }
 
   public String setBooleanName() {
     return before1_18("setBoolean", "a");
   }
 
-  public String setTagName() {
-    return before1_18("setTag", "c");
+  @Version(name = "setTag", versions = { "1.12", "1.13", "1.14", "1.15", "1.17" })
+  public void setTagBefore1_18(Object nmsItemstack, Object tagCompound) {
+    invokeMethod(nmsItemstack, "setTag", tagCompound);
+  }
+
+  @Version(name = "setTag", versions = { "1.18", "1.19", "1.20.0", "1.20.1", "1.20.2", "1.20.3", "1.20.4" })
+  public void setTagAfter1_18(Object nmsItemstack, Object tagCompound) {
+    invokeMethod(nmsItemstack, "c", tagCompound);
+  }
+
+  @Version(name = "setTag")
+  public void setTagLatest(Object nmsItemStack, Object tagCompound) {
+    try {
+
+      final Class<?> dataComponentTypeClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponentType");
+      final Class<?> customDataClass = Path.MINECRAFT_WORLD_ITEM_COMPONENT.getClass("CustomData");
+      final Class<?> dataComponentsClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponents");
+      final Object customDataComponent = findParametrizedField(dataComponentsClass, dataComponentTypeClass, customDataClass).get().get(null);
+
+      // CustomData.set(DataComponents.CUSTOM_DATA, nmsItemStack, tagCompound)
+      customDataClass
+        .getMethod("a", dataComponentTypeClass, nmsItemStack.getClass(), Path.MINECRAFT_NBT.getClass("NBTTagCompound"))
+        .invoke(null, customDataComponent, nmsItemStack, tagCompound);
+    } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException  e) {
+      e.printStackTrace();
+    }
   }
 
   // ======= SPECIFIC METHOD ===========
