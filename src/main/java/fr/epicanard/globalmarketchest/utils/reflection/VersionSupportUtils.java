@@ -271,10 +271,12 @@ public class VersionSupportUtils {
   public String hasTagNameBefore1_18() {
     return "hasKey"; // NBTTagCompound.hasKey
   }
+
   @Version(name = "hasTagName", versions = { "1.18", "1.19", "1.20.0", "1.20.1", "1.20.2", "1.20.3", "1.20.4" })
   public String hasTagNameAfter1_19_20() {
     return "e"; // NBTTagCompound.e
   }
+
   @Version(name = "hasTagName")
   public String hasTagNameLatest() {
     return "a"; // CustomData.a

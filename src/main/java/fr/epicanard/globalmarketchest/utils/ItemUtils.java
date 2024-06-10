@@ -19,9 +19,9 @@ public class ItemUtils {
   /**
    * Add glow effect to item
    * Add Curse Binding effect and hide enchants
-   * 
+   *
    * /!\ Don't use on selling items
-   * 
+   *
    * @param item ItemStack
    * @return ItemStack
    */
@@ -38,9 +38,9 @@ public class ItemUtils {
   /**
    * Remove glow effect to item
    * Remove Curse Binding effect and show enchants
-   * 
+   *
    * /!\ Don't use on selling items
-   * 
+   *
    * @param item ItemStack
    * @return ItemStack
    */
@@ -56,7 +56,7 @@ public class ItemUtils {
 
   /**
    * Add or remove the glow to an item inside the inventory at a postion
-   * 
+   *
    * @param inv    Inventory to use
    * @param pos    Position to set the glow
    * @param toGlow If true add the glow else remove the glow effect
@@ -70,14 +70,14 @@ public class ItemUtils {
 
   /**
    * Hide the meta of the item
-   * 
+   *
    * @param item
    * @return return the param itemstack
    */
   public ItemStack hideMeta(ItemStack item) {
     ItemMeta met = item.getItemMeta();
     if (met != null) {
-      met.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
+      met.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
       item.setItemMeta(met);
     }
     return item;
