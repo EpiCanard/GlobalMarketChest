@@ -24,6 +24,7 @@ class VersionField {
    * Field value
    */
   private Object object;
+  private Class<?> objectClass;
 
   /**
    * The constructor
@@ -32,6 +33,12 @@ class VersionField {
    */
   VersionField(Object obj) {
     this.object = obj;
+    this.objectClass = this.object.getClass();
+  }
+
+  VersionField(Object obj, Class<?> objClass) {
+    this.object = obj;
+    this.objectClass = objClass;
   }
 
   /**
@@ -39,6 +46,10 @@ class VersionField {
    */
   public static VersionField from(Object obj) {
     return new VersionField(obj);
+  }
+
+  public static VersionField from(Object obj, Class<?> objClass) {
+    return new VersionField(obj, objClass);
   }
 
   /**
@@ -51,7 +62,7 @@ class VersionField {
    * @throws IllegalAccessException
    */
   VersionField get(String name) throws NoSuchFieldException, IllegalAccessException {
-    Object ret = this.object.getClass().getField(name).get(this.object);
+    Object ret = this.objectClass.getField(name).get(this.object);
     return new VersionField(ret);
   }
 
@@ -65,7 +76,7 @@ class VersionField {
    * @throws IllegalAccessException
    */
   VersionField getWithType(Class<?> fieldType) throws NoSuchFieldException, IllegalAccessException {
-    final Optional<Field> maybeField = Arrays.stream(this.object.getClass().getFields())
+    final Optional<Field> maybeField = Arrays.stream(this.objectClass.getFields())
             .filter(f -> f.getType().isAssignableFrom(fieldType)).findFirst();
     if (!maybeField.isPresent()) {
       throw new NoSuchFieldException("Can't find field with type : " + fieldType.getName());
@@ -83,7 +94,7 @@ class VersionField {
    * @throws InvocationTargetException
    */
   Object invokeMethodWithType(Class<?> returnType) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-    final Optional<Method> maybeMethod = Arrays.stream(this.object.getClass().getMethods())
+    final Optional<Method> maybeMethod = Arrays.stream(this.objectClass.getMethods())
             .filter(m -> m.getReturnType().isAssignableFrom(returnType)).findFirst();
     if (!maybeMethod.isPresent()) {
       throw new NoSuchMethodException("Can't find methode with return type : " + returnType.getName());

@@ -543,7 +543,7 @@ public class VersionSupportUtils {
     }
   }
 
-  @Version(name = "updateInventoryName")
+  @Version(name = "updateInventoryName", versions = { "1.20.0", "1.20.1" })
   public void updateInventoryName_latest_1_20(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
@@ -569,6 +569,33 @@ public class VersionSupportUtils {
     }
   }
 
+  @Version(name = "updateInventoryName")
+  public void updateInventoryName_latest(String title, Player player) {
+    try {
+      Object entityPlayer = invokeMethod(player, "getHandle");
+      Class<?> entityHumanClass = Path.MINECRAFT_WORLD_ENTITY_PLAYER.getClass("EntityHuman");
+      Object chatMessage = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent")
+          .getMethod("b", String.class).invoke(null, title);
+      Class<?> containerClass = Path.MINECRAFT_WORLD_INVENTORY.getClass("Container");
+      VersionField activeContainerVF = VersionField.from(entityPlayer, entityHumanClass).getWithType(containerClass);
+      Object windowId = activeContainerVF.get("j").value();
+
+      Class<?> ichat = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
+      Class<?> containers = Path.MINECRAFT_WORLD_INVENTORY.getClass("Containers");
+
+      Object packet = Path.MINECRAFT_NETWORK_GAME.getClass("PacketPlayOutOpenWindow")
+          .getConstructor(Integer.TYPE, containers, ichat)
+          .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
+
+      Object playerConnection = entityPlayer.getClass().getDeclaredField("c").get(entityPlayer);
+
+      playerConnection.getClass().getMethod("b", Path.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet"))
+          .invoke(playerConnection, packet);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   /**
    * Define if the GMC NBT TAG is set on this item
    *
@@ -581,7 +608,7 @@ public class VersionSupportUtils {
 
       Object tagCompound = call("getTag", this, nmsItemStack);
 
-      return tagCompound != null && (Boolean) invokeMethod(tagCompound, hasTagName(), this.NBTTAG);
+      return tagCompound != null && (Boolean) invokeMethod(tagCompound, call("hasTagName", this), this.NBTTAG);
     } catch (Exception e) {
       e.printStackTrace();
     }
