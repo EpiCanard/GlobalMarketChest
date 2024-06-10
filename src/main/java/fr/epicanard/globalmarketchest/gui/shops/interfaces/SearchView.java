@@ -52,6 +52,8 @@ public class SearchView extends DefaultFooter implements Droppable {
       item = event.getCursor();
       event.getWhoClicked().setItemOnCursor(null);
       event.getWhoClicked().getInventory().addItem(item.clone());
+    } else {
+        return;
     }
 
     final String category = GlobalMarketChest.plugin.getCatHandler().getCategory(item);
