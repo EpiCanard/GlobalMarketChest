@@ -438,6 +438,43 @@ Build:
     - minecraft:cherry_wood
     - minecraft:cherry_slab
     - minecraft:cherry_stairs
+    - minecraft:tuff_slab
+    - minecraft:tuff_stairs
+    - minecraft:tuff_wall
+    - minecraft:chiseled_tuff
+    - minecraft:polished_tuff
+    - minecraft:polished_tuff_slab
+    - minecraft:polished_tuff_stairs
+    - minecraft:polished_tuff_wall
+    - minecraft:tuff_bricks
+    - minecraft:tuff_brick_slab
+    - minecraft:tuff_brick_stairs
+    - minecraft:tuff_brick_wall
+    - minecraft:chiseled_tuff_bricks
+    - minecraft:chiseled_copper
+    - minecraft:exposed_chiseled_copper
+    - minecraft:weathered_chiseled_copper
+    - minecraft:oxidized_chiseled_copper
+    - minecraft:waxed_chiseled_copper
+    - minecraft:waxed_exposed_chiseled_copper
+    - minecraft:waxed_weathered_chiseled_copper
+    - minecraft:waxed_oxidized_chiseled_copper
+    - minecraft:copper_grate
+    - minecraft:exposed_copper_grate
+    - minecraft:weathered_copper_grate
+    - minecraft:oxidized_copper_grate
+    - minecraft:waxed_copper_grate
+    - minecraft:waxed_exposed_copper_grate
+    - minecraft:waxed_weathered_copper_grate
+    - minecraft:waxed_oxidized_copper_grate
+    - minecraft:copper_bulb
+    - minecraft:exposed_copper_bulb
+    - minecraft:weathered_copper_bulb
+    - minecraft:oxidized_copper_bulb
+    - minecraft:waxed_copper_bulb
+    - minecraft:waxed_exposed_copper_bulb
+    - minecraft:waxed_weathered_copper_bulb
+    - minecraft:waxed_oxidized_copper_bulb
 Decoration:
   DisplayName: "Decoration Blocks"
   DisplayItem: minecraft:peony
@@ -780,6 +817,23 @@ Decoration:
     - minecraft:cherry_fence
     - minecraft:cherry_sign
     - minecraft:cherry_hanging_sign
+    - minecraft:short_grass
+    - minecraft:copper_door
+    - minecraft:exposed_copper_door
+    - minecraft:weathered_copper_door
+    - minecraft:oxidized_copper_door
+    - minecraft:waxed_copper_door
+    - minecraft:waxed_exposed_copper_door
+    - minecraft:waxed_weathered_copper_door
+    - minecraft:waxed_oxidized_copper_door
+    - minecraft:copper_trapdoor
+    - minecraft:exposed_copper_trapdoor
+    - minecraft:weathered_copper_trapdoor
+    - minecraft:oxidized_copper_trapdoor
+    - minecraft:waxed_copper_trapdoor
+    - minecraft:waxed_exposed_copper_trapdoor
+    - minecraft:waxed_weathered_copper_trapdoor
+    - minecraft:waxed_oxidized_copper_trapdoor
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
@@ -872,6 +926,7 @@ Redstone:
     - minecraft:cherry_door
     - minecraft:cherry_trapdoor
     - minecraft:cherry_fence_gate
+    - minecraft:crafter
 Transportation:
   DisplayName: "Transportation"
   DisplayItem: minecraft:powered_rail
@@ -1165,6 +1220,26 @@ Misc:
     - minecraft:shelter_pottery_sherd
     - minecraft:skull_pottery_sherd
     - minecraft:snort_pottery_sherd
+    - minecraft:heavy_core
+    - minecraft:turtle_scute
+    - minecraft:armadillo_scute
+    - minecraft:wolf_armor
+    - minecraft:armadillo_spawn_egg
+    - minecraft:bogged_spawn_egg
+    - minecraft:breeze_spawn_egg
+    - minecraft:wind_charge
+    - minecraft:flow_banner_pattern
+    - minecraft:guster_banner_pattern
+    - minecraft:flow_armor_trim_smithing_template
+    - minecraft:bolt_armor_trim_smithing_template
+    - minecraft:flow_pottery_sherd
+    - minecraft:guster_pottery_sherd
+    - minecraft:scrape_pottery_sherd
+    - minecraft:trial_spawner
+    - minecraft:trial_key
+    - minecraft:ominous_trial_key
+    - minecraft:vault
+    - minecraft:breeze_rod
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
@@ -1296,6 +1371,7 @@ Combat:
     - minecraft:netherite_helmet
     - minecraft:netherite_leggings
     - minecraft:netherite_sword
+    - minecraft:mace
 Brewing:
   DisplayName: "Brewing"
   DisplayItem: minecraft:potion
@@ -1317,6 +1393,7 @@ Brewing:
     - minecraft:potion
     - minecraft:rabbit_foot
     - minecraft:splash_potion
+    - minecraft:ominous_bottle
 Books:
   DisplayName: "Enchanted books"
   DisplayItem: minecraft:enchanted_book
