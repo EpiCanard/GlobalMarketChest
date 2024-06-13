@@ -8,14 +8,13 @@ import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
 import fr.epicanard.globalmarketchest.utils.PlayerUtils;
 import fr.epicanard.globalmarketchest.utils.WorldUtils;
-
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
+
 import static fr.epicanard.globalmarketchest.utils.Option.forAll;
 
 /**
