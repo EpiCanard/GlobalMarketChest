@@ -45,7 +45,7 @@ public class SetTpConsumer implements CommandConsumer {
             && exists(shop.getTpLocation(), loc -> args.length < 2 || WorldUtils.compareLocations(loc, argLoc)))
         .collect(Collectors.toList());
       if (shops.size() == 0) {
-        PlayerUtils.sendMessage(sender, String.format("%s%s %s", LangUtils.get("ErrorMessages.UnknownShop"), args[0], (args.length > 1) ? args[1]: ""));
+        PlayerUtils.sendMessage(sender, String.format("%s%s %s", LangUtils.get("ErrorMessages.UnknownShop"), args[0], (args.length > 1) ? args[1] : ""));
         return false;
       }
       if (shops.size() > 1 && args.length < 2) {
