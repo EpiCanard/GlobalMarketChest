@@ -117,16 +117,6 @@ public class VersionSupportUtils {
     return registry.getClass().getMethod("a", minecraftKey.getClass()).invoke(registry, minecraftKey);
   }
 
-  @Version(name = "getMinecraftKeyClass", versions = { "1.12", "1.13", "1.14", "1.15", "1.16" })
-  public Class<?> getMinecraftKeyClass_old() throws ClassNotFoundException {
-    return Path.MINECRAFT_SERVER.getClass("MinecraftKey");
-  }
-
-  @Version(name = "getMinecraftKeyClass")
-  public Class<?> getMinecraftKeyClass_latest() throws ClassNotFoundException {
-    return Path.MINECRAFT_RESOURCES.getClass("MinecraftKey");
-  }
-
   @Version(name = "getMinecraftKey", versions = { "1.12" })
   public Object getMinecraftKey_1_12(Object registry, Object nmsItemStack)
       throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
@@ -314,6 +304,21 @@ public class VersionSupportUtils {
     }
   }
 
+  @Version(name = "newMinecraftKey", versions = { "1.12", "1.13", "1.14", "1.15", "1.16" })
+  public Object newMinecraftKey_old(String name) throws Exception {
+    return Path.MINECRAFT_SERVER.getClass("MinecraftKey").getConstructor(String.class).newInstance(name);
+  }
+
+  @Version(name = "newMinecraftKey", versions = { "1.17", "1.18", "1.19", "1.20" })
+  public Object newMinecraftKey_1_17(String name) throws Exception {
+    return Path.MINECRAFT_RESOURCES.getClass("MinecraftKey").getConstructor(String.class).newInstance(name);
+  }
+
+  @Version(name = "newMinecraftKey")
+  public Object newMinecraftKey_latest(String name) throws Exception {
+    return Path.MINECRAFT_RESOURCES.getClass("MinecraftKey").getMethod("a", String.class).invoke(null, name);
+  }
+
   // ======= SPECIFIC METHOD ===========
 
   /**
@@ -324,8 +329,7 @@ public class VersionSupportUtils {
    */
   public ItemStack getItemStack(String name) {
     try {
-      Class<?> minecraftKeyClass = call("getMinecraftKeyClass", this);
-      Object minecraftKey = minecraftKeyClass.getConstructor(String.class).newInstance(name);
+      Object minecraftKey = call("newMinecraftKey", this, name);;
 
       Object registry = getRegistry();
       Object item = call("getRegistryItem", this, registry, minecraftKey);
