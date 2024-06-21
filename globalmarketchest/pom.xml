@@ -17,6 +17,14 @@
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
   </properties>
 
+  <packaging>jar</packaging>
+  <modules>
+    <module>core</module>
+
+    <!--<module>modules/nms-common</module>-->
+    <!--<module>modules/1_20_R6</module>-->
+  </modules>
+
   <build>
     <finalName>${project.name}-${project.version}</finalName>
     <resources>
