@@ -17,10 +17,10 @@ jobs:
         distribution: 'zulu'
         java-version: 17
     - name: Build package
-      run: mvn clean package
+      run: ./mvn.sh clean package
     - name: Set build version
       run: |
-        build_version=$(mvn initialize help:evaluate -Dexpression=project.version -q -DforceStdout)
+        build_version=$(./mvn.sh initialize help:evaluate -Dexpression=project.version -q -DforceStdout)
         echo "BUILD_VERSION=$build_version" >> $GITHUB_ENV
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
