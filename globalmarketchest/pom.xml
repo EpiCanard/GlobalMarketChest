@@ -1,16 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>fr.epicanard</groupId>
+    <artifactId>globalmarketchest-parent</artifactId>
+    <version>${revision}</version>
+  </parent>
+
   <groupId>fr.epicanard</groupId>
   <artifactId>globalmarketchest</artifactId>
-  <version>${git.commit.id.describe}</version>
+  <version>${revision}</version>
   <name>GlobalMarketChest</name>
   <description>Shop plugin to create economy between user</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
     <spigot.version>1.21.4-R0.1-SNAPSHOT</spigot.version>
     <duckconfig.version>1.2.0</duckconfig.version>
     <lombok.version>1.18.32</lombok.version>
@@ -18,12 +24,6 @@
   </properties>
 
   <packaging>jar</packaging>
-  <modules>
-    <module>core</module>
-
-    <!--<module>modules/nms-common</module>-->
-    <!--<module>modules/1_20_R6</module>-->
-  </modules>
 
   <build>
     <finalName>${project.name}-${project.version}</finalName>
@@ -36,30 +36,9 @@
     </resources>
     <plugins>
       <plugin>
-        <groupId>io.github.git-commit-id</groupId>
-        <artifactId>git-commit-id-maven-plugin</artifactId>
-        <version>5.0.0</version>
-        <executions>
-          <execution>
-            <id>get-the-git-infos</id>
-            <goals>
-              <goal>revision</goal>
-            </goals>
-            <phase>initialize</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <injectAllReactorProjects>true</injectAllReactorProjects>
-          <gitDescribe>
-            <tags>true</tags>
-            <dirty>+${maven.build.timestamp}</dirty>
-          </gitDescribe>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>3.6.0</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -77,6 +56,8 @@
                 <includes>
                   <include>org.apache.commons:commons-lang3</include>
                   <include>com.github.EpiCanard:DuckConfig</include>
+                  <include>fr.epicanard.globalmarketchest:nms</include>
+                  <include>fr.epicanard.globalmarketchest:1_21</include>
                   <include>org.bstats:bstats-bukkit</include>
                 </includes>
               </artifactSet>
@@ -86,95 +67,33 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.1.2</version>
-        <configuration>
-          <archive>
-            <index>true</index>
-            <manifestEntries>
-              <Built-By>EpiCanard</Built-By>
-              <Project-Version>${project.version}</Project-Version>
-            </manifestEntries>
-          </archive>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.1.2</version>
-        <configuration>
-          <configLocation>checkstyle.xml</configLocation>
-          <consoleOutput>true</consoleOutput>
-          <failsOnError>true</failsOnError>
-          <linkXRef>false</linkXRef>
-        </configuration>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
         <executions>
           <execution>
-            <id>validate</id>
-            <phase>validate</phase>
+            <id>copy-jar</id>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                <copy file="${project.build.directory}/${project.name}-${project.version}.jar" todir="${project.basedir}/../target/" />
+              </tasks>
+            </configuration>
             <goals>
-              <goal>check</goal>
+              <goal>run</goal>
             </goals>
           </execution>
         </executions>
-        <dependencies>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>10.3.2</version>
-          </dependency>
-        </dependencies>
       </plugin>
-      <plugin>
-        <groupId>org.openrewrite.maven</groupId>
-        <artifactId>rewrite-maven-plugin</artifactId>
-        <version>4.31.1</version>
-        <configuration>
-          <activeRecipes>
-            <recipe>org.openrewrite.java.RemoveUnusedImports</recipe>
-            <recipe>org.openrewrite.java.OrderImports</recipe>
-            <recipe>org.openrewrite.java.format.EmptyNewlineAtEndOfFile</recipe>
-            <recipe>org.openrewrite.java.cleanup.DefaultComesLast</recipe>
-            <recipe>org.openrewrite.java.cleanup.EmptyBlock</recipe>
-            <recipe>org.openrewrite.java.cleanup.ForLoopControlVariablePostfixOperators</recipe>
-            <recipe>org.openrewrite.java.cleanup.MethodParamPad</recipe>
-            <recipe>org.openrewrite.java.cleanup.NoWhitespaceAfter</recipe>
-            <recipe>org.openrewrite.java.cleanup.NoWhitespaceBefore</recipe>
-            <recipe>org.openrewrite.java.cleanup.PadEmptyForLoopComponents</recipe>
-            <recipe>org.openrewrite.java.cleanup.TypecastParenPad</recipe>
-            <recipe>org.openrewrite.java.cleanup.EqualsAvoidsNull</recipe>
-            <recipe>org.openrewrite.java.cleanup.ExplicitInitialization</recipe>
-            <recipe>org.openrewrite.java.cleanup.FallThrough</recipe>
-            <recipe>org.openrewrite.java.cleanup.HideUtilityClassConstructor</recipe>
-            <recipe>org.openrewrite.java.cleanup.OperatorWrap</recipe>
-            <recipe>org.openrewrite.java.cleanup.UnnecessaryParentheses</recipe>
-          </activeRecipes>
-        </configuration>
-      </plugin>
+
     </plugins>
   </build>
-
-  <repositories>
-    <repository>
-      <id>spigot-repo</id>
-      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-    </repository>
-    <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
-    </repository>
-    <repository>
-      <id>CodeMC</id>
-      <url>https://repo.codemc.org/repository/maven-public</url>
-    </repository>
-  </repositories>
 
   <dependencies>
     <!-- Lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
+     <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
     <!--Spigot API -->
@@ -206,6 +125,16 @@
       <artifactId>bstats-bukkit</artifactId>
       <version>1.7</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>nms</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>1_21</artifactId>
+      <version>${revision}</version>
     </dependency>
   </dependencies>
 </project>

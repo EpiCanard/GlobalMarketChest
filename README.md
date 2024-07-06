@@ -131,3 +131,13 @@ I would like to thanks :
 If you want to donate for work done, it will be a pleasure. Thank you.
 
 [www.paypal.me/globalmarketchest42](https://www.paypal.me/globalmarketchest42)
+
+
+### Contribution
+
+If you want to contribute to the plugin, you can fork the plugin, and open a Pull Request with your changes.
+
+Note:\
+To build the project use the script `./mvn.sh`, it works like mvn command, it just define dynamically the parameter `${revision}` and send it to the command `mvn`.
+
+Example: `./mvn.sh clean package`
