@@ -57,7 +57,25 @@
                   <include>org.apache.commons:commons-lang3</include>
                   <include>com.github.EpiCanard:DuckConfig</include>
                   <include>fr.epicanard.globalmarketchest:nms</include>
-                  <include>fr.epicanard.globalmarketchest:1_21</include>
+                  <include>fr.epicanard.globalmarketchest:v1_12_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_13_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_13_R2</include>
+                  <include>fr.epicanard.globalmarketchest:v1_14_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_15_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_16_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_16_R2</include>
+                  <include>fr.epicanard.globalmarketchest:v1_16_R3</include>
+                  <include>fr.epicanard.globalmarketchest:v1_17_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_18_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_18_R2</include>
+                  <include>fr.epicanard.globalmarketchest:v1_19_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_19_R2</include>
+                  <include>fr.epicanard.globalmarketchest:v1_19_R3</include>
+                  <include>fr.epicanard.globalmarketchest:v1_20_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_20_R2</include>
+                  <include>fr.epicanard.globalmarketchest:v1_20_R3</include>
+                  <include>fr.epicanard.globalmarketchest:v1_20_R4</include>
+                  <include>fr.epicanard.globalmarketchest:v1_21_R1</include>
                   <include>org.bstats:bstats-bukkit</include>
                 </includes>
               </artifactSet>
@@ -76,6 +94,7 @@
             <configuration>
               <tasks>
                 <copy file="${project.build.directory}/${project.name}-${project.version}.jar" todir="${project.basedir}/../target/" />
+                <copy file="${project.build.directory}/classes/plugin.yml" todir="${project.basedir}/../target/classes/" />
               </tasks>
             </configuration>
             <goals>
@@ -133,7 +152,97 @@
     </dependency>
     <dependency>
       <groupId>fr.epicanard.globalmarketchest</groupId>
-      <artifactId>1_21</artifactId>
+      <artifactId>v1_12_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_13_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_13_R2</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_14_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_15_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_16_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_16_R2</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_16_R3</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_17_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_18_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_18_R2</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_19_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_19_R2</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_19_R3</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_20_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_20_R2</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_20_R3</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_20_R4</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_21_R1</artifactId>
       <version>${revision}</version>
     </dependency>
   </dependencies>
