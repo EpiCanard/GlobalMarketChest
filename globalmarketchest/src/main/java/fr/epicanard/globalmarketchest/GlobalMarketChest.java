@@ -21,6 +21,7 @@ import fr.epicanard.globalmarketchest.gui.InventoriesHandler;
 import fr.epicanard.globalmarketchest.listeners.*;
 import fr.epicanard.globalmarketchest.managers.AuctionManager;
 import fr.epicanard.globalmarketchest.managers.ShopManager;
+import fr.epicanard.globalmarketchest.nms.*;
 import fr.epicanard.globalmarketchest.ranks.RanksLoader;
 import fr.epicanard.globalmarketchest.utils.*;
 import lombok.Getter;
@@ -60,8 +61,12 @@ public class GlobalMarketChest extends JavaPlugin {
   private Double tax;
   @Getter
   private String serverName;
+  @Getter
+  private Nms nms;
 
   public GlobalMarketChest() {
+    GlobalMarketChest.plugin = this;
+
     // Initialization of loader
     this.configLoader = new ConfigLoader();
     this.inventories = new InventoriesHandler();
@@ -69,13 +74,19 @@ public class GlobalMarketChest extends JavaPlugin {
     this.shopManager = new ShopManager();
     this.auctionManager = new AuctionManager();
     this.ranksLoader = new RanksLoader();
+    this.nms = initNms();
 
-    GlobalMarketChest.plugin = this;
     Version.initVersion(Utils.getFullVersion());
   }
 
   @Override
   public void onEnable() {
+
+    if (this.nms == null) {
+      LoggerUtils.error("Version " + Utils.getFullVersion() + " is not yet supported. Please contact EpiCanard to add support of this version.");
+      this.disable();
+      return;
+    }
 
     try {
       this.configLoader.loadFiles();
@@ -262,6 +273,70 @@ public class GlobalMarketChest extends JavaPlugin {
       }
     } catch (Exception e) {
       System.out.println(e.getMessage());
+    }
+  }
+
+  private static Nms initNms() {
+    switch (Utils.getFullVersion()) {
+      case "1.12":
+      case "1.12.1":
+      case "1.12.2":
+        return new Nms_v1_12_R1();
+      case "1.13":
+      case "1.13.1":
+        return new Nms_v1_13_R1();
+      case "1.13.2":
+        return new Nms_v1_13_R2();
+      case "1.14":
+      case "1.14.1":
+      case "1.14.2":
+      case "1.14.3":
+      case "1.14.4":
+        return new Nms_v1_14_R1();
+      case "1.15":
+      case "1.15.1":
+      case "1.15.2":
+        return new Nms_v1_15_R1();
+      case "1.16":
+      case "1.16.1":
+        return new Nms_v1_16_R1();
+      case "1.16.2":
+      case "1.16.3":
+        return new Nms_v1_16_R2();
+      case "1.16.4":
+      case "1.16.5":
+        return new Nms_v1_16_R3();
+      case "1.17":
+      case "1.17.1":
+        return new Nms_v1_17_R1();
+      case "1.18":
+      case "1.18.1":
+        return new Nms_v1_18_R1();
+      case "1.18.2":
+        return new Nms_v1_18_R2();
+      case "1.19":
+      case "1.19.1":
+      case "1.19.2":
+        return new Nms_v1_19_R1();
+      case "1.19.3":
+        return new Nms_v1_19_R2();
+      case "1.19.4":
+        return new Nms_v1_19_R3();
+      case "1.20":
+      case "1.20.1":
+        return new Nms_v1_20_R1();
+      case "1.20.2":
+        return new Nms_v1_20_R2();
+      case "1.20.3":
+      case "1.20.4":
+        return new Nms_v1_20_R3();
+      case "1.20.5":
+      case "1.20.6":
+        return new Nms_v1_20_R4();
+      case "1.21":
+        return new Nms_v1_21_R1();
+      default:
+        return null;
     }
   }
 }

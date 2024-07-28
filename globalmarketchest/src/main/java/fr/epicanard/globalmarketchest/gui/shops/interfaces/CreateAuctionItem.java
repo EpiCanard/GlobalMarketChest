@@ -12,7 +12,6 @@ import fr.epicanard.globalmarketchest.gui.shops.Droppable;
 import fr.epicanard.globalmarketchest.gui.shops.baseinterfaces.ShopInterface;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.*;
-import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -164,7 +163,7 @@ public class CreateAuctionItem extends ShopInterface implements Droppable {
     }
 
     lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
-    this.inv.getInv().setItem(22, VersionSupportUtils.getInstance().setNbtTag(ItemStackUtils.setItemStackLore(item.clone(), lore)));
+    this.inv.getInv().setItem(22, GlobalMarketChest.plugin.getNms().setNbtTag(ItemStackUtils.setItemStackLore(item.clone(), lore)));
   }
 
   /**

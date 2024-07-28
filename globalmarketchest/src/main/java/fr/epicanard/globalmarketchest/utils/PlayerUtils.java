@@ -2,7 +2,6 @@ package fr.epicanard.globalmarketchest.utils;
 
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.WarnException;
-import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -226,7 +225,7 @@ public class PlayerUtils {
   public void removeDuplicateItems(Inventory playerInventory) {
     ItemStack[] items = playerInventory.getContents();
     for (int i = 0; i < items.length; i++) {
-      if (VersionSupportUtils.getInstance().hasNbtTag(items[i])) {
+      if (GlobalMarketChest.plugin.getNms().hasNbtTag(items[i])) {
         playerInventory.setItem(i, null);
       }
     }
