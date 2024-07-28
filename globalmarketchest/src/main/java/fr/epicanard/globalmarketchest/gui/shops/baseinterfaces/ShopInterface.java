@@ -1,17 +1,14 @@
 package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
-import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.gui.paginator.Paginator;
 import fr.epicanard.globalmarketchest.gui.shops.toggler.Toggler;
 import fr.epicanard.globalmarketchest.utils.LangUtils;
-import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
-import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -73,11 +70,7 @@ public abstract class ShopInterface {
    */
   private void updateInventoryName(String interfaceName) {
     String title = LangUtils.getOrElse("InterfacesTitle." + interfaceName, "&2GlobalMarketChest");
-    try {
-      AnnotationCaller.call("updateInventoryName", VersionSupportUtils.getInstance(), title, (Player) this.inv.getPlayer());
-    } catch (MissingMethodException e) {
-      e.printStackTrace();
-    }
+    GlobalMarketChest.plugin.getNms().updateInventoryName(this.inv.getPlayer(), title);
   }
 
   /**
@@ -93,7 +86,7 @@ public abstract class ShopInterface {
    * @param item Icon
    */
   protected void setIcon(ItemStack item) {
-    this.icon = VersionSupportUtils.getInstance().setNbtTag(item);
+    this.icon = GlobalMarketChest.plugin.getNms().setNbtTag(item);
     this.loadIcon();
   }
 

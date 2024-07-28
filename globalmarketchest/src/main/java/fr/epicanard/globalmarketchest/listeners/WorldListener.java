@@ -8,7 +8,6 @@ import fr.epicanard.globalmarketchest.gui.actions.LeaveShop;
 import fr.epicanard.globalmarketchest.permissions.Permissions;
 import fr.epicanard.globalmarketchest.shops.ShopInfo;
 import fr.epicanard.globalmarketchest.utils.*;
-import fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -180,7 +179,8 @@ public abstract class WorldListener implements Listener {
   private static class V1_X extends WorldListener {
     @Override
     protected Block getAttachedBlock(Block block) {
-      final BlockData data = (BlockData) ReflectionUtils.invokeMethod(block.getState(), "getBlockData", (Object[]) null);
+      final BlockData data = block.getState().getBlockData();
+
 
       if (data instanceof Directional) {
         return block.getRelative(((Directional) data).getFacing().getOppositeFace());

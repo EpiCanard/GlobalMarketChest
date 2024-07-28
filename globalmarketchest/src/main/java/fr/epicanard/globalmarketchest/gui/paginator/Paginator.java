@@ -4,7 +4,6 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.InvalidPaginatorParameter;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
 import fr.epicanard.globalmarketchest.utils.Utils;
-import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -30,7 +29,6 @@ public class Paginator {
   private Consumer<Integer> clickConsumer;
   @Getter
   private List<ItemStack> itemstacks = new ArrayList<ItemStack>();
-
 
   public Paginator(InventoryGUI inv, PaginatorConfig config) {
     this.inv = inv;
@@ -247,7 +245,7 @@ public class Paginator {
 
   public void setItemStacks(List<ItemStack> items) {
     this.itemstacks.clear();
-    items = Utils.mapList(items, itemStack -> VersionSupportUtils.getInstance().setNbtTag(itemStack));
+    items = Utils.mapList(items, GlobalMarketChest.plugin.getNms()::setNbtTag);
     this.itemstacks.addAll(items);
   }
 
