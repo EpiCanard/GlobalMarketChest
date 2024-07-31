@@ -3,8 +3,8 @@ package fr.epicanard.globalmarketchest.utils.reflection;
 import org.bukkit.Bukkit;
 
 public enum Path {
-  BUKKIT("org.bukkit.craftbukkit." + version()),
-  MINECRAFT_SERVER("net.minecraft.server." + version()),
+  BUKKIT("org.bukkit.craftbukkit" + version()),
+  MINECRAFT_SERVER("net.minecraft.server" + version()),
   MINECRAFT_RESOURCES("net.minecraft.resources"),
   MINECRAFT_WORLD_ITEM("net.minecraft.world.item"),
   MINECRAFT_WORLD_ITEM_COMPONENT("net.minecraft.world.item.component"),
@@ -25,7 +25,11 @@ public enum Path {
   }
 
   private static String version() {
-    return Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    try {
+      return "." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    } catch(ArrayIndexOutOfBoundsException e) {
+        return "";
+    }
   }
 
   public Class<?> getClass(String className) throws ClassNotFoundException {
