@@ -75,8 +75,6 @@ public class GlobalMarketChest extends JavaPlugin {
     this.auctionManager = new AuctionManager();
     this.ranksLoader = new RanksLoader();
     this.nms = initNms();
-
-    Version.initVersion(Utils.getFullVersion());
   }
 
   @Override
@@ -91,7 +89,7 @@ public class GlobalMarketChest extends JavaPlugin {
     try {
       this.configLoader.loadFiles();
     } catch (CantLoadConfigException e) {
-      this.getLogger().log(Level.SEVERE, e.getMessage());
+      LoggerUtils.error(e.getMessage());
       this.disable();
       return;
     }

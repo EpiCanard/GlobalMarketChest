@@ -39,22 +39,5 @@ public class ReflectionUtils {
     return null;
   }
 
-  /**
-   * Define if the current object has the specified method
-   *
-   * @param object the object on which call the method
-   * @param method the method name to calle
-   * @param args all the arguments that must be send to the method
-   * @return return a boolean
-   */
-  public static Boolean hasMethod(Object object, String method, Object... args) {
-    try {
-      object.getClass().getMethod(method, fromObjectToClass(args));
-      return true;
-    } catch (NoSuchMethodException e) {
-      return false;
-    }
-  }
-
   private ReflectionUtils() {}
 }
