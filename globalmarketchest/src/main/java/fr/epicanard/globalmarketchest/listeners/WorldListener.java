@@ -162,10 +162,7 @@ public abstract class WorldListener implements Listener {
   }
 
   public static WorldListener of() {
-    if (Version.isEqualsTo(Version.V1_12)) {
-      return new V1_12();
-    }
-    return new V1_X();
+    return Utils.getVersion().equals("1.12") ? new V1_12() : new V1_X();
   }
 
   private static class V1_12 extends WorldListener {

@@ -233,7 +233,7 @@ public class ItemStackUtils {
    * @return
    */
   public Boolean isDamaged(ItemStack item) {
-    return Version.isEqualsTo(Version.V1_12) ? isDamaged_1_12(item) : isDamaged_Latest(item);
+    return Utils.getVersion().equals("1.12") ? isDamaged_1_12(item) : isDamaged_Latest(item);
   }
 
   /**
