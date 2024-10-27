@@ -1,0 +1,289 @@
+# ========================= File lang-vi_VN.yml =============================
+#
+# Language :        Việt Nam
+# Translation by :  ✰ Mao Mao ✰
+#
+# Tệp này chứa tất cả văn bản được hiển thị bởi plugin globalmarketchest
+#
+# Thông tin:
+#   Trong một số văn bản, có những biến như thế này: {shopName}.
+#   Không dịch chúng !
+#   Các biến này được thay thế bên trong plugin để hiển thị văn bản động.
+#   Thứ tự của các biến có thể được thay đổi.
+#   Nếu bạn xóa một biến, điều này sẽ có thể tạo ra lỗi.
+#
+#   Cách sử dụng:
+#   Cách này do bản thân người phiên dịch tự tiềm hiểu và hướng dẫn cho các bạn!
+#
+#   Cách 1: Tạo một "Biển hiệu" ngẫu nhiên trong thế giới hoặc tạo warp đặt biển ra cho mem nhấp vào
+#   Cách 2: Ghi lên tấm biển
+#   Line1:   globalshop
+#   Cách 3: tạo holo hướng dẫn member về cách sử dụng
+#
+#   Các bạn có thể đổi tên "globalshop" trong cấu hình với dòng khoảng 229 "Sign" trong phần "FirstLineToCreate"
+#   Các bạn có thể sử dụng tên mới này cho "Biển hiệu" của mình
+#   Xem thêm về cách tạo tại: https://github.com/EpiCanard/GlobalMarketChest/wiki/Commands#command-open
+#
+# ===========================================================================
+
+InterfacesTitle:
+  EditAuction: "&2Chỉnh sửa phiên đấu giá"
+  BuyAuction: "&2Bán đấu giá"
+  CategoryView: "&2Xem danh mục"
+  AuctionViewList: "&2Xem danh sách đấu giá"
+  AuctionViewByPlayer: "&2Xem danh sách người chơi đấu giá"
+  AuctionViewItem: "&2Xem danh sách vật phẩm đấu giá"
+  ConfigShop : "&2Cài đặt cửa hàng"
+  AuctionGlobalView: "&2Lược sử đấu giá"
+  SearchView: "&2Tìm kiếm đấu giá"
+  ConfirmView: "&2Xác nhận xem"
+  LastAuctionViewList: "&2Đấu giá lần cuối"
+  ShulkerBoxContent: "&2Nội dung hộp Shulker"
+  # Auction Creation
+  CreateAuctionItem: "&2Chọn mục đấu giá"
+  CreateAuctionPrice: "&2Chọn số tiền đấu giá"
+  # Shop Creation
+  ShopCreationSelectType: "&2Chọn loại cửa hàng và khối liên kết"
+  ShopCreationLink: "&2Đặt tên nhóm / cửa hàng liên kết"
+Divers:
+  State: "Trạng thái"
+  Quantity: "Số lượng"
+  UnitPrice: "Giá cả"
+  TotalPrice: "Tổng giá"
+  AuctionNumber: "Số đấu giá"
+  Seller: "Người bán"
+  Buyer: "Người mua"
+  Start: "Bắt đầu"
+  Location: "Vị trí"
+  OtherLocation: "Vị trí khác"
+  Server: "Máy chủ"
+  Group: "Nhóm"
+  Type: "Loại"
+  Warning: "Cảnh báo"
+  ExpireIn: "Hết hạn"
+  Expired: "Hết hạn"
+  Started: "Bắt đầu"
+  Ended: "Đã kết thúc"
+  CanceledBy: "Bị hủy bởi"
+  Free: "Miễn phí"
+  WithStatus: "&fVới trạng thái : &2{status}"
+  Days: "ngày"
+  Hours: "giờ"
+  Minutes: "phút"
+  Seconds: "giây"
+  PastDate: "{date} trước kia"
+  UnknownPlayer: "Người chơi không xác định"
+  SearchItemTextIcon: "&7Tìm kiếm: &3{search}"
+  ExitChatMode: "&7 - (Viết &9{exit}&7 Để lại chế độ trò chuyện)"
+  AdvicePriceIcon: "&7Giá tư vấn : &3{advicePrice}"
+  NoAdvicePrice: "&3Không có giá tư vấn"
+  MinPrice: "Giá tối thiểu"
+  MaxPrice: "Giá tối đa"
+  Anonymous: "Vô danh"
+States:
+  InProgress: "Trong tiến trình"
+  Expired: "Hết hạn"
+  Abandoned: "Bị bỏ rơi"
+  Finished: "Hoàn thành"
+Shops:
+  ClickChangeGroup: "&cBấm để thay đổi tên nhóm cửa hàng"
+  CurrentShop: "Cửa hàng hiện tại"
+Buttons:
+  Background:
+    Name: " "
+  Money:
+    Name: "&6Tiền của bạn"
+  PreviousButton:
+    Name: "Trở lại"
+    Description: "&fQuay lại ô hàng trước đó"
+  ExitButton:
+    Name: "&4Thoát"
+    Description: "&fĐóng chợ"
+  Validate:
+    Name: "&2Xác nhận"
+    Description: "&fChuyển đến bước tiếp theo"
+  Return:
+    Name: "&4Trở lại"
+    Description: "&fQuay trở lại bước trước"
+  CreateShop:
+    Name: "&2Tạo cửa hàng"
+  NewAuction:
+    Name: "&2Tạo ra đấu giá mới"
+    Description: "&7Số đấu giá số ({auctionNumber}/{maxAuctionNumber});&7Bấm vào đây để bán các mặt hàng của bạn"
+  CreateAuction:
+    Name: "&2Tạo ra đấu giá"
+  BuyAuction:
+    Name: "&2Mua phiên đấu giá này"
+  AdminRemoveAuction:
+    Name: "&cLoại bỏ cuộc đấu giá này"
+  AdminSeePlayerAuctions:
+    Name: "&cXem đấu giá của một người chơi"
+  RenewAuction:
+    Name: "&6Gia hạn đấu giá này"
+  UndoAuction:
+    Name: "&cHoàn lại cuộc đấu giá"
+  RenewEveryAuction:
+    Name: "&6Gia hạn mọi cuộc đấu giá"
+  UndoEveryAuction:
+    Name: "&cHoàn tác mọi cuộc đấu giá"
+  GlobalView:
+    Name: "&fTổng quan"
+    Description: "&5Lịch sử đấu giá"
+  Search:
+    Name: "&3Tìm kiếm một cuộc đấu giá"
+  DragItem:
+    Name: "&aKéo một vật phẩm ở đây"
+    Description: "&ahoặc sử dụng SHIFT-Click"
+  CancelAuction:
+    Name: "&4Hủy đấu giá này"
+  ViewByCategory:
+    Name: "Xem theo thể loại"
+    Description: "Người chơi có thể xem các cuộc đấu giá theo thể loại không ?"
+  ViewByPlayer:
+    Name: "Xem bởi người chơi"
+    Description: "Người chơi có thể xem các cuộc đấu giá của người chơi không ?"
+  ViewByLastCreated:
+    Name: "Xem bởi lần cuối được tạo"
+    Description: "Người chơi có thể nhìn thấy các cuộc đấu giá được tạo ra cuối cùng không ?"
+  GlobalShop:
+    Name: "Đấu giá thế giới"
+  AuctionShop:
+    Name: "Đấu giá ẩn danh"
+  LocalShop:
+    Name: "Cửa hàng địa phương"
+  AdminShop:
+    Name: "Cửa hàng quản trị"
+  EditGroupName:
+    Name: "&fChỉnh sửa tên nhóm"
+  PreviousPage:
+    Name: "Trang trước"
+  NextPage:
+    Name: "Trang tiếp theo"
+  NumPage:
+    Name: "Số trang"
+  AuctionSide:
+    Name: " "
+  AuctionMiddle:
+    Name: "&2Thả một mặt hàng ở đây"
+    Description: "&2hoặc sử dụng SHIFT-Click"
+  MaxInOne:
+    Name: "&fCác mặt hàng tối đa trong một cuộc đấu giá"
+  MaxRepeat:
+    Name: "&fLặp lại đấu giá càng nhiều càng tốt"
+  RepeatIncrease:
+    Name: "&2+"
+  RepeatDecrease:
+    Name: "&4-"
+  InProgressAuction:
+    Name: "&aTiến trình đấu giá"
+  ExpiredAuction:
+    Name: "&cĐấu giá đã hết hạn"
+  SoldAuction:
+    Name: "&bBán đấu giá"
+  BoughtAuction:
+    Name: "&9Mua đấu giá"
+  CanceledAuction:
+    Name: "&6Đã hủy đấu giá"
+  FreePrice:
+    Name: "&aMiễn phí"
+    Description: "&7Đặt giá thành 0"
+  CircleSetItem:
+    Name: " "
+  CircleUnsetItem:
+    Name: " "
+  YesButton:
+    Name: "ĐÚNG"
+  NoButton:
+    Name: "SAI"
+  Question:
+    Name: " "
+  SearchItemDrop:
+    Name: "&fTìm các vật phẩm tương tự"
+    Description: "&7Nhấp với vật phẩm mong muốn;&7Hoặc sử dụng SHIFT+Click"
+  SearchItemText:
+    Name: "&fTìm một vật phẩm có tên"
+  SearchByPlayer:
+    Name: "&fTìm đấu giá của một người chơi"
+  LastAuctions:
+    Name: "&3Lần cuối mua đấu giá {hours} giờ trước"
+  LastCreatedAuctions:
+    Name: "&3Lần cuối tạo đấu giá: {hours} giờ trước"
+  LastBoughtAuctions:
+    Name: "&3Lần cuối mua đấu giá: {hours} giờ trước"
+  AdvicePriceInfo:
+    Name: "Giá tư vấn"
+    Description: "&3{advicePrice};&7Bấm để sử dụng giá tư vấn"
+  SeeShulkerBoxContent:
+    Name: "Xem nội dung của hộp Shulker này"
+ErrorMessages:
+  UnknownWorld: "Thế giới không xác định cho cửa hàng"
+  ShopTypeNotSet: "Loại cửa hàng không được đặt;&2Vui lòng chọn ít nhất một loại"
+  MissingItems: "Số lượng vật phẩm sai, một số mặt hàng bị thiếu"
+  FailCreateAuction: "Không tạo ra đấu giá trong cơ sở dữ liệu"
+  NotEnoughSpace: "Không đủ khoảng trống để thêm tất cả các mặt hàng vào túi người chơi"
+  NotEnoughMoney: "Không đủ tiền để mua đấu giá này"
+  CantBuyAuction: "Không thể mua đấu giá (đã hết hạn hoặc đã bán)"
+  CantRenewAuction: "Không thể gia hạn đấu giá"
+  CantUndoAuction: "Không thể hoàn tác đấu giá"
+  CantRemoveAuction: "Không thể loại bỏ đấu giá"
+  CantRenewEveryAuction: "Không thể gia hạn mọi phiên đấu giá"
+  CantUndoEveryAuction: "Không thể hoàn tác mọi phiên đấu giá"
+  PlayerDoesntExist: "Người chơi này không tồn tại"
+  MaxAuctionByPlayer: "Không thể tạo ra nhiều phiên đấu giá;&7Đã đạt tối đa"
+  PermissionNotAllowed: "&cBạn không được phép thực hiện hành động này"
+  InvalidCommand: "&cLệnh này không hợp lệ : "
+  PlayerOnly: "&cLệnh này chỉ có thể được thực thi bởi một người chơi"
+  UnknownShop: "&cCửa hàng không xác định : "
+  CantRemoveBlock: "&cBạn không thể loại bỏ khối này vì một cửa hàng được gắn vào nó"
+  DamagedItem: "Bạn không thể bán một mặt hàng bị hư hỏng"
+  BlacklistedItem: "Bạn không thể bán một mặt hàng trong danh sách đen"
+  CommandInChat: "&cBạn không được phép thực thi các lệnh ở chế độ trò chuyện"
+  MaxGlobalShop: "&cBạn đã đạt được số lượng tối đa toàn cầu mà bạn có thể tạo ({maxGlobalShop} Cửa hàng thế giới)"
+InfoMessages:
+  UndoAuction: "&2Đấu giá đã xóa thành công"
+  RemoveAuction: "&2Đấu giá đã loại bỏ thành công"
+  RenewAuction: "&2Đấu giá được đổi mới thành công"
+  CreateAuction: "&2Đấu giá được tạo thành công"
+  RenewEveryAuction: "&2Mỗi phiên đấu giá được đổi mới thành công"
+  UndoEveryAuction: "&2Mỗi phiên đấu giá đã xóa thành công"
+  ShopDeleted: "Cửa hàng đã xóa thành công"
+  AcquireAuction: "&3{buyer} &fĐã mua &2x{quantity} {itemName} &fvới giá &2{price}&f từ &3{seller}&6."
+  AcquireAuctionOwner: "&3{buyer} &6Mua đấu giá của bạn &2x{quantity} {itemName} &6cvới giá &2{price}&6."
+  AuctionCreated: "&3{seller} &6Đã tạo &3{auctionNumber} &6Một phiên đấu giá với &2x{quantity} {itemName} &6Giá khởi điểm &2{price}&6."
+  LoginMessage:
+    BaseMessage: "&6Kể từ khi kết nối cuối cùng của bạn :"
+    SoldAuctions: "&6- Bạn đã bán &3{count}&6 Đấu giá"
+    ExpiredAuctions:  "&6- &3{count}&6 Đấu giá đã hết hạn"
+  PluginReloading: "Plugin đang tải lại..."
+  PluginReloaded: "Plugin được tải lại."
+  WriteGroupName: "Viết tên nhóm mà bạn muốn"
+  WriteItemName: "Viết tên của vật phẩm bạn đang tìm kiếm"
+  WritePlayerName: "Viết tên của người chơi bạn đang tìm kiếm"
+  DeleteShopQuestion: "Bạn có chắc bạn muốn xóa cửa hàng này không ?"
+  ConvertingShopAuctions: "Chuyển đổi đấu giá của cửa hàng : &6{shopName}&7"
+  ShopAuctionsConverted: "Cửa hàng &6{shopName}&7 : &3{updated}&9/{total}&7 Đấu giá chuyển đổi"
+  ShopTemporarilyLocked: "Cửa hàng này tạm thời bị khóa"
+  ConversionMode: "Chế độ chuyển đổi : &6{mode}&7"
+  NewVersionAvailable: "&6Phiên bản mới &3{lastVersion}&6 của GlobalMarketchest hiện có sẵn trên Spigot ! &7(hiện tại : {currentVersion})"
+Commands:
+  Buttons:
+    OpenText: "Mở"
+    OpenHover: "Bấm để mở cửa hàng"
+    DetailText: "Chi tiết"
+    DetailHover: "Nhấp vào xem chi tiết"
+    TeleportText: "Dịch chuyển tức thời"
+    TeleportHover: "Bấm để dịch chuyển đến cửa hàng"
+  ListShop: "Danh sách các cửa hàng : "
+  SeeHelp: "&6Xem trợ giúp : &c/globalmarketchest help"
+  HelpCommand:
+    Usage: "&6Cách sử dụng :"
+    Help: "&c/globalmarketchest [help]&6 - Hiển thị trợ giúp"
+    Version: "&c/globalmarketchest version&6 - Hiển thị phiên bản plugin"
+    Reload: "&c/globalmarketchest reload&6 - Tải lại plugin"
+    List: "&c/globalmarketchest list&6 - Liệt kê tất cả cửa hàng thế giới"
+    Detail: "&c/globalmarketchest list detail <shop>&6 - Liệt kê tất cả GlobalShop"
+    TP: "&c/globalmarketchest list tp <shop> <position>&6 - Dịch chuyển đến một shop người chơi cụ thể"
+    Open: "&c/globalmarketchest open <shop>&6 - Mở một cửa hàng thế giới"
+    AdminOpen: "&c/globalmarketchest open <shop> [player]&6 - Mở một cửa hàng thế giới"
+    Close: "&c/globalmarketchest close <player>&6 - Đóng cửa hàng của một người chơi"
+    FixAuctions: "&c/globalmarketchest fix auctions [active | all]&6 - Chuyển đổi Minecraft cũ &c[&aItemMeta&c] đến phiên bản Minecraft mới"

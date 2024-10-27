@@ -124,6 +124,7 @@ I would like to thanks :
 - **VStitch** for the Russian translation.
 - **theilqer** for the Japanese translation.
 - **XLuxBX** for the Spanish translation.
+- **✰ Mao Mao ✰** for the Vietnamese translation.
 
 
 ### Donation
