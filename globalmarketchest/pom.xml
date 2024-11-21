@@ -76,6 +76,7 @@
                   <include>fr.epicanard.globalmarketchest:v1_20_R3</include>
                   <include>fr.epicanard.globalmarketchest:v1_20_R4</include>
                   <include>fr.epicanard.globalmarketchest:v1_21_R1</include>
+                  <include>fr.epicanard.globalmarketchest:v1_21_R2</include>
                   <include>org.bstats:bstats-bukkit</include>
                 </includes>
               </artifactSet>
@@ -243,6 +244,11 @@
     <dependency>
       <groupId>fr.epicanard.globalmarketchest</groupId>
       <artifactId>v1_21_R1</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>fr.epicanard.globalmarketchest</groupId>
+      <artifactId>v1_21_R2</artifactId>
       <version>${revision}</version>
     </dependency>
   </dependencies>
