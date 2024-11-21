@@ -142,10 +142,16 @@ public class VersionSupportUtils {
     return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "d"));
   }
 
+  @Version(name = "getMinecraftKey", versions = {"1.20.5, 1.20.6", "1.21.1"})
+  public Object getMinecraftKey_1_21_1(Object registry, Object nmsItemStack)
+      throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "g"));
+  }
+
   @Version(name = "getMinecraftKey")
   public Object getMinecraftKey_latest(Object registry, Object nmsItemStack)
       throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "g"));
+    return registry.getClass().getMethod("b", Object.class).invoke(registry, invokeMethod(nmsItemStack, "h"));
   }
 
   @Version(name = "getNamespace", versions = { "1.14", "1.15", "1.16", "1.17" })
@@ -575,8 +581,8 @@ public class VersionSupportUtils {
     }
   }
 
-  @Version(name = "updateInventoryName")
-  public void updateInventoryName_latest(String title, Player player) {
+  @Version(name = "updateInventoryName", versions = {  "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6", "1.21.1" })
+  public void updateInventoryName_1_21_1(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
       Class<?> entityHumanClass = Path.MINECRAFT_WORLD_ENTITY_PLAYER.getClass("EntityHuman");
@@ -594,6 +600,33 @@ public class VersionSupportUtils {
           .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
 
       Object playerConnection = entityPlayer.getClass().getDeclaredField("c").get(entityPlayer);
+
+      playerConnection.getClass().getMethod("b", Path.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet"))
+          .invoke(playerConnection, packet);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Version(name = "updateInventoryName")
+  public void updateInventoryName_latest(String title, Player player) {
+    try {
+      Object entityPlayer = invokeMethod(player, "getHandle");
+      Class<?> entityHumanClass = Path.MINECRAFT_WORLD_ENTITY_PLAYER.getClass("EntityHuman");
+      Object chatMessage = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent")
+          .getMethod("b", String.class).invoke(null, title);
+      Class<?> containerClass = Path.MINECRAFT_WORLD_INVENTORY.getClass("Container");
+      VersionField activeContainerVF = VersionField.from(entityPlayer, entityHumanClass).getWithType(containerClass);
+      Object windowId = activeContainerVF.get("l").value();
+
+      Class<?> ichat = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
+      Class<?> containers = Path.MINECRAFT_WORLD_INVENTORY.getClass("Containers");
+
+      Object packet = Path.MINECRAFT_NETWORK_GAME.getClass("PacketPlayOutOpenWindow")
+          .getConstructor(Integer.TYPE, containers, ichat)
+          .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
+
+      Object playerConnection = entityPlayer.getClass().getDeclaredField("f").get(entityPlayer);
 
       playerConnection.getClass().getMethod("b", Path.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet"))
           .invoke(playerConnection, packet);
