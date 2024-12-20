@@ -474,6 +474,19 @@ Build:
     - minecraft:waxed_exposed_copper_bulb
     - minecraft:waxed_weathered_copper_bulb
     - minecraft:waxed_oxidized_copper_bulb
+    - minecraft:pale_oak_planks
+    - minecraft:pale_oak_log
+    - minecraft:pale_oak_wood
+    - minecraft:stripped_pale_oak_log
+    - minecraft:stripped_pale_oak_wood
+    - minecraft:pale_oak_slab
+    - minecraft:pale_oak_stairs
+    - minecraft:resin_block
+    - minecraft:resin_brick_stairs
+    - minecraft:resin_brick_slab
+    - minecraft:resin_brick_wall
+    - minecraft:chiseled_resin_bricks
+    - minecraft:resin_bricks
 Decoration:
   DisplayName: "Decoration Blocks"
   DisplayItem: minecraft:peony
@@ -833,6 +846,17 @@ Decoration:
     - minecraft:waxed_exposed_copper_trapdoor
     - minecraft:waxed_weathered_copper_trapdoor
     - minecraft:waxed_oxidized_copper_trapdoor
+    - minecraft:pale_oak_sapling
+    - minecraft:pale_oak_leaves
+    - minecraft:pale_moss_carpet
+    - minecraft:pale_hanging_moss
+    - minecraft:pale_moss_block
+    - minecraft:pale_oak_fence
+    - minecraft:pale_oak_door
+    - minecraft:pale_oak_sign
+    - minecraft:pale_oak_hanging_sign
+    - minecraft:open_eyeblossom
+    - minecraft:closed_eyeblossom
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
@@ -926,6 +950,10 @@ Redstone:
     - minecraft:cherry_trapdoor
     - minecraft:cherry_fence_gate
     - minecraft:crafter
+    - minecraft:pale_oak_button
+    - minecraft:pale_oak_pressure_plate
+    - minecraft:pale_oak_trapdoor
+    - minecraft:pale_oak_fence_gate
 Transportation:
   DisplayName: "Transportation"
   DisplayItem: minecraft:powered_rail
@@ -963,6 +991,8 @@ Transportation:
     - minecraft:bamboo_chest_raft
     - minecraft:cherry_boat
     - minecraft:cherry_chest_boat
+    - minecraft:pale_oak_boat
+    - minecraft:pale_oak_chest_boat
 Misc:
   DisplayName: "Miscellaneous"
   DisplayItem: minecraft:lava_bucket
@@ -1241,6 +1271,12 @@ Misc:
     - minecraft:ominous_trial_key
     - minecraft:vault
     - minecraft:breeze_rod
+    - minecraft:creaking_heart
+    - minecraft:creaking_spawn_egg
+    - minecraft:field_masoned_banner_pattern
+    - minecraft:bordure_indented_banner_pattern
+    - minecraft:resin_clump
+    - minecraft:resin_brick
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
@@ -1327,6 +1363,23 @@ Tools:
     - minecraft:spyglass
     - minecraft:recovery_compass
     - minecraft:brush
+    - minecraft:bundle
+    - minecraft:white_bundle
+    - minecraft:orange_bundle
+    - minecraft:magenta_bundle
+    - minecraft:light_blue_bundle
+    - minecraft:yellow_bundle
+    - minecraft:lime_bundle
+    - minecraft:pink_bundle
+    - minecraft:gray_bundle
+    - minecraft:light_gray_bundle
+    - minecraft:cyan_bundle
+    - minecraft:purple_bundle
+    - minecraft:blue_bundle
+    - minecraft:brown_bundle
+    - minecraft:green_bundle
+    - minecraft:red_bundle
+    - minecraft:black_bundle
 Combat:
   DisplayName: "Combat"
   DisplayItem: minecraft:golden_sword

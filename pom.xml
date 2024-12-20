@@ -11,7 +11,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <spigot.version>1.20.6-R0.1-SNAPSHOT</spigot.version>
+    <spigot.version>1.21.4-R0.1-SNAPSHOT</spigot.version>
     <duckconfig.version>1.2.0</duckconfig.version>
     <lombok.version>1.18.32</lombok.version>
   </properties>
