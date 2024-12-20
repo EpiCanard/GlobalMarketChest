@@ -98,6 +98,7 @@ public class ShopCreationLink extends ShopCreationInterface {
    */
   public void changeName(String name) {
     final ShopInfo shop = this.inv.getTransactionValue(TransactionKey.SHOP_INFO);
+    this.load();
 
     if (shop != null)
       shop.setGroup(name);
