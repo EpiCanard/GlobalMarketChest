@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import static fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller.call;
 import static fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils.*;
@@ -301,10 +302,17 @@ public class VersionSupportUtils {
       final Class<?> dataComponentsClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponents");
       final Object customDataComponent = findParametrizedField(dataComponentsClass, dataComponentTypeClass, customDataClass).get().get(null);
 
-      // CustomData.set(DataComponents.CUSTOM_DATA, nmsItemStack, tagCompound)
-      customDataClass
-        .getMethod("a", dataComponentTypeClass, nmsItemStack.getClass(), Path.MINECRAFT_NBT.getClass("NBTTagCompound"))
-        .invoke(null, customDataComponent, nmsItemStack, tagCompound);
+      if (tagCompound.getClass().equals(customDataClass)) {
+        // nmsItemStack.set(DataComponents.CUSTOM_DATA, tagCompound)
+        nmsItemStack.getClass()
+          .getMethod("b", dataComponentTypeClass, Object.class)
+          .invoke(nmsItemStack, customDataComponent, tagCompound);
+      } else {
+        // CustomData.set(DataComponents.CUSTOM_DATA, nmsItemStack, tagCompound)
+        customDataClass
+          .getMethod("a", dataComponentTypeClass, nmsItemStack.getClass(), Path.MINECRAFT_NBT.getClass("NBTTagCompound"))
+          .invoke(null, customDataComponent, nmsItemStack, tagCompound);
+      }
     } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException  e) {
       e.printStackTrace();
     }
@@ -670,12 +678,7 @@ public class VersionSupportUtils {
       Object nmsItemStack = NMSUtils.toNmsItemstack(itemStack);
 
       Object tagCompound = call("getTag", this, nmsItemStack);
-
-      if (tagCompound == null)
-        tagCompound = call("newNBTTagCompound", this);
-
-      tagCompound.getClass().getMethod(setBooleanName(), String.class, boolean.class).invoke(tagCompound, this.NBTTAG, true);
-
+      tagCompound = call("updateTag", this, tagCompound);
       call("setTag", this, nmsItemStack, tagCompound);
 
       return NMSUtils.toItemstack(nmsItemStack);
@@ -683,6 +686,45 @@ public class VersionSupportUtils {
       e.printStackTrace();
     }
     return itemStack;
+  }
+
+  @Version(name = "updateTag", versions = { "1.12", "1.13", "1.14", "1.15", "1.16", "1.17", "1.18", "1.19", "1.20.0", "1.20.1", "1.20.2", "1.20.3", "1.20.4"})
+  public Object updateTag_old(Object tagCompound) {
+    try {
+      if (tagCompound == null)
+        tagCompound = call("newNBTTagCompound", this);
+      putBoolean(tagCompound);
+      return tagCompound;
+     } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  @Version(name = "updateTag")
+  public Object updateTag_latest(Object tagCompound) {
+    try {
+      if (tagCompound == null) {
+        tagCompound = call("newNBTTagCompound", this);
+        putBoolean(tagCompound);
+      } else {
+        Consumer<?> consumer = tag -> putBoolean(tag);
+        // CustomerData.update(Consumer<CompoundTag>)
+        tagCompound.getClass().getMethod("a", Consumer.class).invoke(tagCompound, consumer);
+      }
+      return tagCompound;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  private void putBoolean(Object tagCompound) {
+    try {
+      tagCompound.getClass().getMethod(setBooleanName(), String.class, boolean.class).invoke(tagCompound, this.NBTTAG, true);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private Optional<Field> findParametrizedField(Class<?> main, Class<?> type, Class<?> generic) {
