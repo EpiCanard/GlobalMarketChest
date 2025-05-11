@@ -3,6 +3,7 @@ package fr.epicanard.globalmarketchest.utils.reflection;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.*;
@@ -429,8 +430,7 @@ public class VersionSupportUtils {
 
       Object packet = Path.MINECRAFT_SERVER.getClass("PacketPlayOutOpenWindow")
           .getConstructor(Integer.TYPE, String.class, ichat, Integer.TYPE)
-          .newInstance(windowId, "minecraft:chest", ichat.cast(chatMessage),
-              player.getOpenInventory().getTopInventory().getSize());
+          .newInstance(windowId, "minecraft:chest", ichat.cast(chatMessage), 54);
 
       Object playerConnection = entityPlayer.getClass().getDeclaredField("playerConnection").get(entityPlayer);
 
