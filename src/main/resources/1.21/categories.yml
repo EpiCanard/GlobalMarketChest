@@ -857,6 +857,13 @@ Decoration:
     - minecraft:pale_oak_hanging_sign
     - minecraft:open_eyeblossom
     - minecraft:closed_eyeblossom
+    - minecraft:bush
+    - minecraft:firefly_bush
+    - minecraft:short_dry_grass
+    - minecraft:tall_dry_grass
+    - minecraft:wildflowers
+    - minecraft:leaf_litter
+    - minecraft:cactus_flower
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
@@ -1277,6 +1284,8 @@ Misc:
     - minecraft:bordure_indented_banner_pattern
     - minecraft:resin_clump
     - minecraft:resin_brick
+    - minecraft:blue_egg
+    - minecraft:brown_egg
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
@@ -1476,5 +1485,6 @@ Books:
 # - minecraft:structure_void
 # - minecraft:jigsaw
 # - minecraft:light
-# - minecraft:bundle
+# - minecraft:test_block
+# - minecraft:test_instance_block
 
