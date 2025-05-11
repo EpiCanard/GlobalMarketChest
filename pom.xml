@@ -11,9 +11,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.release>8</maven.compiler.release>
     <spigot.version>1.21.5-R0.1-SNAPSHOT</spigot.version>
     <duckconfig.version>1.2.0</duckconfig.version>
-    <lombok.version>1.18.32</lombok.version>
+    <lombok.version>1.18.38</lombok.version>
   </properties>
 
   <build>
@@ -66,6 +67,19 @@
               <Project-Version>${project.version}</Project-Version>
             </manifestEntries>
           </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
         </configuration>
       </plugin>
       <plugin>

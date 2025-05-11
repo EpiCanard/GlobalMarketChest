@@ -27,8 +27,8 @@ public enum Path {
   private static String version() {
     try {
       return "." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
-    } catch(ArrayIndexOutOfBoundsException e) {
-        return "";
+    } catch (ArrayIndexOutOfBoundsException e) {
+      return "";
     }
   }
 

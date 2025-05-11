@@ -695,7 +695,7 @@ public class VersionSupportUtils {
         tagCompound = call("newNBTTagCompound", this);
       putBoolean(tagCompound);
       return tagCompound;
-     } catch (Exception e) {
+    } catch (Exception e) {
       e.printStackTrace();
       return null;
     }
