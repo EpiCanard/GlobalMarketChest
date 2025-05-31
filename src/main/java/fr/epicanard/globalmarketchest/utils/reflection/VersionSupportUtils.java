@@ -205,7 +205,14 @@ public class VersionSupportUtils {
   public Object getName_latest(Object nmsItemStack)
       throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     final Class<?> chatBaseComponent = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
-    return VersionField.from(nmsItemStack).invokeMethodWithType(chatBaseComponent);
+    for(Method method: nmsItemStack.getClass().getMethods()) {
+      if (method.getReturnType().isAssignableFrom(chatBaseComponent)) {
+        Object result = method.invoke(nmsItemStack);
+        if (result != null)
+          return result;
+      }
+    }
+    return null;
   }
 
   private String before1_18(String before, String after) {
@@ -401,9 +408,10 @@ public class VersionSupportUtils {
       Object nmsItemStack = asNMSCopy.invoke(null, itemStack);
       Object name = call("getName", this, nmsItemStack);
 
-      if (name instanceof String) {
+      if (name == null)
+        return itemStack.getType().name();
+      if (name instanceof String)
         return (String) name;
-      }
       return invokeMethod(name, "getString").toString();
     } catch (Exception e) {
       e.printStackTrace();
