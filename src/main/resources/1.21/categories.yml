@@ -1000,6 +1000,22 @@ Transportation:
     - minecraft:cherry_chest_boat
     - minecraft:pale_oak_boat
     - minecraft:pale_oak_chest_boat
+    - minecraft:white_harness
+    - minecraft:orange_harness
+    - minecraft:magenta_harness
+    - minecraft:light_blue_harness
+    - minecraft:yellow_harness
+    - minecraft:lime_harness
+    - minecraft:pink_harness
+    - minecraft:gray_harness
+    - minecraft:light_gray_harness
+    - minecraft:cyan_harness
+    - minecraft:purple_harness
+    - minecraft:blue_harness
+    - minecraft:brown_harness
+    - minecraft:green_harness
+    - minecraft:red_harness
+    - minecraft:black_harness
 Misc:
   DisplayName: "Miscellaneous"
   DisplayItem: minecraft:lava_bucket
@@ -1286,6 +1302,10 @@ Misc:
     - minecraft:resin_brick
     - minecraft:blue_egg
     - minecraft:brown_egg
+    - minecraft:bat_spawn_egg
+    - minecraft:dried_ghast
+    - minecraft:music_disc_lava_chicken
+    - minecraft:music_disc_tears
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
