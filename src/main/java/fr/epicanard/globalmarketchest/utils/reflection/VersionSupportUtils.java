@@ -3,13 +3,13 @@ package fr.epicanard.globalmarketchest.utils.reflection;
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller.call;
 import static fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils.*;
@@ -642,7 +642,8 @@ public class VersionSupportUtils {
           .getConstructor(Integer.TYPE, containers, ichat)
           .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
 
-      Object playerConnection = entityPlayer.getClass().getDeclaredField("f").get(entityPlayer);
+      Class<?> playerConnectionClass = Path.MINECRAFT_SERVER_NETWORK.getClass("PlayerConnection");
+      Object playerConnection = VersionField.from(entityPlayer).getWithType(playerConnectionClass).value();
 
       playerConnection.getClass().getMethod("b", Path.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet"))
           .invoke(playerConnection, packet);

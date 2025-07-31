@@ -8,6 +8,7 @@ public enum Path {
   MINECRAFT_RESOURCES("net.minecraft.resources"),
   MINECRAFT_WORLD_ITEM("net.minecraft.world.item"),
   MINECRAFT_WORLD_ITEM_COMPONENT("net.minecraft.world.item.component"),
+  MINECRAFT_SERVER_NETWORK("net.minecraft.server.network"),
   MINECRAFT_NETWORK_CHAT("net.minecraft.network.chat"),
   MINECRAFT_NETWORK_GAME("net.minecraft.network.protocol.game"),
   MINECRAFT_NETWORK_PROTOCOL("net.minecraft.network.protocol"),
