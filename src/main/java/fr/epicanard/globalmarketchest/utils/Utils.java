@@ -12,6 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static fr.epicanard.globalmarketchest.utils.LangUtils.formatString;
@@ -42,8 +44,17 @@ public class Utils {
   private static final String lastSupportedVersion = "1.21";
 
   static {
-    fullVersion = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 6).replace("-R", ".0");
-    version = GlobalMarketChest.plugin.getServer().getBukkitVersion().substring(0, 4);
+    Pattern pattern = Pattern.compile("^([0-9]+)\\.([0-9]+)(?:\\.([0-9]+))?.*");
+    Matcher matcher = pattern.matcher(GlobalMarketChest.plugin.getServer().getBukkitVersion());
+    if (matcher.matches()) {
+      String major = matcher.group(1);
+      String minor = matcher.group(2);
+      String patch = matcher.group(3);
+      fullVersion = String.format("%s.%s.%s", major, minor, (patch != null) ? patch : "0");
+      version = String.format("%s.%s", major, minor);
+    } else {
+      throw new RuntimeException("Unexpected bukkit version : " + GlobalMarketChest.plugin.getServer().getBukkitVersion());
+    }
   }
 
   /**
