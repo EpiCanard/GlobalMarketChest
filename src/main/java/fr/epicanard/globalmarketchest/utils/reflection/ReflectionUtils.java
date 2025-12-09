@@ -56,5 +56,14 @@ public class ReflectionUtils {
     }
   }
 
+  public static Object newInstance(Class<?> clazz, Object... args) {
+    try {
+      return clazz.getConstructor(fromObjectToClass(args)).newInstance(args);
+    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
   private ReflectionUtils() {}
 }

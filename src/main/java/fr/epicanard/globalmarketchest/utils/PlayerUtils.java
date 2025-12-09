@@ -226,7 +226,7 @@ public class PlayerUtils {
   public void removeDuplicateItems(Inventory playerInventory) {
     ItemStack[] items = playerInventory.getContents();
     for (int i = 0; i < items.length; i++) {
-      if (VersionSupportUtils.getInstance().hasNbtTag(items[i])) {
+      if (VersionSupportUtils.getInstance().hasTag(items[i])) {
         playerInventory.setItem(i, null);
       }
     }

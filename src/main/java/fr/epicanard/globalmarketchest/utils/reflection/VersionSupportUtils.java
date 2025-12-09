@@ -2,46 +2,45 @@ package fr.epicanard.globalmarketchest.utils.reflection;
 
 import fr.epicanard.globalmarketchest.utils.Utils;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
+import fr.epicanard.globalmarketchest.utils.reflection.tags.ITagHandler;
+import fr.epicanard.globalmarketchest.utils.reflection.tags.OldTagHandler;
+import fr.epicanard.globalmarketchest.utils.reflection.tags.TagHandler;
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import static fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller.call;
 import static fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils.*;
 
-public class VersionSupportUtils {
-
-  private final String NBTTAG = "GMCItem";
+public class VersionSupportUtils implements ITagHandler {
 
   private static VersionSupportUtils INSTANCE;
+
+  private ITagHandler tagHandler;
 
   /**
    * Private constructor VersionSupportUtils
    */
-  private VersionSupportUtils() {
+  private VersionSupportUtils(ITagHandler handler) {
+    this.tagHandler = handler;
   }
 
   /**
    * Singleton, method to get the instance of this class
    */
   public static VersionSupportUtils getInstance() {
-    if (INSTANCE == null)
-      INSTANCE = new VersionSupportUtils();
-    return INSTANCE;
-  }
-
-  private Object newInstance(Class<?> clazz, Object... args) {
-    try {
-      return clazz.getConstructor(fromObjectToClass(args)).newInstance(args);
-    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-      e.printStackTrace();
+    if (INSTANCE == null) {
+      if (Utils.getVersion() == "1.12" || Utils.getVersion() == "1.13")
+        INSTANCE = new VersionSupportUtils(new OldTagHandler());
+      else
+        INSTANCE = new VersionSupportUtils(new TagHandler());
     }
-    return null;
+    return INSTANCE;
   }
 
   // ======== TOOLS ============
@@ -176,16 +175,6 @@ public class VersionSupportUtils {
     return invokeMethod(minecraftKey, "a");
   }
 
-  @Version(name = "newNBTTagCompound", versions = { "1.12", "1.13", "1.14", "1.15", "1.16" })
-  public Object newNBTTagCompound_old() throws ClassNotFoundException {
-    return newInstance(Path.MINECRAFT_SERVER.getClass("NBTTagCompound"));
-  }
-
-  @Version(name = "newNBTTagCompound")
-  public Object newNBTTagCompound_latest() throws ClassNotFoundException {
-    return newInstance(Path.MINECRAFT_NBT.getClass("NBTTagCompound"));
-  }
-
   @Version(name = "getItemClass", versions = { "1.12", "1.13", "1.14", "1.15", "1.16" })
   public Class<?> getItemClass_old() throws ClassNotFoundException {
     return Path.MINECRAFT_SERVER.getClass("Item");
@@ -205,7 +194,7 @@ public class VersionSupportUtils {
   public Object getName_latest(Object nmsItemStack)
       throws ClassNotFoundException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
     final Class<?> chatBaseComponent = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
-    for(Method method: nmsItemStack.getClass().getMethods()) {
+    for (Method method: nmsItemStack.getClass().getMethods()) {
       if (method.getReturnType().isAssignableFrom(chatBaseComponent)) {
         Object result = method.invoke(nmsItemStack);
         if (result != null)
@@ -213,117 +202,6 @@ public class VersionSupportUtils {
       }
     }
     return null;
-  }
-
-  private String before1_18(String before, String after) {
-    switch (Utils.getVersion()) {
-      case "1.12":
-      case "1.13":
-      case "1.14":
-      case "1.15":
-      case "1.16":
-      case "1.17":
-        return before;
-      default:
-        return after;
-    }
-  }
-
-  @Version(name = "getTag", versions = { "1.12", "1.13", "1.14", "1.15", "1.16", "1.17" })
-  public Object getTagOld(Object itemStack) {
-    return invokeMethod(itemStack, "getTag");
-  }
-
-  @Version(name = "getTag", versions = { "1.18", "1.19", "1.20.0", "1.20.1", "1.20.2", "1.20.3", "1.20.4" })
-  public Object getTag(Object itemStack)
-      throws ClassNotFoundException, InvocationTargetException, IllegalAccessException {
-    final Class<?> nbtTagCompound = Path.MINECRAFT_NBT.getClass("NBTTagCompound");
-    final Optional<Method> maybeMethod = Arrays.stream(itemStack.getClass().getMethods())
-        .filter(m -> m.getReturnType().isAssignableFrom(nbtTagCompound) && m.getParameters().length == 0)
-        .findFirst();
-    if (maybeMethod.isPresent())
-      return maybeMethod.get().invoke(itemStack);
-    return null;
-  }
-
-  @Version(name = "getTag")
-  public Object getTagLatest(Object itemStack)
-    throws ClassNotFoundException, InvocationTargetException, IllegalAccessException {
-    // net.minecraft.core.component.DataComponents.CUSTOM_DATA => DataComponents.b ?
-    final Class<?> dataComponentTypeClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponentType");
-    final Class<?> dataComponentHolderClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponentHolder");
-    final Class<?> customDataClass = Path.MINECRAFT_WORLD_ITEM_COMPONENT.getClass("CustomData");
-    final Class<?> dataComponentsClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponents");
-    // Get DataComponents.CUSTOM_DATA: DataComponentType<CustomData>
-    final Optional<Field> customDataComponent = findParametrizedField(dataComponentsClass, dataComponentTypeClass, customDataClass);
-
-    if (!customDataComponent.isPresent())
-      return null;
-
-    // Get Method <T> T get(DataComponentType<CustomData>)
-    final Optional<Method> maybeMethod = Arrays.stream(dataComponentHolderClass.getMethods())
-      .filter(m -> {
-        return m.getGenericReturnType().getTypeName().equals("T") && m.getParameters().length == 1
-          && m.getParameters()[0].getType().isAssignableFrom(dataComponentTypeClass);
-      })
-      .findFirst();
-    if (maybeMethod.isPresent())
-      return maybeMethod.get().invoke(itemStack, customDataComponent.get().get(null));
-    return null;
-  }
-
-  @Version(name = "hasTagName", versions = { "1.12", "1.13", "1.14", "1.15", "1.17" })
-  public String hasTagNameBefore1_18() {
-    return "hasKey"; // NBTTagCompound.hasKey
-  }
-
-  @Version(name = "hasTagName", versions = { "1.18", "1.19", "1.20.0", "1.20.1", "1.20.2", "1.20.3", "1.20.4" })
-  public String hasTagNameAfter1_19_20() {
-    return "e"; // NBTTagCompound.e
-  }
-
-  @Version(name = "hasTagName")
-  public String hasTagNameLatest() {
-    return "a"; // CustomData.a
-  }
-
-  public String setBooleanName() {
-    return before1_18("setBoolean", "a");
-  }
-
-  @Version(name = "setTag", versions = { "1.12", "1.13", "1.14", "1.15", "1.17" })
-  public void setTagBefore1_18(Object nmsItemstack, Object tagCompound) {
-    invokeMethod(nmsItemstack, "setTag", tagCompound);
-  }
-
-  @Version(name = "setTag", versions = { "1.18", "1.19", "1.20.0", "1.20.1", "1.20.2", "1.20.3", "1.20.4" })
-  public void setTagAfter1_18(Object nmsItemstack, Object tagCompound) {
-    invokeMethod(nmsItemstack, "c", tagCompound);
-  }
-
-  @Version(name = "setTag")
-  public void setTagLatest(Object nmsItemStack, Object tagCompound) {
-    try {
-
-      final Class<?> dataComponentTypeClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponentType");
-      final Class<?> customDataClass = Path.MINECRAFT_WORLD_ITEM_COMPONENT.getClass("CustomData");
-      final Class<?> dataComponentsClass = Path.MINECRAFT_CORE_COMPONENT.getClass("DataComponents");
-      final Object customDataComponent = findParametrizedField(dataComponentsClass, dataComponentTypeClass, customDataClass).get().get(null);
-
-      if (tagCompound.getClass().equals(customDataClass)) {
-        // nmsItemStack.set(DataComponents.CUSTOM_DATA, tagCompound)
-        nmsItemStack.getClass()
-          .getMethod("b", dataComponentTypeClass, Object.class)
-          .invoke(nmsItemStack, customDataComponent, tagCompound);
-      } else {
-        // CustomData.set(DataComponents.CUSTOM_DATA, nmsItemStack, tagCompound)
-        customDataClass
-          .getMethod("a", dataComponentTypeClass, nmsItemStack.getClass(), Path.MINECRAFT_NBT.getClass("NBTTagCompound"))
-          .invoke(null, customDataComponent, nmsItemStack, tagCompound);
-      }
-    } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException  e) {
-      e.printStackTrace();
-    }
   }
 
   @Version(name = "newMinecraftKey", versions = { "1.12", "1.13", "1.14", "1.15", "1.16" })
@@ -364,7 +242,7 @@ public class VersionSupportUtils {
           .getDeclaredMethod("asNewCraftStack", itemCLass);
       ItemStack itemStack = (ItemStack) asNewCraftStack.invoke(null, item);
 
-      return this.setNbtTag(itemStack);
+      return this.setTag(itemStack);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -652,90 +530,6 @@ public class VersionSupportUtils {
     }
   }
 
-  /**
-   * Define if the GMC NBT TAG is set on this item
-   *
-   * @param itemStack Item to analyze
-   * @return Return if the item as gmc nbt tag
-   */
-  public boolean hasNbtTag(ItemStack itemStack) {
-    try {
-      Object nmsItemStack = NMSUtils.toNmsItemstack(itemStack);
-
-      Object tagCompound = call("getTag", this, nmsItemStack);
-
-      return tagCompound != null && (Boolean) invokeMethod(tagCompound, call("hasTagName", this), this.NBTTAG);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return false;
-  }
-
-  /**
-   * Set the custom GMC NBT TAG on item in parameter
-   *
-   * @param itemStack Item on which add NBT TAG
-   * @return ItemStack modified
-   */
-  public ItemStack setNbtTag(ItemStack itemStack) {
-    if (itemStack == null)
-      return null;
-    if (this.hasNbtTag(itemStack))
-      return itemStack;
-
-    try {
-      Object nmsItemStack = NMSUtils.toNmsItemstack(itemStack);
-
-      Object tagCompound = call("getTag", this, nmsItemStack);
-      tagCompound = call("updateTag", this, tagCompound);
-      call("setTag", this, nmsItemStack, tagCompound);
-
-      return NMSUtils.toItemstack(nmsItemStack);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return itemStack;
-  }
-
-  @Version(name = "updateTag", versions = { "1.12", "1.13", "1.14", "1.15", "1.16", "1.17", "1.18", "1.19", "1.20.0", "1.20.1", "1.20.2", "1.20.3", "1.20.4"})
-  public Object updateTag_old(Object tagCompound) {
-    try {
-      if (tagCompound == null)
-        tagCompound = call("newNBTTagCompound", this);
-      putBoolean(tagCompound);
-      return tagCompound;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
-  @Version(name = "updateTag")
-  public Object updateTag_latest(Object tagCompound) {
-    try {
-      if (tagCompound == null) {
-        tagCompound = call("newNBTTagCompound", this);
-        putBoolean(tagCompound);
-      } else {
-        Consumer<?> consumer = tag -> putBoolean(tag);
-        // CustomerData.update(Consumer<CompoundTag>)
-        tagCompound.getClass().getMethod("a", Consumer.class).invoke(tagCompound, consumer);
-      }
-      return tagCompound;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
-  private void putBoolean(Object tagCompound) {
-    try {
-      tagCompound.getClass().getMethod(setBooleanName(), String.class, boolean.class).invoke(tagCompound, this.NBTTAG, true);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   private Optional<Field> findParametrizedField(Class<?> main, Class<?> type, Class<?> generic) {
     return Arrays
       .stream(main.getFields())
@@ -743,6 +537,16 @@ public class VersionSupportUtils {
           && ((ParameterizedType) f.getGenericType()).getActualTypeArguments()[0].equals(generic))
       .findFirst();
 
+  }
+
+  @Override
+  public boolean hasTag(ItemStack itemStack) {
+    return this.tagHandler.hasTag(itemStack);
+  }
+
+  @Override
+  public ItemStack setTag(ItemStack itemStack) {
+    return this.tagHandler.setTag(itemStack);
   }
 
 }

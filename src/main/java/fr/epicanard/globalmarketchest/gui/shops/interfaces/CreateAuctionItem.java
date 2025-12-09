@@ -163,7 +163,7 @@ public class CreateAuctionItem extends ShopInterface implements Droppable {
     }
 
     lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(item));
-    this.inv.getInv().setItem(22, VersionSupportUtils.getInstance().setNbtTag(ItemStackUtils.setItemStackLore(item.clone(), lore)));
+    this.inv.getInv().setItem(22, VersionSupportUtils.getInstance().setTag(ItemStackUtils.setItemStackLore(item.clone(), lore)));
   }
 
   /**

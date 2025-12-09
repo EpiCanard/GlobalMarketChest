@@ -247,7 +247,7 @@ public class Paginator {
 
   public void setItemStacks(List<ItemStack> items) {
     this.itemstacks.clear();
-    items = Utils.mapList(items, itemStack -> VersionSupportUtils.getInstance().setNbtTag(itemStack));
+    items = Utils.mapList(items, itemStack -> VersionSupportUtils.getInstance().setTag(itemStack));
     this.itemstacks.addAll(items);
   }
 
