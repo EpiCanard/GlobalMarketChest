@@ -119,6 +119,7 @@ public abstract class ShopInterface {
       return;
     if (this.paginator == null || !this.paginator.onClick(event.getSlot()))
       Optional.ofNullable(this.actions.get(event.getSlot())).ifPresent(c -> c.accept(inv));
+    inv.getPlayer().updateInventory();
   }
 
   /**
