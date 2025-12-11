@@ -1,5 +1,6 @@
 package fr.epicanard.globalmarketchest.gui.shops.baseinterfaces;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
 import fr.epicanard.globalmarketchest.gui.InterfacesLoader;
 import fr.epicanard.globalmarketchest.gui.InventoryGUI;
@@ -11,6 +12,7 @@ import fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller;
 import fr.epicanard.globalmarketchest.utils.reflection.VersionSupportUtils;
 import lombok.Getter;
 import lombok.experimental.Accessors;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -73,10 +75,15 @@ public abstract class ShopInterface {
    */
   private void updateInventoryName(String interfaceName) {
     String title = LangUtils.getOrElse("InterfacesTitle." + interfaceName, "&2GlobalMarketChest");
-    try {
-      AnnotationCaller.call("updateInventoryName", VersionSupportUtils.getInstance(), title, (Player) this.inv.getPlayer());
-    } catch (MissingMethodException e) {
-      e.printStackTrace();
+
+    if (GlobalMarketChest.plugin.getMinecraftVersion().isLowerThan(1, 20)) {
+      try {
+        AnnotationCaller.call("updateInventoryName", VersionSupportUtils.getInstance(), title, (Player) this.inv.getPlayer());
+      } catch (MissingMethodException e) {
+        e.printStackTrace();
+      }
+    } else {
+      this.inv.getPlayer().getOpenInventory().setTitle(title);
     }
   }
 
@@ -119,7 +126,9 @@ public abstract class ShopInterface {
       return;
     if (this.paginator == null || !this.paginator.onClick(event.getSlot()))
       Optional.ofNullable(this.actions.get(event.getSlot())).ifPresent(c -> c.accept(inv));
-    inv.getPlayer().updateInventory();
+    Bukkit.getScheduler().runTask(GlobalMarketChest.plugin, () -> {
+      inv.getPlayer().updateInventory();
+    });
   }
 
   /**

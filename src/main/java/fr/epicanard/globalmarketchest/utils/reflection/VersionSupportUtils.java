@@ -475,7 +475,7 @@ public class VersionSupportUtils implements ITagHandler {
     }
   }
 
-  @Version(name = "updateInventoryName", versions = {  "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6", "1.21.1" })
+  @Version(name = "updateInventoryName", versions = {  "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6"})
   public void updateInventoryName_1_21_1(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
@@ -502,41 +502,12 @@ public class VersionSupportUtils implements ITagHandler {
     }
   }
 
-  @Version(name = "updateInventoryName")
-  public void updateInventoryName_latest(String title, Player player) {
-    try {
-      Object entityPlayer = invokeMethod(player, "getHandle");
-      Class<?> entityHumanClass = Path.MINECRAFT_WORLD_ENTITY_PLAYER.getClass("EntityHuman");
-      Object chatMessage = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent")
-          .getMethod("b", String.class).invoke(null, title);
-      Class<?> containerClass = Path.MINECRAFT_WORLD_INVENTORY.getClass("Container");
-      VersionField activeContainerVF = VersionField.from(entityPlayer, entityHumanClass).getWithType(containerClass);
-      Object windowId = activeContainerVF.get("l").value();
-
-      Class<?> ichat = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent");
-      Class<?> containers = Path.MINECRAFT_WORLD_INVENTORY.getClass("Containers");
-
-      Object packet = Path.MINECRAFT_NETWORK_GAME.getClass("PacketPlayOutOpenWindow")
-          .getConstructor(Integer.TYPE, containers, ichat)
-          .newInstance(windowId, containers.getField("f").get(null), ichat.cast(chatMessage));
-
-      Class<?> playerConnectionClass = Path.MINECRAFT_SERVER_NETWORK.getClass("PlayerConnection");
-      Object playerConnection = VersionField.from(entityPlayer).getWithType(playerConnectionClass).value();
-
-      playerConnection.getClass().getMethod("b", Path.MINECRAFT_NETWORK_PROTOCOL.getClass("Packet"))
-          .invoke(playerConnection, packet);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   private Optional<Field> findParametrizedField(Class<?> main, Class<?> type, Class<?> generic) {
     return Arrays
       .stream(main.getFields())
       .filter(f -> f.getType().isAssignableFrom(type)
           && ((ParameterizedType) f.getGenericType()).getActualTypeArguments()[0].equals(generic))
       .findFirst();
-
   }
 
   @Override

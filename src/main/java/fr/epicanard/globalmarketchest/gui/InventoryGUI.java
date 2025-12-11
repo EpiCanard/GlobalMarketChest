@@ -43,7 +43,7 @@ public class InventoryGUI {
 
   public InventoryGUI(Player player) {
     this.player = player;
-    this.inv = Bukkit.createInventory(null, 54, Utils.toColor("&2GlobalMarketChest"));
+    this.inv = Bukkit.createInventory(player, 54, Utils.toColor("&2GlobalMarketChest"));
     this.warn = new Warning(this.inv);
     this.playerRankProperties = GlobalMarketChest.plugin.getRanksLoader().getPlayerProperties(player);
   }
