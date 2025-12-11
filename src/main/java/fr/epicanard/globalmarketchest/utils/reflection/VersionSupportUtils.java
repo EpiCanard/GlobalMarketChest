@@ -1,12 +1,13 @@
 package fr.epicanard.globalmarketchest.utils.reflection;
 
-import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.utils.annotations.Version;
 import fr.epicanard.globalmarketchest.utils.reflection.tags.ITagHandler;
 import fr.epicanard.globalmarketchest.utils.reflection.tags.OldTagHandler;
 import fr.epicanard.globalmarketchest.utils.reflection.tags.TagHandler;
-import org.bukkit.Bukkit;
-import org.bukkit.Server;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -227,7 +228,7 @@ public class VersionSupportUtils implements ITagHandler {
    * @param name
    * @return
    */
-  public ItemStack getItemStack(String name) {
+  public ItemStack getItemStackFromBukkit(String name) {
     try {
       Object minecraftKey = call("newMinecraftKey", this, name);;
 
@@ -249,6 +250,16 @@ public class VersionSupportUtils implements ITagHandler {
     }
 
     return null;
+  }
+
+  public ItemStack getItemStack(String name) {
+    if (name.startsWith("minecraft:") && GlobalMarketChest.plugin.getMinecraftVersion().isHigherThan(1, 13)) {
+      String key = name.substring(10);
+      Material material = Registry.MATERIAL.get(NamespacedKey.minecraft(key));
+      return this.setTag(new ItemStack(material, 1));
+    } else {
+      return getItemStackFromBukkit(name);
+    }
   }
 
   /**
