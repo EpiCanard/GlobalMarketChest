@@ -6,7 +6,7 @@ import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
 import fr.epicanard.globalmarketchest.utils.ItemStackUtils;
-import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.MinecraftVersion;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -128,8 +128,10 @@ public class ConfigLoader {
     this.categories = null;
     this.languages = null;
 
-    this.config = this.loadOneFile("config.yml", Utils.getVersion(), Utils.getLastSupportedVersion());
-    this.categories = this.loadOneFile("categories.yml", Utils.getVersion(), Utils.getLastSupportedVersion());
+    String version = GlobalMarketChest.plugin.getMinecraftVersion().baseVersion();
+
+    this.config = this.loadOneFile("config.yml", version, MinecraftVersion.getLastSupportedVersion());
+    this.categories = this.loadOneFile("categories.yml", version, MinecraftVersion.getLastSupportedVersion());
     if (this.config != null) {
       final String langFilename = this.config.getString("General.Lang", "lang-en_US.yml");
       this.languages = this.loadOneFile(langFilename, "langs", null);

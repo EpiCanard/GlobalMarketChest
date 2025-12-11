@@ -35,7 +35,7 @@ public class VersionSupportUtils implements ITagHandler {
    */
   public static VersionSupportUtils getInstance() {
     if (INSTANCE == null) {
-      if (Utils.getVersion() == "1.12" || Utils.getVersion() == "1.13")
+      if (GlobalMarketChest.plugin.getMinecraftVersion().isLowerOrEqualsTo(1, 13))
         INSTANCE = new VersionSupportUtils(new OldTagHandler());
       else
         INSTANCE = new VersionSupportUtils(new TagHandler());

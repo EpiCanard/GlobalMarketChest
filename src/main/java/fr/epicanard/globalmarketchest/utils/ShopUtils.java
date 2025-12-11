@@ -33,24 +33,16 @@ public class ShopUtils {
   private Set<String> SIGN_MATERIALS;
 
   static {
-    switch (Utils.getVersion()) {
-      case "1.12" :
-        SIGN_MATERIALS = new HashSet<>(Arrays.asList(
-          "SIGN_POST",
-          "WALL_SIGN"
-        ));
-        break;
-      case "1.13" :
-        SIGN_MATERIALS = new HashSet<>(Arrays.asList(
-          "SIGN",
-          "WALL_SIGN"
-        ));
-        break;
-      default:
-        SIGN_MATERIALS =  Arrays.stream(Material.values())
-          .filter(m -> m.name().endsWith("_SIGN") && !m.name().contains("LEGACY"))
-          .map(Material::name)
-          .collect(Collectors.toSet());
+    MinecraftVersion version = GlobalMarketChest.plugin.getMinecraftVersion();
+    if (version.isEqualsTo(1, 12)) {
+      SIGN_MATERIALS = new HashSet<>(Arrays.asList("SIGN_POST", "WALL_SIGN"));
+    } else if (version.isEqualsTo(1, 13)) {
+      SIGN_MATERIALS = new HashSet<>(Arrays.asList("SIGN", "WALL_SIGN"));
+    } else {
+      SIGN_MATERIALS =  Arrays.stream(Material.values())
+        .filter(m -> m.name().endsWith("_SIGN") && !m.name().contains("LEGACY"))
+        .map(Material::name)
+        .collect(Collectors.toSet());
     }
   }
 

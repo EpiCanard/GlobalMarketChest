@@ -56,6 +56,8 @@ public class GlobalMarketChest extends JavaPlugin {
   private CategoryHandler catHandler;
   @Getter
   private Map<String, PriceLimit> priceLimits;
+  @Getter
+  private final MinecraftVersion minecraftVersion;
 
   public GlobalMarketChest() {
     // Initialization of loader
@@ -65,6 +67,7 @@ public class GlobalMarketChest extends JavaPlugin {
     this.shopManager = new ShopManager();
     this.auctionManager = new AuctionManager();
     this.ranksLoader = new RanksLoader();
+    this.minecraftVersion = MinecraftVersion.parse(this.getServer().getBukkitVersion());
   }
 
   @Override

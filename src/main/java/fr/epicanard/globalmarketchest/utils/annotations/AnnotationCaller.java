@@ -1,7 +1,8 @@
 package fr.epicanard.globalmarketchest.utils.annotations;
 
+import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.MissingMethodException;
-import fr.epicanard.globalmarketchest.utils.Utils;
+import fr.epicanard.globalmarketchest.utils.MinecraftVersion;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -28,7 +29,8 @@ public final class AnnotationCaller {
       final Version versionAno = method.getDeclaredAnnotation(Version.class);
       if (versionAno != null && versionAno.name().equals(methodName)) {
         final List<String> versions = Arrays.asList(versionAno.versions());
-        if (versions.contains(Utils.getVersion()) || versions.contains(Utils.getFullVersion()))
+        MinecraftVersion version = GlobalMarketChest.plugin.getMinecraftVersion();
+        if (versions.contains(version.baseVersion()) || versions.contains(version.fullVersion()))
           return method;
         if (versions.contains("latest"))
           latest = method;
