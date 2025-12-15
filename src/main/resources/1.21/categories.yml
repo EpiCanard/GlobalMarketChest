@@ -222,7 +222,6 @@ Build:
     - minecraft:sandstone
     - minecraft:sandstone_slab
     - minecraft:sandstone_stairs
-    - minecraft:sea_lantern
     - minecraft:smooth_quartz
     - minecraft:smooth_red_sandstone
     - minecraft:smooth_sandstone
@@ -487,6 +486,25 @@ Build:
     - minecraft:resin_brick_wall
     - minecraft:chiseled_resin_bricks
     - minecraft:resin_bricks
+    - minecraft:chain
+    - minecraft:iron_chain
+    - minecraft:copper_chain
+    - minecraft:exposed_copper_chain
+    - minecraft:weathered_copper_chain
+    - minecraft:oxidized_copper_chain
+    - minecraft:waxed_copper_chain
+    - minecraft:waxed_exposed_copper_chain
+    - minecraft:waxed_weathered_copper_chain
+    - minecraft:waxed_oxidized_copper_chain
+    - minecraft:iron_bars
+    - minecraft:copper_bars
+    - minecraft:exposed_copper_bars
+    - minecraft:weathered_copper_bars
+    - minecraft:oxidized_copper_bars
+    - minecraft:waxed_copper_bars
+    - minecraft:waxed_exposed_copper_bars
+    - minecraft:waxed_weathered_copper_bars
+    - minecraft:waxed_oxidized_copper_bars
 Decoration:
   DisplayName: "Decoration Blocks"
   DisplayItem: minecraft:peony
@@ -592,7 +610,6 @@ Decoration:
     - minecraft:infested_mossy_stone_bricks
     - minecraft:infested_stone
     - minecraft:infested_stone_bricks
-    - minecraft:iron_bars
     - minecraft:item_frame
     - minecraft:jukebox
     - minecraft:jungle_fence
@@ -713,7 +730,6 @@ Decoration:
     - minecraft:granite_wall
     - minecraft:grindstone
     - minecraft:jungle_sign
-    - minecraft:lantern
     - minecraft:lily_of_the_valley
     - minecraft:loom
     - minecraft:mossy_stone_brick_wall
@@ -735,7 +751,6 @@ Decoration:
     - minecraft:honeycomb_block
     - minecraft:honey_block
     - minecraft:blackstone_wall
-    - minecraft:chain
     - minecraft:crimson_fence
     - minecraft:crimson_fungus
     - minecraft:crimson_roots
@@ -747,7 +762,6 @@ Decoration:
     - minecraft:respawn_anchor
     - minecraft:shroomlight
     - minecraft:soul_campfire
-    - minecraft:soul_lantern
     - minecraft:soul_torch
     - minecraft:twisting_vines
     - minecraft:warped_fence
@@ -864,6 +878,53 @@ Decoration:
     - minecraft:wildflowers
     - minecraft:leaf_litter
     - minecraft:cactus_flower
+    - minecraft:acacia_shelf
+    - minecraft:bamboo_shelf
+    - minecraft:birch_shelf
+    - minecraft:cherry_shelf
+    - minecraft:crimson_shelf
+    - minecraft:dark_oak_shelf
+    - minecraft:jungle_shelf
+    - minecraft:mangrove_shelf
+    - minecraft:oak_shelf
+    - minecraft:pale_oak_shelf
+    - minecraft:spruce_shelf
+    - minecraft:warped_shelf
+    - minecraft:copper_torch
+    - minecraft:exposed_lightning_rod
+    - minecraft:weathered_lightning_rod
+    - minecraft:oxidized_lightning_rod
+    - minecraft:waxed_lightning_rod
+    - minecraft:waxed_exposed_lightning_rod
+    - minecraft:waxed_weathered_lightning_rod
+    - minecraft:waxed_oxidized_lightning_rod
+    - minecraft:sea_lantern
+    - minecraft:lantern
+    - minecraft:soul_lantern
+    - minecraft:copper_lantern
+    - minecraft:exposed_copper_lantern
+    - minecraft:weathered_copper_lantern
+    - minecraft:oxidized_copper_lantern
+    - minecraft:waxed_copper_lantern
+    - minecraft:waxed_exposed_copper_lantern
+    - minecraft:waxed_weathered_copper_lantern
+    - minecraft:waxed_oxidized_copper_lantern
+    - minecraft:copper_chest
+    - minecraft:exposed_copper_chest
+    - minecraft:weathered_copper_chest
+    - minecraft:oxidized_copper_chest
+    - minecraft:waxed_copper_chest
+    - minecraft:waxed_exposed_copper_chest
+    - minecraft:waxed_weathered_copper_chest
+    - minecraft:waxed_oxidized_copper_chest
+    - minecraft:copper_golem_statue
+    - minecraft:exposed_copper_golem_statue
+    - minecraft:weathered_copper_golem_statue
+    - minecraft:oxidized_copper_golem_statue
+    - minecraft:waxed_copper_golem_statue
+    - minecraft:waxed_exposed_copper_golem_statue
+    - minecraft:waxed_weathered_copper_golem_statue
+    - minecraft:waxed_oxidized_copper_golem_statue
 Redstone:
   DisplayName: "Redstone"
   DisplayItem: minecraft:redstone
@@ -1047,7 +1108,6 @@ Misc:
     - minecraft:creeper_spawn_egg
     - minecraft:cyan_dye
     - minecraft:diamond
-    - minecraft:diamond_horse_armor
     - minecraft:dolphin_spawn_egg
     - minecraft:donkey_spawn_egg
     - minecraft:dragon_egg
@@ -1071,7 +1131,6 @@ Misc:
     - minecraft:glowstone_dust
     - minecraft:gold_ingot
     - minecraft:gold_nugget
-    - minecraft:golden_horse_armor
     - minecraft:gray_dye
     - minecraft:guardian_spawn_egg
     - minecraft:gunpowder
@@ -1079,7 +1138,6 @@ Misc:
     - minecraft:horse_spawn_egg
     - minecraft:husk_spawn_egg
     - minecraft:ink_sac
-    - minecraft:iron_horse_armor
     - minecraft:iron_ingot
     - minecraft:iron_nugget
     - minecraft:kelp
@@ -1182,7 +1240,6 @@ Misc:
     - minecraft:fox_spawn_egg
     - minecraft:globe_banner_pattern
     - minecraft:green_dye
-    - minecraft:leather_horse_armor
     - minecraft:mojang_banner_pattern
     - minecraft:panda_spawn_egg
     - minecraft:pillager_spawn_egg
@@ -1306,6 +1363,13 @@ Misc:
     - minecraft:dried_ghast
     - minecraft:music_disc_lava_chicken
     - minecraft:music_disc_tears
+    - minecraft:nautilus_spawn_egg
+    - minecraft:copper_golem_spawn_egg
+    - minecraft:camel_husk_spawn_egg
+    - minecraft:parched_spawn_egg
+    - minecraft:zombie_nautilus_spawn_egg
+    - minecraft:happy_ghast_spawn_egg
+    - minecraft:copper_nugget
 Food:
   DisplayName: "Foodstuffs"
   DisplayItem: minecraft:apple
@@ -1409,6 +1473,10 @@ Tools:
     - minecraft:green_bundle
     - minecraft:red_bundle
     - minecraft:black_bundle
+    - minecraft:copper_shovel
+    - minecraft:copper_pickaxe
+    - minecraft:copper_axe
+    - minecraft:copper_hoe
 Combat:
   DisplayName: "Combat"
   DisplayItem: minecraft:golden_sword
@@ -1455,6 +1523,29 @@ Combat:
     - minecraft:netherite_leggings
     - minecraft:netherite_sword
     - minecraft:mace
+    - minecraft:copper_sword
+    - minecraft:copper_helmet
+    - minecraft:copper_chestplate
+    - minecraft:copper_leggings
+    - minecraft:copper_boots
+    - minecraft:wooden_spear
+    - minecraft:stone_spear
+    - minecraft:copper_spear
+    - minecraft:iron_spear
+    - minecraft:golden_spear
+    - minecraft:diamond_spear
+    - minecraft:netherite_spear
+    - minecraft:leather_horse_armor
+    - minecraft:iron_horse_armor
+    - minecraft:golden_horse_armor
+    - minecraft:diamond_horse_armor
+    - minecraft:copper_horse_armor
+    - minecraft:netherite_horse_armor
+    - minecraft:iron_nautilus_armor
+    - minecraft:golden_nautilus_armor
+    - minecraft:diamond_nautilus_armor
+    - minecraft:netherite_nautilus_armor
+    - minecraft:copper_nautilus_armor
 Brewing:
   DisplayName: "Brewing"
   DisplayItem: minecraft:potion
