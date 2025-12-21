@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.lang.reflect.*;
 
-
 import static fr.epicanard.globalmarketchest.utils.annotations.AnnotationCaller.call;
 import static fr.epicanard.globalmarketchest.utils.reflection.ReflectionUtils.*;
 
