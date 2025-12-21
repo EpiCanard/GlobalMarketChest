@@ -13,7 +13,6 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.release>8</maven.compiler.release>
     <spigot.version>1.21.11-R0.1-SNAPSHOT</spigot.version>
-    <duckconfig.version>v1.3.0</duckconfig.version>
     <lombok.version>1.18.38</lombok.version>
   </properties>
 
@@ -179,11 +178,6 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
       <version>3.2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.github.EpiCanard</groupId>
-      <artifactId>DuckConfig</artifactId>
-      <version>${duckconfig.version}</version>
     </dependency>
     <dependency>
       <groupId>org.bstats</groupId>

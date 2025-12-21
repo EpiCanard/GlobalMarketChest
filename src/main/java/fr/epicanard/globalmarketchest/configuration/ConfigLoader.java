@@ -1,7 +1,5 @@
 package fr.epicanard.globalmarketchest.configuration;
 
-import fr.epicanard.duckconfig.DuckLoader;
-import fr.epicanard.duckconfig.annotations.ResourceWrapper;
 import fr.epicanard.globalmarketchest.GlobalMarketChest;
 import fr.epicanard.globalmarketchest.exceptions.CantLoadConfigException;
 import fr.epicanard.globalmarketchest.utils.ConfigUtils;
@@ -10,6 +8,7 @@ import fr.epicanard.globalmarketchest.utils.MinecraftVersion;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
@@ -148,18 +147,48 @@ public class ConfigLoader {
       return null;
     }
 
-    final ResourceWrapper resource = new ResourceWrapper(GlobalMarketChest.plugin.getDataFolder().getPath(), "price-limits.yml");
-    Map<String, PriceLimit> prices = DuckLoader.loadMap(PriceLimit.class, resource).entrySet().stream()
-        .collect(Collectors.toMap(
-            Map.Entry::getKey,
-            entry -> entry.getValue().checkValidity()
-        ));
+    final File limitsConfFile = new File(GlobalMarketChest.plugin.getDataFolder(), "price-limits.yml");
+    final YamlConfiguration limitsConf = new YamlConfiguration();
+    Map<String, PriceLimit> prices = null;
 
-    if (prices.size() == 0) {
-      prices = this.getMaterials().collect(Collectors.toMap(mat -> mat, mat -> new PriceLimit()));
+    try {
+      if (limitsConfFile.exists()) {
+        limitsConf.load(limitsConfFile);
+        prices = limitsConf.getValues(false).entrySet().stream()
+          .collect(Collectors.toMap(
+            Map.Entry::getKey,
+            entry -> {
+              MemorySection section = (MemorySection) entry.getValue();
+              return new PriceLimit(
+                  section.getDouble("min", section.getDouble("Min", 0)),
+                  section.getDouble("max", section.getDouble("Max", -1.0))
+              ).checkValidity();
+            }
+          ));
+      }
+
+      if (prices == null || prices.size() == 0) {
+        prices = this.getMaterials().collect(Collectors.toMap(mat -> mat, mat -> new PriceLimit()));
+      }
+
+      YamlConfiguration newLimitsConf = new YamlConfiguration();
+
+      if (GlobalMarketChest.plugin.getMinecraftVersion().isLowerThan(1, 19))
+        newLimitsConf.options().header(PriceLimit.header.stream().collect(Collectors.joining("\n")));
+      else
+        newLimitsConf.options().setHeader(PriceLimit.header);
+
+      prices.entrySet().stream().forEach(entry -> {
+        newLimitsConf.set(entry.getKey() + ".min", entry.getValue().min);
+        newLimitsConf.set(entry.getKey() + ".max", entry.getValue().max);
+      });
+
+      newLimitsConf.save(limitsConfFile);
+      return prices;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
     }
-    DuckLoader.save(prices, resource);
-    return prices;
   }
 
   /**

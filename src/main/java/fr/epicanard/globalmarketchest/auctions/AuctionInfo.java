@@ -139,11 +139,11 @@ public class AuctionInfo {
   public List<String> getLore(final AuctionLoreConfig config, final PriceLimit priceLimit) {
     final List<String> lore = this.buildBaseLore(config);
     if (priceLimit != null) {
-      if (priceLimit.Min > 0) {
-        this.addLore(lore, "MinPrice", "&6", format(priceLimit.Min));
+      if (priceLimit.min > 0) {
+        this.addLore(lore, "MinPrice", "&6", format(priceLimit.min));
       }
-      if (priceLimit.Max > 0) {
-        this.addLore(lore, "MaxPrice", "&6", format(priceLimit.Max));
+      if (priceLimit.max > 0) {
+        this.addLore(lore, "MaxPrice", "&6", format(priceLimit.max));
       }
     }
     lore.add(GlobalMarketChest.plugin.getCatHandler().getDisplayCategory(this.itemStack));
