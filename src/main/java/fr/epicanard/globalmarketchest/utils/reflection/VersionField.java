@@ -18,7 +18,7 @@ import java.util.Optional;
  * Reflection VersionField
  * VersionField.from(myObject).get("afield").get("anotherfield").value()
  */
-class VersionField {
+public class VersionField {
 
   /**
    * Field value
@@ -61,7 +61,7 @@ class VersionField {
    * @throws NoSuchFieldException
    * @throws IllegalAccessException
    */
-  VersionField get(String name) throws NoSuchFieldException, IllegalAccessException {
+  public VersionField get(String name) throws NoSuchFieldException, IllegalAccessException {
     Object ret = this.objectClass.getField(name).get(this.object);
     return new VersionField(ret);
   }
@@ -75,7 +75,7 @@ class VersionField {
    * @throws NoSuchFieldException
    * @throws IllegalAccessException
    */
-  VersionField getWithType(Class<?> fieldType) throws NoSuchFieldException, IllegalAccessException {
+  public VersionField getWithType(Class<?> fieldType) throws NoSuchFieldException, IllegalAccessException {
     final Optional<Field> maybeField = Arrays.stream(this.objectClass.getFields())
             .filter(f -> f.getType().isAssignableFrom(fieldType)).findFirst();
     if (!maybeField.isPresent()) {
@@ -85,29 +85,11 @@ class VersionField {
   }
 
   /**
-   * Reflection method to invoke a method with type
-   *
-   * @param returnType return type
-   * @return a new instance of VersionField
-   * @throws NoSuchMethodException
-   * @throws IllegalAccessException
-   * @throws InvocationTargetException
-   */
-  Object invokeMethodWithType(Class<?> returnType) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-    final Optional<Method> maybeMethod = Arrays.stream(this.objectClass.getMethods())
-            .filter(m -> m.getReturnType().isAssignableFrom(returnType)).findFirst();
-    if (!maybeMethod.isPresent()) {
-      throw new NoSuchMethodException("Can't find methode with return type : " + returnType.getName());
-    }
-    return maybeMethod.get().invoke(this.object);
-  }
-
-  /**
    * Return the object value stored
    *
    * @return
    */
-  Object value() {
+  public Object value() {
     return this.object;
   }
 }

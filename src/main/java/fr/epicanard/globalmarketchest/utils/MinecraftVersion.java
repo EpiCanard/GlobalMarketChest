@@ -46,23 +46,43 @@ public class MinecraftVersion {
   }
 
   public boolean isLowerThan(final Integer major, final Integer minor) {
-    return (this.minor < minor && this.major == major) || this.major < major;
+    return this.major < major || (this.major == major && this.minor < minor);
+  }
+
+  public boolean isLowerThan(final Integer major, final Integer minor, final Integer patch) {
+    return this.major < major || (this.major == major && (this.minor < minor || (this.minor == minor && this.patch < patch)));
   }
 
   public boolean isLowerOrEqualsTo(final Integer major, final Integer minor) {
-    return (this.minor == minor && this.major == major) || ((this.minor < minor && this.major == major) || this.major < major);
+    return this.major < major || (this.major == major && this.minor <= minor);
+  }
+
+  public boolean isLowerOrEqualsTo(final Integer major, final Integer minor, final Integer patch) {
+    return this.major < major || (this.major == major && (this.minor < minor || (this.minor == minor && this.patch <= patch)));
   }
 
   public boolean isEqualsTo(final Integer major, final Integer minor) {
-    return this.minor == minor && this.major == major;
+    return this.major == major && this.minor == minor;
+  }
+
+  public boolean isEqualsTo(final Integer major, final Integer minor, final Integer patch) {
+    return this.patch == patch && this.minor == minor && this.major == major;
   }
 
   public boolean isHigherOrEqualsTo(final Integer major, final Integer minor) {
-    return (this.minor == minor && this.major == major) || ((this.minor > minor && this.major == major) || this.major > major);
+    return this.major > major || (this.major == major && this.minor >= minor);
+  }
+
+  public boolean isHigherOrEqualsTo(final Integer major, final Integer minor, final Integer patch) {
+    return this.major > major || (this.major == major && (this.minor > minor || (this.minor == minor && this.patch >= patch)));
   }
 
   public boolean isHigherThan(final Integer major, final Integer minor) {
-    return  (this.minor > minor && this.major == major) || this.major > major;
+    return  this.major > major || (this.major == major && this.minor > minor);
+  }
+
+  public boolean isHigherThan(final Integer major, final Integer minor, final Integer patch) {
+    return  this.major > major || (this.major == major && (this.minor > minor || (this.minor == minor && this.patch > patch)));
   }
 
 }
