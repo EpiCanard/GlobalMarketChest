@@ -179,7 +179,7 @@ public class NMSInventoryTitleUpdater implements IInventoryTitleUpdater {
   }
 
   @Version(name = "updateInventoryName", versions = { "1.20.0", "1.20.1" })
-  public void updateInventoryName_latest_1_20(String title, Player player) {
+  public void updateInventoryName_1_20(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
       Object chatMessage = Path.MINECRAFT_NETWORK_CHAT.getClass("IChatBaseComponent")
@@ -205,7 +205,7 @@ public class NMSInventoryTitleUpdater implements IInventoryTitleUpdater {
   }
 
   @Version(name = "updateInventoryName", versions = {  "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6"})
-  public void updateInventoryName_1_21_1(String title, Player player) {
+  public void updateInventoryName_1_20_2(String title, Player player) {
     try {
       Object entityPlayer = invokeMethod(player, "getHandle");
       Class<?> entityHumanClass = Path.MINECRAFT_WORLD_ENTITY_PLAYER.getClass("EntityHuman");

@@ -49,7 +49,7 @@ public class VersionSupportUtils extends RegistryProvider implements ITagHandler
 
       final ITagHandler tagHandler = (version.isLowerOrEqualsTo(1, 13)) ? new OldTagHandler() : new TagHandler();
       final IMinecraftKeyHandler minecraftKeyHandler = (version.isLowerThan(1, 13)) ?  new NMSMinecraftKeyHandler() : new MinecraftKeyHandler();
-      final IInventoryTitleUpdater inventoryTitleUpdater = (version.isLowerThan(1, 20)) ?  new NMSInventoryTitleUpdater() : new InventoryTitleUpdater();
+      final IInventoryTitleUpdater inventoryTitleUpdater = (version.isLowerThan(1, 21)) ?  new NMSInventoryTitleUpdater() : new InventoryTitleUpdater();
 
       INSTANCE = new VersionSupportUtils(tagHandler, minecraftKeyHandler, inventoryTitleUpdater);
     }
