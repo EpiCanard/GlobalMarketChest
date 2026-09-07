@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fr.epicanard</groupId>
   <artifactId>globalmarketchest</artifactId>
-  <version>1.16.1</version>
+  <version>1.16.2</version>
   <name>GlobalMarketChest</name>
   <description>Shop plugin to create economy between user</description>
 
@@ -12,7 +12,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.release>8</maven.compiler.release>
-    <spigot.version>1.21.11-R0.1-SNAPSHOT</spigot.version>
+    <spigot.version>26.2-R0.1-SNAPSHOT</spigot.version>
     <lombok.version>1.18.38</lombok.version>
   </properties>
 
