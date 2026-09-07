@@ -112,7 +112,7 @@ public abstract class RegistryProvider {
       chatBaseComponent = Path.MINECRAFT_NETWORK_CHAT.getClass("Component");
     }
     for (Method method: nmsItemStack.getClass().getMethods()) {
-      if (method.getReturnType().isAssignableFrom(chatBaseComponent)) {
+      if (method.getReturnType().isAssignableFrom(chatBaseComponent) && method.getParameterCount() == 0) {
         Object result = method.invoke(nmsItemStack);
         if (result != null)
           return result;
