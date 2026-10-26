@@ -12,7 +12,7 @@ public class MinecraftVersion {
    * Prevent loading config issues for versions not fully supported by the plugin
    */
   @Getter
-  private static final String lastSupportedVersion = "1.21";
+  private static final String lastSupportedVersion = "26.3";
 
   final private Integer major;
   final private Integer minor;
